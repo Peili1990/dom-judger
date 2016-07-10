@@ -28,5 +28,14 @@ public class IndexController extends BaseController {
 		mav.addAllObjects(basicService.getSessionUserService(session));
 		return mav;
 	}
+	
+	@RequestMapping(value = "/admin-apply", method = RequestMethod.GET)
+	public ModelAndView adminApplyView(HttpSession session) {
+		ModelAndView mav = new ModelAndView("admin/admin-apply");
+		mav.addAllObjects(basicService.getSessionUserService(session));
+		return mav;
+	}
+	
+	
 
 }
