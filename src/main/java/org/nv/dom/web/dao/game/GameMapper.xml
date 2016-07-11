@@ -5,37 +5,42 @@
 	<resultMap type="ApplyingGame" id="applyingGame">
 		<id property="id" column="id"/>
 		<result property="gameDesc" column="desc"/>
+		<result property="gameStatus" column="status"/>
 		<result property="playerNum" column="player_num"/>
-		<result property="playCurNum" column="COUNT(dp.role)"/>
-		<result property="startDate" column="estimated_start_date"/>
-		<collection property="Judgers" column="id" javaType="List" ofType="String" select="queryGameJudgerDao"></collection>
+		<result property="startDate" column="startDate"/>
+		<collection property="players" column="id" javaType="List" ofType="User" select="queryGamePlayerDao"></collection>
 	</resultMap>
 
-	<select id="getApplyingGamesDao" resultMap="applyingGame">
+	<select id="getApplyingGamesDao" parameterType="long" resultMap="applyingGame">
 	
 		SELECT
 			dg.id,
 			dg.desc,
+			dg.status,
 			dg.player_num,
-			COUNT(dp.role),
-			dg.estimated_start_date
+			IF(ISNULL(actual_start_date),estimated_start_date,actual_start_date) AS startDate
 		FROM
 			d_game dg LEFT JOIN d_player dp
 		ON
-			dg.status = 1 AND dp.role='player' AND dp.game_id=dg.id
+			dg.status = 1 AND dp.role='judger' AND dp.game_id=dg.id
+		WHERE
+			dp.user_id=#{userId}
 		GROUP BY
 			dg.id
+		LIMIT 1
 				
 	</select>
 	
-	<select id="queryGameJudgerDao" parameterType="long" resultType="String">
+	<select id="queryGamePlayerDao" parameterType="long" resultType="UserApplyInfo">
 	
 		SELECT 
-			du.nickname
+			du.id AS userId,
+			du.nickname AS nickname,
+			DATE_FORMAT(dp.apply_time,'%Y-%c-%d %H:%i:%s') AS applyTime
 		FROM
 			d_user du, d_player dp
 		WHERE
-			dp.role = "judger" AND dp.user_id = du.id
+			dp.role = "player" AND dp.user_id = du.id AND dp.game_id = #{gameId}
 	
 	</select>
 	

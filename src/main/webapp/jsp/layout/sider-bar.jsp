@@ -7,7 +7,7 @@
       <li class="admin-parent">
         <a class="am-cf" data-am-collapse="{target: '#collapse-nav'}"><span class="am-icon-file"></span> 版杀管理 <span class="am-icon-angle-right am-fr am-margin-right"></span></a>
         <ul class="am-list am-collapse admin-sidebar-sub am-in" id="collapse-nav">
-          <li><a href="${ baseUrl }admin-apply" class="am-cf"><span class="am-icon-check"></span> 报名管理<span class="am-icon-star am-fr am-margin-right admin-icon-yellow"></span></a></li>
+          <li><a href="${ baseUrl }admin-apply/${ sessionUser.id }" class="am-cf"><span class="am-icon-check"></span> 报名管理<span class="am-icon-star am-fr am-margin-right admin-icon-yellow"></span></a></li>
           <li><a href="admin-help.html"><span class="am-icon-puzzle-piece"></span> 角色状态</a></li>
           <li><a href="admin-gallery.html"><span class="am-icon-th"></span> 发布公告</a></li>
           <li><a href="admin-log.html"><span class="am-icon-calendar"></span> 发送反馈</a></li>
@@ -26,11 +26,5 @@
       </div>
     </div>
 
-    <div class="am-panel am-panel-default admin-sidebar-panel">
-      <div class="am-panel-bd">
-        <p><span class="am-icon-tag"></span> wiki</p>
-        <p>Welcome to the Amaze wiki!</p>
-      </div>
-    </div>
   </div>
   <!-- sidebar end -->

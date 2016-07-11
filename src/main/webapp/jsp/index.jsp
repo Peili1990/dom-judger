@@ -5,27 +5,6 @@
 <head lang="en">
 <title>法官后台结算管理登录界面 - 维多利亚的噩梦</title>
 <jsp:include page="layout/common.jsp"></jsp:include>
-<style>
-.header {
-	text-align: center;
-}
-
-.header h1 {
-	font-size: 200%;
-	color: #333;
-	margin-top: 30px;
-}
-
-.header p {
-	font-size: 14px;
-}
-
-#error-msg {
-	display: none;
-	color: red;
-	margin-bottom: 10px;
-}
-</style>
 </head>
 <body>
 	<div class="header">

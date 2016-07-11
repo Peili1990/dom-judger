@@ -3,6 +3,7 @@ package org.nv.dom.web.dao.game;
 import java.util.List;
 
 import org.nv.dom.domain.game.ApplyingGame;
+import org.nv.dom.domain.user.UserApplyInfo;
 import org.nv.dom.dto.game.ApplyDTO;
 import org.springframework.stereotype.Repository;
 
@@ -12,11 +13,11 @@ public interface GameMapper {
 	/**
 	 * <p>获取报名中的版杀信息</p>
 	 */
-	public List<ApplyingGame> getApplyingGamesDao();
+	public ApplyingGame getApplyingGamesDao(long userId);
 	/**
 	 * <p>获取版杀主持法官信息</p>
 	 */
-	public List<String> queryGameJudgerDao(long gameId);
+	public List<UserApplyInfo> queryGamePlayerDao(long gameId);
 	/**
 	 * <p>查询玩家是否报名或参与其他版杀</p>
 	 */

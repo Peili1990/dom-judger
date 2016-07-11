@@ -2,20 +2,27 @@ package org.nv.dom.domain.game;
 
 import java.util.List;
 
+import org.nv.dom.domain.user.UserApplyInfo;
+
 public class ApplyingGame {
 	
 	/** 游戏id */
 	private long id;
 	/** 游戏名称 */
 	private String gameDesc;
-	/** 法官配置 */
-	private List<String> Judgers;
+	/** 游戏状态 */
+	private Integer gameStatus;
+	/** 游戏状态描述 */
+	private String gameStatusDesc;
+	/** 玩家名单 */
+	private List<UserApplyInfo> players;
 	/** 玩家人数 */
 	private Integer playerNum;
 	/** 当前报名人数 */
 	private Integer playCurNum;
 	/** 预计开始时间 */
 	private String startDate;
+	
 	public long getId() {
 		return id;
 	}
@@ -28,11 +35,23 @@ public class ApplyingGame {
 	public void setGameDesc(String gameDesc) {
 		this.gameDesc = gameDesc;
 	}
-	public List<String> getJudgers() {
-		return Judgers;
+	public Integer getGameStatus() {
+		return gameStatus;
 	}
-	public void setJudgers(List<String> judgers) {
-		Judgers = judgers;
+	public void setGameStatus(Integer gameStatus) {
+		this.gameStatus = gameStatus;
+	}
+	public String getGameStatusDesc() {
+		return gameStatusDesc;
+	}
+	public void setGameStatusDesc(String gameStatusDesc) {
+		this.gameStatusDesc = gameStatusDesc;
+	}
+	public List<UserApplyInfo> getPlayers() {
+		return players;
+	}
+	public void setPlayers(List<UserApplyInfo> players) {
+		this.players = players;
 	}
 	public Integer getPlayerNum() {
 		return playerNum;
@@ -52,6 +71,7 @@ public class ApplyingGame {
 	public void setStartDate(String startDate) {
 		this.startDate = startDate;
 	}
+	
 	
 	
 	

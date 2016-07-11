@@ -2,7 +2,11 @@ package org.nv.dom.web.controller;
 
 import java.util.Map;
 
-import org.nv.dom.dto.game.ApplyDTO;
+import javax.servlet.http.HttpServletRequest;
+
+import org.nv.dom.config.PageParamType;
+import org.nv.dom.domain.user.User;
+import org.nv.dom.dto.account.LoginDTO;
 import org.nv.dom.web.service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,15 +23,16 @@ public class GameController extends BaseController{
 	GameService gameService;
 	
 	@ResponseBody
-	@RequestMapping(value = "/getApplyingGames", method = RequestMethod.POST)
-	public Map<String,Object> getApplyingGames(){
-		return gameService.getApplyingGames();
+	@RequestMapping(value = "/publish", method = RequestMethod.POST)
+	public Map<String, Object> loginAction(@ModelAttribute("loginDTO") LoginDTO loginDTO, HttpServletRequest request) {
+		Map<String, Object> result = null;
+		if((int)result.get("status")==1){
+			User user = (User) result.get("user");
+			user.setPassword("");
+			request.getSession().setAttribute(PageParamType.user_in_session, user);
+			result.remove("user");
+		}
+		return result;
 	}
 	
-	@ResponseBody
-	@RequestMapping(value = "/apply", method = RequestMethod.POST)
-	public Map<String,Object> apply(@ModelAttribute("applyDTO") ApplyDTO applyDTO){
-		return gameService.applyForGame(applyDTO);
-	}
-
 }
