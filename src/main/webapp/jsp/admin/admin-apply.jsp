@@ -124,7 +124,7 @@
           <div class="am-form-group">
             <label class="am-u-sm-3 am-form-label">人数配置</label>
             <div class="am-u-sm-9">
-              <select data-am-selected>
+              <select data-am-selected id="playerNum">
               	 <option value="19">19</option>
   				 <option value="22">22</option>
               </select>
@@ -155,7 +155,7 @@
           <div class="am-form-group">
             <div class="am-u-sm-9 am-u-sm-push-3">
               <div id="error-msg"></div>
-              <button type="button" class="am-btn am-btn-primary" onclick="submitApply()">发布报名帖</button>
+              <button type="button" class="am-btn am-btn-primary" onclick="submitApply(${sessionUser.id})">发布报名帖</button>
             </div>
           </div>
         </form>

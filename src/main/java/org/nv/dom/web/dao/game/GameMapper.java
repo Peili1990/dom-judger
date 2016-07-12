@@ -5,6 +5,7 @@ import java.util.List;
 import org.nv.dom.domain.game.ApplyingGame;
 import org.nv.dom.domain.user.UserApplyInfo;
 import org.nv.dom.dto.game.ApplyDTO;
+import org.nv.dom.dto.game.PublishGameDTO;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -15,16 +16,21 @@ public interface GameMapper {
 	 */
 	public ApplyingGame getApplyingGamesDao(long userId);
 	/**
-	 * <p>获取版杀主持法官信息</p>
+	 * <p>获取版杀参与玩家信息</p>
 	 */
 	public List<UserApplyInfo> queryGamePlayerDao(long gameId);
 	/**
 	 * <p>查询玩家是否报名或参与其他版杀</p>
 	 */
-	public int queryHasAttendGameDao(ApplyDTO applyDTO);
+	public int queryHasAttendGameDao(long userId);
 	/**
-	 * <p>报名版杀</p>
+	 * <p>报名版杀主持法官</p>
 	 */
 	public int applyForGameDao(ApplyDTO applyDTO);
+	/**
+	 * <p>发布报名帖</p>
+	 */
+	public int publishGameDao(PublishGameDTO publishGameDTO);
+	
 	
 }

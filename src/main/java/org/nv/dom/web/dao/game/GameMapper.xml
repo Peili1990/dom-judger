@@ -4,7 +4,7 @@
 
 	<resultMap type="ApplyingGame" id="applyingGame">
 		<id property="id" column="id"/>
-		<result property="gameDesc" column="desc"/>
+		<result property="gameDesc" column="description"/>
 		<result property="gameStatus" column="status"/>
 		<result property="playerNum" column="player_num"/>
 		<result property="startDate" column="startDate"/>
@@ -15,7 +15,7 @@
 	
 		SELECT
 			dg.id,
-			dg.desc,
+			dg.description,
 			dg.status,
 			dg.player_num,
 			IF(ISNULL(actual_start_date),estimated_start_date,actual_start_date) AS startDate
@@ -44,7 +44,7 @@
 	
 	</select>
 	
-	<select id="queryHasAttendGameDao" parameterType="ApplyDTO" resultType="Integer">
+	<select id="queryHasAttendGameDao" parameterType="long" resultType="Integer">
 	
 		SELECT
 			count(1)
@@ -60,12 +60,36 @@
 		INSERT INTO d_player (
 			user_id,
 			role,
-			game_id			
+			game_id,
+			apply_time
+						
 		) 
 		VALUES (
 			#{userId},
-			"player",
-			#{gameId}
+			"judger",
+			#{gameId},
+			NOW()
+		)
+	
+	</insert>
+	
+	<insert id="publishGameDao" parameterType="PublishGameDTO" useGeneratedKeys="true" keyProperty="gameId">
+	
+		INSERT INTO d_game (
+			description,
+			player_num,
+			status,
+			estimated_start_date,
+			qq_group,
+			remark		
+		) 
+		VALUES (
+			#{gameDesc},
+			#{playerNum},
+			1,
+			#{startDate},
+			#{qqGroup},
+			#{remark}
 		)
 	
 	</insert>

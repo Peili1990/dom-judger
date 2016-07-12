@@ -3,7 +3,7 @@ function showApplyForm(){
 	$("#applyPublish").css({"display":"block"});
 }
 
-function submitApply(){
+function submitApply(userId){
 	var gameDesc = $("#gameDesc").val().trim();
 	var startDate = $("#startDate").val().trim();
 	if(gameDesc==""){
@@ -18,6 +18,33 @@ function submitApply(){
 	}
 	$("#error-msg").css("display","none");
 	$("#error-msg").text("");
-
+	var url = getRootPath() + "/game/publish";
+	var options = {
+		gameDesc : gameDesc,
+		judgerId : userId,
+		playerNum : $("#playerNum option:selected").val(),
+		startDate : $("#startDate").val(),
+		qqGroup : $("#QQgroup").val(),
+		remark : $("#remark").val()
+	};
+	var common = new Common();
+	common.callAction(options, url, function(data) {
+		if (!data) {
+			$("#error-msg").css("display","block");
+			$("#error-msg").text("系统异常");
+			return;
+		}
+		switch (data.status) {
+		case 1:
+			myInfo("报名帖发布成功！",function(){
+				window.location = getRootPath() + "/admin-apply/"+userId;
+			});
+			return;
+		default:
+			$("#error-msg").css("display","block");
+			$("#error-msg").text(data.message);
+			return;
+		}
+	});
 
 }

@@ -1,10 +1,15 @@
 package org.nv.dom.web.service.impl;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.nv.dom.config.PageParamType;
 import org.nv.dom.domain.game.ApplyingGame;
+import org.nv.dom.dto.game.ApplyDTO;
+import org.nv.dom.dto.game.PublishGameDTO;
 import org.nv.dom.enums.GameStatus;
 import org.nv.dom.web.dao.game.GameMapper;
 import org.nv.dom.web.service.GameService;
@@ -13,6 +18,8 @@ import org.springframework.stereotype.Service;
 
 @Service("gameServiceImpl")
 public class GameServiceImpl implements GameService {
+	
+	private Logger logger = Logger.getLogger(GameServiceImpl.class);
 	
 	@Autowired
 	GameMapper gameMapper;
@@ -33,6 +40,49 @@ public class GameServiceImpl implements GameService {
 			result.put(PageParamType.BUSINESS_MESSAGE, "系统异常");
 		}	
 		return result;
+	}
+
+	@Override
+	public Map<String, Object> publishGame(PublishGameDTO publishGameDTO) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		if(publishGameDTO == null || publishGameDTO.getGameDesc() == null
+				|| publishGameDTO.getPlayerNum() < 0L || publishGameDTO.getStartDate() == null
+				|| publishGameDTO.getJudgerId() < 0L){
+			result.put(PageParamType.BUSINESS_STATUS, -2);
+			result.put(PageParamType.BUSINESS_MESSAGE, "参数异常");
+			return result;
+		}
+		String today = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+		if(publishGameDTO.getStartDate().compareTo(today)<0){
+			result.put(PageParamType.BUSINESS_STATUS, -4);
+			result.put(PageParamType.BUSINESS_MESSAGE, "开版时间不能早于今天");
+			return result;
+		}
+		try{
+			if(gameMapper.queryHasAttendGameDao(publishGameDTO.getJudgerId()) > 0){
+				result.put(PageParamType.BUSINESS_STATUS, -3);
+				result.put(PageParamType.BUSINESS_MESSAGE, "已参加其他版杀，不能开新版杀");
+				return result;
+			}
+			ApplyDTO applyDTO = new ApplyDTO();
+			gameMapper.publishGameDao(publishGameDTO);
+			applyDTO.setGameId(publishGameDTO.getGameId());
+			applyDTO.setUserId(publishGameDTO.getJudgerId());
+			if(gameMapper.applyForGameDao(applyDTO) == 1){
+				result.put(PageParamType.BUSINESS_STATUS, 1);
+				result.put(PageParamType.BUSINESS_MESSAGE, "发布成功");
+				return result;
+			} else {
+				result.put(PageParamType.BUSINESS_STATUS, 1);
+				result.put(PageParamType.BUSINESS_MESSAGE, "发布失败，请稍后重试");
+				return result;
+			}	
+		} catch(Exception e){
+			logger.info(e.getMessage(),e);
+			result.put(PageParamType.BUSINESS_STATUS, -1);
+			result.put(PageParamType.BUSINESS_MESSAGE, "系统异常");
+			return result;
+		}
 	}
 
 }
