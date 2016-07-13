@@ -4,6 +4,8 @@ public class UserApplyInfo {
 	
 	private long userId;
 	private String nickname;
+	private Integer status;
+	private String statusDesc;
 	private String applyTime;
 	public long getUserId() {
 		return userId;
@@ -16,6 +18,18 @@ public class UserApplyInfo {
 	}
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
+	}
+	public Integer getStatus() {
+		return status;
+	}
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+	public String getStatusDesc() {
+		return statusDesc;
+	}
+	public void setStatusDesc(String statusDesc) {
+		this.statusDesc = statusDesc;
 	}
 	public String getApplyTime() {
 		return applyTime;

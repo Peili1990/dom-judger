@@ -25,6 +25,7 @@ function submitApply(userId){
 		playerNum : $("#playerNum option:selected").val(),
 		startDate : $("#startDate").val(),
 		qqGroup : $("#QQgroup").val(),
+		identitySelect : $("#identitySelect").val(),
 		remark : $("#remark").val()
 	};
 	var common = new Common();

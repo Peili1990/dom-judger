@@ -16,6 +16,8 @@ public class PublishGameDTO {
 	private String qqGroup;
 	/** 备注 */
 	private String remark;
+	/** 外在身份选择方式 */
+	private String identitySelect;
 	
 	public long getGameId() {
 		return gameId;
@@ -58,6 +60,12 @@ public class PublishGameDTO {
 	}
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+	public String getIdentitySelect() {
+		return identitySelect;
+	}
+	public void setIdentitySelect(String identitySelect) {
+		this.identitySelect = identitySelect;
 	}
 	
 }

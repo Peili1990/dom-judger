@@ -8,9 +8,11 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 import org.nv.dom.config.PageParamType;
 import org.nv.dom.domain.game.ApplyingGame;
+import org.nv.dom.domain.user.UserApplyInfo;
 import org.nv.dom.dto.game.ApplyDTO;
 import org.nv.dom.dto.game.PublishGameDTO;
 import org.nv.dom.enums.GameStatus;
+import org.nv.dom.enums.PlayerStatus;
 import org.nv.dom.web.dao.game.GameMapper;
 import org.nv.dom.web.service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +34,9 @@ public class GameServiceImpl implements GameService {
 			applyingGame = gameMapper.getApplyingGamesDao(userId);
 			applyingGame.setPlayCurNum(applyingGame.getPlayers().size());
 			applyingGame.setGameStatusDesc(GameStatus.getMessageByCode(applyingGame.getGameStatus()));
+			for(UserApplyInfo userApplyInfo:applyingGame.getPlayers()){
+				userApplyInfo.setStatusDesc(PlayerStatus.getMessageByCode(userApplyInfo.getStatus()));
+			}
 			result.put("applyingGame", applyingGame);
 			result.put(PageParamType.BUSINESS_STATUS, 1);
 			result.put(PageParamType.BUSINESS_MESSAGE, "获取版杀信息成功");

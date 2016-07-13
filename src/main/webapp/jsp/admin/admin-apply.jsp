@@ -68,8 +68,9 @@
 						  <tr>
 							<th><input type="checkbox" /></th>
 							<th>编号</th>
-							<th>id</th>
+							<th>id</th>	
 							<th>报名时间</th>
+							<th>当前状态</th>
 							<th class="table-set">操作</th>
 						  </tr>
 						</thead>
@@ -80,6 +81,7 @@
               					<td>${ playerStatus.index+1 }</td>
              					<td>${ player.nickname }</td>
               					<td>${ player.applyTime }</td>
+              					<td>${ player.statusDesc }</td>
               					<td>
                 				<div class="am-btn-toolbar">
                   				  <div class="am-btn-group am-btn-group-xs">
@@ -142,6 +144,16 @@
             <label for="user-weibo" class="am-u-sm-3 am-form-label">预计开版时间</label>
             <div class="am-u-sm-9">
               <input type="text" id="startDate" class="am-form-field" placeholder="选择预计开版时间" data-am-datepicker readonly required />
+            </div>
+          </div>
+          
+          <div class="am-form-group">
+            <label class="am-u-sm-3 am-form-label">外在身份选择方式</label>
+            <div class="am-u-sm-9">
+              <select data-am-selected id="identitySelect">
+              	 <option value="A">个人选择</option>
+  				 <option value="B">3选1</option>
+              </select>
             </div>
           </div>
 

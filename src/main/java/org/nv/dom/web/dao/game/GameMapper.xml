@@ -36,6 +36,7 @@
 		SELECT 
 			du.id AS userId,
 			du.nickname AS nickname,
+			dp.status AS status,
 			DATE_FORMAT(dp.apply_time,'%Y-%c-%d %H:%i:%s') AS applyTime
 		FROM
 			d_user du, d_player dp
@@ -81,7 +82,8 @@
 			status,
 			estimated_start_date,
 			qq_group,
-			remark		
+			remark,
+			identity_select	
 		) 
 		VALUES (
 			#{gameDesc},
@@ -89,7 +91,8 @@
 			1,
 			#{startDate},
 			#{qqGroup},
-			#{remark}
+			#{remark},
+			#{identitySelect}
 		)
 	
 	</insert>
