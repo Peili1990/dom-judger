@@ -17,7 +17,7 @@ public class PublishGameDTO {
 	/** 备注 */
 	private String remark;
 	/** 外在身份选择方式 */
-	private String identitySelect;
+	private String characterSelect;
 	
 	public long getGameId() {
 		return gameId;
@@ -61,11 +61,11 @@ public class PublishGameDTO {
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
-	public String getIdentitySelect() {
-		return identitySelect;
+	public String getCharacterSelect() {
+		return characterSelect;
 	}
-	public void setIdentitySelect(String identitySelect) {
-		this.identitySelect = identitySelect;
+	public void setCharacterSelect(String characterSelect) {
+		this.characterSelect = characterSelect;
 	}
 	
 }

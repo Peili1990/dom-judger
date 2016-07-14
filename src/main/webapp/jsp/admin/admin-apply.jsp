@@ -150,7 +150,7 @@
           <div class="am-form-group">
             <label class="am-u-sm-3 am-form-label">外在身份选择方式</label>
             <div class="am-u-sm-9">
-              <select data-am-selected id="identitySelect">
+              <select data-am-selected id="characterSelect">
               	 <option value="A">个人选择</option>
   				 <option value="B">3选1</option>
               </select>

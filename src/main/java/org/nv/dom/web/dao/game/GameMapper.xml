@@ -83,7 +83,7 @@
 			estimated_start_date,
 			qq_group,
 			remark,
-			identity_select	
+			character_select	
 		) 
 		VALUES (
 			#{gameDesc},
@@ -92,7 +92,7 @@
 			#{startDate},
 			#{qqGroup},
 			#{remark},
-			#{identitySelect}
+			#{characterSelect}
 		)
 	
 	</insert>
