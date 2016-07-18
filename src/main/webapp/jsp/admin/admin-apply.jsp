@@ -49,8 +49,8 @@
                   	</c:if>
                   	<c:if test="${ applyingGame.gameStatus == 2 }">
                   	<p><button type="button" class="am-btn am-btn-primary am-btn-xs" 
-                  		onclick="">结束报名</button>
-                       <button type="button" class="am-btn am-btn-danger am-btn-xs" onclick="">修改报名帖</button></p>
+                  		onclick="">抽取身份</button>
+                       <button type="button" class="am-btn am-btn-danger am-btn-xs" onclick="">提交全名单</button></p>
                   	</c:if>
                   </c:when>
                   <c:otherwise>
@@ -99,9 +99,9 @@
               					<td>
                 				<div class="am-btn-toolbar">
                   				  <div class="am-btn-group am-btn-group-xs">
-                    				<button class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-pencil-square-o"></span> 查看版杀记录</button>
-                   					<button class="am-btn am-btn-default am-btn-xs"><span class="am-icon-paper-plane-o"></span> 发送消息</button>
-                    				<button class="am-btn am-btn-default am-btn-xs am-text-danger"><span class="am-icon-trash-o"></span> 踢出</button>
+                    				<button class="am-btn am-btn-default am-btn-xs am-text-secondary" title="查看版杀记录"><span class="am-icon-pencil-square-o"></span></button>
+                   					<button class="am-btn am-btn-default am-btn-xs" title="发送消息"><span class="am-icon-paper-plane-o"></span></button>
+                    				<button class="am-btn am-btn-default am-btn-xs am-text-danger" title="踢出游戏"><span class="am-icon-trash-o"></span></button>
                   				  </div>
                 				</div>
               					</td>
