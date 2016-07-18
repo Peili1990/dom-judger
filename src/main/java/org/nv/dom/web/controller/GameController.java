@@ -4,6 +4,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.nv.dom.dto.game.ChangeStatusDTO;
 import org.nv.dom.dto.game.PublishGameDTO;
 import org.nv.dom.web.service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +23,14 @@ public class GameController extends BaseController{
 	
 	@ResponseBody
 	@RequestMapping(value = "/publish", method = RequestMethod.POST)
-	public Map<String, Object> loginAction(@ModelAttribute("publishGameDTO") PublishGameDTO publishGameDTO, HttpSession session) {
+	public Map<String, Object> publish(@ModelAttribute("publishGameDTO") PublishGameDTO publishGameDTO, HttpSession session) {
 		return gameService.publishGame(publishGameDTO);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/changeStatus", method = RequestMethod.POST)
+	public Map<String, Object> changeStatus(@ModelAttribute("changeStatusDTO") ChangeStatusDTO changeStatusDTO, HttpSession session) {
+		return gameService.changeStatus(changeStatusDTO);
 	}
 	
 }

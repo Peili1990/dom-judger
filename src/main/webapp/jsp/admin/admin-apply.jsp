@@ -30,7 +30,7 @@
 
     <div class="am-g">
 
-      <div class="am-u-sm-12 am-u-md-4 am-u-md-push-8"> 
+      <div class="am-u-sm-12 am-u-md-3 am-u-md-push-9"> 
       	<div class="am-panel am-panel-default">
           <div class="am-panel-bd">
             <div class="user-info">
@@ -42,9 +42,19 @@
               		当前状态：<strong>${ applyingGame.gameStatusDesc }</strong><br>
               		报名人数：<strong>${ applyingGame.playCurNum }/${ applyingGame.playerNum }</strong><br>
                   	开版时间：<strong>${ applyingGame.startDate }</strong><br>
+                  	<c:if test="${ applyingGame.gameStatus == 1 }">
+                  	<p><button type="button" class="am-btn am-btn-primary am-btn-xs" 
+                  		onclick="changeGameStatus(${applyingGame.id},2)">结束报名</button>
+                       <button type="button" class="am-btn am-btn-danger am-btn-xs" onclick="">修改报名帖</button></p>
+                  	</c:if>
+                  	<c:if test="${ applyingGame.gameStatus == 2 }">
+                  	<p><button type="button" class="am-btn am-btn-primary am-btn-xs" 
+                  		onclick="">结束报名</button>
+                       <button type="button" class="am-btn am-btn-danger am-btn-xs" onclick="">修改报名帖</button></p>
+                  	</c:if>
                   </c:when>
                   <c:otherwise>
-                  	目前没有正在主持的版杀
+                  	目前没有正在报名的版杀
                   </c:otherwise>
               	</c:choose>     
               	</p>
@@ -53,7 +63,7 @@
         </div>
       </div>
 
-      <div class="am-u-sm-12 am-u-md-8 am-u-md-pull-4">
+      <div class="am-u-sm-12 am-u-md-9 am-u-md-pull-3">
       
       	<div class="am-panel am-panel-default" id="applyDetail">
           <div class="am-panel-bd">
@@ -70,7 +80,9 @@
 							<th>编号</th>
 							<th>id</th>	
 							<th>报名时间</th>
-							<th>当前状态</th>
+							<th>外在身份</th>
+							<th>申请先驱</th>
+							<th>实际身份</th>
 							<th class="table-set">操作</th>
 						  </tr>
 						</thead>
@@ -81,7 +93,9 @@
               					<td>${ playerStatus.index+1 }</td>
              					<td>${ player.nickname }</td>
               					<td>${ player.applyTime }</td>
-              					<td>${ player.statusDesc }</td>
+              					<td>${ player.characterName }</td>
+              					<td>${ player.applyPioneer }</td>
+              					<td></td>
               					<td>
                 				<div class="am-btn-toolbar">
                   				  <div class="am-btn-group am-btn-group-xs">
@@ -98,7 +112,7 @@
 					</form>
                   </c:when>
                   <c:otherwise>
-                  	目前没有正在主持的版杀          	
+                  	目前没有正在报名的版杀          	
                     <p><button type="button" class="am-btn am-btn-primary am-btn-xs" onclick="showApplyForm()">新建版杀</button>
                        <button type="button" class="am-btn am-btn-danger am-btn-xs" onclick="">申请成为其他版杀法官</button></p>
                   </c:otherwise>

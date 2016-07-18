@@ -569,4 +569,27 @@ function myInfo(text,callback){
 	$('#my-alert .am-modal-btn').on('click',callback);	
 }
 
+function changeGameStatus(gameId,status){
+	var url = getRootPath() + "/game/changeStatus";
+	var options = {
+		gameId : gameId,
+		status : status
+	};
+	var common = new Common();
+	common.callAction(options, url, function(data) {
+		if (!data) {
+			return;
+		}
+		switch (data.status) {
+		case 1:
+			myInfo("修改状态成功！",function(){
+				window.location = getRootPath() + "/admin-apply/";
+			});
+			return;
+		default:
+			myAlert(data.message);
+			return;
+		}
+	})
+}
 

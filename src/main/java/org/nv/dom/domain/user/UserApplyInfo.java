@@ -4,8 +4,10 @@ public class UserApplyInfo {
 	
 	private long userId;
 	private String nickname;
-	private Integer status;
 	private String statusDesc;
+	private String isSp;
+	private String characterName;
+	private String applyPioneer;
 	private String applyTime;
 	public long getUserId() {
 		return userId;
@@ -19,17 +21,29 @@ public class UserApplyInfo {
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
 	}
-	public Integer getStatus() {
-		return status;
-	}
-	public void setStatus(Integer status) {
-		this.status = status;
-	}
 	public String getStatusDesc() {
 		return statusDesc;
 	}
 	public void setStatusDesc(String statusDesc) {
 		this.statusDesc = statusDesc;
+	}
+	public String getIsSp() {
+		return isSp;
+	}
+	public void setIsSp(String isSp) {
+		this.isSp = isSp;
+	}
+	public String getCharacterName() {
+		return characterName;
+	}
+	public void setCharacterName(String characterName) {
+		this.characterName = characterName;
+	}
+	public String getApplyPioneer() {
+		return applyPioneer;
+	}
+	public void setApplyPioneer(String applyPioneer) {
+		this.applyPioneer = applyPioneer;
 	}
 	public String getApplyTime() {
 		return applyTime;

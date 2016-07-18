@@ -44,6 +44,14 @@ public class IndexController extends BaseController {
 		return mav;
 	}
 	
+	@RequestMapping(value = "/admin-character", method = RequestMethod.GET)
+	public ModelAndView adminCharacterView(HttpSession session) {
+		User user = (User) session.getAttribute(PageParamType.user_in_session);
+		ModelAndView mav = new ModelAndView("admin/admin-character");
+		mav.addAllObjects(basicService.getSessionUserService(session));
+		return mav;
+	}
+	
 	
 
 }

@@ -6,13 +6,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+import org.nv.dom.config.NVTermConstant;
 import org.nv.dom.config.PageParamType;
 import org.nv.dom.domain.game.ApplyingGame;
 import org.nv.dom.domain.user.UserApplyInfo;
 import org.nv.dom.dto.game.ApplyDTO;
+import org.nv.dom.dto.game.ChangeStatusDTO;
 import org.nv.dom.dto.game.PublishGameDTO;
 import org.nv.dom.enums.GameStatus;
-import org.nv.dom.enums.PlayerStatus;
+import org.nv.dom.util.StringUtil;
 import org.nv.dom.web.dao.game.GameMapper;
 import org.nv.dom.web.service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +37,20 @@ public class GameServiceImpl implements GameService {
 			applyingGame.setPlayCurNum(applyingGame.getPlayers().size());
 			applyingGame.setGameStatusDesc(GameStatus.getMessageByCode(applyingGame.getGameStatus()));
 			for(UserApplyInfo userApplyInfo:applyingGame.getPlayers()){
-				userApplyInfo.setStatusDesc(PlayerStatus.getMessageByCode(userApplyInfo.getStatus()));
+				String isSp=userApplyInfo.getIsSp();
+				if(StringUtil.isNullOrEmpty(isSp)){
+					userApplyInfo.setCharacterName("未选择");
+				} else if(isSp.equals(NVTermConstant.IS_SP)){
+					userApplyInfo.setCharacterName("sp"+userApplyInfo.getCharacterName());
+				}
+				String applyPioneer=userApplyInfo.getApplyPioneer();
+				if(StringUtil.isNullOrEmpty(applyPioneer)){
+					userApplyInfo.setApplyPioneer("未选择");
+				} else if(applyPioneer.equals(NVTermConstant.APPLY_PIONEER)){
+					userApplyInfo.setApplyPioneer("是");
+				} else {
+					userApplyInfo.setApplyPioneer("否");
+				}
 			}
 			result.put("applyingGame", applyingGame);
 			result.put(PageParamType.BUSINESS_STATUS, 1);
@@ -88,6 +103,25 @@ public class GameServiceImpl implements GameService {
 			result.put(PageParamType.BUSINESS_MESSAGE, "系统异常");
 			return result;
 		}
+	}
+
+	@Override
+	public Map<String, Object> changeStatus(ChangeStatusDTO changeStatusDTO) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		try{
+			if(gameMapper.changeStatusDao(changeStatusDTO) == 1){
+				result.put(PageParamType.BUSINESS_STATUS, 1);
+				result.put(PageParamType.BUSINESS_MESSAGE, "修改状态成功");
+			} else {
+				result.put(PageParamType.BUSINESS_STATUS, -3);
+				result.put(PageParamType.BUSINESS_MESSAGE, "修改失败，请重试");
+			}	
+		}catch(Exception e){
+			logger.info(e.getMessage(),e);
+			result.put(PageParamType.BUSINESS_STATUS, -1);
+			result.put(PageParamType.BUSINESS_MESSAGE, "系统异常");
+		}
+		return result;
 	}
 
 }

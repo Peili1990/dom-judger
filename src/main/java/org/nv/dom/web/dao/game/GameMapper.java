@@ -5,6 +5,7 @@ import java.util.List;
 import org.nv.dom.domain.game.ApplyingGame;
 import org.nv.dom.domain.user.UserApplyInfo;
 import org.nv.dom.dto.game.ApplyDTO;
+import org.nv.dom.dto.game.ChangeStatusDTO;
 import org.nv.dom.dto.game.PublishGameDTO;
 import org.springframework.stereotype.Repository;
 
@@ -31,6 +32,10 @@ public interface GameMapper {
 	 * <p>发布报名帖</p>
 	 */
 	public int publishGameDao(PublishGameDTO publishGameDTO);
+	/**
+	 * <p>修改版杀状态</p>
+	 */
+	public int changeStatusDao(ChangeStatusDTO changeStatusDTO);
 	
 	
 }

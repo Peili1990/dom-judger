@@ -22,7 +22,7 @@
 		FROM
 			d_game dg LEFT JOIN d_player dp
 		ON
-			dg.status = 1 AND dp.role='judger' AND dp.game_id=dg.id
+			dg.status != 9 AND dp.role='judger' AND dp.game_id=dg.id
 		WHERE
 			dp.user_id=#{userId}
 		GROUP BY
@@ -36,12 +36,18 @@
 		SELECT 
 			du.id AS userId,
 			du.nickname AS nickname,
-			dp.status AS status,
-			DATE_FORMAT(dp.apply_time,'%Y-%c-%d %H:%i:%s') AS applyTime
+			DATE_FORMAT(dp.apply_time,'%Y-%c-%d %H:%i:%s') AS applyTime,
+			dc.name AS characterName,
+			dpr.is_sp AS isSp,
+			dpr.apply_pioneer AS applyPioneer
 		FROM
-			d_user du, d_player dp
+			d_user du, d_player dp LEFT JOIN (d_character dc LEFT JOIN d_player_record dpr
+												ON 
+												dc.id=dpr.character_id ) 
+		ON 
+			dpr.player_id=dp.id 
 		WHERE
-			dp.role = "player" AND dp.user_id = du.id AND dp.game_id = #{gameId}
+			dp.role = "player" AND dp.user_id = du.id AND dp.game_id = #{gameId} 
 	
 	</select>
 	
@@ -96,5 +102,16 @@
 		)
 	
 	</insert>
+	
+	<update id="changeStatusDao" parameterType="ChangeStatusDTO">
+	
+		UPDATE
+			d_game dg
+		SET
+			dg.status=#{status}
+		WHERE
+			dg.id=#{gameId}
+	
+	</update>
 
 </mapper>

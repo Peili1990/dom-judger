@@ -4,8 +4,9 @@ public enum PlayerStatus {
 	
 	APPLIED(0,"已报名"),
 	CHARACTER_SELECTING(1,"待选角色"),
-	CHARACTER_SELECTED(2,"已选角色"),
-	INDENTITY_KNOWN(3,"已有身份");
+	CHARACTER_SELECTING_THREE(2,"待3选1"),
+	CHARACTER_SELECTED(3,"已选角色"),
+	INDENTITY_KNOWN(4,"已有身份");
 	
 	private final Integer code;
 	private final String message;

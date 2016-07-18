@@ -38,7 +38,7 @@ function submitApply(userId){
 		switch (data.status) {
 		case 1:
 			myInfo("报名帖发布成功！",function(){
-				window.location = getRootPath() + "/admin-apply/"+userId;
+				window.location = getRootPath() + "/admin-apply/";
 			});
 			return;
 		default:
@@ -47,5 +47,4 @@ function submitApply(userId){
 			return;
 		}
 	});
-
 }
