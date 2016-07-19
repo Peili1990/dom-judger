@@ -15,6 +15,7 @@ import org.nv.dom.dto.game.ChangeStatusDTO;
 import org.nv.dom.dto.game.PublishGameDTO;
 import org.nv.dom.enums.GameStatus;
 import org.nv.dom.util.StringUtil;
+import org.nv.dom.util.json.JacksonJSONUtils;
 import org.nv.dom.web.dao.game.GameMapper;
 import org.nv.dom.web.service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +54,7 @@ public class GameServiceImpl implements GameService {
 				}
 			}
 			result.put("applyingGame", applyingGame);
+			result.put("applyingGameStr", JacksonJSONUtils.beanToJSON(applyingGame));
 			result.put(PageParamType.BUSINESS_STATUS, 1);
 			result.put(PageParamType.BUSINESS_MESSAGE, "获取版杀信息成功");
 		} catch (Exception e){

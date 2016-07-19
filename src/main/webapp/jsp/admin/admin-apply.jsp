@@ -49,7 +49,7 @@
                   	</c:if>
                   	<c:if test="${ applyingGame.gameStatus == 2 }">
                   	<p><button type="button" class="am-btn am-btn-primary am-btn-xs" 
-                  		onclick="">抽取身份</button>
+                  		onclick="extractIdentity()">抽取身份</button>
                        <button type="button" class="am-btn am-btn-danger am-btn-xs" onclick="">提交全名单</button></p>
                   	</c:if>
                   </c:when>
@@ -86,7 +86,7 @@
 							<th class="table-set">操作</th>
 						  </tr>
 						</thead>
-						<tbody>
+						<tbody id="apply-info">
 							<c:forEach items="${ applyingGame.players }" var="player" varStatus="playerStatus">
 							  <tr>
 								<td><input type="checkbox" /></td>
@@ -94,8 +94,8 @@
              					<td>${ player.nickname }</td>
               					<td>${ player.applyTime }</td>
               					<td>${ player.characterName }</td>
-              					<td>${ player.applyPioneer }</td>
-              					<td></td>
+              					<td>${ player.applyPioneer }</td>             					
+              					<td>${ player.identity == 0 ? "":player.identity }</td>
               					<td>
                 				<div class="am-btn-toolbar">
                   				  <div class="am-btn-group am-btn-group-xs">
@@ -197,6 +197,112 @@
   <p class="am-padding-left">© 2014 AllMobilize, Inc. Licensed under MIT license. <a href="http://www.mycodes.net/" target="_blank">源码之家</a></p>
 </footer>
 
-<script src="${baseUrl}js/apply/apply.js" type="text/javascript"></script>
+<script type="text/javascript">
+var gamedata=${applyingGameStr};
+var playerInfo;
+
+function extractIdentity(){
+	var players=gamedata.players;
+	var pioneerCandidate=[];
+	var flag=true;
+	$.each(players,function(index,player){
+		if(player.characterId == null){
+			myAlert("有玩家还未选择外在身份！")
+			flag=false;
+			return false;
+		}
+		if(player.applyPioneer == "是"){
+			pioneerCandidate.push(index);
+		}
+		player.identity=null;
+	})
+	if(!flag) return;
+	var playerNum = players.length;
+	$.get('file/config.json').success(function(data){
+		$.each(data.configs,function(index,config){
+			if(config.playerNum == playerNum){
+				var array = config.identityNum;
+				if(pioneerCandidate.length==0){
+					array.push({
+	                    "code": 6,
+	                    "desc": "平民"
+	                });
+				} else {
+					pioneer = pioneerCandidate[parseInt(pioneerCandidate.length*Math.random())]
+					players[pioneer].identity=7;
+					$("#apply-info tr:eq("+pioneer+") td:eq(6)").text("先驱");
+				}
+				array.sort(randomsort);
+				flag=true;
+				$.each(players,function(index,player){
+					if(player.identity!=null){
+						flag=false;
+						return true;
+					}
+					if(flag){
+						player.identity=array[index].code;
+						$("#apply-info tr:eq("+index+") td:eq(6)").text(array[index].desc);
+					} else {
+						player.identity=array[index-1].code;
+						$("#apply-info tr:eq("+index+") td:eq(6)").text(array[index-1].desc);
+					}	
+				})
+			}
+		})
+	})
+}
+
+function showApplyForm(){
+	$("#applyDetail").css({"display":"none"});
+	$("#applyPublish").css({"display":"block"});
+}
+
+function submitApply(userId){
+	var gameDesc = $("#gameDesc").val().trim();
+	var startDate = $("#startDate").val().trim();
+	if(gameDesc==""){
+		$("#error-msg").css("display","block");
+		$("#error-msg").text("版杀名称不能为空");
+		return false;
+	}
+	if(startDate==""){
+		$("#error-msg").css("display","block");
+		$("#error-msg").text("预计开版时间不能为空");
+		return false;
+	}
+	$("#error-msg").css("display","none");
+	$("#error-msg").text("");
+	var url = getRootPath() + "/game/publish";
+	var options = {
+		gameDesc : gameDesc,
+		judgerId : userId,
+		playerNum : $("#playerNum option:selected").val(),
+		startDate : $("#startDate").val(),
+		qqGroup : $("#QQgroup").val(),
+		characterSelect : $("#characterSelect").val(),
+		remark : $("#remark").val()
+	};
+	var common = new Common();
+	common.callAction(options, url, function(data) {
+		if (!data) {
+			$("#error-msg").css("display","block");
+			$("#error-msg").text("系统异常");
+			return;
+		}
+		switch (data.status) {
+		case 1:
+			myInfo("报名帖发布成功！",function(){
+				window.location = getRootPath() + "/admin-apply/";
+			});
+			return;
+		default:
+			$("#error-msg").css("display","block");
+			$("#error-msg").text(data.message);
+			return;
+		}
+	});
+}
+
+</script>
 </body>
 </html>

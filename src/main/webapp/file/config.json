@@ -1,0 +1,170 @@
+{
+    "configs": [
+        {
+            "playerNum": 19,
+            "identityNum": [
+                {
+                    "code": 1,
+                    "desc": "警察"
+                },
+                {
+                    "code": 1,
+                    "desc": "警察"
+                },
+                {
+                    "code": 2,
+                    "desc": "官员"
+                },
+                {
+                    "code": 3,
+                    "desc": "刺客"
+                },
+                {
+                    "code": 4,
+                    "desc": "医生"
+                },
+                {
+                    "code": 5,
+                    "desc": "牧师"
+                },
+                {
+                    "code": 6,
+                    "desc": "平民"
+                },
+                {
+                    "code": 6,
+                    "desc": "平民"
+                },
+                {
+                    "code": 6,
+                    "desc": "平民"
+                },
+                {
+                    "code": 6,
+                    "desc": "平民"
+                },
+                {
+                    "code": 6,
+                    "desc": "平民"
+                },
+                {
+                    "code": 8,
+                    "desc": "杀手"
+                },
+                {
+                    "code": 8,
+                    "desc": "杀手"
+                },
+                {
+                    "code": 9,
+                    "desc": "暴徒"
+                },
+                {
+                    "code": 10,
+                    "desc": "间谍"
+                },
+                {
+                    "code": 11,
+                    "desc": "小偷"
+                },
+                {
+                    "code": 12,
+                    "desc": "巫师"
+                },
+                {
+                    "code": 13,
+                    "desc": "帮众"
+                }
+            ]
+        },
+        {
+            "playerNum": 22,
+            "identityNum": [
+                {
+                    "code": 1,
+                    "desc": "警察"
+                },
+                {
+                    "code": 1,
+                    "desc": "警察"
+                },
+                {
+                    "code": 1,
+                    "desc": "警察"
+                },
+                {
+                    "code": 2,
+                    "desc": "官员"
+                },
+                {
+                    "code": 3,
+                    "desc": "刺客"
+                },
+                {
+                    "code": 4,
+                    "desc": "医生"
+                },
+                {
+                    "code": 5,
+                    "desc": "牧师"
+                },
+                {
+                    "code": 6,
+                    "desc": "平民"
+                },
+                {
+                    "code": 6,
+                    "desc": "平民"
+                },
+                {
+                    "code": 6,
+                    "desc": "平民"
+                },
+                {
+                    "code": 6,
+                    "desc": "平民"
+                },
+                {
+                    "code": 6,
+                    "desc": "平民"
+                },
+                {
+                    "code": 6,
+                    "desc": "平民"
+                },
+                {
+                    "code": 8,
+                    "desc": "杀手"
+                },
+                {
+                    "code": 8,
+                    "desc": "杀手"
+                },
+                {
+                    "code": 8,
+                    "desc": "杀手"
+                },
+                {
+                    "code": 9,
+                    "desc": "暴徒"
+                },
+                {
+                    "code": 10,
+                    "desc": "间谍"
+                },
+                {
+                    "code": 11,
+                    "desc": "小偷"
+                },
+                {
+                    "code": 12,
+                    "desc": "巫师"
+                },
+                {
+                    "code": 13,
+                    "desc": "帮众"
+                }
+            ]
+        }
+    ]
+}
