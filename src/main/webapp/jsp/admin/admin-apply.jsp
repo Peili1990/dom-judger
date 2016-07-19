@@ -50,7 +50,7 @@
                   	<c:if test="${ applyingGame.gameStatus == 2 }">
                   	<p><button type="button" class="am-btn am-btn-primary am-btn-xs" 
                   		onclick="extractIdentity()">抽取身份</button>
-                       <button type="button" class="am-btn am-btn-danger am-btn-xs" onclick="">提交全名单</button></p>
+                       <button type="button" class="am-btn am-btn-danger am-btn-xs" onclick="submitList()">提交全名单</button></p>
                   	</c:if>
                   </c:when>
                   <c:otherwise>
@@ -199,7 +199,6 @@
 
 <script type="text/javascript">
 var gamedata=${applyingGameStr};
-var playerInfo;
 
 function extractIdentity(){
 	var players=gamedata.players;
@@ -229,7 +228,8 @@ function extractIdentity(){
 	                });
 				} else {
 					pioneer = pioneerCandidate[parseInt(pioneerCandidate.length*Math.random())]
-					players[pioneer].identity=7;
+					players[pioneer].identity = 7;
+					players[pioneer].identityDesc = "先驱";
 					$("#apply-info tr:eq("+pioneer+") td:eq(6)").text("先驱");
 				}
 				array.sort(randomsort);
@@ -240,16 +240,70 @@ function extractIdentity(){
 						return true;
 					}
 					if(flag){
-						player.identity=array[index].code;
+						player.identity = array[index].code;
+						player.identityDesc = array[index].desc;
 						$("#apply-info tr:eq("+index+") td:eq(6)").text(array[index].desc);
 					} else {
 						player.identity=array[index-1].code;
+						player.identityDesc = array[index-1].desc;
 						$("#apply-info tr:eq("+index+") td:eq(6)").text(array[index-1].desc);
 					}	
 				})
 			}
 		})
 	})
+}
+
+function submitList(){
+	var players=gamedata.players;
+	if(players[0].identity == null){
+		myAlert("请先抽取身份");
+		return;
+	}
+	$.get('file/config.json').success(function(data){
+		var policeSign = data.policeSign.sort(randomsort);
+		var killerSign = data.killerSign.sort(randomsort);
+		var policeCount = 0;
+		var killerCount = 0;
+		var officer;
+		var policeList=[];
+		$.each(players,function(index,player){
+			player.remark="";
+			switch(player.identity){
+			case 1:
+				player.identityDesc += "（"+policeSign[policeCount]+"）";
+				policeList.push(index);
+				policeCount++;
+				break;
+			case 2:
+				officer=player;
+				break;
+			case 8:
+				player.identityDesc += "（"+killerSign[killerCount]+"）";
+				killerCount++;
+				break;
+			}
+		})
+		contact = policeList[parseInt(policeList.length*Math.random())];
+		officer.remark = "联络员："+$("#apply-info tr:eq("+contact+") td:eq(4)").text();
+		var url = getRootPath() + "/game/submitList";
+		var common = new Common();
+		common.callAction(JSON.stringify(players),url,function(data){
+			if (!data) {
+				return;
+			}
+			switch (data.status) {
+			case 1:
+				myInfo("提交全名单成功！",function(){
+					window.location = getRootPath() + "/admin-apply/";
+				});
+				return;
+			default:
+				myAlert(data.message);
+				return;
+			}
+		},"application/json;charset=utf-8")
+	})	
 }
 
 function showApplyForm(){
