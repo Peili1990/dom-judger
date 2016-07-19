@@ -95,7 +95,7 @@
               					<td>${ player.applyTime }</td>
               					<td>${ player.characterName }</td>
               					<td>${ player.applyPioneer }</td>             					
-              					<td>${ player.identity == 0 ? "":player.identity }</td>
+              					<td>${ player.identityDesc == null ? "":player.identityDesc }</td>
               					<td>
                 				<div class="am-btn-toolbar">
                   				  <div class="am-btn-group am-btn-group-xs">

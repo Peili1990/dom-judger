@@ -41,7 +41,7 @@
 			dc.id AS characterId,
 			dc.name AS characterName,
 			dpr.is_sp AS isSp,
-			dpr.identity AS identity,
+			dpr.identity_desc AS identityDesc,
 			dpr.apply_pioneer AS applyPioneer
 		FROM
 			d_user du, d_player dp LEFT JOIN (d_character dc LEFT JOIN d_player_record dpr

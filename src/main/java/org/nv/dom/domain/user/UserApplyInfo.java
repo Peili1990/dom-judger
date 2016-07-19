@@ -18,6 +18,8 @@ public class UserApplyInfo {
 	private String characterName;
 	/** 身份代码 */
 	private Integer identity;
+	/** 身份名称 */
+	private String identityDesc;
 	/** 是否申请先驱  */
 	private String applyPioneer;
 	/** 报名时间 */
@@ -63,6 +65,12 @@ public class UserApplyInfo {
 	}
 	public void setIdentity(Integer identity) {
 		this.identity = identity;
+	}
+	public String getIdentityDesc() {
+		return identityDesc;
+	}
+	public void setIdentityDesc(String identityDesc) {
+		this.identityDesc = identityDesc;
 	}
 	public String getCharacterName() {
 		return characterName;
