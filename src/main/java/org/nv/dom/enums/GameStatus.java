@@ -5,8 +5,9 @@ public enum GameStatus {
 	CANCELED(0,"已取消"),
 	APPLYING(1,"报名中"),
 	APPLY_END(2,"报名结束"),
-	PROCEEDING(3,"进行中"),
-	FINISHED(4,"已结束");
+	READY(3,"游戏开始前"),
+	PROCEEDING(4,"进行中"),
+	FINISHED(5,"复盘中");
 	
 	private final Integer code;
 	private final String message;

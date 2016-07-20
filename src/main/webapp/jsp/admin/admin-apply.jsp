@@ -50,7 +50,7 @@
                   	<c:if test="${ applyingGame.gameStatus == 2 }">
                   	<p><button type="button" class="am-btn am-btn-primary am-btn-xs" 
                   		onclick="extractIdentity()">抽取身份</button>
-                       <button type="button" class="am-btn am-btn-danger am-btn-xs" onclick="submitList()">提交全名单</button></p>
+                       <button type="button" class="am-btn am-btn-danger am-btn-xs" onclick="submitList(${applyingGame.id})">提交全名单</button></p>
                   	</c:if>
                   </c:when>
                   <c:otherwise>
@@ -76,7 +76,6 @@
 					  <table class="am-table am-table-striped am-table-hover table-main">
 						<thead>
 						  <tr>
-							<th><input type="checkbox" /></th>
 							<th>编号</th>
 							<th>id</th>	
 							<th>报名时间</th>
@@ -89,7 +88,6 @@
 						<tbody id="apply-info">
 							<c:forEach items="${ applyingGame.players }" var="player" varStatus="playerStatus">
 							  <tr>
-								<td><input type="checkbox" /></td>
               					<td>${ playerStatus.index+1 }</td>
              					<td>${ player.nickname }</td>
               					<td>${ player.applyTime }</td>
@@ -213,38 +211,38 @@ function extractIdentity(){
 		if(player.applyPioneer == "是"){
 			pioneerCandidate.push(index);
 		}
-		player.identity=null;
+		player.sign=null;
 	})
 	if(!flag) return;
 	var playerNum = players.length;
-	$.get('file/config.json').success(function(data){
+	$.get('${baseUrl}file/config.json').success(function(data){
 		$.each(data.configs,function(index,config){
 			if(config.playerNum == playerNum){
 				var array = config.identityNum;
 				if(pioneerCandidate.length==0){
 					array.push({
-	                    "code": 6,
+	                    "sign": 11,
 	                    "desc": "平民"
 	                });
 				} else {
 					pioneer = pioneerCandidate[parseInt(pioneerCandidate.length*Math.random())]
-					players[pioneer].identity = 7;
+					players[pioneer].sign = 12;
 					players[pioneer].identityDesc = "先驱";
 					$("#apply-info tr:eq("+pioneer+") td:eq(6)").text("先驱");
 				}
 				array.sort(randomsort);
 				flag=true;
 				$.each(players,function(index,player){
-					if(player.identity!=null){
+					if(player.sign!=null){
 						flag=false;
 						return true;
 					}
 					if(flag){
-						player.identity = array[index].code;
+						player.sign = array[index].sign;
 						player.identityDesc = array[index].desc;
 						$("#apply-info tr:eq("+index+") td:eq(6)").text(array[index].desc);
 					} else {
-						player.identity=array[index-1].code;
+						player.sign=array[index-1].sign;
 						player.identityDesc = array[index-1].desc;
 						$("#apply-info tr:eq("+index+") td:eq(6)").text(array[index-1].desc);
 					}	
@@ -254,38 +252,32 @@ function extractIdentity(){
 	})
 }
 
-function submitList(){
+function submitList(gameId){
 	var players=gamedata.players;
-	if(players[0].identity == null){
+	if(players[0].sign == null){
 		myAlert("请先抽取身份");
 		return;
 	}
-	$.get('file/config.json').success(function(data){
+	$.get('${baseUrl}file/config.json').success(function(data){
 		var policeSign = data.policeSign.sort(randomsort);
 		var killerSign = data.killerSign.sort(randomsort);
 		var policeCount = 0;
 		var killerCount = 0;
-		var officer;
-		var policeList=[];
 		$.each(players,function(index,player){
 			player.remark="";
-			switch(player.identity){
-			case 1:
-				player.identityDesc += "（"+policeSign[policeCount]+"）";
-				policeList.push(index);
+			switch(player.sign){
+			case -1:
+				player.sign=policeSign[policeCount].sign;
+				player.identityDesc += "（"+policeSign[policeCount].desc+"）";
 				policeCount++;
 				break;
-			case 2:
-				officer=player;
-				break;
-			case 8:
-				player.identityDesc += "（"+killerSign[killerCount]+"）";
+			case -2:
+				player.sign=killerSign[killerCount].sign;
+				player.identityDesc += "（"+killerSign[killerCount].desc+"）";
 				killerCount++;
 				break;
 			}
 		})
-		contact = policeList[parseInt(policeList.length*Math.random())];
-		officer.remark = "联络员："+$("#apply-info tr:eq("+contact+") td:eq(4)").text();
 		var url = getRootPath() + "/game/submitList";
 		var common = new Common();
 		common.callAction(JSON.stringify(players),url,function(data){
@@ -294,9 +286,7 @@ function submitList(){
 			}
 			switch (data.status) {
 			case 1:
-				myInfo("提交全名单成功！",function(){
-					window.location = getRootPath() + "/admin-apply/";
-				});
+				changeGameStatus(gameId,3);
 				return;
 			default:
 				myAlert(data.message);

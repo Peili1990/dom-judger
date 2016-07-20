@@ -4,75 +4,75 @@
             "playerNum": 19,
             "identityNum": [
                 {
-                    "code": 1,
+                    "sign": -1,
                     "desc": "警察"
                 },
                 {
-                    "code": 1,
+                    "sign": -1,
                     "desc": "警察"
                 },
                 {
-                    "code": 2,
+                    "sign": 10,
                     "desc": "官员"
                 },
                 {
-                    "code": 3,
+                    "sign": 8,
                     "desc": "刺客"
                 },
                 {
-                    "code": 4,
+                    "sign": 9,
                     "desc": "医生"
                 },
                 {
-                    "code": 5,
+                    "sign": 7,
                     "desc": "牧师"
                 },
                 {
-                    "code": 6,
+                    "sign": 11,
                     "desc": "平民"
                 },
                 {
-                    "code": 6,
+                    "sign": 11,
                     "desc": "平民"
                 },
                 {
-                    "code": 6,
+                    "sign": 11,
                     "desc": "平民"
                 },
                 {
-                    "code": 6,
+                    "sign": 11,
                     "desc": "平民"
                 },
                 {
-                    "code": 6,
+                    "sign": 11,
                     "desc": "平民"
                 },
                 {
-                    "code": 8,
+                    "sign": -2,
                     "desc": "杀手"
                 },
                 {
-                    "code": 8,
+                    "sign": -2,
                     "desc": "杀手"
                 },
                 {
-                    "code": 9,
+                    "sign": 22,
                     "desc": "暴徒"
                 },
                 {
-                    "code": 10,
+                    "sign": 20,
                     "desc": "间谍"
                 },
                 {
-                    "code": 11,
+                    "sign": 19,
                     "desc": "小偷"
                 },
                 {
-                    "code": 12,
+                    "sign": 21,
                     "desc": "巫师"
                 },
                 {
-                    "code": 13,
+                    "sign": 23,
                     "desc": "帮众"
                 }
             ]
@@ -81,92 +81,142 @@
             "playerNum": 22,
             "identityNum": [
                 {
-                    "code": 1,
+                    "sign": -1,
                     "desc": "警察"
                 },
                 {
-                    "code": 1,
+                    "sign": -1,
                     "desc": "警察"
                 },
                 {
-                    "code": 1,
+                    "sign": -1,
                     "desc": "警察"
                 },
                 {
-                    "code": 2,
+                    "sign": 10,
                     "desc": "官员"
                 },
                 {
-                    "code": 3,
+                    "sign": 8,
                     "desc": "刺客"
                 },
                 {
-                    "code": 4,
+                    "sign": 9,
                     "desc": "医生"
                 },
                 {
-                    "code": 5,
+                    "sign": 7,
                     "desc": "牧师"
                 },
                 {
-                    "code": 6,
+                    "sign": 11,
                     "desc": "平民"
                 },
                 {
-                    "code": 6,
+                    "sign": 11,
                     "desc": "平民"
                 },
                 {
-                    "code": 6,
+                    "sign": 11,
                     "desc": "平民"
                 },
                 {
-                    "code": 6,
+                    "sign": 11,
                     "desc": "平民"
                 },
                 {
-                    "code": 6,
+                    "sign": 11,
                     "desc": "平民"
                 },
                 {
-                    "code": 6,
+                    "sign": 11,
                     "desc": "平民"
                 },
                 {
-                    "code": 8,
+                    "sign": -2,
                     "desc": "杀手"
                 },
                 {
-                    "code": 8,
+                    "sign": -2,
                     "desc": "杀手"
                 },
                 {
-                    "code": 8,
+                    "sign": -2,
                     "desc": "杀手"
                 },
                 {
-                    "code": 9,
+                    "sign": 22,
                     "desc": "暴徒"
                 },
                 {
-                    "code": 10,
+                    "sign": 20,
                     "desc": "间谍"
                 },
                 {
-                    "code": 11,
+                    "sign": 19,
                     "desc": "小偷"
                 },
                 {
-                    "code": 12,
+                    "sign": 21,
                     "desc": "巫师"
                 },
                 {
-                    "code": 13,
+                    "sign": 23,
                     "desc": "帮众"
                 }
             ]
         }
     ],
-    "policeSign":["手铐","放大镜","星型警徽","雨伞","问号","天窗"],
-    "killerSign":["刀","手枪","毒药瓶","套索","棍","扑克牌"]
+    "policeSign": [
+        {
+            "sign": 1,
+            "desc": "手铐"
+        },
+        {
+            "sign": 2,
+            "desc": "放大镜"
+        },
+        {
+            "sign": 3,
+            "desc": "星型警徽"
+        },
+        {
+            "sign": 4,
+            "desc": "雨伞"
+        },
+        {
+            "sign": 5,
+            "desc": "问号"
+        },
+        {
+            "sign": 6,
+            "desc": "天窗"
+        }
+    ],
+    "killerSign": [
+        {
+            "sign": 13,
+            "desc": "刀"
+        },
+        {
+            "sign": 14,
+            "desc": "手枪"
+        },
+        {
+            "sign": 15,
+            "desc": "毒药瓶"
+        },
+        {
+            "sign": 16,
+            "desc": "套索"
+        },
+        {
+            "sign": 17,
+            "desc": "棍"
+        },
+        {
+            "sign": 18,
+            "desc": "扑克牌"
+        }
+    ]
 }

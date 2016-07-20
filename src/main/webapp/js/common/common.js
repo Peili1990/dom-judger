@@ -583,7 +583,7 @@ function changeGameStatus(gameId,status){
 		}
 		switch (data.status) {
 		case 1:
-			myInfo("修改状态成功！",function(){
+			myInfo("版杀状态更新成功！",function(){
 				window.location = getRootPath() + "/admin-apply/";
 			});
 			return;

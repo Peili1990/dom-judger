@@ -17,7 +17,7 @@ public class UserApplyInfo {
 	/** 角色名称 */
 	private String characterName;
 	/** 身份代码 */
-	private Integer identity;
+	private Integer sign;
 	/** 身份名称 */
 	private String identityDesc;
 	/** 是否申请先驱  */
@@ -60,11 +60,11 @@ public class UserApplyInfo {
 	public void setCharacterId(Integer characterId) {
 		this.characterId = characterId;
 	}
-	public Integer getIdentity() {
-		return identity;
+	public Integer getSign() {
+		return sign;
 	}
-	public void setIdentity(Integer identity) {
-		this.identity = identity;
+	public void setSign(Integer sign) {
+		this.sign = sign;
 	}
 	public String getIdentityDesc() {
 		return identityDesc;

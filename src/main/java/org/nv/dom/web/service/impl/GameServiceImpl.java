@@ -10,11 +10,11 @@ import org.apache.log4j.Logger;
 import org.nv.dom.config.NVTermConstant;
 import org.nv.dom.config.PageParamType;
 import org.nv.dom.domain.game.ApplyingGame;
+import org.nv.dom.domain.player.PlayerInfo;
 import org.nv.dom.domain.user.UserApplyInfo;
 import org.nv.dom.dto.game.ApplyDTO;
 import org.nv.dom.dto.game.ChangeStatusDTO;
 import org.nv.dom.dto.game.PublishGameDTO;
-import org.nv.dom.dto.player.PlayerInfoDTO;
 import org.nv.dom.enums.GameStatus;
 import org.nv.dom.util.StringUtil;
 import org.nv.dom.util.json.JacksonJSONUtils;
@@ -129,16 +129,12 @@ public class GameServiceImpl implements GameService {
 	}
 
 	@Override
-	public Map<String, Object> submitList(List<PlayerInfoDTO> playerList) {
+	public Map<String, Object> submitList(List<PlayerInfo> submitList) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		try{
-			if(gameMapper.submitApplyListDao(playerList) == playerList.size()){
-				result.put(PageParamType.BUSINESS_STATUS, 1);
-				result.put(PageParamType.BUSINESS_MESSAGE, "提交全名单成功");
-			} else {
-				result.put(PageParamType.BUSINESS_STATUS, -3);
-				result.put(PageParamType.BUSINESS_MESSAGE, "提交全名单失败，请重试");
-			}	
+			gameMapper.submitApplyListDao(submitList); 
+			result.put(PageParamType.BUSINESS_STATUS, 1);
+			result.put(PageParamType.BUSINESS_MESSAGE, "提交全名单成功");	
 		}catch(Exception e){
 			logger.info(e.getMessage(),e);
 			result.put(PageParamType.BUSINESS_STATUS, -1);

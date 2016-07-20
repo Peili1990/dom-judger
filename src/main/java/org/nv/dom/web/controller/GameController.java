@@ -8,7 +8,6 @@ import javax.servlet.http.HttpSession;
 import org.nv.dom.domain.player.PlayerInfo;
 import org.nv.dom.dto.game.ChangeStatusDTO;
 import org.nv.dom.dto.game.PublishGameDTO;
-import org.nv.dom.dto.player.PlayerInfoDTO;
 import org.nv.dom.web.service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -39,7 +38,7 @@ public class GameController extends BaseController{
 	
 	@ResponseBody
 	@RequestMapping(value = "/submitList", method = RequestMethod.POST)
-	public Map<String, Object> submitList(@RequestBody List<PlayerInfoDTO> playerList, HttpSession session){
+	public Map<String, Object> submitList(@RequestBody List<PlayerInfo> playerList, HttpSession session){
 		return gameService.submitList(playerList);
 	}
 	

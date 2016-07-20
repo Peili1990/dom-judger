@@ -179,6 +179,10 @@ ul {
   font-size: 1.4rem;
 }
 
+.character-info{
+	width:200px;
+}
+
 /*
 * errorLog.html css
 */
@@ -243,4 +247,13 @@ gallery.html css
   border: none;
   width: 200px;
   margin: 0 auto;
+}
+
+#character-info input[type=text]{
+	border:none;
+	font-size:1.4rem;
+	padding-left:0;
+	padding-top:0;
+	padding-bottom:0;
+	
 }

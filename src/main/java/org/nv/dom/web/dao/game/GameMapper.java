@@ -3,11 +3,11 @@ package org.nv.dom.web.dao.game;
 import java.util.List;
 
 import org.nv.dom.domain.game.ApplyingGame;
+import org.nv.dom.domain.player.PlayerInfo;
 import org.nv.dom.domain.user.UserApplyInfo;
 import org.nv.dom.dto.game.ApplyDTO;
 import org.nv.dom.dto.game.ChangeStatusDTO;
 import org.nv.dom.dto.game.PublishGameDTO;
-import org.nv.dom.dto.player.PlayerInfoDTO;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -40,7 +40,7 @@ public interface GameMapper {
 	/**
 	 * <p>更新全名单</p>
 	 */
-	public int submitApplyListDao(List<PlayerInfoDTO> playerList);
+	public int submitApplyListDao(List<PlayerInfo> playerList);
 	
 	
 }

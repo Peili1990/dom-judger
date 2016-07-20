@@ -120,13 +120,14 @@
 	<update id="submitApplyListDao" parameterType="java.util.List">
 	
 		<foreach collection="list" item="item" index="index" open="" close="" separator=";">
-				update d_player_record dpr 
+				UPDATE 
+					d_player_record dpr 
 				<set>
-				  dpr.identity=${item.identity},
-				  dpr.identity_desc=${item.identityDesc},
-				  dpr.remark=${item.remark}
-				</set>
-				where dpr.player_id = ${item.playerId}
+				  	dpr.sign=#{item.sign},
+				  	dpr.identity_desc=#{item.identityDesc}
+				</set>  	
+				WHERE
+				  	dpr.player_id = #{item.playerId}
 		 </foreach>
 	
 	</update>
