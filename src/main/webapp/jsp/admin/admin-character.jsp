@@ -42,19 +42,37 @@
 					  <table class="am-table am-table-striped am-table-hover table-main">
 						<thead>
 						  <tr>
-							<th>角色</th>
+							<th width="90px">角色</th>
 							<th>实际身份</th>
 							<th>行动</th>
 							<th>特权</th>
 							<th>反馈</th>
 							<th>投票</th>
 							<th>备注</th>
-							<th class="table-set">操作</th>
+							<th class="table-set" width="130px">操作</th>
 						  </tr>
 						</thead>
 						<tbody id="character-info">
 							<tr>
-              					<td>安德安纳</td>
+              					<td>普拉马逊斯</td>
+             					<td><input type="text" value="警察（星型警徽）"></td>
+              					<td><input type="text" value="查验沃兹沃斯"></td>
+              					<td><input type="text" value="野蛮人野蛮人 昆西"></td>
+              					<td><input type="text" value="沃兹沃斯是杀手（棍）；昆西是平民/帮众"></td>
+              					<td><input type="text" value="马克唐"></td>            					
+              					<td><input type="text" value="衰竭"></td>
+              					<td>
+                				<div class="am-btn-toolbar">
+                  				  <div class="am-btn-group am-btn-group-xs">
+                    				<button class="am-btn am-btn-default am-btn-xs am-text-secondary" title="结算"><span class="am-icon-pencil-square-o"></span></button>
+                   					<button class="am-btn am-btn-default am-btn-xs" title="发送消息"><span class="am-icon-paper-plane-o"></span></button>
+                   					<button class="am-btn am-btn-default am-btn-xs am-text-success" title="查看提交时间"><span class="am-icon-clock-o"></span></button>
+                  				  </div>
+                				</div>
+              					</td>
+              				  </tr>
+              				  <tr>
+              					<td>普拉马逊斯</td>
              					<td><input type="text" value="警察（星型警徽）"></td>
               					<td><input type="text" value="查验沃兹沃斯"></td>
               					<td><input type="text" value="野蛮人野蛮人 昆西"></td>
