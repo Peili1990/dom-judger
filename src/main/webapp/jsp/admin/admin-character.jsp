@@ -58,7 +58,7 @@
 										</tr>
 									</thead>
 									<tbody id="character-info">
-										<c:forEach items="${ playerList }" var="player">
+										<c:forEach items="${ playerList }" var="player" varStatus="playerStatus">
 											<tr>
 												<td>${player.characterName}</td>
 												<td><input type="text" value="${player.identityDesc}"></td>
@@ -70,9 +70,9 @@
 												<td>
 													<div class="am-btn-toolbar">
 														<div class="am-btn-group am-btn-group-xs">
-															<button class="am-btn am-btn-default am-btn-xs am-text-secondary" title="结算"><span class="am-icon-pencil-square-o"></span></button>
-															<button class="am-btn am-btn-default am-btn-xs" title="发送消息"><span class="am-icon-paper-plane-o"></span></button>
-															<button class="am-btn am-btn-default am-btn-xs am-text-success" title="查看提交时间"><span class="am-icon-clock-o"></span></button>
+															<button type="button" class="am-btn am-btn-default am-btn-xs am-text-secondary" title="更改状态" onclick="showPlayerStatus()"><span class="am-icon-pencil-square-o"></span></button>
+															<button type="button" class="am-btn am-btn-default am-btn-xs" title="发送消息"><span class="am-icon-paper-plane-o"></span></button>
+															<button type="button" class="am-btn am-btn-default am-btn-xs am-text-success" title="查看提交时间"><span class="am-icon-clock-o"></span></button>
 														</div>
 													</div>
 												</td>
@@ -94,6 +94,16 @@
 
 	</div>
 
+	<div class="am-modal am-modal-no-btn" tabindex="-1" id="player-panel">
+		<div class="am-modal-dialog">
+			<div class="am-modal-hd">
+				Modal 标题 <a href="javascript: void(0)"
+					class="am-close am-close-spin" data-am-modal-close>&times;</a>
+			</div>
+			<div class="am-modal-bd">Modal 内容。</div>
+		</div>
+	</div>
+
 	<footer>
 		<hr>
 		<p class="am-padding-left">
@@ -101,6 +111,19 @@
 				href="http://www.mycodes.net/" target="_blank">源码之家</a>
 		</p>
 	</footer>
+
+<script type="text/javascript">
+var players=${playerListStr};
+
+function showPlayerStatus(){
+	$("#player-panel").modal();
+}
+
+	
+
+	
+
+</script>
 
 </body>
 </html>
