@@ -37,29 +37,35 @@ public class GameServiceImpl implements GameService {
 		ApplyingGame applyingGame;
 		try{
 			applyingGame = gameMapper.getApplyingGamesDao(userId);
-			applyingGame.setPlayCurNum(applyingGame.getPlayers().size());
-			applyingGame.setGameStatusDesc(GameStatus.getMessageByCode(applyingGame.getGameStatus()));
-			for(UserApplyInfo userApplyInfo:applyingGame.getPlayers()){
-				String isSp=userApplyInfo.getIsSp();
-				if(StringUtil.isNullOrEmpty(isSp)){
-					userApplyInfo.setCharacterName("未选择");
-				} else if(isSp.equals(NVTermConstant.IS_SP)){
-					userApplyInfo.setCharacterName("sp"+userApplyInfo.getCharacterName());
+			if(applyingGame == null){
+				result.put(PageParamType.BUSINESS_STATUS, -3);
+				result.put(PageParamType.BUSINESS_MESSAGE, "暂无版杀信息");
+			} else {
+				applyingGame.setPlayCurNum(applyingGame.getPlayers().size());
+				applyingGame.setGameStatusDesc(GameStatus.getMessageByCode(applyingGame.getGameStatus()));
+				for(UserApplyInfo userApplyInfo:applyingGame.getPlayers()){
+					String isSp=userApplyInfo.getIsSp();
+					if(StringUtil.isNullOrEmpty(isSp)){
+						userApplyInfo.setCharacterName("未选择");
+					} else if(isSp.equals(NVTermConstant.IS_SP)){
+						userApplyInfo.setCharacterName("sp"+userApplyInfo.getCharacterName());
+					}
+					String applyPioneer=userApplyInfo.getApplyPioneer();
+					if(StringUtil.isNullOrEmpty(applyPioneer)){
+						userApplyInfo.setApplyPioneer("未选择");
+					} else if(applyPioneer.equals(NVTermConstant.APPLY_PIONEER)){
+						userApplyInfo.setApplyPioneer("是");
+					} else {
+						userApplyInfo.setApplyPioneer("否");
+					}
 				}
-				String applyPioneer=userApplyInfo.getApplyPioneer();
-				if(StringUtil.isNullOrEmpty(applyPioneer)){
-					userApplyInfo.setApplyPioneer("未选择");
-				} else if(applyPioneer.equals(NVTermConstant.APPLY_PIONEER)){
-					userApplyInfo.setApplyPioneer("是");
-				} else {
-					userApplyInfo.setApplyPioneer("否");
-				}
+				result.put("applyingGame", applyingGame);
+				result.put("applyingGameStr", JacksonJSONUtils.beanToJSON(applyingGame));
+				result.put(PageParamType.BUSINESS_STATUS, 1);
+				result.put(PageParamType.BUSINESS_MESSAGE, "获取版杀信息成功");
 			}
-			result.put("applyingGame", applyingGame);
-			result.put("applyingGameStr", JacksonJSONUtils.beanToJSON(applyingGame));
-			result.put(PageParamType.BUSINESS_STATUS, 1);
-			result.put(PageParamType.BUSINESS_MESSAGE, "获取版杀信息成功");
 		} catch (Exception e){
+			logger.info(e.getMessage(),e);
 			result.put(PageParamType.BUSINESS_STATUS, -1);
 			result.put(PageParamType.BUSINESS_MESSAGE, "系统异常");
 		}	

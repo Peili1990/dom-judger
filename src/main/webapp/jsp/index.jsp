@@ -71,7 +71,7 @@
 			}
 			switch (data.status) {
 			case 1:
-				window.location = getRootPath() + "/admin-index";
+				window.location = getRootPath() + "/admin-apply";
 				return;
 			default:
 				$("#error-msg").css("display","block");

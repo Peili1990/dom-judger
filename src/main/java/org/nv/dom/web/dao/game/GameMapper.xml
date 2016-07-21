@@ -124,7 +124,10 @@
 					d_player_record dpr 
 				<set>
 				  	dpr.sign=#{item.sign},
-				  	dpr.identity_desc=#{item.identityDesc}
+				  	dpr.identity_desc=#{item.identityDesc},
+				  	dpr.camp=#{item.camp},
+				  	dpr.is_life=1,
+				  	dpr.is_mute=0
 				</set>  	
 				WHERE
 				  	dpr.player_id = #{item.playerId}

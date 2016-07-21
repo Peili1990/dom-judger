@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.nv.dom.web.dao.player.PlayerMapper">
+
+	<select id="getPlayerInfosDao" parameterType="long" resultType="PlayerInfo">
+	
+	<![CDATA[
+		SELECT 
+			dp.id AS playerId,
+			dc.name AS characterName,
+			dpr.is_sp AS isSp,
+			dpr.identity_desc AS identityDesc,
+			dpr.camp AS camp,
+			dpr.is_life AS isLife,
+			dpr.is_mute AS isMute,
+			dpr.action AS action,
+			dpr.privilege AS privilege,
+			dpr.feedback AS feedback,
+			dpr.vote AS vote,
+			dpr.submit_time AS submitTime,
+			dpr.remark AS remark 
+		FROM
+			d_game dg, d_player dp, d_player_record dpr, d_character dc
+		WHERE 
+			dg.status > 2 AND dg.status != 9 AND dp.game_id=#{gameId} AND dp.id = dpr.player_id AND dpr.character_id = dc.id
+	]]>
+	
+	</select>
+	
+	
+
+</mapper>

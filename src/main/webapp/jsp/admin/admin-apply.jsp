@@ -228,7 +228,8 @@ function extractIdentity(){
 					pioneer = pioneerCandidate[parseInt(pioneerCandidate.length*Math.random())]
 					players[pioneer].sign = 12;
 					players[pioneer].identityDesc = "先驱";
-					$("#apply-info tr:eq("+pioneer+") td:eq(6)").text("先驱");
+					players[pioneer].camp = 1;
+					$("#apply-info tr:eq("+pioneer+") td:eq(5)").text("先驱");
 				}
 				array.sort(randomsort);
 				flag=true;
@@ -240,11 +241,13 @@ function extractIdentity(){
 					if(flag){
 						player.sign = array[index].sign;
 						player.identityDesc = array[index].desc;
-						$("#apply-info tr:eq("+index+") td:eq(6)").text(array[index].desc);
+						player.camp = array[index].sign < 12 ? 1 : 2;
+						$("#apply-info tr:eq("+index+") td:eq(5)").text(array[index].desc);
 					} else {
 						player.sign=array[index-1].sign;
 						player.identityDesc = array[index-1].desc;
-						$("#apply-info tr:eq("+index+") td:eq(6)").text(array[index-1].desc);
+						player.camp = array[index-1].sign < 12 ? 1 : 2;
+						$("#apply-info tr:eq("+index+") td:eq(5)").text(array[index-1].desc);
 					}	
 				})
 			}
@@ -271,7 +274,7 @@ function submitList(gameId){
 				player.identityDesc += "（"+policeSign[policeCount].desc+"）";
 				policeCount++;
 				break;
-			case -2:
+			case 99:
 				player.sign=killerSign[killerCount].sign;
 				player.identityDesc += "（"+killerSign[killerCount].desc+"）";
 				killerCount++;
