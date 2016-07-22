@@ -267,7 +267,8 @@ function submitList(gameId){
 		var policeCount = 0;
 		var killerCount = 0;
 		$.each(players,function(index,player){
-			player.remark="";
+			player.isLife=1;
+			player.isMute=0;
 			switch(player.sign){
 			case -1:
 				player.sign=policeSign[policeCount].sign;
@@ -339,7 +340,7 @@ function submitApply(userId){
 		switch (data.status) {
 		case 1:
 			myInfo("报名帖发布成功！",function(){
-				window.location = getRootPath() + "/admin-apply/";
+				window.location = getRootPath() + "/admin-apply";
 			});
 			return;
 		default:

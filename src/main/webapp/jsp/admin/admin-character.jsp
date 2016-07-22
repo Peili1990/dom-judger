@@ -43,6 +43,10 @@
 									<option value="B">第一夜</option>
 								</select>
 							</div>
+							<div class="am-form-group operation">
+								<input type="button" class="am-btn am-btn-primary" value="保存表格" onclick="saveForm()">
+								<input type="button" class="am-btn am-btn-danger" value="新增表格" onclick="">
+							</div>
 							<form class="am-form">
 								<table class="am-table am-table-striped am-table-hover table-main">
 									<thead>
@@ -70,7 +74,7 @@
 												<td>
 													<div class="am-btn-toolbar">
 														<div class="am-btn-group am-btn-group-xs">
-															<button type="button" class="am-btn am-btn-default am-btn-xs am-text-secondary" title="更改状态" onclick="showPlayerStatus()"><span class="am-icon-pencil-square-o"></span></button>
+															<button type="button" class="am-btn am-btn-default am-btn-xs am-text-secondary" title="更改状态" onclick="showPlayerStatus(${playerStatus.index})"><span class="am-icon-pencil-square-o"></span></button>
 															<button type="button" class="am-btn am-btn-default am-btn-xs" title="发送消息"><span class="am-icon-paper-plane-o"></span></button>
 															<button type="button" class="am-btn am-btn-default am-btn-xs am-text-success" title="查看提交时间"><span class="am-icon-clock-o"></span></button>
 														</div>
@@ -96,11 +100,49 @@
 
 	<div class="am-modal am-modal-no-btn" tabindex="-1" id="player-panel">
 		<div class="am-modal-dialog">
-			<div class="am-modal-hd">
-				Modal 标题 <a href="javascript: void(0)"
-					class="am-close am-close-spin" data-am-modal-close>&times;</a>
-			</div>
-			<div class="am-modal-bd">Modal 内容。</div>
+			<form class="am-form">
+			 <fieldset>
+			 	<legend>角色状态变更</legend>
+			 		<p>角色：sp莫利</p>
+					<div class="am-form-group">
+						<label>存活状态</label>
+						<br> 
+						<label class="am-radio-inline">
+       						<input type="radio" name="is-life" value="1"> 存活
+      					</label>
+      					<label class="am-radio-inline">
+        					<input type="radio" name="is-life" value="0"> 死亡
+      					</label>
+					</div>
+					<div class="am-form-group">
+						<label>禁言状态</label>
+						<br> 
+						<label class="am-radio-inline">
+       						<input type="radio" name="is-mute" value="1"> 被禁言
+      					</label>
+      					<label class="am-radio-inline">
+        					<input type="radio" name="is-mute" value="0"> 未被禁言
+      					</label>
+					</div>
+					<div class="am-form-group">
+						<label>阵营</label>
+						<br> 
+						<label class="am-radio-inline">
+       						<input type="radio" name="camp" value="1"> 好人方
+      					</label>
+      					<label class="am-radio-inline">
+        					<input type="radio" name="camp" value="2"> 杀手方
+      					</label>
+      					<label class="am-radio-inline">
+        					<input type="radio" name="camp" value="3"> 契约方
+      					</label>
+					</div>
+					<div class="am-form-group" style="text-align:center">
+						<input type="button" class="am-btn am-btn-primary" value="确定" name="confirm">
+						<input type="button" class="am-btn am-btn-default" value="取消" onclick="closePlayerStatus()">
+					</div>
+				</fieldset>
+			</form>
 		</div>
 	</div>
 
@@ -114,14 +156,58 @@
 
 <script type="text/javascript">
 var players=${playerListStr};
+var panel = $("#player-panel")
 
-function showPlayerStatus(){
-	$("#player-panel").modal();
+function showPlayerStatus(index){
+	panel.find("p").text(players[index].characterName);
+	$("input[name='is-life'][value="+players[index].isLife+"]").attr("checked",true);
+	$("input[name='is-mute'][value="+players[index].isMute+"]").attr("checked",true);
+	$("input[name='camp'][value="+players[index].camp+"]").attr("checked",true);
+	$("input[name='confirm']").on("click",function(){
+		changePlayerStatus(index);
+	})
+	panel.modal();
 }
 
-	
+function changePlayerStatus(index){
+	players[index].isLife=$("input[name='is-life'][checked]").val(); 
+	players[index].isMute=$("input[name='is-mute'][checked]").val();
+	players[index].camp=$("input[name='camp'][checked]").val();
+	panel.modal("close");
+}
 
-	
+function closePlayerStatus(){
+	panel.modal("close");
+}
+
+function saveForm(){
+	$.each($("#character-info tr"),function(index,tr){
+		inputs = $(tr).find("input");
+		players[index].identityDesc = inputs.eq(0).val();
+		players[index].action = inputs.eq(1).val();
+		players[index].privilege = inputs.eq(2).val();
+		players[index].feedback = inputs.eq(3).val();
+		players[index].vote = inputs.eq(4).val();
+		players[index].remark = inputs.eq(5).val();
+	})
+	var url = getRootPath() + "/game/submitList";
+		var common = new Common();
+		common.callAction(JSON.stringify(players),url,function(data){
+			if (!data) {
+				return;
+			}
+			switch (data.status) {
+			case 1:
+				myInfo("保存表格成功！",function(){
+					window.location = getRootPath() + "/admin-character";
+				})
+				return;
+			default:
+				myAlert(data.message);
+				return;
+			}
+		},"application/json;charset=utf-8")
+}
 
 </script>
 

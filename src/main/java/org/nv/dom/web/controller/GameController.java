@@ -40,6 +40,6 @@ public class GameController extends BaseController{
 	@RequestMapping(value = "/submitList", method = RequestMethod.POST)
 	public Map<String, Object> submitList(@RequestBody List<PlayerInfo> playerList, HttpSession session){
 		return gameService.submitList(playerList);
-	}
+	}	
 	
 }

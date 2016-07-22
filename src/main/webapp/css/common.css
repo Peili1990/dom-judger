@@ -19,3 +19,26 @@
 	color: red;
 	margin-bottom: 10px;
 }
+
+#player-panel .am-modal-dialog{
+	height:400px;
+	width:300px;
+}
+
+#player-panel legend{
+	text-align:center;
+}
+
+#player-panel fieldset{
+	margin-bottom:20px;
+}
+
+#player-panel .am-form{
+	padding:10px;
+	text-align:left;
+}
+
+.operation .am-btn{
+	width:100px;
+	
+}
