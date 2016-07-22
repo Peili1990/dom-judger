@@ -126,8 +126,23 @@
 				  	dpr.sign=#{item.sign},
 				  	dpr.identity_desc=#{item.identityDesc},
 				  	dpr.camp=#{item.camp},
-				  	dpr.is_life=1,
-				  	dpr.is_mute=0
+				  	dpr.is_life=#{item.isLife},
+				  	dpr.is_mute=#{item.isMute}
+				  	<if test="item.action != null">
+				  	,dpr.action=#{item.action}
+				  	</if>
+				  	<if test="item.privilege != null">
+				  	,dpr.privilege=#{item.privilege}
+				  	</if>
+				  	<if test="item.feedback != null">
+				  	,dpr.feedback=#{item.feedback}
+				  	</if>
+				  	<if test="item.vote != null">
+				  	,dpr.feedback=#{item.feedback}
+				  	</if>
+				  	<if test="item.remark != null">
+				  	,dpr.feedback=#{item.remark}
+				  	</if>
 				</set>  	
 				WHERE
 				  	dpr.player_id = #{item.playerId}
