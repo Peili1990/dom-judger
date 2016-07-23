@@ -196,6 +196,10 @@
 </footer>
 
 <script type="text/javascript">
+$(function(){
+	$("#collapse-nav li:eq(0) .am-icon-star").removeClass("invisible");
+})
+
 var gamedata=${applyingGameStr};
 
 function extractIdentity(){

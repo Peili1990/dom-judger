@@ -158,6 +158,10 @@
 var players=${playerListStr};
 var panel = $("#player-panel")
 
+$(function(){
+	$("#collapse-nav li:eq(1) .am-icon-star").removeClass("invisible");
+})
+
 function showPlayerStatus(index){
 	panel.find("p").text(players[index].characterName);
 	$("input[name='is-life'][value="+players[index].isLife+"]").attr("checked",true);
@@ -207,6 +211,10 @@ function saveForm(){
 				return;
 			}
 		},"application/json;charset=utf-8")
+}
+
+function newForm(){
+	
 }
 
 </script>
