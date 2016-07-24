@@ -38,8 +38,8 @@
     <div class="am-modal-bd">
     </div>
     <div class="am-modal-footer">
-      <span class="am-modal-btn" id="prompt-confirm">提交</span>
-      <span class="am-modal-btn">取消</span>      
+      <span class="am-modal-btn" data-am-modal-confirm>提交</span>
+      <span class="am-modal-btn" data-am-modal-cancel>取消</span>      
     </div>
   </div>
 </div>

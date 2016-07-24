@@ -572,8 +572,14 @@ function myInfo(text,callback){
 
 function myPrompt(text,callback){
 	$("#my-prompt .am-modal-bd").html(text).append("<input type='text' class='am-modal-prompt-input' name='header'>")
-	$("#my-prompt").modal('open');
-	$("#prompt-confirm").on('click',createForm());	
+	$('#my-prompt').modal({
+	      relatedTarget: this,
+	      onConfirm: function(e){
+	    	  eval(callback);
+	      },
+	      onCancel: function(e) {
+	      }
+	});
 }
 
 function changeGameStatus(gameId,status){
