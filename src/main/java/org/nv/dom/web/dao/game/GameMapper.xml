@@ -149,5 +149,48 @@
 		 </foreach>
 	
 	</update>
+	
+	<select id="getFormListDao" parameterType="long" resultType="GameForm">
+	
+		SELECT
+			df.id AS formId,
+			df.header AS header
+		FROM
+			d_form df
+		WHERE
+			df.game_id = #{gameId}
+		ORDER BY
+			df.id
+			
+	</select>
+	
+	<insert id="createOrUpdateFormDao" parameterType="GameForm">
+	
+		<if test="formId>0">
+			UPDATE 
+				d_form df
+			SET
+				df.header=#{header},
+				df.content=#{content},
+				df.update_time=NOW()
+			WHERE
+				df.id=#{formId}
+		</if>
+		<if test="formId==0">
+			INSERT INTO d_form (
+				game_id,
+				header,
+				content,
+				create_time
+			)
+			VALUES(
+				#{gameId},
+				#{header},
+				#{content},
+				NOW()
+			)
+		</if>
+	
+	</insert>
 
 </mapper>

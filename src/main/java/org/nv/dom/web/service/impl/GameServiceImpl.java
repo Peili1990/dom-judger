@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
 import org.nv.dom.config.NVTermConstant;
 import org.nv.dom.config.PageParamType;
 import org.nv.dom.domain.game.ApplyingGame;
+import org.nv.dom.domain.game.GameForm;
 import org.nv.dom.domain.player.PlayerInfo;
 import org.nv.dom.domain.user.UserApplyInfo;
 import org.nv.dom.dto.game.ApplyDTO;
@@ -120,6 +121,12 @@ public class GameServiceImpl implements GameService {
 		Map<String, Object> result = new HashMap<String, Object>();
 		try{
 			if(gameMapper.changeStatusDao(changeStatusDTO) == 1){
+				if(changeStatusDTO.getStatus() == GameStatus.READY.getCode()){
+					GameForm form = new GameForm();
+					form.setGameId(changeStatusDTO.getGameId());
+					form.setHeader("游戏开始前");
+					gameMapper.createOrUpdateFormDao(form);
+				}
 				result.put(PageParamType.BUSINESS_STATUS, 1);
 				result.put(PageParamType.BUSINESS_MESSAGE, "修改状态成功");
 			} else {
@@ -148,5 +155,41 @@ public class GameServiceImpl implements GameService {
 		}
 		return result;
 	}
+
+	@Override
+	public Map<String, Object> getFormList(long gameId) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		try{
+			List<GameForm> formList = gameMapper.getFormListDao(gameId);
+			result.put("formList", formList);
+			result.put(PageParamType.BUSINESS_STATUS, 1);
+			result.put(PageParamType.BUSINESS_MESSAGE, "获取表格列表成功");
+		}catch(Exception e){
+			logger.info(e.getMessage(),e);
+			result.put(PageParamType.BUSINESS_STATUS, -1);
+			result.put(PageParamType.BUSINESS_MESSAGE, "系统异常");
+		}
+		return result;
+	}
+
+	@Override
+	public Map<String, Object> createOrUpdateForm(GameForm form) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		try{
+			if(gameMapper.createOrUpdateFormDao(form)==1){
+				result.put(PageParamType.BUSINESS_STATUS, 1);
+				result.put(PageParamType.BUSINESS_MESSAGE, "创建或更新表格成功");
+			} else {
+				result.put(PageParamType.BUSINESS_STATUS, -3);
+				result.put(PageParamType.BUSINESS_MESSAGE, "创建或更新表格失败");
+			}
+		}catch(Exception e){
+			logger.info(e.getMessage(),e);
+			result.put(PageParamType.BUSINESS_STATUS, -1);
+			result.put(PageParamType.BUSINESS_MESSAGE, "系统异常");
+		}
+		return result;
+	}
+
 
 }

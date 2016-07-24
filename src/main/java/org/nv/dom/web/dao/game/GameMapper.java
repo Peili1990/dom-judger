@@ -3,6 +3,7 @@ package org.nv.dom.web.dao.game;
 import java.util.List;
 
 import org.nv.dom.domain.game.ApplyingGame;
+import org.nv.dom.domain.game.GameForm;
 import org.nv.dom.domain.player.PlayerInfo;
 import org.nv.dom.domain.user.UserApplyInfo;
 import org.nv.dom.dto.game.ApplyDTO;
@@ -41,6 +42,14 @@ public interface GameMapper {
 	 * <p>更新全名单</p>
 	 */
 	public int submitApplyListDao(List<PlayerInfo> playerList);
+	/**
+	 * <p>获取全部表格</p>
+	 */
+	public List<GameForm> getFormListDao(long gameId);
+	/**
+	 * <p>创建或更新表格</p>
+	 */
+	public int createOrUpdateFormDao(GameForm form);
 	
 	
 }

@@ -31,3 +31,15 @@
     </div>
   </div>
 </div>
+
+<div class="am-modal am-modal-prompt" tabindex="-1" id="my-prompt">
+  <div class="am-modal-dialog">
+    <div class="am-modal-hd">维多利亚的噩梦</div>
+    <div class="am-modal-bd">
+    </div>
+    <div class="am-modal-footer">
+      <span class="am-modal-btn" id="prompt-confirm">提交</span>
+      <span class="am-modal-btn">取消</span>      
+    </div>
+  </div>
+</div>

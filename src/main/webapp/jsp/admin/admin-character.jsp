@@ -39,13 +39,14 @@
 						<c:when test="${playerList != null && !playerList.isEmpty()}">
 							<div class="character-info">
 								<select data-am-selected>
-									<option value="A">游戏开始前</option>
-									<option value="B">第一夜</option>
+									<c:forEach items="${ formList }" var="form">
+										<option value="${ form.formId }">${ form.header }</option>
+									</c:forEach>
 								</select>
 							</div>
 							<div class="am-form-group operation">
 								<input type="button" class="am-btn am-btn-primary" value="保存表格" onclick="saveForm()">
-								<input type="button" class="am-btn am-btn-danger" value="新增表格" onclick="">
+								<input type="button" class="am-btn am-btn-danger" value="新增表格" onclick="myPrompt('请输入新表格标题','')">
 							</div>
 							<form class="am-form">
 								<table class="am-table am-table-striped am-table-hover table-main">
@@ -87,6 +88,7 @@
 							</form>
 						</c:when>
 						<c:otherwise>
+							没有正在进行中的版杀
 						</c:otherwise>
 					</c:choose>
 				</div>
@@ -213,8 +215,28 @@ function saveForm(){
 		},"application/json;charset=utf-8")
 }
 
-function newForm(){
-	
+function createForm(){
+	var common = new Common();
+	var url = getRootPath() + "/game/createOrUpdateForm";
+	var options = {
+		header : $("input[name='header']").val(),
+		content : $("#character-info").html()
+	};
+	common.callAction(options,url,function(data){
+		if (!data) {
+			return;
+		}
+		switch (data.status) {
+		case 1:
+			myInfo("创建表格成功！",function(){
+				window.location = getRootPath() + "/admin-character";
+			})
+			return;
+		default:
+			myAlert(data.message);
+			return;
+		}
+	})	
 }
 
 </script>

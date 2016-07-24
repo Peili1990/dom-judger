@@ -61,6 +61,7 @@ public class IndexController extends BaseController {
 		long gameId = (long) session.getAttribute(PageParamType.GAMEID_IN_SESSION);
 		ModelAndView mav = new ModelAndView("admin/admin-character");
 		mav.addAllObjects(playerService.getPlayerInfo(gameId));
+		mav.addAllObjects(gameService.getFormList(gameId));
 		mav.addAllObjects(basicService.getSessionUserService(session));
 		return mav;
 	}

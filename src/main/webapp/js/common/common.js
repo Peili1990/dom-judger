@@ -570,6 +570,12 @@ function myInfo(text,callback){
 	$('#my-alert .am-modal-btn').on('click',callback);	
 }
 
+function myPrompt(text,callback){
+	$("#my-prompt .am-modal-bd").html(text).append("<input type='text' class='am-modal-prompt-input' name='header'>")
+	$("#my-prompt").modal('open');
+	$("#prompt-confirm").on('click',createForm());	
+}
+
 function changeGameStatus(gameId,status){
 	var url = getRootPath() + "/game/changeStatus";
 	var options = {

@@ -5,6 +5,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.nv.dom.config.PageParamType;
+import org.nv.dom.domain.game.GameForm;
 import org.nv.dom.domain.player.PlayerInfo;
 import org.nv.dom.dto.game.ChangeStatusDTO;
 import org.nv.dom.dto.game.PublishGameDTO;
@@ -40,6 +42,13 @@ public class GameController extends BaseController{
 	@RequestMapping(value = "/submitList", method = RequestMethod.POST)
 	public Map<String, Object> submitList(@RequestBody List<PlayerInfo> playerList, HttpSession session){
 		return gameService.submitList(playerList);
-	}	
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/createOrUpdateForm", method = RequestMethod.POST)
+	public Map<String, Object> createOrUpdateForm(@ModelAttribute("gameForm") GameForm gameForm, HttpSession session){
+		gameForm.setGameId((long) session.getAttribute(PageParamType.GAMEID_IN_SESSION));
+		return gameService.createOrUpdateForm(gameForm);
+	}
 	
 }
