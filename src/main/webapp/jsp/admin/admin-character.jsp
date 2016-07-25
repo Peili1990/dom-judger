@@ -38,7 +38,7 @@
 					<c:choose>
 						<c:when test="${playerList != null && !playerList.isEmpty()}">
 							<div class="character-info">
-								<select data-am-selected>
+								<select data-am-selected id="form-list">
 									<c:forEach items="${ formList }" var="form">
 										<option value="${ form.formId }">${ form.header }</option>
 									</c:forEach>
@@ -46,7 +46,7 @@
 							</div>
 							<div class="am-form-group operation">
 								<input type="button" class="am-btn am-btn-primary" value="保存表格" onclick="saveForm()">
-								<input type="button" class="am-btn am-btn-danger" value="新增表格" onclick="myPrompt('请输入新表格标题','createForm()')">
+								<input type="button" class="am-btn am-btn-danger" value="新增表格" onclick="myPrompt('注意：请先保存表格再新增表格，否则可能导致数据丢失！<br/>请输入新表格标题','updateForm(true)')">
 							</div>
 							<form class="am-form">
 								<table class="am-table am-table-striped am-table-hover table-main">
@@ -66,7 +66,7 @@
 										<c:forEach items="${ playerList }" var="player" varStatus="playerStatus">
 											<tr>
 												<td>${player.characterName}</td>
-												<td><input type="text" value="${player.identityDesc}"></td>
+												<td><input type="text" value="${player.identityDesc}  "></td>
 												<td><input type="text" value="${player.action}"></td>
 												<td><input type="text" value="${player.privilege}"></td>
 												<td><input type="text" value="${player.feedback}"></td>
@@ -157,11 +157,12 @@
 	</footer>
 
 <script type="text/javascript">
-var players=${playerListStr};
+var players=${playerListStr}
 var panel = $("#player-panel")
 
 $(function(){
 	$("#collapse-nav li:eq(1) .am-icon-star").removeClass("invisible");
+	addstatusStyle(players);
 })
 
 function showPlayerStatus(index){
@@ -176,9 +177,31 @@ function showPlayerStatus(index){
 }
 
 function changePlayerStatus(index){
-	players[index].isLife=$("input[name='is-life'][checked]").val(); 
-	players[index].isMute=$("input[name='is-mute'][checked]").val();
-	players[index].camp=$("input[name='camp'][checked]").val();
+	player = $("#character-info tr:eq("+index+") td:eq(0)")
+	players[index].isLife=$("input[name='is-life']:checked").val();
+	if(players[index].isLife == "0"){
+		player.addClass("dead");
+	} else {
+		player.removeClass("dead");
+	}
+	players[index].isMute=$("input[name='is-mute']:checked").val();
+	if(players[index].isMute == "1"){
+		player.addClass("silent");
+	} else {
+		player.removeClass("silent");
+	}
+	players[index].camp=$("input[name='camp']:checked").val();
+	switch(players[index].camp){
+	case "1":
+		player.css({"color":"blue"});
+		break;
+	case "2":
+		player.css({"color":"red"});
+		break;
+	case "3":
+		player.css({"color":"purple"});
+		break;
+	}	
 	panel.modal("close");
 }
 
@@ -197,38 +220,14 @@ function saveForm(){
 		players[index].remark = inputs.eq(5).val();
 	})
 	var url = getRootPath() + "/game/submitList";
-		var common = new Common();
-		common.callAction(JSON.stringify(players),url,function(data){
-			if (!data) {
-				return;
-			}
-			switch (data.status) {
-			case 1:
-				myInfo("保存表格成功！",function(){
-					window.location = getRootPath() + "/admin-character";
-				})
-				return;
-			default:
-				myAlert(data.message);
-				return;
-			}
-		},"application/json;charset=utf-8")
-}
-
-function createForm(){
 	var common = new Common();
-	var url = getRootPath() + "/game/createOrUpdateForm";
-	var options = {
-		header : $("input[name='header']").val(),
-		content : $("#character-info").html()
-	};
-	common.callAction(options,url,function(data){
+	common.callAction(JSON.stringify(players),url,function(data){
 		if (!data) {
 			return;
 		}
 		switch (data.status) {
 		case 1:
-			myInfo("创建表格成功！",function(){
+			myInfo("保存表格成功！",function(){
 				window.location = getRootPath() + "/admin-character";
 			})
 			return;
@@ -236,7 +235,104 @@ function createForm(){
 			myAlert(data.message);
 			return;
 		}
-	})	
+	},"application/json;charset=utf-8")
+}
+
+function updateForm(){
+	var common = new Common();
+	var url = getRootPath() + "/game/createOrUpdateForm";
+	var options = {
+		formId : $('#form-list option:selected').val(),
+		content : JSON.stringify(players)
+	};
+	common.callAction(options,url,function(data){
+		if (!data) {
+			return;
+		}
+		switch (data.status) {
+		case 1:
+			options = {
+				header : $("input[name='header']").val()
+			};
+			common.callAction(options,url,function(data1){
+				if (!data1) {
+					return;
+				}
+				switch (data1.status) {
+				case 1:
+					myInfo("创建表格成功！",function(){
+						window.location = getRootPath() + "/admin-character";
+					})
+				default:
+					myAlert(data1.message);
+					return;
+				}
+			})
+			return;
+		default:
+			myAlert(data.message);
+			return;
+		}
+	})		
+}
+
+$("#form-list").change(function(){
+	if($(this).get(0).selectedIndex==0){
+		window.location.reload();
+	} else {
+		var common = new Common();
+		var url = getRootPath() + "/game/getFormContent";
+		var options = {
+			formId : $('#form-list option:selected').val(),
+		};
+		common.callAction(options,url,function(data){
+			if (!data) {
+				return;
+			}
+			switch (data.status) {
+			case 1:
+				players = JSON.parse(data.content);
+				$.each($("#character-info tr"),function(index,tr){
+					inputs=$(tr).find("input");
+					inputs.eq(0).val(players[index].identityDesc);
+					inputs.eq(1).val(players[index].action); 
+					inputs.eq(2).val(players[index].privilege);
+					inputs.eq(3).val(players[index].feedback);
+					inputs.eq(4).val(players[index].vote);
+					inputs.eq(5).val(players[index].remark);
+				})
+				addstatusStyle(players);
+				$(".operation .am-btn").attr("disabled","disabled");
+				return;
+			default:
+				myAlert(data1.message);
+				return;
+			}
+		})
+	}
+})
+
+function addstatusStyle(players){
+	$.each($("#character-info tr"),function(index,tr){
+		player = $(tr).find("td").eq(0);
+		if(players[index].isLife == "0"){
+			player.addClass("dead");
+		}
+		if(players[index].isMute == "1"){
+			player.addClass("silent");
+		}
+		switch(players[index].camp){
+		case 1:
+			player.css({"color":"blue"});
+			break;
+		case 2:
+			player.css({"color":"red"});
+			break;
+		case 3:
+			player.css({"color":"purple"});
+			break;
+		}	
+	})
 }
 
 </script>

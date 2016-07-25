@@ -66,6 +66,13 @@ public class IndexController extends BaseController {
 		return mav;
 	}
 	
+	@RequestMapping(value = "/admin-announcement", method = RequestMethod.GET)
+	public ModelAndView adminAnnouncementView(HttpSession session) {
+		ModelAndView mav = new ModelAndView("admin/admin-announcement");
+		mav.addAllObjects(basicService.getSessionUserService(session));
+		return mav;
+	}
+	
 	
 
 }

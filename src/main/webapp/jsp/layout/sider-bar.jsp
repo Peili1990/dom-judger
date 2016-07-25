@@ -8,7 +8,7 @@
         <ul class="am-list am-collapse admin-sidebar-sub am-in" id="collapse-nav">
           <li><a href="${ baseUrl }admin-apply" class="am-cf"><span class="am-icon-check"></span> 报名管理<span class="am-icon-star am-fr am-margin-right admin-icon-yellow invisible"></span></a></li>
           <li><a href="${ baseUrl }admin-character"><span class="am-icon-puzzle-piece"></span> 角色状态<span class="am-icon-star am-fr am-margin-right admin-icon-yellow invisible"></span></a></li>
-          <li><a href="admin-gallery.html"><span class="am-icon-th"></span> 发布公告<span class="am-icon-star am-fr am-margin-right admin-icon-yellow invisible"></span></a></li>
+          <li><a href="${ baseUrl }admin-announcement"><span class="am-icon-th"></span> 发布公告<span class="am-icon-star am-fr am-margin-right admin-icon-yellow invisible"></span></a></li>
           <li><a href="admin-log.html"><span class="am-icon-calendar"></span> 发送反馈<span class="am-icon-star am-fr am-margin-right admin-icon-yellow invisible"></span></a></li>
           <li><a href="admin-404.html"><span class="am-icon-bug"></span> 复盘总结<span class="am-icon-star am-fr am-margin-right admin-icon-yellow invisible"></span></a></li>
         </ul>

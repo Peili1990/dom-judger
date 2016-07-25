@@ -46,3 +46,11 @@
 .invisible{
 	display:none;
 }
+
+.dead{
+	text-decoration:line-through
+}
+
+.silent{
+	font-style: italic
+}

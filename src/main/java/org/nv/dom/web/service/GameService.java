@@ -22,6 +22,8 @@ public interface GameService {
 	public Map<String, Object> createOrUpdateForm(GameForm form);
 	
 	public Map<String, Object> getFormList(long gameId);
+	
+	public Map<String, Object> getFormContent(long formId);
 
 
 }

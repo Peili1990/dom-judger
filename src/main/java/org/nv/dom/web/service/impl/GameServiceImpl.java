@@ -11,6 +11,7 @@ import org.nv.dom.config.NVTermConstant;
 import org.nv.dom.config.PageParamType;
 import org.nv.dom.domain.game.ApplyingGame;
 import org.nv.dom.domain.game.GameForm;
+import org.nv.dom.domain.newspaper.Newspaper;
 import org.nv.dom.domain.player.PlayerInfo;
 import org.nv.dom.domain.user.UserApplyInfo;
 import org.nv.dom.dto.game.ApplyDTO;
@@ -20,6 +21,7 @@ import org.nv.dom.enums.GameStatus;
 import org.nv.dom.util.StringUtil;
 import org.nv.dom.util.json.JacksonJSONUtils;
 import org.nv.dom.web.dao.game.GameMapper;
+import org.nv.dom.web.dao.newspaper.NewspaperMapper;
 import org.nv.dom.web.service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,6 +33,9 @@ public class GameServiceImpl implements GameService {
 	
 	@Autowired
 	GameMapper gameMapper;
+	
+	@Autowired
+	NewspaperMapper newspaperMapper;
 
 	@Override
 	public Map<String, Object> getApplyingGames(long userId) {
@@ -102,6 +107,8 @@ public class GameServiceImpl implements GameService {
 			if(gameMapper.applyForGameDao(applyDTO) == 1){
 				result.put(PageParamType.BUSINESS_STATUS, 1);
 				result.put(PageParamType.BUSINESS_MESSAGE, "发布成功");
+				Newspaper newspaper = new Newspaper(publishGameDTO.getGameId());
+				newspaperMapper.createOrUpdateNewspaperDao(newspaper);
 				return result;
 			} else {
 				result.put(PageParamType.BUSINESS_STATUS, 1);
@@ -175,8 +182,15 @@ public class GameServiceImpl implements GameService {
 	@Override
 	public Map<String, Object> createOrUpdateForm(GameForm form) {
 		Map<String, Object> result = new HashMap<String, Object>();
+		if(form.getGameId()<1L){
+			result.put(PageParamType.BUSINESS_STATUS, -2);
+			result.put(PageParamType.BUSINESS_MESSAGE, "参数异常");
+		}
 		try{
 			if(gameMapper.createOrUpdateFormDao(form)==1){
+				if(form.getFormId()<1L){
+					gameMapper.clearFormDao(form.getGameId());
+				}
 				result.put(PageParamType.BUSINESS_STATUS, 1);
 				result.put(PageParamType.BUSINESS_MESSAGE, "创建或更新表格成功");
 			} else {
@@ -190,6 +204,23 @@ public class GameServiceImpl implements GameService {
 		}
 		return result;
 	}
+
+	@Override
+	public Map<String, Object> getFormContent(long formId) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		try{
+			String content = gameMapper.getFormContentDao(formId);
+			result.put("content", content);
+			result.put(PageParamType.BUSINESS_STATUS, 1);
+			result.put(PageParamType.BUSINESS_MESSAGE, "获取表格内容成功");
+		}catch(Exception e){
+			logger.info(e.getMessage(),e);
+			result.put(PageParamType.BUSINESS_STATUS, -1);
+			result.put(PageParamType.BUSINESS_MESSAGE, "系统异常");
+		}
+		return result;
+	}
+
 
 
 }

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
@@ -51,4 +52,9 @@ public class GameController extends BaseController{
 		return gameService.createOrUpdateForm(gameForm);
 	}
 	
+	@ResponseBody
+	@RequestMapping(value = "/getFormContent", method = RequestMethod.POST)
+	public Map<String, Object> getFormContent(@RequestParam("formId") long formId, HttpSession session){
+		return gameService.getFormContent(formId);
+	}
 }

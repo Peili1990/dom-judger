@@ -52,6 +52,10 @@
                   		onclick="extractIdentity()">抽取身份</button>
                        <button type="button" class="am-btn am-btn-danger am-btn-xs" onclick="submitList(${applyingGame.id})">提交全名单</button></p>
                   	</c:if>
+                  	<c:if test="${ applyingGame.gameStatus == 3 }">
+                  	<p><button type="button" class="am-btn am-btn-primary am-btn-xs" 
+                  		onclick="changeGameStatus(${applyingGame.id},4)">开始游戏</button></p>
+                  	</c:if>
                   </c:when>
                   <c:otherwise>
                   	目前没有正在报名的版杀
@@ -200,7 +204,7 @@ $(function(){
 	$("#collapse-nav li:eq(0) .am-icon-star").removeClass("invisible");
 })
 
-var gamedata=${applyingGameStr};
+var gamedata=${applyingGameStr}
 
 function extractIdentity(){
 	var players=gamedata.players;

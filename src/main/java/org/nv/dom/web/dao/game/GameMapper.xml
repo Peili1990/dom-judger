@@ -160,7 +160,8 @@
 		WHERE
 			df.game_id = #{gameId}
 		ORDER BY
-			df.id
+			df.create_time
+		DESC
 			
 	</select>
 	
@@ -170,7 +171,6 @@
 			UPDATE 
 				d_form df
 			SET
-				df.header=#{header},
 				df.content=#{content},
 				df.update_time=NOW()
 			WHERE
@@ -192,5 +192,31 @@
 		</if>
 	
 	</insert>
+	
+	<update id="clearFormDao" parameterType="long">
+	
+		UPDATE 
+			d_player_record dpr, d_player dp
+		SET
+			dpr.action="",
+			dpr.privilege="",
+			dpr.feedback="",
+			dpr.vote="",
+			dpr.remark=""
+		WHERE
+			dpr.player_id=dp.id AND dp.game_id = #{gameId}
+			
+	</update>
+	
+	<select id="getFormContentDao" parameterType="long" resultType="String">
+	
+		SELECT
+			df.content
+		FROM
+			d_form df
+		WHERE
+			df.id=#{formId}
+	
+	</select>
 
 </mapper>

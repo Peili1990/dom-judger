@@ -50,6 +50,14 @@ public interface GameMapper {
 	 * <p>创建或更新表格</p>
 	 */
 	public int createOrUpdateFormDao(GameForm form);
+	/**
+	 * <p>清空表格内容</p>
+	 */
+	public int clearFormDao(long gameId);
+	/**
+	 * <p>获取历史表格内容</p>
+	 */
+	public String getFormContentDao(long formId);
 	
 	
 }
