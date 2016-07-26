@@ -42,5 +42,37 @@
 		</if>
 	
 	</insert>
+	
+	<select id="getNewspaperListDao" parameterType="long" resultType="Newspaper">
+	
+		SELECT 
+			dn.id AS newspaperId,
+			dn.header AS header
+		FROM
+			d_newspaper dn
+		WHERE
+			dn.game_id = #{gameId}
+		ORDER BY
+			dn.id
+		DESC
+	
+	</select>
+	
+	<select id="getNewspaperDetailDao" parameterType="long" resultType="Newspaper">
+	
+		SELECT 
+			dn.id AS newspaperId,
+			dn.header AS header,
+			dn.headline AS headline,
+			dn.headline_body AS headlineBody,
+			dn.subedition AS subedition,
+			dn.important_notice AS importantNotice,
+			dn.seat_table AS seatTable
+		FROM
+			d_newspaper dn
+		WHERE
+			dn.id = #{newspaperId}
+	
+	</select>
 
 </mapper>

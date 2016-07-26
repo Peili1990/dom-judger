@@ -1,6 +1,7 @@
 package org.nv.dom.web.service.impl;
 
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -9,6 +10,7 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 import org.nv.dom.config.NVTermConstant;
 import org.nv.dom.config.PageParamType;
+import org.nv.dom.config.RedisConstant;
 import org.nv.dom.domain.game.ApplyingGame;
 import org.nv.dom.domain.game.GameForm;
 import org.nv.dom.domain.newspaper.Newspaper;
@@ -27,7 +29,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service("gameServiceImpl")
-public class GameServiceImpl implements GameService {
+public class GameServiceImpl extends BasicServiceImpl implements GameService {
 	
 	private Logger logger = Logger.getLogger(GameServiceImpl.class);
 	
@@ -105,10 +107,14 @@ public class GameServiceImpl implements GameService {
 			applyDTO.setGameId(publishGameDTO.getGameId());
 			applyDTO.setUserId(publishGameDTO.getJudgerId());
 			if(gameMapper.applyForGameDao(applyDTO) == 1){
-				result.put(PageParamType.BUSINESS_STATUS, 1);
-				result.put(PageParamType.BUSINESS_MESSAGE, "发布成功");
+				if(publishGameDTO.getCharacterSelect().equals(NVTermConstant.SELECT_THREE)){
+					List<Integer> list = Arrays.asList(NVTermConstant.arrays);
+					redisClient.setHSet(RedisConstant.AVAILABLE_LIST, String.valueOf(publishGameDTO.getGameId()), JacksonJSONUtils.beanToJSON(list).toString());
+				}
 				Newspaper newspaper = new Newspaper(publishGameDTO.getGameId());
 				newspaperMapper.createOrUpdateNewspaperDao(newspaper);
+				result.put(PageParamType.BUSINESS_STATUS, 1);
+				result.put(PageParamType.BUSINESS_MESSAGE, "发布成功");
 				return result;
 			} else {
 				result.put(PageParamType.BUSINESS_STATUS, 1);
@@ -128,12 +134,15 @@ public class GameServiceImpl implements GameService {
 		Map<String, Object> result = new HashMap<String, Object>();
 		try{
 			if(gameMapper.changeStatusDao(changeStatusDTO) == 1){
+				if(changeStatusDTO.getStatus() == GameStatus.APPLY_END.getCode()){
+					redisClient.delHSet(RedisConstant.AVAILABLE_LIST, String.valueOf(changeStatusDTO.getGameId()));
+				}
 				if(changeStatusDTO.getStatus() == GameStatus.READY.getCode()){
 					GameForm form = new GameForm();
 					form.setGameId(changeStatusDTO.getGameId());
 					form.setHeader("游戏开始前");
 					gameMapper.createOrUpdateFormDao(form);
-				}
+				}	
 				result.put(PageParamType.BUSINESS_STATUS, 1);
 				result.put(PageParamType.BUSINESS_MESSAGE, "修改状态成功");
 			} else {

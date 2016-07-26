@@ -54,3 +54,15 @@
 .silent{
 	font-style: italic
 }
+
+#newspaper-content td{
+	width:100px;
+}
+
+#edit-newspaper label{
+	padding:0;
+}
+
+#edit-newspaper textarea{
+	height:200px;
+}
