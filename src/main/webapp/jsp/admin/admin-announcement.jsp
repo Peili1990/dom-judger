@@ -152,7 +152,7 @@ function editNewspaper(){
 	$("#headline-body").html(replaceTag(content.eq(0).html()));
 	$("#subedition").html(replaceTag(content.eq(1).html()));
 	$("#important-notice").html(replaceTag(content.eq(2).html()));
-	um.setContent($("#seat-table-content").html());
+	um.setContent(typeof($("#seat-table-content").html()) == "undefined" ? "" : $("#seat-table-content").html());
 	showEditNewspaperForm();
 }
 
@@ -212,10 +212,10 @@ function saveNewspaper(publish){
 	var url = getRootPath() + "/assemble/saveNewspaper";
 	var options = {
 			newspaperId : $('#announcement-list option:selected').val(),
-			headline : recoverTag($("#headline").html()),
-			headlineBody : recoverTag($("#headline-body").html()),
-			subedition : recoverTag($("#subedition").html()),
-			importantNotice : recoverTag($("#important-notice").html()),
+			headline : $("#headline").val(),
+			headlineBody : recoverTag($("#headline-body").val()),
+			subedition : recoverTag($("#subedition").val()),
+			importantNotice : recoverTag($("#important-notice").val()),
 			seatTable : um.getContent(),
 			status : publish
 		}

@@ -611,11 +611,14 @@ function randomsort(a, b) {
 }
 
 function replaceTag(input){
+	if(typeof(input) == "undefined")
+		return "";
 	var reg=new RegExp("<br>","g");
 	return input.replace(reg,"\r\n")
 }
 
 function recoverTag(input){
-	var reg=new RegExp("\r\n","g"); 
-	return input.replace(reg,"<br>");
+	if(typeof(input) == "undefined")
+		return "";
+	return input.replace(/\n|\r\n/g,"<br>");
 }
