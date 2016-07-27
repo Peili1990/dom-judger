@@ -27,6 +27,17 @@
 	
 	</select>
 	
+	<select id="getAlivePlayersDao" parameterType="long" resultType="PlayerInfo">
+	
+		SELECT
+			dc.name AS characterName
+		FROM
+			d_player dp, d_player_record dpr, d_character dc
+		WHERE 
+			dp.id = dpr.player_id AND dpr.character_id = dc.id AND dp.game_id = #{gameId}
+	
+	</select>
+	
 	
 
 </mapper>

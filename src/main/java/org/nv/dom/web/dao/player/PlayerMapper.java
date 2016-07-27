@@ -12,5 +12,10 @@ public interface PlayerMapper {
 	 * <p>获取进行中版杀的玩家信息</p>
 	 */
 	public List<PlayerInfo> getPlayerInfosDao(long gameId);
+	
+	/**
+	 * <p>获取进行中版杀存活玩家名单</p>
+	 */
+	public List<PlayerInfo> getAlivePlayersDao(long gameId);
 
 }

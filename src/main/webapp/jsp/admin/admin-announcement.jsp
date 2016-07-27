@@ -66,7 +66,7 @@
 								<c:if test="${newspaperDetail.seatTable!=null && not empty newspaperDetail.seatTable }">
 									<hr>
 									<h3>座次表</h3>
-									<p>${newspaperDetail.seatTable}</p>
+									<div id="seat-table-content">${newspaperDetail.seatTable}</div>
 								</c:if>
 							</div>
 							<form class="am-form am-form-horizontal" id="edit-newspaper" style="display:none">
@@ -102,10 +102,10 @@
         						</div>
         						<div class="am-form-group">
             						<div class="am-u-sm-9 am-u-sm-push-3">
-              						<div id="error-msg"></div>
-              							<button type="button" class="am-btn am-btn-primary" onclick="showData()">发布公告</button>
+              						<div id="error-msg">按时发斯蒂芬</div>
+              							<button type="button" class="am-btn am-btn-primary" onclick="">发布公告</button>
               							<button type="button" class="am-btn am-btn-danger" onclick="">保存公告</button>
-              							<button type="button" class="am-btn am-btn-warning" onclick="">生成座次表</button>
+              							<button type="button" class="am-btn am-btn-warning" onclick="generateSeatTable()">生成座次表</button>
            							 </div>
           						</div>
   							</form>
@@ -131,6 +131,8 @@
 </footer>
 
 <script type="text/javascript">
+var um = UM.getEditor("seat-table");
+
 
 $(function(){
 	$("#collapse-nav li:eq(2) .am-icon-star").removeClass("invisible");
@@ -148,12 +150,35 @@ function editNewspaper(){
 	$("#headline-body").html(replaceTag(content.eq(0).html()));
 	$("#subedition").html(replaceTag(content.eq(1).html()));
 	$("#important-notice").html(replaceTag(content.eq(2).html()));
-	$("#seat-table").html(replaceTag(content.eq(3).html()));
+	$(".edui-container").removeAttr("style");
+	$(".edui-body-container").removeAttr("style").css({"height":"200px"});
+	um.setContent($("#seat-table-content").html());
 	showEditNewspaperForm();
 }
 
-function showData(){
-	alert($("#headline-body").html());
+function generateSeatTable(){
+	$("#error-msg").css("display","none");
+	$("#error-msg").text("");
+	var url = getRootPath() + "/assemble/generateSeatTable";
+	var common = new Common();
+	common.callAction(null, url, function(data) {
+		if (!data) {
+			$("#error-msg").css("display","block");
+			$("#error-msg").text("系统异常");
+			return;
+		}
+		switch (data.status) {
+		case 1:
+			$("#error-msg").css("display","block");
+			$("#error-msg").text("生成座次表成功！");
+			um.setContent(data.seatTable);
+			return;
+		default:
+			$("#error-msg").css("display","block");
+			$("#error-msg").text(data.message);
+			return;
+		}
+	});
 }
 
 </script>

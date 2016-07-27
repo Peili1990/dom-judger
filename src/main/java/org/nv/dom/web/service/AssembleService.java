@@ -10,5 +10,7 @@ public interface AssembleService {
 	public List<Newspaper> getNewspaperList(long gameId);
 	
 	public Map<String, Object> getNewspaperDetail(long newspaperId);
+	
+	public Map<String, Object> generateSeatTable(long gameId);
 
 }
