@@ -18,7 +18,7 @@ public class NVTermConstant {
 	
 	public static final String[] KILLER_SIGN = {"刀","手枪","毒药瓶","套索","棍","扑克牌"};
 	
-	public static final String DEFAULT_HEADER = "7月5日日刊（开版公告）";
+	public static final String DEFAULT_HEADER = "7月5日夜刊（开版公告）";
 	
 	public static final String DEFAULT_HEADLINE = "小镇受西部铁路公司200万美元投资垂青";
 	

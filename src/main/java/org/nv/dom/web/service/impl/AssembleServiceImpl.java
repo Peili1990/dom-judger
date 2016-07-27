@@ -62,12 +62,12 @@ public class AssembleServiceImpl implements AssembleService {
 			List<PlayerInfo> players = playerMapper.getAlivePlayersDao(gameId);
 			if(players == null || players.size()<6){
 				result.put(PageParamType.BUSINESS_STATUS, -3);
-				result.put(PageParamType.BUSINESS_MESSAGE, "存活玩家太少，无法生成座次表！");
+				result.put(PageParamType.BUSINESS_MESSAGE, "存活玩家太少，无法生成座位表！");
 			} else {
 				String seatTableHtml = generateSeatTableHtml(players);
 				result.put("seatTable", seatTableHtml);
 				result.put(PageParamType.BUSINESS_STATUS, 1);
-				result.put(PageParamType.BUSINESS_MESSAGE, "生成座次表成功");
+				result.put(PageParamType.BUSINESS_MESSAGE, "生成座位表成功");
 			}	
 		}catch(Exception e){
 			logger.error(e.getMessage(), e);
@@ -99,6 +99,22 @@ public class AssembleServiceImpl implements AssembleService {
 		}
 		seatTableHtml.append("</tbody></table>");
 		return seatTableHtml.toString();
+	}
+
+	@Override
+	public Map<String, Object> createOrUpdateNewspaper(Newspaper newspaper) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		try{
+			long newspaperId = newspaperMapper.createOrUpdateNewspaperDao(newspaper);
+			result.put("newspaperId", newspaperId);
+			result.put(PageParamType.BUSINESS_STATUS, 1);
+			result.put(PageParamType.BUSINESS_MESSAGE, "新增或更新报纸成功！");
+		}catch(Exception e){
+			logger.error(e.getMessage(),e);
+			result.put(PageParamType.BUSINESS_STATUS, -1);
+			result.put(PageParamType.BUSINESS_MESSAGE, "系统异常");
+		}
+		return result;
 	}
 	
 }

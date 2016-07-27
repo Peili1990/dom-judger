@@ -2,19 +2,19 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.nv.dom.web.dao.newspaper.NewspaperMapper">
 
-	<insert id="createOrUpdateNewspaperDao" parameterType="Newspaper">
+	<insert id="createOrUpdateNewspaperDao" parameterType="Newspaper" useGeneratedKeys="true" keyProperty="newspaperId">
 	
 		<if test="newspaperId>0">
 			UPDATE 
 				d_newspaper dn
 			SET
-				dn.header=#{header},
 				dn.headline=#{headline},
 				dn.headline_body=#{headlineBody},
 				dn.subedition=#{subedition},
 				dn.important_notice=#{importantNotice},
 				dn.seat_table=#{seatTable},
-				dn.update_time=NOW()
+				dn.update_time=NOW(),
+				dn.status=#{status}
 			WHERE
 				dn.id=#{newspaperId}
 		</if>
@@ -27,7 +27,8 @@
 				subedition,
 				important_notice,
 				seat_table,
-				create_time
+				create_time,
+				status
 			)
 			VALUES(
 				#{gameId},
@@ -37,7 +38,8 @@
 				#{subedition},
 				#{importantNotice},
 				#{seatTable},
-				NOW()
+				NOW(),
+				#{status}
 			)
 		</if>
 	

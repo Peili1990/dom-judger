@@ -617,5 +617,5 @@ function replaceTag(input){
 
 function recoverTag(input){
 	var reg=new RegExp("\r\n","g"); 
-	return str.replace(reg,"<br>");
+	return input.replace(reg,"<br>");
 }

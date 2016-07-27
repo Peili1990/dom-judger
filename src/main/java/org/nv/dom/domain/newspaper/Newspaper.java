@@ -20,6 +20,8 @@ public class Newspaper {
 	private String importantNotice;
 	/** 座次表 */
 	private String seatTable;
+	/** 发布状态 */
+	private Integer status;
 	
 	public long getGameId() {
 		return gameId;
@@ -69,6 +71,12 @@ public class Newspaper {
 	public void setSeatTable(String seatTable) {
 		this.seatTable = seatTable;
 	}
+	public Integer getStatus() {
+		return status;
+	}
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
 	public Newspaper() {
 		super();
 	}
@@ -79,6 +87,7 @@ public class Newspaper {
 		this.headline = NVTermConstant.DEFAULT_HEADLINE;
 		this.headlineBody = NVTermConstant.DEFAULT_HEADLINE_BODY;
 		this.subedition = NVTermConstant.DEFAULT_SUBEDITION;
+		this.status = 1;
 	}
 	
 	

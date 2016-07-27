@@ -46,7 +46,7 @@
 							</div>
 							<div class="am-form-group operation">
 								<input type="button" class="am-btn am-btn-primary" value="保存表格" onclick="saveForm()">
-								<input type="button" class="am-btn am-btn-danger" value="新增表格" onclick="myPrompt('注意：请先保存表格再新增表格，否则可能导致数据丢失！<br/>请输入新表格标题','updateForm(true)')">
+								<input type="button" class="am-btn am-btn-danger" value="新增表格" onclick="myPrompt('注意：请先保存表格再新增表格，否则可能导致数据丢失！<br/>请输入新表格标题','updateForm()')">
 							</div>
 							<form class="am-form">
 								<table class="am-table am-table-striped am-table-hover table-main">
