@@ -570,6 +570,18 @@ function myInfo(text,callback){
 	$('#my-alert .am-modal-btn').on('click',callback);	
 }
 
+function myConfirm(text,callback){
+	$("#my-confirm .am-modal-bd").html(text);
+	$('#my-confirm').modal({
+	      relatedTarget: this,
+	      onConfirm: function(e){
+	    	  eval(callback);
+	      },
+	      onCancel: function(e) {
+	      }
+	});
+}
+
 function myPrompt(text,callback){
 	$("#my-prompt .am-modal-bd").html(text).append("<input type='text' class='am-modal-prompt-input' name='header'>")
 	$('#my-prompt').modal({

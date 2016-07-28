@@ -14,7 +14,8 @@
 				dn.important_notice=#{importantNotice},
 				dn.seat_table=#{seatTable},
 				dn.update_time=NOW(),
-				dn.status=#{status}
+				dn.status=#{status},
+				dn.type=#{type}
 			WHERE
 				dn.id=#{newspaperId}
 		</if>
@@ -28,7 +29,8 @@
 				important_notice,
 				seat_table,
 				create_time,
-				status
+				status,
+				type
 			)
 			VALUES(
 				#{gameId},
@@ -39,7 +41,8 @@
 				#{importantNotice},
 				#{seatTable},
 				NOW(),
-				#{status}
+				#{status},
+				#{type}
 			)
 		</if>
 	
@@ -69,7 +72,8 @@
 			dn.headline_body AS headlineBody,
 			dn.subedition AS subedition,
 			dn.important_notice AS importantNotice,
-			dn.seat_table AS seatTable
+			dn.seat_table AS seatTable,
+			dn.type AS type
 		FROM
 			d_newspaper dn
 		WHERE

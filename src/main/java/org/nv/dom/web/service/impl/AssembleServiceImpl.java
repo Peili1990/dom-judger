@@ -46,11 +46,11 @@ public class AssembleServiceImpl implements AssembleService {
 			Newspaper newspaper = newspaperMapper.getNewspaperDetailDao(newspaperId);
 			result.put("newspaperDetail", newspaper);
 			result.put(PageParamType.BUSINESS_STATUS, 1);
-			result.put(PageParamType.BUSINESS_STATUS, "获取报纸详情成功");
+			result.put(PageParamType.BUSINESS_MESSAGE, "获取报纸详情成功");
 		}catch(Exception e){
 			logger.error(e.getMessage(), e);
 			result.put(PageParamType.BUSINESS_STATUS, -1);
-			result.put(PageParamType.BUSINESS_STATUS, "系统异常");
+			result.put(PageParamType.BUSINESS_MESSAGE, "系统异常");
 		}
 		return result;
 	}
@@ -105,11 +105,11 @@ public class AssembleServiceImpl implements AssembleService {
 	public Map<String, Object> createOrUpdateNewspaper(Newspaper newspaper) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		try{
-			long newspaperId = newspaperMapper.createOrUpdateNewspaperDao(newspaper);
-			result.put("newspaperId", newspaperId);
+			newspaperMapper.createOrUpdateNewspaperDao(newspaper);
+			result.put("newspaperId", newspaper.getNewspaperId());
 			result.put(PageParamType.BUSINESS_STATUS, 1);
 			result.put(PageParamType.BUSINESS_MESSAGE, "新增或更新报纸成功！");
-		}catch(Exception e){
+		}catch(Exception e){  
 			logger.error(e.getMessage(),e);
 			result.put(PageParamType.BUSINESS_STATUS, -1);
 			result.put(PageParamType.BUSINESS_MESSAGE, "系统异常");

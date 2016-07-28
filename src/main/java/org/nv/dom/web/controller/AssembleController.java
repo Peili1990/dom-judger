@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
@@ -34,6 +35,12 @@ public class AssembleController extends BaseController {
 		long gameId = (long) session.getAttribute(PageParamType.GAMEID_IN_SESSION);
 		newspaper.setGameId(gameId);
 		return assembleService.createOrUpdateNewspaper(newspaper);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/getNewspaperDetail", method = RequestMethod.POST)
+	public Map<String, Object> getNewspaperDetail(@RequestParam("newspaperId") long newspaperId, HttpSession session) {
+		return assembleService.getNewspaperDetail(newspaperId);
 	}
 
 }
