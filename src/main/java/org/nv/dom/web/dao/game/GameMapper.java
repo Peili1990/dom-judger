@@ -8,6 +8,7 @@ import org.nv.dom.domain.player.PlayerInfo;
 import org.nv.dom.domain.user.UserApplyInfo;
 import org.nv.dom.dto.game.ApplyDTO;
 import org.nv.dom.dto.game.ChangeStatusDTO;
+import org.nv.dom.dto.game.KickPlayerDTO;
 import org.nv.dom.dto.game.PublishGameDTO;
 import org.springframework.stereotype.Repository;
 
@@ -34,6 +35,14 @@ public interface GameMapper {
 	 * <p>发布报名帖</p>
 	 */
 	public int publishGameDao(PublishGameDTO publishGameDTO);
+	/**
+	 * <p>插入踢出玩家记录</p>
+	 */
+	public int kickPlayerDao(KickPlayerDTO kickPlayerDTO);
+	/**
+	 * <p>删除玩家报名信息</p>
+	 */
+	public int deletePlayerApplyInfoDao(long playerId);
 	/**
 	 * <p>修改版杀状态</p>
 	 */

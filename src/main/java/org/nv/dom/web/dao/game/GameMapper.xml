@@ -106,6 +106,43 @@
 	
 	</insert>
 	
+	<insert id="kickPlayerDao" parameterType="KickPlayerDTO">
+	
+		INSERT INTO d_kick_record(
+			game_id,
+			judger_user_id,
+			player_user_id,
+			reason,
+			kick_time
+		) 
+		VALUES(
+			#{gameId},
+			#{judgerUserId},
+			(SELECT 
+				dp.user_id 
+			 FROM
+				d_player dp
+			 WHERE	
+			 	dp.id=#{playerId}),
+			#{reason},
+			NOW()
+		)
+	
+	</insert>
+	
+	<delete id="deletePlayerApplyInfoDao" parameterType="long">
+		
+		DELETE FROM
+			d_player_record
+		WHERE
+			player_id = #{playerId};
+		DELETE FROM
+			d_player
+		WHERE
+			id = #{playerId};	
+		
+	</delete>
+	
 	<update id="changeStatusDao" parameterType="ChangeStatusDTO">
 	
 		UPDATE

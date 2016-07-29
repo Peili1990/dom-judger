@@ -18,6 +18,7 @@ import org.nv.dom.domain.player.PlayerInfo;
 import org.nv.dom.domain.user.UserApplyInfo;
 import org.nv.dom.dto.game.ApplyDTO;
 import org.nv.dom.dto.game.ChangeStatusDTO;
+import org.nv.dom.dto.game.KickPlayerDTO;
 import org.nv.dom.dto.game.PublishGameDTO;
 import org.nv.dom.enums.GameStatus;
 import org.nv.dom.util.StringUtil;
@@ -128,6 +129,26 @@ public class GameServiceImpl extends BasicServiceImpl implements GameService {
 			return result;
 		}
 	}
+	
+	@Override
+	public Map<String, Object> kickPlayer(KickPlayerDTO kickPlayerDTO) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		try{
+			if(gameMapper.kickPlayerDao(kickPlayerDTO) == 1){
+				gameMapper.deletePlayerApplyInfoDao(kickPlayerDTO.getPlayerId());
+				result.put(PageParamType.BUSINESS_STATUS, 1);
+				result.put(PageParamType.BUSINESS_MESSAGE, "踢出玩家成功");
+			} else {
+				result.put(PageParamType.BUSINESS_STATUS, -3);
+				result.put(PageParamType.BUSINESS_MESSAGE, "踢出玩家失败");
+			}
+		}catch(Exception e){
+			logger.info(e.getMessage(),e);
+			result.put(PageParamType.BUSINESS_STATUS, -1);
+			result.put(PageParamType.BUSINESS_MESSAGE, "系统异常");
+		}
+		return result;
+	}
 
 	@Override
 	public Map<String, Object> changeStatus(ChangeStatusDTO changeStatusDTO) {
@@ -229,7 +250,6 @@ public class GameServiceImpl extends BasicServiceImpl implements GameService {
 		}
 		return result;
 	}
-
 
 
 }

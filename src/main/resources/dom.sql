@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50624
 File Encoding         : 65001
 
-Date: 2016-07-28 18:42:34
+Date: 2016-07-29 18:10:44
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -82,7 +82,7 @@ INSERT INTO `d_character` VALUES ('46', '李', '0', '62', null, '0', null);
 INSERT INTO `d_character` VALUES ('47', '厄金特', '1', '76', null, '0', null);
 INSERT INTO `d_character` VALUES ('48', '昆西', '1', '34', null, '0', null);
 INSERT INTO `d_character` VALUES ('49', '马克唐', '0', '77', null, '0', null);
-INSERT INTO `d_character` VALUES ('50', '约翰逊', '1', '51', null, '0', null);
+INSERT INTO `d_character` VALUES ('50', '约翰逊', '1', '51', null, '1', null);
 INSERT INTO `d_character` VALUES ('51', '欧内斯特', '1', '60', null, '0', null);
 INSERT INTO `d_character` VALUES ('52', '浮士德', '0', '58', null, '0', null);
 INSERT INTO `d_character` VALUES ('53', '德.圣地亚哥', '0', '72', null, '0', null);
@@ -129,8 +129,28 @@ CREATE TABLE `d_game` (
 -- ----------------------------
 -- Records of d_game
 -- ----------------------------
-INSERT INTO `d_game` VALUES ('1', '16NV', 'B', '19', '3', '2016-07-14', null, null, null, null);
+INSERT INTO `d_game` VALUES ('1', '16NV', 'B', '19', '3', '2016-07-15', null, null, null, null);
 INSERT INTO `d_game` VALUES ('5', '20NV', 'A', '19', '1', '2016-07-26', null, null, '132697360', '');
+
+-- ----------------------------
+-- Table structure for `d_kick_record`
+-- ----------------------------
+DROP TABLE IF EXISTS `d_kick_record`;
+CREATE TABLE `d_kick_record` (
+  `id` bigint(11) NOT NULL AUTO_INCREMENT,
+  `game_id` bigint(11) DEFAULT NULL,
+  `judger_user_id` bigint(11) DEFAULT NULL,
+  `player_user_id` bigint(11) DEFAULT NULL,
+  `reason` varchar(64) DEFAULT NULL,
+  `kick_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of d_kick_record
+-- ----------------------------
+INSERT INTO `d_kick_record` VALUES ('5', '5', '22', '23', '混子', '2016-07-29 18:06:04');
+INSERT INTO `d_kick_record` VALUES ('6', '5', '22', '23', '混子', '2016-07-29 18:09:30');
 
 -- ----------------------------
 -- Table structure for `d_newspaper`
@@ -150,12 +170,12 @@ CREATE TABLE `d_newspaper` (
   `type` int(1) unsigned zerofill DEFAULT '0' COMMENT '1 夜刊 2 日刊',
   `status` int(1) DEFAULT NULL COMMENT '1 已发布 0 未发布',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of d_newspaper
 -- ----------------------------
-INSERT INTO `d_newspaper` VALUES ('1', '5', '7月5日日刊（开版公告）', '小镇受西部铁路公司200万美元投资垂青', '本市西部仅两站<br>维多利亚讯 据可靠消息，今日下午，西部铁路公司董事会发言人特理·亨德曼表明，其第二大股东亨利.刘易斯（左图）即将对本市行政区域内的维多利亚镇进行大规模投资，由铁路运输业带动铁矿、石油的初期计划已经草拟成案。经济学家称该举措即将带来临近地区就业的重整，治安专家则担心大额外来人员对本地区的影响。中部铁运则表明，在铁路运重创的6月后进行这种冒险之举不具长期眼光。<br>维多利亚镇普通镇民，书记官温彻斯特太太表示，“这预示一种时代的变化。当蒸汽机车最终被内燃机车取代的时候，我们知道有些东西不同了。”', '2版政治：在野党质疑政府监管<br>2版经济：周边带动理论 <br>2版金融：华尔街芝加哥工业指数上升24% <br>7版：维多利亚镇的介绍 <br><br>4版<br>西部铁路公司收到匿名警告信 犯罪专家称或非无稽之谈 <br>芝加哥讯 西部铁路公司芝加哥分所近日收到恐吓信，据平克顿侦探所透露，此信来向可推为维多利亚镇。目前警方没有明确透露信的具体内容，但据称为某一组织的某些人员向西部铁路公司某些高层追索“欠款”，并扬言“你们，都得死”。 <br>有证券交易所表明，6月后的会计工作使证券持有人对西部铁路公司表示乐观，然而始终有声音质疑为何西部铁路公司能在6月的N.劳兄弟公司铁路重大事故后保持账面未有亏损。', '哈代死亡。<br><br>哈代遗言：', '<table>\r\n				<tbody>\r\n					<tr>\r\n						<td>恩菲尔德</td>\r\n						<td align=\"center\">霍尔</td>\r\n						<td align=\"right\">欧内斯特</td>\r\n					</tr>\r\n					<tr>\r\n						<td></td>\r\n						<td></td>\r\n						<td align=\"right\">叶妹</td>\r\n					</tr>\r\n					<tr>\r\n						<td>叶兄</td>\r\n						<td></td>\r\n						<td align=\"right\">安德安纳</td>\r\n					</tr>\r\n					<tr>\r\n						<td>哈代【死亡】</td>\r\n						<td></td>\r\n						<td align=\"right\">马克唐</td>\r\n					</tr>\r\n					<tr>\r\n						<td>白瑞摩</td>\r\n						<td></td>\r\n						<td align=\"right\">圣地亚哥</td>\r\n					</tr>\r\n					<tr>\r\n						<td>赫本</td>\r\n						<td></td>\r\n						<td align=\"right\">科尔比</td>\r\n					</tr>\r\n					<tr>\r\n						<td>莫利</td>\r\n						<td></td>\r\n						<td align=\"right\">（布莱克）</td>\r\n					</tr>\r\n					<tr>\r\n						<td>普拉马逊斯</td>\r\n						<td></td>\r\n						<td align=\"right\">昆西</td>\r\n					</tr>\r\n					<tr>\r\n						<td>艾尔威</td>\r\n						<td align=\"center\">劳伦</td>\r\n						<td align=\"right\">伊卡</td>\r\n					</tr>\r\n				</tbody>\r\n			</table>', '2016-07-25 18:03:37', null, null, null);
+INSERT INTO `d_newspaper` VALUES ('1', '5', '7月5日日刊（开版公告）', '小镇受西部铁路公司200万美元投资垂青', '本市西部仅两站<br>维多利亚讯 据可靠消息，今日下午，西部铁路公司董事会发言人特理·亨德曼表明，其第二大股东亨利.刘易斯（左图）即将对本市行政区域内的维多利亚镇进行大规模投资，由铁路运输业带动铁矿、石油的初期计划已经草拟成案。经济学家称该举措即将带来临近地区就业的重整，治安专家则担心大额外来人员对本地区的影响。中部铁运则表明，在铁路运重创的6月后进行这种冒险之举不具长期眼光。<br>维多利亚镇普通镇民，书记官温彻斯特太太表示，“这预示一种时代的变化。当蒸汽机车最终被内燃机车取代的时候，我们知道有些东西不同了。”', '2版政治：在野党质疑政府监管<br>2版经济：周边带动理论 <br>2版金融：华尔街芝加哥工业指数上升24% <br>7版：维多利亚镇的介绍 <br><br>4版<br>西部铁路公司收到匿名警告信 犯罪专家称或非无稽之谈 <br>芝加哥讯 西部铁路公司芝加哥分所近日收到恐吓信，据平克顿侦探所透露，此信来向可推为维多利亚镇。目前警方没有明确透露信的具体内容，但据称为某一组织的某些人员向西部铁路公司某些高层追索“欠款”，并扬言“你们，都得死”。 <br>有证券交易所表明，6月后的会计工作使证券持有人对西部铁路公司表示乐观，然而始终有声音质疑为何西部铁路公司能在6月的N.劳兄弟公司铁路重大事故后保持账面未有亏损。', '哈代死亡。<br><br>哈代遗言：', '<table>\r\n				<tbody>\r\n					<tr>\r\n						<td>恩菲尔德</td>\r\n						<td align=\"center\">霍尔</td>\r\n						<td align=\"right\">欧内斯特</td>\r\n					</tr>\r\n					<tr>\r\n						<td></td>\r\n						<td></td>\r\n						<td align=\"right\">叶妹</td>\r\n					</tr>\r\n					<tr>\r\n						<td>叶兄</td>\r\n						<td></td>\r\n						<td align=\"right\">安德安纳</td>\r\n					</tr>\r\n					<tr>\r\n						<td>哈代【死亡】</td>\r\n						<td></td>\r\n						<td align=\"right\">马克唐</td>\r\n					</tr>\r\n					<tr>\r\n						<td>白瑞摩</td>\r\n						<td></td>\r\n						<td align=\"right\">圣地亚哥</td>\r\n					</tr>\r\n					<tr>\r\n						<td>赫本</td>\r\n						<td></td>\r\n						<td align=\"right\">科尔比</td>\r\n					</tr>\r\n					<tr>\r\n						<td>莫利</td>\r\n						<td></td>\r\n						<td align=\"right\">（布莱克）</td>\r\n					</tr>\r\n					<tr>\r\n						<td>普拉马逊斯</td>\r\n						<td></td>\r\n						<td align=\"right\">昆西</td>\r\n					</tr>\r\n					<tr>\r\n						<td>艾尔威</td>\r\n						<td align=\"center\">劳伦</td>\r\n						<td align=\"right\">伊卡</td>\r\n					</tr>\r\n				</tbody>\r\n			</table>', '2016-07-25 18:03:37', null, null, '1');
 INSERT INTO `d_newspaper` VALUES ('2', '1', '7月5日夜刊（开版公告）', '小镇受西部铁路公司200万美元投资垂青', '本市西部仅两站<br>维多利亚讯 据可靠消息，今日下午，西部铁路公司董事会发言人特理·亨德曼表明，其第二大股东亨利.刘易斯（左图）即将对本市行政区域内的维多利亚镇进行大规模投资，由铁路运输业带动铁矿、石油的初期计划已经草拟成案。经济学家称该举措即将带来临近地区就业的重整，治安专家则担心大额外来人员对本地区的影响。中部铁运则表明，在铁路运重创的6月后进行这种冒险之举不具长期眼光。<br>维多利亚镇普通镇民，书记官温彻斯特太太表示，“这预示一种时代的变化。当蒸汽机车最终被内燃机车取代的时候，我们知道有些东西不同了。”', '2版政治：在野党质疑政府监管<br>2版经济：周边带动理论 <br>2版金融：华尔街芝加哥工业指数上升24%  <br>5版 柏林会议进展不顺 <br>6版 清帝国使者离开纽约 <br>7版：维多利亚镇的介绍<br>8版 独立日烟火不慎造成男童落水 <br><br>4版<br>西部铁路公司收到匿名警告信 犯罪专家称或非无稽之谈 <br>芝加哥讯 西部铁路公司芝加哥分所近日收到恐吓信，据平克顿侦探所透露，此信来向可推为维多利亚镇。目前警方没有明确透露信的具体内容，但据称为某一组织的某些人员向西部铁路公司某些高层追索“欠款”，并扬言“你们，都得死”。 <br>有证券交易所表明，6月后的会计工作使证券持有人对西部铁路公司表示乐观，然而始终有声音质疑为何西部铁路公司能在6月的N.劳兄弟公司铁路重大事故后保持账面未有亏损。', '哈代死亡。<br><br>哈代遗言：', '<table><tbody><tr><td>珀利</td><td align=\"center\">伊卡</td><td align=\"right\">山纳</td></tr><tr><td></td><td></td><td align=\"right\">哈代</td></tr><tr><td>马丁</td><td></td><td align=\"right\">爱德华</td></tr><tr><td>昆西</td><td></td><td align=\"right\">叶什（妹）</td></tr><tr><td>温切斯特</td><td></td><td align=\"right\">卓尔</td></tr><tr><td>叶什（兄）</td><td></td><td align=\"right\">白瑞摩</td></tr><tr><td>厄金特</td><td></td><td align=\"right\">赫本</td></tr><tr><td>奎勒</td><td></td><td align=\"right\">安德安纳</td></tr><tr><td>伊奥克</td><td align=\"center\">斯达福斯</td><td align=\"right\">科尔比</td></tr></tbody></table>', '2016-07-27 17:07:07', '2016-07-28 15:38:24', '1', '1');
 
 -- ----------------------------
@@ -170,7 +190,7 @@ CREATE TABLE `d_player` (
   `status` int(5) DEFAULT NULL COMMENT '0 已报名 1待选外在角色 2待3选1 3已选外在身份 4已查看实际身份',
   `apply_time` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of d_player
@@ -197,6 +217,8 @@ INSERT INTO `d_player` VALUES ('24', '19', 'player', '1', '3', '2016-07-18 11:04
 INSERT INTO `d_player` VALUES ('25', '20', 'player', '1', '3', '2016-07-18 11:04:26');
 INSERT INTO `d_player` VALUES ('26', '21', 'player', '1', '3', '2016-07-18 11:04:31');
 INSERT INTO `d_player` VALUES ('30', '22', 'judger', '5', null, '2016-07-25 18:03:28');
+INSERT INTO `d_player` VALUES ('33', '24', 'player', '5', '3', '2016-07-29 15:55:44');
+INSERT INTO `d_player` VALUES ('36', '23', 'player', '5', '1', '2016-07-29 18:09:50');
 
 -- ----------------------------
 -- Table structure for `d_player_record`
@@ -226,7 +248,7 @@ CREATE TABLE `d_player_record` (
 -- ----------------------------
 INSERT INTO `d_player_record` VALUES ('5', '6', '0', '1', '15', '杀手（毒药瓶）', '2', '1', '0', '', '', '', '', null, '');
 INSERT INTO `d_player_record` VALUES ('8', '5', '1', '0', '10', '官员', '1', '1', '0', '', '', '', '', null, '');
-INSERT INTO `d_player_record` VALUES ('10', '40', '0', '0', '22', '暴徒', '2', '1', '0', '', '', '', '', null, '');
+INSERT INTO `d_player_record` VALUES ('10', '40', '0', '0', '22', '暴徒', '2', '1', '0', '红色信封 山纳', '', '', '', '2016-07-29 16:38:23', '');
 INSERT INTO `d_player_record` VALUES ('11', '19', '1', '0', '11', '平民', '1', '1', '0', '', '', '', '', null, '');
 INSERT INTO `d_player_record` VALUES ('12', '1', '0', '1', '12', '先驱', '1', '1', '0', '', '', '', '', null, '');
 INSERT INTO `d_player_record` VALUES ('13', '35', '0', '0', '21', '巫师', '2', '1', '0', '', '', '', '', null, '');
@@ -243,6 +265,7 @@ INSERT INTO `d_player_record` VALUES ('23', '41', '1', '0', '19', '小偷', '2',
 INSERT INTO `d_player_record` VALUES ('24', '54', '0', '0', '7', '牧师', '1', '1', '0', '', '', '', '', null, '');
 INSERT INTO `d_player_record` VALUES ('25', '48', '0', '0', '11', '平民', '1', '1', '0', '', '', '', '', null, '');
 INSERT INTO `d_player_record` VALUES ('26', '2', '0', '1', '23', '帮众', '2', '1', '0', '', '', '', '', null, '');
+INSERT INTO `d_player_record` VALUES ('33', '2', '0', '0', '0', null, null, null, null, null, null, null, null, null, null);
 
 -- ----------------------------
 -- Table structure for `d_sign`
@@ -286,6 +309,23 @@ INSERT INTO `d_sign` VALUES ('23', '帮众', '沾血的钱币', '2', null);
 INSERT INTO `d_sign` VALUES ('24', null, '契约', '3', null);
 
 -- ----------------------------
+-- Table structure for `d_speech`
+-- ----------------------------
+DROP TABLE IF EXISTS `d_speech`;
+CREATE TABLE `d_speech` (
+  `id` bigint(11) NOT NULL AUTO_INCREMENT,
+  `player_id` bigint(11) DEFAULT NULL,
+  `newspaper_id` bigint(11) DEFAULT NULL,
+  `content` text,
+  `type` int(1) DEFAULT NULL COMMENT '1 发言 2 动作',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of d_speech
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for `d_user`
 -- ----------------------------
 DROP TABLE IF EXISTS `d_user`;
@@ -298,7 +338,7 @@ CREATE TABLE `d_user` (
   `createTime` datetime DEFAULT NULL,
   `avatar` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of d_user
@@ -325,3 +365,5 @@ INSERT INTO `d_user` VALUES ('19', 'jack3192', 'yesterday', '人头', null, '201
 INSERT INTO `d_user` VALUES ('20', 'jack3193', 'yesterday', '框架', null, '2016-07-18 10:59:32', null);
 INSERT INTO `d_user` VALUES ('21', 'jack3194', 'yesterday', '吃饭', null, '2016-07-18 11:00:25', null);
 INSERT INTO `d_user` VALUES ('22', 'jack3172', 'yesterday', '美美', null, '2016-07-25 17:52:37', null);
+INSERT INTO `d_user` VALUES ('23', 'jack3171', 'yesterday', '飞飞', null, '2016-07-29 10:51:08', null);
+INSERT INTO `d_user` VALUES ('24', 'jack3170', 'yesterday', '随机', null, '2016-07-29 15:55:30', null);
