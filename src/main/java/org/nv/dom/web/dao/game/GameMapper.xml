@@ -22,7 +22,7 @@
 		FROM
 			d_game dg LEFT JOIN d_player dp
 		ON
-			dg.status != 9 AND dp.role='judger' AND dp.game_id=dg.id
+			dg.status != 9 AND dp.role='judger' AND dp.game_id=dg.id AND dp.status != 9
 		WHERE
 			dp.user_id=#{userId}
 		GROUP BY
@@ -61,7 +61,7 @@
 		FROM
 			d_player
 		WHERE
-			user_id = #{userId}
+			user_id = #{userId} AND status != 9
 	
 	</select>
 	
