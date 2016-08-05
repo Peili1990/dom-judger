@@ -11,6 +11,7 @@
 			dpr.is_sp AS isSp,
 			dpr.identity_desc AS identityDesc,
 			dpr.camp AS camp,
+			dpr.position AS position,
 			dpr.is_life AS isLife,
 			dpr.is_mute AS isMute,
 			dpr.action AS action,
@@ -23,6 +24,8 @@
 			d_game dg, d_player dp, d_player_record dpr, d_character dc
 		WHERE 
 			dg.status > 2 AND dg.status != 9 AND dp.game_id=#{gameId} AND dp.id = dpr.player_id AND dpr.character_id = dc.id
+		ORDER BY
+			dpr.position
 	]]>
 	
 	</select>
@@ -35,6 +38,8 @@
 			d_player dp, d_player_record dpr, d_character dc
 		WHERE 
 			dp.id = dpr.player_id AND dpr.character_id = dc.id AND dp.game_id = #{gameId}
+		ORDER BY
+			dpr.position
 	
 	</select>
 	

@@ -12,6 +12,10 @@ public class PlayerInfo {
 	private Integer sign;
 	/** 身份描述 */
 	private String identityDesc;
+	/** 性别 */
+	private Integer sex;
+	/** 位置 */
+	private Integer position;
 	/** 阵营 */
 	private Integer camp;
 	/** 存活 */
@@ -60,6 +64,18 @@ public class PlayerInfo {
 	}
 	public void setIdentityDesc(String identityDesc) {
 		this.identityDesc = identityDesc;
+	}
+	public Integer getSex() {
+		return sex;
+	}
+	public void setSex(Integer sex) {
+		this.sex = sex;
+	}
+	public Integer getPosition() {
+		return position;
+	}
+	public void setPosition(Integer position) {
+		this.position = position;
 	}
 	public Integer getCamp() {
 		return camp;

@@ -41,6 +41,10 @@ public class NVTermConstant {
 			+ "并扬言“你们，都得死”。 <br>有证券交易所表明，6月后的会计工作使证券持有人对西部铁路公司表示乐观，"
 			+ "然而始终有声音质疑为何西部铁路公司能在6月的N.劳兄弟公司铁路重大事故后保持账面未有亏损。";
 	
+	public static final Integer EVENING_PAPER = 1;
+	
+	public static final Integer DAILY_PAPER = 2;
+	
 	
 
 }

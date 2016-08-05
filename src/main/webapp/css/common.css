@@ -66,3 +66,32 @@
 #edit-newspaper textarea{
 	height:200px;
 }
+
+.am-comment{
+	position:relative;	
+}
+
+.float-toolbar{
+	position: absolute;
+    right: 0;
+    top: 0;
+    display:none;
+}
+
+.float-toolbar .am-btn{
+	display:block;
+	float:none;
+	margin:5px;
+}
+
+.float-toolbar .am-btn:first-child{
+	margin-left:-1px;
+}
+
+.float-toolbar span{
+	width:12px;
+}
+
+#speech-list{
+	overflow-y:scroll;
+}

@@ -125,6 +125,9 @@
       					<label class="am-radio-inline">
         					<input type="radio" name="is-mute" value="0"> 未被禁言
       					</label>
+      					<label class="am-radio-inline">
+        					<input type="radio" name="is-mute" value="2"> 语无伦次
+      					</label>
 					</div>
 					<div class="am-form-group">
 						<label>阵营</label>

@@ -71,14 +71,16 @@
 			user_id,
 			role,
 			game_id,
-			apply_time
+			apply_time,
+			status
 						
 		) 
 		VALUES (
 			#{userId},
 			"judger",
 			#{gameId},
-			NOW()
+			NOW(),
+			8
 		)
 	
 	</insert>
@@ -164,7 +166,8 @@
 				  	dpr.identity_desc=#{item.identityDesc},
 				  	dpr.camp=#{item.camp},
 				  	dpr.is_life=#{item.isLife},
-				  	dpr.is_mute=#{item.isMute}
+				  	dpr.is_mute=#{item.isMute},
+				  	dpr.position=#{item.position}
 				  	<if test="item.action != null">
 				  	,dpr.action=#{item.action}
 				  	</if>
@@ -175,10 +178,10 @@
 				  	,dpr.feedback=#{item.feedback}
 				  	</if>
 				  	<if test="item.vote != null">
-				  	,dpr.feedback=#{item.feedback}
+				  	,dpr.vote=#{item.vote}
 				  	</if>
 				  	<if test="item.remark != null">
-				  	,dpr.feedback=#{item.remark}
+				  	,dpr.remark=#{item.remark}
 				  	</if>
 				</set>  	
 				WHERE

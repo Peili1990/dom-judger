@@ -277,6 +277,7 @@ function submitList(gameId){
 		var policeCount = 0;
 		var killerCount = 0;
 		$.each(players,function(index,player){
+			player.position=index;
 			player.isLife=1;
 			player.isMute=0;
 			switch(player.sign){

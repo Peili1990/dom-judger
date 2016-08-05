@@ -53,10 +53,11 @@ public class IndexController extends BaseController {
 		User user = (User) session.getAttribute(PageParamType.user_in_session);
 		ModelAndView mav = new ModelAndView("admin/admin-apply");
 		Map<String, Object> result = gameService.getApplyingGames(user.getId());
+		long gameId = 0L;
 		if((int)result.get("status")==1){
-			long gameId = ((ApplyingGame)result.get("applyingGame")).getId();
-			session.setAttribute(PageParamType.GAMEID_IN_SESSION, gameId);
+			gameId = ((ApplyingGame)result.get("applyingGame")).getId();
 		}
+		session.setAttribute(PageParamType.GAMEID_IN_SESSION, gameId);
 		mav.addAllObjects(result);
 		mav.addAllObjects(basicService.getSessionUserService(session));
 		return mav;

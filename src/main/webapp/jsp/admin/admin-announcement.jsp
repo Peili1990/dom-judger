@@ -34,6 +34,37 @@
     	<div class="am-u-sm-12 am-u-md-5 am-u-md-push-7"> 
       		<div class="am-panel am-panel-default">
           		<div class="am-panel-bd">
+          			<c:choose>
+          				<c:when test="${ speechList != null}">
+          					<h2>角色发言</h2>
+          					<ul class="am-comments-list am-comments-list-flip" id="speech-list">
+          						<c:forEach items="${ speechList}" var="speech">
+          							<li class="am-comment"> 
+										<img src="http://q.qlogo.cn/qqapp/100229475/C06A0F683914D5FEEE6968887DDCF0AB/100" class="am-comment-avatar">
+									<div class="am-comment-main">
+										<header class="am-comment-hd">
+											<div class="am-comment-meta">
+											<a href="" class="am-comment-author">${speech.characterName}</a>
+											<time>${speech.createTime }</time>
+											</div>
+										</header>
+										<div class="am-comment-bd">${speech.content }</div>
+									</div>
+									<div class="am-btn-toolbar float-toolbar">
+											<div class="am-btn-group am-btn-group-xs">
+												<button type="button" class="am-btn am-btn-default am-btn-xs am-text-secondary" title="统计字数" onclick=""><span class="am-icon-pencil-square-o"></span></button>
+												<button type="button" class="am-btn am-btn-default am-btn-xs" title="发送消息"><span class="am-icon-paper-plane-o"></span></button>
+												<button type="button" class="am-btn am-btn-default am-btn-xs am-text-danger" title="删除"><span class="am-icon-trash-o"></span></button>
+											</div>
+										</div>
+									</li>
+          						</c:forEach>       					
+          					</ul>				
+          				</c:when>
+          				<c:otherwise>
+          					没有相关发言
+          				</c:otherwise>
+          			</c:choose>
           		</div>
          	</div>
     	</div>
@@ -333,6 +364,14 @@ function switchNewspaper(){
 		}
 	})
 }
+
+$.each($("#speech-list li"),function(){
+	$(this).hover(function(){
+		$(this).find(".float-toolbar").stop().fadeIn();
+	},function(){
+		$(this).find(".float-toolbar").stop().fadeOut();
+	})
+})
 
 
 
