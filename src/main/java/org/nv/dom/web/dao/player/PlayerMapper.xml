@@ -43,6 +43,53 @@
 	
 	</select>
 	
+	<select id="getReplaceSkinDao" parameterType="long" resultType="PlayerReplaceSkin">
+	
+		SELECT 
+			drs.id AS id,
+			drs.character_name AS characterName,
+			drs.character_avatar AS characterAvatar
+		FROM
+			d_replace_skin drs
+		WHERE
+			drs.player_id = #{playerId}		
+	
+	</select>
+	
+	<insert id='createOrUpdateReplaceSkinDao' parameterType="PlayerReplaceSkin" useGeneratedKeys="true" keyProperty="id">
+
+		<if test="id>0">
+			UPDATE
+				d_replace_skin drs
+			SET
+				drs.character_name = #{characterName},
+				drs.character_avatar = #{characterAvatar}
+			WHERE
+				drs.id = #{id}
+		</if>	
+		<if test="id==0">
+			INSERT INTO d_replace_skin(
+				player_id,
+				character_name,
+				character_avatar
+			)
+			VALUES(
+				#{playerId},
+				#{characterName},
+				#{characterAvatar}
+			)
+		</if>
+	
+	</insert>
+	
+	<delete id="deleteReplaceSkinDao" parameterType="long">
+	
+		DELETE FROM 
+			d_replace_skin
+		WHERE 
+			id = #{skinId}
+	
+	</delete>
 	
 
 </mapper>

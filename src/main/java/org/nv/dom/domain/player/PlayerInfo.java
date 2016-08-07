@@ -7,7 +7,7 @@ public class PlayerInfo {
 	/** 角色名称 */
 	private String characterName;
 	/** 是否sp */
-	private String isSp;
+	private Integer isSp;
 	/** 签代码 */
 	private Integer sign;
 	/** 身份描述 */
@@ -47,10 +47,10 @@ public class PlayerInfo {
 	public void setCharacterName(String characterName) {
 		this.characterName = characterName;
 	}
-	public String getIsSp() {
+	public Integer getIsSp() {
 		return isSp;
 	}
-	public void setIsSp(String isSp) {
+	public void setIsSp(Integer isSp) {
 		this.isSp = isSp;
 	}
 	public Integer getSign() {

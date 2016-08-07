@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!doctype html>
 <html class="no-js">
 <head>
@@ -45,7 +46,7 @@
 								</select>
 							</div>
 							<div class="am-form-group operation">
-								<input type="button" class="am-btn am-btn-primary" value="保存表格" onclick="saveForm()">
+								<input type="button" class="am-btn am-btn-primary" value="保存表格" onclick="saveForm(true)">
 								<input type="button" class="am-btn am-btn-danger" value="新增表格" onclick="myPrompt('注意：请先保存表格再新增表格，否则可能导致数据丢失！<br/>请输入新表格标题','updateForm()')">
 							</div>
 							<form class="am-form">
@@ -64,7 +65,7 @@
 									</thead>
 									<tbody id="character-info">
 										<c:forEach items="${ playerList }" var="player" varStatus="playerStatus">
-											<tr>
+											<tr>	
 												<td>${player.characterName}</td>
 												<td><input type="text" value="${player.identityDesc}  "></td>
 												<td><input type="text" value="${player.action}"></td>
@@ -77,7 +78,19 @@
 														<div class="am-btn-group am-btn-group-xs">
 															<button type="button" class="am-btn am-btn-default am-btn-xs am-text-secondary" title="更改状态" onclick="showPlayerStatus(${playerStatus.index})"><span class="am-icon-pencil-square-o"></span></button>
 															<button type="button" class="am-btn am-btn-default am-btn-xs" title="发送消息"><span class="am-icon-paper-plane-o"></span></button>
-															<button type="button" class="am-btn am-btn-default am-btn-xs am-text-success" title="查看提交时间"><span class="am-icon-clock-o"></span></button>
+															<div class="am-dropdown 
+															<c:if test="${fn:length(playerList) - playerStatus.index <=3 }">
+															 am-dropdown-up
+															</c:if>
+															" data-am-dropdown>
+																<button type="button" class="am-btn am-btn-default am-btn-xs am-text-success am-dropdown-toggle" title="更多操作"><span class="am-icon-ellipsis-h"></span></button>
+																<ul class="am-dropdown-content">
+    																<li onclick="showReplacePanel(${playerStatus.index})"><a><span class="am-icon-comments-o"></span> 发言称呼</a></li>
+    																<li><a><span class="am-icon-clock-o"></span> 提交时间</a></li>
+    		 														<li onclick="positionUp(${playerStatus.index})"><a><span class="am-icon-chevron-up" ></span> 位置上移</a></li>
+    																<li onclick="positionDown(${playerStatus.index})"><a><span class="am-icon-chevron-down"></span> 位置下移</a></li>
+ 														 		</ul>
+															</div>
 														</div>
 													</div>
 												</td>
@@ -99,50 +112,100 @@
 		<!-- content end -->
 
 	</div>
+	
+	<div class="am-modal am-modal-no-btn" tabindex="-1" id="replace-panel">
+		<div class="am-modal-dialog">
+			<form class="am-form">
+			 <fieldset>
+			 	<legend>发言称呼管理 -- 珀利</legend>
+			 		<table class="am-table am-table-striped am-table-hover table-main">
+						<thead>
+							<tr>
+								<th width="180px">发言称呼</th>
+								<th width="180px">头像</th>
+								<th>操作</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td><input type="text" value="伊卡A"></td>
+								<td><select data-am-selected>
+									
+								</select></td>
+								<td>
+									<div class="am-btn-toolbar">
+										<div class="am-btn-group am-btn-group-xs">
+											<button type="button" class="am-btn am-btn-default am-btn-xs am-text-secondary" title="保存"><span class="am-icon-check-square-o"></span></button>								
+											<button type="button" class="am-btn am-btn-default am-btn-xs am-text-danger" title="删除"><span class="am-icon-trash-o"></span></button>								
+										</div>
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<div class="am-form-group" style="text-align:center">
+						<input type="button" class="am-btn am-btn-primary" value="新增" name="create">
+						<input type="button" class="am-btn am-btn-default" value="关闭" onclick="closeReplaceStatus()">
+					</div>
+			 </fieldset>
+			 </form>
+			</div>
+	</div>
 
 	<div class="am-modal am-modal-no-btn" tabindex="-1" id="player-panel">
 		<div class="am-modal-dialog">
 			<form class="am-form">
 			 <fieldset>
-			 	<legend>角色状态变更</legend>
-			 		<p>角色：sp莫利</p>
-					<div class="am-form-group">
-						<label>存活状态</label>
-						<br> 
-						<label class="am-radio-inline">
-       						<input type="radio" name="is-life" value="1"> 存活
-      					</label>
-      					<label class="am-radio-inline">
-        					<input type="radio" name="is-life" value="0"> 死亡
-      					</label>
+			 	<legend>角色状态变更 -- </legend>
+			 		<div class="float-panel">
+						<div class="am-form-group">
+							<label>存活状态</label>
+							<br> 
+							<label class="am-radio-inline">
+       							<input type="radio" name="is-life" value="1"> 存活
+      						</label>
+      						<label class="am-radio-inline">
+        						<input type="radio" name="is-life" value="0"> 死亡
+      						</label>
+						</div>
+						<div class="am-form-group">
+							<label>禁言状态</label>
+							<br> 
+							<label class="am-radio-inline">
+       							<input type="radio" name="is-mute" value="1"> 被禁言
+      						</label>
+      						<label class="am-radio-inline">
+        						<input type="radio" name="is-mute" value="0"> 未被禁言
+      						</label>
+      						<label class="am-radio-inline">
+        						<input type="radio" name="is-mute" value="2"> 语无伦次
+      						</label>
+						</div>
+						<div class="am-form-group">
+							<label>阵营</label>
+							<br> 
+							<label class="am-radio-inline">
+       							<input type="radio" name="camp" value="1"> 好人方
+      						</label>
+      						<label class="am-radio-inline">
+        						<input type="radio" name="camp" value="2"> 杀手方
+      						</label>
+      						<label class="am-radio-inline">
+        						<input type="radio" name="camp" value="3"> 契约方
+      						</label>
+						</div>
+						<div class="am-form-group">
+							<label>是否sp</label>
+							<br> 
+							<label class="am-radio-inline">
+       							<input type="radio" name="is-sp" value="0"> 非sp
+      						</label>
+      						<label class="am-radio-inline">
+        						<input type="radio" name="is-sp" value="1"> sp
+      						</label>
+						</div>
 					</div>
-					<div class="am-form-group">
-						<label>禁言状态</label>
-						<br> 
-						<label class="am-radio-inline">
-       						<input type="radio" name="is-mute" value="1"> 被禁言
-      					</label>
-      					<label class="am-radio-inline">
-        					<input type="radio" name="is-mute" value="0"> 未被禁言
-      					</label>
-      					<label class="am-radio-inline">
-        					<input type="radio" name="is-mute" value="2"> 语无伦次
-      					</label>
-					</div>
-					<div class="am-form-group">
-						<label>阵营</label>
-						<br> 
-						<label class="am-radio-inline">
-       						<input type="radio" name="camp" value="1"> 好人方
-      					</label>
-      					<label class="am-radio-inline">
-        					<input type="radio" name="camp" value="2"> 杀手方
-      					</label>
-      					<label class="am-radio-inline">
-        					<input type="radio" name="camp" value="3"> 契约方
-      					</label>
-					</div>
-					<div class="am-form-group" style="text-align:center">
+					<div class="am-form-group" style="text-align:center;">
 						<input type="button" class="am-btn am-btn-primary" value="确定" name="confirm">
 						<input type="button" class="am-btn am-btn-default" value="取消" onclick="closePlayerStatus()">
 					</div>
@@ -160,27 +223,134 @@
 	</footer>
 
 <script type="text/javascript">
+var playerPanel = $("#player-panel")
+var replacePanel = $("#replace-panel")
+var avatarList;
 var players=${playerListStr}
-var panel = $("#player-panel")
 
 $(function(){
 	$("#collapse-nav li:eq(1) .am-icon-star").removeClass("invisible");
 	addstatusStyle(players);
+	$.get('${baseUrl}file/avatar.json').success(function(data){
+		var builder = new StringBuilder();
+		builder.append('<td><select>');
+		$.each(data.characterAvatars,function(index,character){
+			builder.appendFormat('<option value="{0}">{1}</option>',character.avatar,character.characterName);
+		})
+		builder.append('</select></td>');
+		avatarList=builder.toString();
+	})
 })
 
 function showPlayerStatus(index){
-	panel.find("p").text(players[index].characterName);
+	playerPanel.find("legend").text("角色状态变更 -- "+players[index].characterName);
 	$("input[name='is-life'][value="+players[index].isLife+"]").attr("checked",true);
 	$("input[name='is-mute'][value="+players[index].isMute+"]").attr("checked",true);
 	$("input[name='camp'][value="+players[index].camp+"]").attr("checked",true);
-	$("input[name='confirm']").on("click",function(){
+	$("input[name='is-sp'][value="+players[index].isSp+"]").attr("checked",true);
+	$("input[name='confirm']").unbind("click").on("click",function(){
 		changePlayerStatus(index);
 	})
-	panel.modal();
+	playerPanel.modal('open');
+}
+
+function showReplacePanel(playerIndex){
+	var url = getRootPath() + "/getReplaceSkin";
+	var common = new Common();
+	var options = {
+			playerId : players[playerIndex].playerId
+	}
+	common.callAction(options,url,function(data){
+		if (!data) {
+			return;
+		}
+		switch (data.status) {
+		case 1:
+			var list = replacePanel.find("tbody");
+ 			list.empty();
+			$.each(data.replaceList,function(index,skin){
+				var builder = new StringBuilder();
+				builder.appendFormat('<tr><td><input type="hidden" name="id" value={0}><input type="text" name="character-name" value={1}></td>',skin.id,skin.characterName);
+				builder.append(avatarList);
+				builder.appendFormat('<td><div class="am-btn-toolbar">' +
+				'<div class="am-btn-group am-btn-group-xs">' +
+				'<button type="button" class="am-btn am-btn-default am-btn-xs am-text-secondary" title="保存" onclick="saveReplaceSkin({0},{1})"><span class="am-icon-check-square-o"></span></button>'+							
+				'<button type="button" class="am-btn am-btn-default am-btn-xs am-text-danger" title="删除" onclick="deleteReplaceSkin({2},{3})"><span class="am-icon-trash-o"></span></button>'+								
+				'</div></div></td></tr>',playerIndex,index,playerIndex,index);
+				list.append(builder.toString());
+				list.find("select").eq(index).val(skin.characterAvatar).selected({maxHeight: '100px'});
+			})
+			replacePanel.find("input[name='create']").unbind("click").on("click",function(){saveReplaceSkin(playerIndex)});
+			replacePanel.find("legend").text("发言称呼管理 -- "+players[playerIndex].characterName);
+			replacePanel.modal('open');
+			return;
+		default:
+			myAlert(data.message);
+			return;
+		}
+	})
+}
+
+function saveReplaceSkin(playerIndex,skinIndex){
+	var url = getRootPath() + "/saveReplaceSkin";
+	var common = new Common();
+	var options = skinIndex != null ? {
+			id : replacePanel.find("tbody").find("tr").eq(skinIndex).find("input[name='id']").val(),
+			playerId : players[playerIndex].playerId,
+			characterName : replacePanel.find("tbody").find("tr").eq(skinIndex).find("input[name='character-name']").val(),
+			characterAvatar : replacePanel.find("tbody").find("tr").eq(skinIndex).find("select").val(),
+	}: {
+			id : 0,
+			playerId : players[playerIndex].playerId
+	}
+	common.callAction(options,url,function(data){
+		if (!data) {
+			return;
+		}
+		switch (data.status) {
+		case 1:
+			showReplacePanel(playerIndex);
+			return;
+		default:
+			myAlert(data.message);
+			return;
+		}
+	})
+}
+
+function deleteReplaceSkin(playerIndex,skinIndex){
+	var url = getRootPath() + "/deleteReplaceSkin";
+	var common = new Common();
+	var options = {
+			skinId : replacePanel.find("tbody").find("tr").eq(skinIndex).find("input[name='id']").val(),
+	};
+	common.callAction(options,url,function(data){
+		if (!data) {
+			return;
+		}
+		switch (data.status) {
+		case 1:
+			showReplacePanel(playerIndex);
+			return;
+		default:
+			myAlert(data.message);
+			return;
+		}
+	})
+}
+
+function closeReplaceStatus(){
+	replacePanel.modal("close");
 }
 
 function changePlayerStatus(index){
 	player = $("#character-info tr:eq("+index+") td:eq(0)")
+	players[index].isSp=$("input[name='is-sp']:checked").val();
+	if(players[index].isSp == "1"){
+		player.text("sp"+players[index].characterName);
+	} else {
+		player.text(players[index].characterName);
+	}
 	players[index].isLife=$("input[name='is-life']:checked").val();
 	if(players[index].isLife == "0"){
 		player.addClass("dead");
@@ -204,15 +374,38 @@ function changePlayerStatus(index){
 	case "3":
 		player.css({"color":"purple"});
 		break;
-	}	
-	panel.modal("close");
+	}
+	playerPanel.modal("close");
 }
 
 function closePlayerStatus(){
-	panel.modal("close");
+	playerPanel.modal("close");
 }
 
-function saveForm(){
+function positionUp(index){
+	if(index==0){
+		players[players.length-1].position=0;
+		players[index].position=players.length-1;
+	} else {
+		players[index].position--;
+		players[index-1].position++;
+	}
+	saveForm(false);
+}
+
+function positionDown(index){
+	if(index==players.length-1){
+		players[0].position=players.length-1;
+		players[index].position=0;
+	} else {
+		players[index].position++;
+		players[index+1].position--;
+	}
+	saveForm(false);
+}
+
+
+function saveForm(needAlert){
 	$.each($("#character-info tr"),function(index,tr){
 		inputs = $(tr).find("input");
 		players[index].identityDesc = inputs.eq(0).val();
@@ -230,9 +423,13 @@ function saveForm(){
 		}
 		switch (data.status) {
 		case 1:
-			myInfo("保存表格成功！",function(){
+			if(needAlert){
+				myInfo("保存表格成功！",function(){
+					window.location = getRootPath() + "/admin-character";
+				})
+			} else {
 				window.location = getRootPath() + "/admin-character";
-			})
+			}
 			return;
 		default:
 			myAlert(data.message);
@@ -323,6 +520,9 @@ function addstatusStyle(players){
 		}
 		if(players[index].isMute == "1"){
 			player.addClass("silent");
+		}
+		if(players[index].isSp == "1"){
+			player.text("sp"+players[index].characterName);
 		}
 		switch(players[index].camp){
 		case 1:

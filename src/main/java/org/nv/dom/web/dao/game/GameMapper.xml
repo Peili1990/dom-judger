@@ -164,6 +164,7 @@
 				<set>
 				  	dpr.sign=#{item.sign},
 				  	dpr.identity_desc=#{item.identityDesc},
+				  	dpr.is_sp=#{item.isSp},
 				  	dpr.camp=#{item.camp},
 				  	dpr.is_life=#{item.isLife},
 				  	dpr.is_mute=#{item.isMute},

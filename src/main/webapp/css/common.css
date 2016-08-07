@@ -20,22 +20,35 @@
 	margin-bottom: 10px;
 }
 
+#replace-panel .am-modal-dialog{
+	height:350px;
+	width:500px;
+}
+
 #player-panel .am-modal-dialog{
-	height:400px;
+
+	height:420px;
 	width:300px;
 }
 
-#player-panel legend{
+#player-panel legend,
+#replace-panel legend{
 	text-align:center;
 }
 
-#player-panel fieldset{
+#player-panel fieldset,
+#replace-panel fieldset{
 	margin-bottom:20px;
 }
 
-#player-panel .am-form{
+#player-panel .am-form,
+#replace-panel .am-form{
 	padding:10px;
 	text-align:left;
+}
+
+.float-panel{
+	margin-top:20px;
 }
 
 .operation .am-btn{
