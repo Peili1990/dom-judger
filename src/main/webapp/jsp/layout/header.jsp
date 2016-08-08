@@ -25,3 +25,29 @@
     </ul>
   </div>
 </header>
+
+<script type="text/javascript">
+  	var userId = ${user.id}
+  	var webSocket = new ReconnectingWebSocket( 'ws://'+'${chatServer}'+'/websocket/'+userId);
+  	
+  	webSocket.onerror = function(event) {
+		myAlert(event.data);
+	};
+
+	webSocket.onopen = function(event) {
+	}
+
+	webSocket.onmessage = function(event) {
+		content = JSON.parse(event.data);
+		switch(content.message){
+		case "speech":
+			if(window.location.href.indexOf("announcement")>0){
+				appendSpeech(content);
+			}
+			break;
+		default:
+			break;
+		}
+	};
+
+</script>

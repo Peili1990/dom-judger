@@ -80,6 +80,12 @@
 			}
 		});
 	}
+	
+	$("#userPwd").keyup(function() {
+		if (event.keyCode == 13) {
+			submitForm();
+		}
+	});
 	</script>
 </body>
 </html>

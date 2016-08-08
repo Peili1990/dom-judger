@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="${baseUrl}assets/css/admin.css">
 <link rel="stylesheet" type="text/css" href="${baseUrl}css/common.css">
 <script src="${baseUrl}js/common/jquery-1.11.3.min.js" type="text/javascript"></script>
+<script src="${baseUrl}js/common/reconnecting-websocket.min.js" type="text/javascript"></script>
 <script src="${baseUrl}umeditor/js/editor_api.js" type="text/javascript"></script>
 <script src="${baseUrl}umeditor/js/umeditor.config.js" type="text/javascript"></script>
 <script src="${baseUrl}js/common/common.js" type="text/javascript"></script>

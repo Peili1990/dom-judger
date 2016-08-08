@@ -47,4 +47,7 @@ public class PageParamType {
 	//用户信息SESSION里面的变量
 	public static final String user_in_session = USER_IN_SESSION;
 	
+	//聊天服务器参数
+	public static final String CHAT_SERVER = "chatServer";
+	
 }

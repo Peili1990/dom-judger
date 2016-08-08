@@ -59,7 +59,11 @@
 										</div>
 									</li>
           						</c:forEach>       					
-          					</ul>				
+          					</ul>
+          					<form class="am-form am-form-horizontal announce-box">
+          						<textarea placeholder="游戏内公告发布内容"></textarea>
+          						<input type="button" class="am-btn am-btn-primary" value="发送" onclick="submitSpeech()">
+          					</form>			
           				</c:when>
           				<c:otherwise>
           					没有相关发言
@@ -177,7 +181,7 @@
 var um = UM.getEditor("seat-table");
 var publishAction = 0;
 var editAction = 0;
-
+var gameId = ${gameId}
 
 $(function(){
 	$("#collapse-nav li:eq(2) .am-icon-star").removeClass("invisible");
@@ -373,6 +377,48 @@ $.each($("#speech-list li"),function(){
 	})
 })
 
+function appendSpeech(speech){
+	var builder = new StringBuilder();
+	if(speech.type == 3){
+		builder.append('<li class="am-panel am-panel-default">');
+		builder.appendFormat('<div class="am-panel-hd">游戏公告<time>{0}</time></div>',speech.createTime);
+		builder.appendFormat('<div class="am-panel-bd">{0}</div></li>',speech.content);	
+	} else {
+		builder.append('<li class="am-comment">');
+		builder.appendFormat('<a href=""><img src="{0}" class="am-comment-avatar"></a>',speech.avatar);
+		builder.append('<div class="am-comment-main"><header class="am-comment-hd"><div class="am-comment-meta">');
+		builder.appendFormat('<a href="" class="am-comment-author">{0}</a><time>{1}</time></div></header>',speech.characterName,speech.createTime);
+		if(speech.type == 1){
+			builder.appendFormat('<div class="am-comment-bd">{0}</div></div></li>',speech.content)
+		}else{
+			builder.appendFormat('<div class="am-comment-bd gesture-style">{0}</div></div></li>',speech.content)
+		}
+	}
+	$("#speech-list").append(builder.toString());
+	$("#speech-list").smoothScroll({
+		position: $("#speech-list")[0].scrollHeight,
+		speed: 800
+	});
+}
+
+function submitSpeech(){
+	var content = $(".announce-box").find("textarea").val().trim();
+	if(content == ""){
+		return;
+	}
+	var options = {
+			gameId : gameId,
+			newspaperId : $('#announcement-list option:selected').val(),
+			content : recoverTag(content),
+			type : 3
+		}
+	$(".announce-box").find("textarea").val("");
+	var url = "http://" + "${chatServer}" + "/sumbitSpeech";
+	var common = new Common();
+	common.callAction(options, url, function(data) {
+		
+	})
+}
 
 
 </script>

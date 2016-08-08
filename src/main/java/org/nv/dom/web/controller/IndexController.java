@@ -65,10 +65,13 @@ public class IndexController extends BaseController {
 	
 	@RequestMapping(value = "/admin-character", method = RequestMethod.GET)
 	public ModelAndView adminCharacterView(HttpSession session) {
-		long gameId = (long) session.getAttribute(PageParamType.GAMEID_IN_SESSION);
 		ModelAndView mav = new ModelAndView("admin/admin-character");
-		mav.addAllObjects(playerService.getPlayerInfo(gameId));
-		mav.addAllObjects(gameService.getFormList(gameId));
+		long gameId = (long) session.getAttribute(PageParamType.GAMEID_IN_SESSION);
+		if(gameId > 0L){	
+			mav.addObject("gameId",gameId);
+			mav.addAllObjects(playerService.getPlayerInfo(gameId));
+			mav.addAllObjects(gameService.getFormList(gameId));		
+		}
 		mav.addAllObjects(basicService.getSessionUserService(session));
 		return mav;
 	}

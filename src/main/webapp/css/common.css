@@ -1,5 +1,9 @@
 @CHARSET "UTF-8";
 
+time{
+	margin-left:10px;
+}
+
 .header {
 	text-align: center;
 }
@@ -107,4 +111,16 @@
 
 #speech-list{
 	overflow-y:scroll;
+	max-height:400px;
+}
+
+.announce-box textarea{
+	width:80%;
+	height:100px;
+	display:inline-block;
+}
+
+.announce-box input[type=button]{
+	display:inline-block;
+	vertical-align:bottom;
 }
