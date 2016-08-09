@@ -39,22 +39,36 @@
           					<h2>角色发言</h2>
           					<ul class="am-comments-list am-comments-list-flip" id="speech-list">
           						<c:forEach items="${ speechList}" var="speech">
-          							<li class="am-comment"> 
-										<img src="http://q.qlogo.cn/qqapp/100229475/C06A0F683914D5FEEE6968887DDCF0AB/100" class="am-comment-avatar">
-									<div class="am-comment-main">
-										<header class="am-comment-hd">
-											<div class="am-comment-meta">
-											<a href="" class="am-comment-author">${speech.characterName}</a>
-											<time>${speech.createTime }</time>
+          							<c:choose>
+          								<c:when test="${ speech.type==3}">
+          									<li class="am-panel am-panel-default">
+          									<div class="am-panel-hd">游戏公告<time>${speech.createTime}</time></div>
+          									<div class="am-panel-bd">${speech.content }</div>
+          								</c:when>
+          								<c:otherwise>
+          									<li class="am-comment"> 
+												<img src="http://q.qlogo.cn/qqapp/100229475/C06A0F683914D5FEEE6968887DDCF0AB/100" class="am-comment-avatar">
+											<div class="am-comment-main">
+											<header class="am-comment-hd">
+												<div class="am-comment-meta">
+												<a href="" class="am-comment-author">${speech.characterName}</a>
+												<time>${speech.createTime }</time>
+												</div>
+											</header>
+											<div class="am-comment-bd 
+												<c:if test="${ speech.type == 2 }">
+													gesture-style
+												</c:if>
+												">${speech.content }</div>
 											</div>
-										</header>
-										<div class="am-comment-bd">${speech.content }</div>
-									</div>
-									<div class="am-btn-toolbar float-toolbar">
+          								</c:otherwise>
+          							</c:choose>
+          								<input type="hidden" value="${speech.id }">			
+										<div class="am-btn-toolbar float-toolbar">
 											<div class="am-btn-group am-btn-group-xs">
 												<button type="button" class="am-btn am-btn-default am-btn-xs am-text-secondary" title="统计字数" onclick=""><span class="am-icon-pencil-square-o"></span></button>
 												<button type="button" class="am-btn am-btn-default am-btn-xs" title="发送消息"><span class="am-icon-paper-plane-o"></span></button>
-												<button type="button" class="am-btn am-btn-default am-btn-xs am-text-danger" title="删除"><span class="am-icon-trash-o"></span></button>
+												<button type="button" class="am-btn am-btn-default am-btn-xs am-text-danger" title="删除" onclick="deleteSpeech(${speech.id})"><span class="am-icon-trash-o"></span></button>
 											</div>
 										</div>
 									</li>
@@ -382,19 +396,31 @@ function appendSpeech(speech){
 	if(speech.type == 3){
 		builder.append('<li class="am-panel am-panel-default">');
 		builder.appendFormat('<div class="am-panel-hd">游戏公告<time>{0}</time></div>',speech.createTime);
-		builder.appendFormat('<div class="am-panel-bd">{0}</div></li>',speech.content);	
+		builder.appendFormat('<div class="am-panel-bd">{0}</div>',speech.content);	
 	} else {
 		builder.append('<li class="am-comment">');
 		builder.appendFormat('<a href=""><img src="{0}" class="am-comment-avatar"></a>',speech.avatar);
 		builder.append('<div class="am-comment-main"><header class="am-comment-hd"><div class="am-comment-meta">');
 		builder.appendFormat('<a href="" class="am-comment-author">{0}</a><time>{1}</time></div></header>',speech.characterName,speech.createTime);
 		if(speech.type == 1){
-			builder.appendFormat('<div class="am-comment-bd">{0}</div></div></li>',speech.content)
+			builder.appendFormat('<div class="am-comment-bd">{0}</div></div>',speech.content)
 		}else{
-			builder.appendFormat('<div class="am-comment-bd gesture-style">{0}</div></div></li>',speech.content)
+			builder.appendFormat('<div class="am-comment-bd gesture-style">{0}</div></div>',speech.content)
 		}
 	}
+	builder.appendFormat('<input type="hidden" value="{0}">',speech.id);
+	builder.append('<div class="am-btn-toolbar float-toolbar">');
+	builder.append('<div class="am-btn-group am-btn-group-xs">');
+	builder.appendFormat('<button type="button" class="am-btn am-btn-default am-btn-xs am-text-secondary" title="统计字数" onclick=""><span class="am-icon-pencil-square-o"></span></button>');
+	builder.appendFormat('<button type="button" class="am-btn am-btn-default am-btn-xs" title="发送消息"><span class="am-icon-paper-plane-o"></span></button>');
+	builder.appendFormat('<button type="button" class="am-btn am-btn-default am-btn-xs am-text-danger" title="删除" onclick="deleteSpeech({0})"><span class="am-icon-trash-o"></span></button>',speech.id);
+	builder.append('</div></div></li>');
 	$("#speech-list").append(builder.toString());
+	$("#speech-list li:last-child").hover(function(){
+		$(this).find(".float-toolbar").stop().fadeIn();
+	},function(){
+		$(this).find(".float-toolbar").stop().fadeOut();
+	})
 	$("#speech-list").smoothScroll({
 		position: $("#speech-list")[0].scrollHeight,
 		speed: 800
@@ -417,6 +443,34 @@ function submitSpeech(){
 	var common = new Common();
 	common.callAction(options, url, function(data) {
 		
+	})
+}
+
+function deleteSpeech(speechId){
+	var url = "http://" + "${chatServer}" + "/deleteSpeech";
+	var options = {
+			gameId : gameId,
+			newspaperId : $('#announcement-list option:selected').val(),
+			speechId : speechId
+		}
+	var common = new Common();
+	common.callAction(options, url, function(data) {
+		if (!data) {
+			return;
+		}
+		switch (data.status) {
+		case 1:
+			$.each($("#speech-list li"),function(index,speech){
+				if($(speech).find("input[type='hidden']").val() == speechId){
+					$(speech).remove();
+					return false;
+				}
+			})
+			return;
+		default:
+			myAlert(data.message);
+			return;
+		}
 	})
 }
 

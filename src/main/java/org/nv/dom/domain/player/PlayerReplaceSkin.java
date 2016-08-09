@@ -6,6 +6,7 @@ public class PlayerReplaceSkin {
 	private long playerId;
 	private String characterName;
 	private String characterAvatar;
+	private Integer isMute;
 	public Integer getId() {
 		return id;
 	}
@@ -30,4 +31,11 @@ public class PlayerReplaceSkin {
 	public void setCharacterAvatar(String characterAvatar) {
 		this.characterAvatar = characterAvatar;
 	}
+	public Integer getIsMute() {
+		return isMute;
+	}
+	public void setIsMute(Integer isMute) {
+		this.isMute = isMute;
+	}
+	
 }

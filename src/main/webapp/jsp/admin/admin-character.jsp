@@ -121,8 +121,9 @@
 			 		<table class="am-table am-table-striped am-table-hover table-main">
 						<thead>
 							<tr>
-								<th width="180px">发言称呼</th>
-								<th width="180px">头像</th>
+								<th width="150px">发言称呼</th>
+								<th width="150px">头像</th>
+								<th>发言状态</th>
 								<th>操作</th>
 							</tr>
 						</thead>
@@ -132,6 +133,19 @@
 								<td><select data-am-selected>
 									
 								</select></td>
+								<td>
+								<div class="am-form-group"> 
+							<label class="am-radio-inline">
+       							<input type="radio" name="is-mute" value="1"> 禁言
+      						</label>
+      						<label class="am-radio-inline">
+        						<input type="radio" name="is-mute" value="0"> 正常
+      						</label>
+      						<label class="am-radio-inline">
+        						<input type="radio" name="is-mute" value="2"> 语无伦次
+      						</label>
+								</div>
+								</td>
 								<td>
 									<div class="am-btn-toolbar">
 										<div class="am-btn-group am-btn-group-xs">
@@ -267,17 +281,20 @@ function showReplacePanel(playerIndex){
 		switch (data.status) {
 		case 1:
 			var list = replacePanel.find("tbody");
- 			list.empty();
 			$.each(data.replaceList,function(index,skin){
 				var builder = new StringBuilder();
 				builder.appendFormat('<tr><td><input type="hidden" name="id" value={0}><input type="text" name="character-name" value={1}></td>',skin.id,skin.characterName);
 				builder.append(avatarList);
+				builder.append('<td><div class="am-form-group"><label class="am-radio-inline"><input type="radio" name="is-mute" value="1"> 禁言</label>');
+				builder.append('<label class="am-radio-inline"><input type="radio" name="is-mute" value="0"> 正常</label>');
+				builder.append('<label class="am-radio-inline"><input type="radio" name="is-mute" value="2"> 语无伦次</label></div></td>');
 				builder.appendFormat('<td><div class="am-btn-toolbar">' +
 				'<div class="am-btn-group am-btn-group-xs">' +
 				'<button type="button" class="am-btn am-btn-default am-btn-xs am-text-secondary" title="保存" onclick="saveReplaceSkin({0},{1})"><span class="am-icon-check-square-o"></span></button>'+							
 				'<button type="button" class="am-btn am-btn-default am-btn-xs am-text-danger" title="删除" onclick="deleteReplaceSkin({2},{3})"><span class="am-icon-trash-o"></span></button>'+								
 				'</div></div></td></tr>',playerIndex,index,playerIndex,index);
 				list.append(builder.toString());
+				list.find("tr eq:("+index+") input[name='is-mute']").val(skin.isMute);
 				list.find("select").eq(index).val(skin.characterAvatar).selected({maxHeight: '100px'});
 			})
 			replacePanel.find("input[name='create']").unbind("click").on("click",function(){saveReplaceSkin(playerIndex)});
@@ -299,6 +316,7 @@ function saveReplaceSkin(playerIndex,skinIndex){
 			playerId : players[playerIndex].playerId,
 			characterName : replacePanel.find("tbody").find("tr").eq(skinIndex).find("input[name='character-name']").val(),
 			characterAvatar : replacePanel.find("tbody").find("tr").eq(skinIndex).find("select").val(),
+			isMute : replacePanel.find("tbody").find("tr").eq(skinIndex).find("input[name='is-mute']").val(),
 	}: {
 			id : 0,
 			playerId : players[playerIndex].playerId
