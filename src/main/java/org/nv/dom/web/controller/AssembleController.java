@@ -42,5 +42,11 @@ public class AssembleController extends BaseController {
 	public Map<String, Object> getNewspaperDetail(@RequestParam("newspaperId") long newspaperId, HttpSession session) {
 		return assembleService.getNewspaperDetail(newspaperId);
 	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/wordCount", method = RequestMethod.POST)
+	public Map<String, Object> wordCount(@RequestParam("content") String content, HttpSession session) {
+		return assembleService.wordCount(content);
+	}
 
 }

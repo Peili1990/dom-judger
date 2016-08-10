@@ -16,7 +16,7 @@
 <![endif]-->
 
 <jsp:include page="../layout/header.jsp"></jsp:include>
-
+<jsp:include page="../layout/chat-panel.jsp"></jsp:include>
 <div class="am-cf admin-main">
  <jsp:include page="../layout/sider-bar.jsp"></jsp:include>
 
@@ -43,7 +43,7 @@
           								<c:when test="${ speech.type==3}">
           									<li class="am-panel am-panel-default">
           									<div class="am-panel-hd">游戏公告<time>${speech.createTime}</time></div>
-          									<div class="am-panel-bd">${speech.content }</div>
+          									<div class="am-panel-bd speech-tontent">${speech.content }</div>
           								</c:when>
           								<c:otherwise>
           									<li class="am-comment"> 
@@ -55,7 +55,7 @@
 												<time>${speech.createTime }</time>
 												</div>
 											</header>
-											<div class="am-comment-bd 
+											<div class="am-comment-bd speech-tontent
 												<c:if test="${ speech.type == 2 }">
 													gesture-style
 												</c:if>
@@ -66,7 +66,7 @@
           								<input type="hidden" value="${speech.id }">			
 										<div class="am-btn-toolbar float-toolbar">
 											<div class="am-btn-group am-btn-group-xs">
-												<button type="button" class="am-btn am-btn-default am-btn-xs am-text-secondary" title="统计字数" onclick=""><span class="am-icon-pencil-square-o"></span></button>
+												<button type="button" class="am-btn am-btn-default am-btn-xs am-text-secondary" title="统计字数" onclick="wordCount(this)"><span class="am-icon-pencil-square-o"></span></button>
 												<button type="button" class="am-btn am-btn-default am-btn-xs" title="发送消息"><span class="am-icon-paper-plane-o"></span></button>
 												<button type="button" class="am-btn am-btn-default am-btn-xs am-text-danger" title="删除" onclick="deleteSpeech(${speech.id})"><span class="am-icon-trash-o"></span></button>
 											</div>
@@ -396,22 +396,22 @@ function appendSpeech(speech){
 	if(speech.type == 3){
 		builder.append('<li class="am-panel am-panel-default">');
 		builder.appendFormat('<div class="am-panel-hd">游戏公告<time>{0}</time></div>',speech.createTime);
-		builder.appendFormat('<div class="am-panel-bd">{0}</div>',speech.content);	
+		builder.appendFormat('<div class="am-panel-bd speech-tontent">{0}</div>',speech.content);	
 	} else {
 		builder.append('<li class="am-comment">');
 		builder.appendFormat('<a href=""><img src="{0}" class="am-comment-avatar"></a>',speech.avatar);
 		builder.append('<div class="am-comment-main"><header class="am-comment-hd"><div class="am-comment-meta">');
 		builder.appendFormat('<a href="" class="am-comment-author">{0}</a><time>{1}</time></div></header>',speech.characterName,speech.createTime);
 		if(speech.type == 1){
-			builder.appendFormat('<div class="am-comment-bd">{0}</div></div>',speech.content)
+			builder.appendFormat('<div class="am-comment-bd speech-tontent">{0}</div></div>',speech.content)
 		}else{
-			builder.appendFormat('<div class="am-comment-bd gesture-style">{0}</div></div>',speech.content)
+			builder.appendFormat('<div class="am-comment-bd gesture-style speech-tontent">{0}</div></div>',speech.content)
 		}
 	}
 	builder.appendFormat('<input type="hidden" value="{0}">',speech.id);
 	builder.append('<div class="am-btn-toolbar float-toolbar">');
 	builder.append('<div class="am-btn-group am-btn-group-xs">');
-	builder.appendFormat('<button type="button" class="am-btn am-btn-default am-btn-xs am-text-secondary" title="统计字数" onclick=""><span class="am-icon-pencil-square-o"></span></button>');
+	builder.appendFormat('<button type="button" class="am-btn am-btn-default am-btn-xs am-text-secondary" title="统计字数" onclick="wordCount(this)"><span class="am-icon-pencil-square-o"></span></button>');
 	builder.appendFormat('<button type="button" class="am-btn am-btn-default am-btn-xs" title="发送消息"><span class="am-icon-paper-plane-o"></span></button>');
 	builder.appendFormat('<button type="button" class="am-btn am-btn-default am-btn-xs am-text-danger" title="删除" onclick="deleteSpeech({0})"><span class="am-icon-trash-o"></span></button>',speech.id);
 	builder.append('</div></div></li>');
@@ -472,6 +472,28 @@ function deleteSpeech(speechId){
 			return;
 		}
 	})
+}
+
+function wordCount(btn){	
+	var url = getRootPath() + "/assemble/wordCount";
+	var options = {
+			content:$(btn).parents("li").find(".speech-tontent").text()
+		}
+	var common = new Common();
+	common.callAction(options, url, function(data) {
+		if (!data) {
+			return;
+		}
+		switch (data.status) {
+		case 1:
+			myInfo("该发言共计："+data.wordCount+"字");
+			return;
+		default:
+			myAlert(data.message);
+			return;
+		}
+	})
+	
 }
 
 

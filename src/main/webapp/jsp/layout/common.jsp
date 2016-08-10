@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="${baseUrl}umeditor/themes/default/_css/umeditor.css">
 <link rel="stylesheet" href="${baseUrl}assets/css/amazeui.min.css"/>
 <link rel="stylesheet" href="${baseUrl}assets/css/admin.css">
+<link rel="stylesheet" type="text/css" href="${baseUrl}css/chat-panel.css">
 <link rel="stylesheet" type="text/css" href="${baseUrl}css/common.css">
 <script src="${baseUrl}js/common/jquery-1.11.3.min.js" type="text/javascript"></script>
 <script src="${baseUrl}js/common/reconnecting-websocket.min.js" type="text/javascript"></script>

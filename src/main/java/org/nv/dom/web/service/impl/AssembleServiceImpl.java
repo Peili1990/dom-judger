@@ -10,6 +10,7 @@ import org.nv.dom.config.PageParamType;
 import org.nv.dom.domain.message.speech.Speech;
 import org.nv.dom.domain.newspaper.Newspaper;
 import org.nv.dom.domain.player.PlayerInfo;
+import org.nv.dom.util.TextUtil;
 import org.nv.dom.web.dao.message.MessageMapper;
 import org.nv.dom.web.dao.newspaper.NewspaperMapper;
 import org.nv.dom.web.dao.player.PlayerMapper;
@@ -119,6 +120,22 @@ public class AssembleServiceImpl implements AssembleService {
 			result.put("newspaperId", newspaper.getNewspaperId());
 			result.put(PageParamType.BUSINESS_STATUS, 1);
 			result.put(PageParamType.BUSINESS_MESSAGE, "新增或更新报纸成功！");
+		}catch(Exception e){  
+			logger.error(e.getMessage(),e);
+			result.put(PageParamType.BUSINESS_STATUS, -1);
+			result.put(PageParamType.BUSINESS_MESSAGE, "系统异常");
+		}
+		return result;
+	}
+
+	@Override
+	public Map<String, Object> wordCount(String content) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		try{
+			Integer wordCount = TextUtil.wordCount(content);
+			result.put("wordCount", wordCount);
+			result.put(PageParamType.BUSINESS_STATUS, 1);
+			result.put(PageParamType.BUSINESS_MESSAGE, "字数统计成功");
 		}catch(Exception e){  
 			logger.error(e.getMessage(),e);
 			result.put(PageParamType.BUSINESS_STATUS, -1);
