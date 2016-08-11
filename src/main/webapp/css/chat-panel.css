@@ -16,7 +16,7 @@
         
         body
         {
-            background: radial-gradient(#ACBEC8, #3A4E57);
+/*             background: radial-gradient(#ACBEC8, #3A4E57); */
             margin: 0;
             width: 100%;
             height: 100%;
@@ -55,31 +55,97 @@
         
         .window
         {
-            width: 500px;
-            height: 300px;
-            background: #181818;
+            width: 443px;
+            height: 462px;     
+            background: white;
             left: 50%;
             position: absolute;
             z-index:99999;
+            border-radius: 6px;
+            border-left:1px solid #cccccc;
+            -webkit-box-shadow: 3px 3px 3px;  
+ 			-moz-box-shadow: 3px 3px 3px;  
+  			box-shadow: 3px 3px 3px; 
         }
         
         .pew
         {
             width: 100%;
-            height: 30px;
-            text-align: center;
+            height: 50px;
             line-height: 30px;
             color: #111;
-            background: #E31836;
+            background: white;
             cursor: default;
+            border-top:1px solid #cccccc;
+            border-bottom:1px solid #cccccc;
+            border-top-left-radius: 3px;
+            border-top-right-radius: 3px;
         }
         
         .container
         {
             width: 100%;
-            height: calc(100% - 30px);
-            color: #eee;
-            padding: 35px 0 0 0;
+            height: 252px;
+            color: black;
+            padding: 3px;
+            text-align: left;
+            font-size: 16px;
+            overflow-y: scroll
+        }
+        
+        .container p{
+        	margin:3px 20px;
+        }
+        
+        .container .self{
+        	color: green;
+        }
+        
+        .container .other{
+        	color:	blue;
+        }
+        
+        .base{
+        	width: 100%;
+            height: 160px;
             text-align: center;
-            font-size: 36px;
+            line-height: 30px;
+            color: #111;
+            background: white;
+            cursor: default;
+            border-top:1px solid #cccccc;
+            border-bottom-left-radius: 3px;
+            border-bottom-right-radius: 3px;
+        }
+        
+        .base textarea{
+        	width:100%;
+        	height:160px;
+        	border:none;
+        }
+        
+        .pew .cross{
+        	position: absolute;
+    		top: 4px;
+   			right: 4px;
+   			display: inline-block;
+    		text-align: center;
+    		width: 24px;
+    		font-size: 20px;
+    		font-weight: 700;
+    		line-height: 24px;
+    		color: #000;
+    		text-shadow: 0 1px 0 #fff;
+    		opacity: .2;
+    		-webkit-transition: all .3s;
+    		transition: all .3s;
+        }
+        
+        .pew .cross:hover{
+        	opacity: 1
+        }
+        
+        .pew p{
+        	color:#cccccc;
+        	margin:-8px 20px;
         }

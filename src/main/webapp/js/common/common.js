@@ -53,6 +53,35 @@ var Common = function() {
 
 };
 
+var Chat = function(){
+	this.clicked = "Nope.";
+	this.winx = "0";
+	this.winy = "0";
+	this.difx = 0;
+	this.dify = 0;
+	
+	this.newWindow = function(data){
+		var builder = new StringBuilder();
+		builder.appendFormat('<div class="window noselect" id="{0}">',"chat11");
+		builder.append('<div class="pew">');
+		builder.append('<span class="cross am-icon-close"></span>');
+		builder.appendFormat('<img src="{0}" class="am-comment-avatar">',null);
+		builder.appendFormat('<span>{0} -- {1}</span>',"2羽","在线");
+		builder.appendFormat('<p>{0}</p>',"<p>这个人很懒，什么都没写</p>");
+		builder.append('</div>');
+		builder.append('<div class="container"><ul>');
+		builder.append('</ul></div><div class="base"><textarea></textarea></div>');
+		$("#chat-pool").append(builder.toString());
+		$("#chat11 .pew").mousedown(function() {
+		    this.clicked = "Yeah.";
+		});
+		$("#chat11 .cross").click(function(){
+			$("#chat11").remove();
+		})
+	}
+	
+} 
+
 /** * 日期格式化 ** */
 Date.prototype.format = function(fmt) {
 	var o = {
@@ -157,6 +186,21 @@ String.prototype.endsWith = function(str) {
 	var reg = new RegExp(str + "$");
 	return reg.test(this);
 };
+
+Array.prototype.indexOf = function(val) {  
+    for (var i = 0; i < this.length; i++) {  
+        if (this[i] == val) return i;  
+    }  
+    return -1;  
+};  
+
+Array.prototype.remove = function(val) {  
+    var index = this.indexOf(val);  
+    while(index>-1){  
+        this.splice(index, 1);  
+        index = this.indexOf(val);  
+    }  
+};  
 
 function StringBuilder() {
 	this._buffers = [];
@@ -634,3 +678,5 @@ function recoverTag(input){
 		return "";
 	return input.replace(/\n|\r\n/g,"<br>");
 }
+
+

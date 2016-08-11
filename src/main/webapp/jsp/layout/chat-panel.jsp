@@ -1,54 +1,74 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+<div id="chat-pool">
 
-<div class="window noselect">
-        <div class="pew">
-            Header
-        </div>
-        <div class="container">
-            The Cords
-        </div>
 </div>
 
-<script type="text/javascript">
 
-var clicked = "Nope.";
-var mausx = "0";
-var mausy = "0";
-var winx = "0";
-var winy = "0";
-var difx = mausx - winx;
-var dify = mausy - winy;
+<!-- <div class="window noselect"> -->
+<!--         <div class="pew"> -->
+<!--             <span class="cross am-icon-close"></span> -->
+<!--             <img src="http://q.qlogo.cn/qqapp/100229475/C06A0F683914D5FEEE6968887DDCF0AB/100" class="am-comment-avatar"> -->
+<!--         	<span>2羽</span> -->
+<!--         	<p>这个人很懒，什么都没写</p> -->
+<!--         </div> -->
+<!--         <div class="container"> -->
+<!--             <ul> -->
+<!--             	<li> -->
+<!--             		<span class="self">小风 <time>2016/8/11 11:29:47</time></span> -->
+<!--             		<p>反馈：死亡请留遗言</p> -->
+<!--             	</li> -->
+<!--             	<li> -->
+<!--             		<span class="other">2羽<time>2016/8/11 11:29:47</time></span> -->
+<!--             		<p>遗言：我是好人啊！</p> -->
+<!--             	</li> -->
+<!--             </ul> -->
+<!--         </div> -->
+<!--         <div class="base"> -->
+<!--         	<textarea></textarea> -->
+<!--         </div> -->
+<!-- </div> -->
+
+<script type="text/javascript">
+var windows = [];
+var chat = new Chat();
+chat.newWindow();
+$("#chat11 .pew").mousedown(function() {
+    chat.clicked = "Yeah.";
+});
+$("#chat11 .cross").click(function(){
+	$("#chat11").remove();
+	windows.remove(chat);
+})
+windows.push(chat);
 
 $("html").mousemove(function (event) {
-    mausx = event.pageX;
+	if(windows.length == 0) return;
+	mausx = event.pageX;
     mausy = event.pageY;
-    winx = $(".window").offset().left;
-    winy = $(".window").offset().top;
-    if (clicked == "Nope.") {
-        difx = mausx - winx;
-        dify = mausy - winy;
-    }
-
-    var newx = event.pageX - difx - $(".window").css("marginLeft").replace('px', '');
-    var newy = event.pageY - dify - $(".window").css("marginTop").replace('px', '');
-    newx = newx < 0 ? 0 : newx;
-    newx = newx > $(window).width()-$(".window").width() ? $(window).width()-$(".window").width() : newx;
-    newy = newy < 0 ? 0 : newy;
-    newy = newy > $(window).height()-$(".window").height() ? $(window).height()-$(".window").height() : newy;
-    $(".window").css({ top: newy, left: newx });
-
-    $(".container").html("Mouse Cords: " + parseFloat($(window).width()-$(".window").width()) + " , " + newx + "<br />" + "Window Cords:" + winx + " , " + winy + "<br />Draggin'?: " + clicked + "<br />Difference: " + difx + " , " + dify + "");
-});
-
-$(".pew").mousedown(function (event) {
-    clicked = "Yeah.";
+	$.each($(windows),function(index,win){
+		panel = $("#chat-pool .window:eq("+index+")")
+		win.winx = panel.offset().left;
+		win.winy = panel.offset().top;
+		if(win.clicked == "Nope."){
+			win.difx = mausx-win.winx;
+			win.dify = mausy-win.winy;
+		}
+		win.newx = event.pageX - win.difx - panel.css("marginLeft").replace('px', '');
+		win.newy = event.pageY - win.dify - panel.css("marginTop").replace('px', '');
+		win.newx = win.newx < 0 ? 0 : win.newx;
+		win.newx = win.newx > $(window).width() - panel.width()-3 ? $(window).width() - panel.width()-3 : win.newx;
+		win.newy = win.newy < 0 ? 0 : win.newy;
+		win.newy = win.newy > $(document).height()-panel.height() ? $(document).height()-panel.height() : win.newy;
+		panel.css({ top: win.newy, left: win.newx });
+    });
 });
 
 $("html").mouseup(function (event) {
-
-    clicked = "Nope.";
+	$.each($(windows),function(index,win){
+		win.clicked = "Nope.";
+	})
 });
 
 </script>

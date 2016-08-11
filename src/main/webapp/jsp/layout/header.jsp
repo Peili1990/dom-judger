@@ -49,5 +49,9 @@
 			break;
 		}
 	};
+	
+	function establishChat(playerId){
+		
+	}
 
 </script>
