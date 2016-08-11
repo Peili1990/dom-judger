@@ -34,10 +34,10 @@
     	<div class="am-u-sm-12 am-u-md-5 am-u-md-push-7"> 
       		<div class="am-panel am-panel-default">
           		<div class="am-panel-bd">
-          			<c:choose>
-          				<c:when test="${ speechList != null}">
-          					<h2>角色发言</h2>
-          					<ul class="am-comments-list am-comments-list-flip" id="speech-list">
+          			<h2>角色发言</h2>
+          			<ul class="am-comments-list am-comments-list-flip" id="speech-list">
+          				<c:choose>
+          					<c:when test="${ speechList != null}">
           						<c:forEach items="${ speechList}" var="speech">
           							<c:choose>
           								<c:when test="${ speech.type==3}">
@@ -72,17 +72,21 @@
 											</div>
 										</div>
 									</li>
-          						</c:forEach>       					
-          					</ul>
-          					<form class="am-form am-form-horizontal announce-box">
-          						<textarea placeholder="游戏内公告发布内容"></textarea>
-          						<input type="button" class="am-btn am-btn-primary" value="发送" onclick="submitSpeech()">
-          					</form>			
-          				</c:when>
-          				<c:otherwise>
-          					没有相关发言
-          				</c:otherwise>
-          			</c:choose>
+          						</c:forEach> 
+          					</c:when>
+          					<c:otherwise>
+          						没有相关发言
+          					</c:otherwise>
+          				</c:choose>      					
+          			</ul>
+          			<form class="am-form am-form-horizontal announce-box 
+          				<c:if test="${speechList == null }">
+          					invisible
+          				</c:if>
+          				">
+          				<textarea placeholder="游戏内公告发布内容"></textarea>
+          				<input type="button" class="am-btn am-btn-primary" value="发送" onclick="submitSpeech()">
+          			</form>			
           		</div>
          	</div>
     	</div>
@@ -373,6 +377,16 @@ function switchNewspaper(){
 			$("#newspaper-content").append(builder.toString());
 			if(newspaperDetail.seatTable){
 				$("#seat-table-content").html(newspaperDetail.seatTable);
+			}
+			if(data.speechList!=null){
+				$("#speech-list").empty();
+				$.each(data.speechList,function(index,speech){
+					appendSpeech(speech);
+				})
+				$(".announce-box").removeClass("invisible");
+			} else{
+				$("#speech-list").empty().text("没有相关发言");
+				$(".announce-box").addClass("invisible");
 			}
 			showNewspaperContent();
 			return;
