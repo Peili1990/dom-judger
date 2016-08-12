@@ -32,16 +32,19 @@
 
 <script type="text/javascript">
 var windows = [];
-var chat = new Chat();
-chat.newWindow();
-$("#chat11 .pew").mousedown(function() {
-    chat.clicked = "Yeah.";
-});
-$("#chat11 .cross").click(function(){
-	$("#chat11").remove();
-	windows.remove(chat);
-})
-windows.push(chat);
+
+function createChat(chatInfo){
+	var chat = new Chat();
+	chat.newWindow(chatInfo);
+	$("#"+chatInfo.chatId+" .pew").mousedown(function() {
+	    chat.clicked = "Yeah.";
+	});
+	$("#"+chatInfo.chatId+" .cross").click(function(){
+		$("#"+chatInfo.chatId).remove();
+		windows.remove(chat);
+	})
+	windows.push(chat);
+}
 
 $("html").mousemove(function (event) {
 	if(windows.length == 0) return;

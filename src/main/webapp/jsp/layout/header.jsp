@@ -51,7 +51,25 @@
 	};
 	
 	function establishChat(playerId){
-		
+		var common = new Common();
+		var url = "http://" + "${chatServer}" + "/getConnectionInfo";
+		var options = {
+			toPlayerId : playerId
+		}; 
+		var common = new Common();
+		common.callAction(options, url, function(data) {
+			if (!data) {
+				return;
+			}
+			switch (data.status) {
+			case 1:
+				createChat(data.chatInfo);
+				return;
+			default:
+				myAlert(data.message);
+				return;
+			}
+		})
 	}
 
 </script>

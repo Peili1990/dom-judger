@@ -60,24 +60,18 @@ var Chat = function(){
 	this.difx = 0;
 	this.dify = 0;
 	
-	this.newWindow = function(data){
+	this.newWindow = function(chatInfo){
 		var builder = new StringBuilder();
-		builder.appendFormat('<div class="window noselect" id="{0}">',"chat11");
+		builder.appendFormat('<div class="window noselect" id="{0}">',chatInfo.chatId);
 		builder.append('<div class="pew">');
 		builder.append('<span class="cross am-icon-close"></span>');
-		builder.appendFormat('<img src="{0}" class="am-comment-avatar">',null);
-		builder.appendFormat('<span>{0} -- {1}</span>',"2羽","在线");
-		builder.appendFormat('<p>{0}</p>',"<p>这个人很懒，什么都没写</p>");
+		builder.appendFormat('<img src="{0}" class="am-comment-avatar">',chatInfo.toUserAvatar);
+		builder.appendFormat('<span>{0}</span>',chatInfo.toUserNickname);
+		builder.appendFormat('<p>{0}</p>',chatInfo.toUserMotto);
 		builder.append('</div>');
 		builder.append('<div class="container"><ul>');
 		builder.append('</ul></div><div class="base"><textarea></textarea></div>');
 		$("#chat-pool").append(builder.toString());
-		$("#chat11 .pew").mousedown(function() {
-		    this.clicked = "Yeah.";
-		});
-		$("#chat11 .cross").click(function(){
-			$("#chat11").remove();
-		})
 	}
 	
 } 
@@ -660,6 +654,12 @@ function changeGameStatus(gameId,status){
 			return;
 		}
 	})
+}
+
+function timeoutHandle(){
+	myInfo("登录超时",function(){
+		window.location = getRootPath() + "/index";
+	});
 }
 
 function randomsort(a, b) {
