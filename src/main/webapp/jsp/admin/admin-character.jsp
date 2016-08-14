@@ -77,7 +77,7 @@
 													<div class="am-btn-toolbar">
 														<div class="am-btn-group am-btn-group-xs">
 															<button type="button" class="am-btn am-btn-default am-btn-xs am-text-secondary" title="更改状态" onclick="showPlayerStatus(${playerStatus.index})"><span class="am-icon-pencil-square-o"></span></button>
-															<button type="button" class="am-btn am-btn-default am-btn-xs" title="发送消息" onclick="establishChat(${player.playerId})"><span class="am-icon-paper-plane-o"></span></button>
+															<button type="button" class="am-btn am-btn-default am-btn-xs" title="发送消息" onclick="establishChat(${player.playerId},'player')"><span class="am-icon-paper-plane-o"></span></button>
 															<div class="am-dropdown 
 															<c:if test="${fn:length(playerList) - playerStatus.index <=3 }">
 															 am-dropdown-up

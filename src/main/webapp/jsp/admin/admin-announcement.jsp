@@ -67,7 +67,7 @@
 										<div class="am-btn-toolbar float-toolbar">
 											<div class="am-btn-group am-btn-group-xs">
 												<button type="button" class="am-btn am-btn-default am-btn-xs am-text-secondary" title="统计字数" onclick="wordCount(this)"><span class="am-icon-pencil-square-o"></span></button>
-												<button type="button" class="am-btn am-btn-default am-btn-xs" title="发送消息"><span class="am-icon-paper-plane-o"></span></button>
+												<button type="button" class="am-btn am-btn-default am-btn-xs" title="发送消息" onclick="establishChat(${speech.playerId},'player')"><span class="am-icon-paper-plane-o"></span></button>
 												<button type="button" class="am-btn am-btn-default am-btn-xs am-text-danger" title="删除" onclick="deleteSpeech(${speech.id})"><span class="am-icon-trash-o"></span></button>
 											</div>
 										</div>
@@ -426,7 +426,7 @@ function appendSpeech(speech){
 	builder.append('<div class="am-btn-toolbar float-toolbar">');
 	builder.append('<div class="am-btn-group am-btn-group-xs">');
 	builder.appendFormat('<button type="button" class="am-btn am-btn-default am-btn-xs am-text-secondary" title="统计字数" onclick="wordCount(this)"><span class="am-icon-pencil-square-o"></span></button>');
-	builder.appendFormat('<button type="button" class="am-btn am-btn-default am-btn-xs" title="发送消息"><span class="am-icon-paper-plane-o"></span></button>');
+	builder.appendFormat('<button type="button" class="am-btn am-btn-default am-btn-xs" title="发送消息" onclick="establishChat(${0},{1})"><span class="am-icon-paper-plane-o"></span></button>',speech.playerId,"player");
 	builder.appendFormat('<button type="button" class="am-btn am-btn-default am-btn-xs am-text-danger" title="删除" onclick="deleteSpeech({0})"><span class="am-icon-trash-o"></span></button>',speech.id);
 	builder.append('</div></div></li>');
 	$("#speech-list").append(builder.toString());

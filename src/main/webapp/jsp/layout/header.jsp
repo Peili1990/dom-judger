@@ -28,6 +28,7 @@
 
 <script type="text/javascript">
   	var userId = ${user.id}
+  	var db = getCurrentDb(userId);
   	var webSocket = new ReconnectingWebSocket( 'ws://'+'${chatServer}'+'/websocket/'+userId);
   	
   	webSocket.onerror = function(event) {
@@ -50,20 +51,26 @@
 		}
 	};
 	
-	function establishChat(playerId){
+	function establishChat(id,type){
 		var common = new Common();
 		var url = "http://" + "${chatServer}" + "/getConnectionInfo";
 		var options = {
-			toPlayerId : playerId
-		}; 
-		var common = new Common();
+				fromUserId : userId
+		};
+		if(type=="user"){
+			options.toUserId = id;	
+		} else if(type=="player"){
+			options.toPlayerId = id;
+		}
 		common.callAction(options, url, function(data) {
 			if (!data) {
 				return;
 			}
 			switch (data.status) {
 			case 1:
-				createChat(data.chatInfo);
+				if(type=="player"){
+					createChat(data.chatInfo);
+				}
 				return;
 			default:
 				myAlert(data.message);

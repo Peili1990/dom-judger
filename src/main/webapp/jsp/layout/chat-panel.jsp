@@ -43,6 +43,18 @@ function createChat(chatInfo){
 		$("#"+chatInfo.chatId).remove();
 		windows.remove(chat);
 	})
+	$("#"+chatInfo.chatId).find("textarea").keydown(function(event){
+		if(event.ctrlKey && event.keyCode == 13){
+			$(this).text+="\r\n";
+		} else if(event.keyCode == 13) {
+			sendMessage(chatInfo,recoverTag($(this).val().trim()));
+		}
+	}).keyup(function(event){
+		if(event.keyCode == 13 &&!event.ctrlKey){
+			$(this).val("")
+		}
+	})
+	
 	windows.push(chat);
 }
 
@@ -73,5 +85,52 @@ $("html").mouseup(function (event) {
 		win.clicked = "Nope.";
 	})
 });
+
+function sendMessage(chatInfo,content){
+	if(content=="") return;
+	var url = "http://" + "${chatServer}" + "/sendMessage";
+	var options = {
+			chatId : chatInfo.chatId,
+			toUserId : chatInfo.toUserId,
+			content : content
+	}
+	var common = new Common();
+	common.callAction(options, url, function(data) {
+		if (!data) {
+			return;
+		}
+		switch (data.status) {
+		case 1:
+			db.transaction(function (trans) {
+                trans.executeSql("insert into chat_record_"+userId+"(chatId,userId,content,createTime) values(?,?,?,?) ", [chatInfo.chatId, userId, content, data.chatDetail.createTime], function (ts, data1) {
+                }, function (ts, message) {
+                    myAlert(message);
+                });
+            });
+			appendChat(chatInfo,data.chatDetail);
+			return;
+		default:
+			myAlert(data.message);
+			return;
+		}
+	})
+}
+
+function appendChat(chatInfo,chatDetail){
+	var builder = new StringBuilder();
+	builder.append('<li>');
+	if(chatDetail.toUserId == userId){
+		builder.appendFormat( '<span class="other">{0} ',chatInfo.toUserNickname);
+	} else {
+		builder.append('<span class="self">我 ');
+	}
+	builder.appendFormat('<time>{0}</time></span>',chatDetail.createTime);
+	builder.appendFormat('<p>{0}</p></li>',chatDetail.content);
+	$("#"+chatInfo.chatId).find("ul").append(builder.toString());
+	$("#"+chatInfo.chatId+" .container").smoothScroll({
+		position: $("#"+chatInfo.chatId+" .container")[0].scrollHeight,
+		speed: 800
+	});
+}
 
 </script>

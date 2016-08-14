@@ -102,7 +102,7 @@
                 				<div class="am-btn-toolbar">
                   				  <div class="am-btn-group am-btn-group-xs">
                     				<button type="button" class="am-btn am-btn-default am-btn-xs am-text-secondary" title="查看版杀记录"><span class="am-icon-pencil-square-o"></span></button>
-                   					<button type="button" class="am-btn am-btn-default am-btn-xs" title="发送消息"><span class="am-icon-paper-plane-o"></span></button>
+                   					<button type="button" class="am-btn am-btn-default am-btn-xs" title="发送消息" onclick="establishChat(${player.playerId},'player')"><span class="am-icon-paper-plane-o"></span></button>
                    					<c:if test="${ applyingGame.gameStatus == 1 }">
                     					<button type="button" class="am-btn am-btn-default am-btn-xs am-text-danger" title="踢出游戏" onclick="myPrompt('被踢出的玩家将无法再次报名本次版杀<br/>请输入踢出理由','kickPlayer(${player.playerId})')"><span class="am-icon-trash-o"></span></button>
                   				  	</c:if>
