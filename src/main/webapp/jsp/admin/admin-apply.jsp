@@ -16,7 +16,7 @@
 <![endif]-->
 
 <jsp:include page="../layout/header.jsp"></jsp:include>
-
+<jsp:include page="../layout/chat-panel.jsp"></jsp:include>
 <div class="am-cf admin-main">
   <jsp:include page="../layout/sider-bar.jsp"></jsp:include>
 

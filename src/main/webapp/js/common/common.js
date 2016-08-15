@@ -688,7 +688,7 @@ function getCurrentDb(userId) {
     	return;
     }
     db.transaction(function (trans) {
-    	trans.executeSql("create table if not exists chat_record_"+userId+"(chatId text null,userId text null,content text null,createTime text null)", [], function (trans, result) {	
+    	trans.executeSql("create table if not exists chat_record_"+userId+"(chatId,userId,content,createTime)", [], function (trans, result) {	
     	},function(trans, result){},function(trans, message){myAlert(message)});
     },function(trans, result){},function(){})//启动一个事务，并设置回调函数
        

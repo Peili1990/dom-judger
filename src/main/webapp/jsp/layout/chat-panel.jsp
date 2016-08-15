@@ -36,6 +36,12 @@ var windows = [];
 function createChat(chatInfo){
 	var chat = new Chat();
 	chat.newWindow(chatInfo);
+	$("#"+chatInfo.chatId).on("click",function(){
+		$.each($(".window"),function(index,win){
+			$(win).css({"z-index":"1000"});
+		})
+		$(this).css({"z-index":"1001"});
+	})
 	$("#"+chatInfo.chatId+" .pew").mousedown(function() {
 	    chat.clicked = "Yeah.";
 	});
@@ -75,7 +81,7 @@ $("html").mousemove(function (event) {
 		win.newx = win.newx < 0 ? 0 : win.newx;
 		win.newx = win.newx > $(window).width() - panel.width()-3 ? $(window).width() - panel.width()-3 : win.newx;
 		win.newy = win.newy < 0 ? 0 : win.newy;
-		win.newy = win.newy > $(document).height()-panel.height() ? $(document).height()-panel.height() : win.newy;
+		win.newy = win.newy > $(document).height()-panel.height()-3 ? $(document).height()-panel.height()-3 : win.newy;
 		panel.css({ top: win.newy, left: win.newx });
     });
 });
@@ -92,6 +98,7 @@ function sendMessage(chatInfo,content){
 	var options = {
 			chatId : chatInfo.chatId,
 			toUserId : chatInfo.toUserId,
+			fromUserId : userId,
 			content : content
 	}
 	var common = new Common();
