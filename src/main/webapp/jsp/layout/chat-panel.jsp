@@ -36,6 +36,13 @@ var windows = [];
 function createChat(chatInfo){
 	var chat = new Chat();
 	chat.newWindow(chatInfo);
+	db.transaction(function (trans) {
+        trans.executeSql("select * from chat_record_"+userId+" where chatId = ? order by createTime desc limit 10 ", [chatId], function (ts, webData) {
+        	
+        }, function (ts, message) {
+            myAlert(message);
+        });
+    });
 	$("#"+chatInfo.chatId).on("click",function(){
 		$.each($(".window"),function(index,win){
 			$(win).css({"z-index":"1000"});
@@ -114,7 +121,7 @@ function sendMessage(chatInfo,content){
                     myAlert(message);
                 });
             });
-			appendChat(chatInfo,data.chatDetail);
+			appendChat(data.chatDetail);
 			return;
 		default:
 			myAlert(data.message);
@@ -123,19 +130,19 @@ function sendMessage(chatInfo,content){
 	})
 }
 
-function appendChat(chatInfo,chatDetail){
+function appendChat(chatDetail){
 	var builder = new StringBuilder();
 	builder.append('<li>');
 	if(chatDetail.toUserId == userId){
-		builder.appendFormat( '<span class="other">{0} ',chatInfo.toUserNickname);
+		builder.appendFormat( '<span class="other">{0} ',$("#"+chatDetail.chatId+" .pew span:eq(1)").text());
 	} else {
 		builder.append('<span class="self">我 ');
 	}
 	builder.appendFormat('<time>{0}</time></span>',chatDetail.createTime);
 	builder.appendFormat('<p>{0}</p></li>',chatDetail.content);
-	$("#"+chatInfo.chatId).find("ul").append(builder.toString());
-	$("#"+chatInfo.chatId+" .container").smoothScroll({
-		position: $("#"+chatInfo.chatId+" .container")[0].scrollHeight,
+	$("#"+chatDetail.chatId).find("ul").append(builder.toString());
+	$("#"+chatDetail.chatId+" .container").smoothScroll({
+		position: $("#"+chatDetail.chatId+" .container")[0].scrollHeight,
 		speed: 800
 	});
 }

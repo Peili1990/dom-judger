@@ -46,6 +46,9 @@
 				appendSpeech(content);
 			}
 			break;
+		case "chat":
+			dealChat(content);
+			break;
 		default:
 			break;
 		}
@@ -77,6 +80,12 @@
 				return;
 			}
 		})
+	}
+	
+	function dealChat(chatDetail){
+		if($("#"+chatDetail.chatId).is(":visible")){
+			appendChat(chatDetail);
+		}
 	}
 
 </script>
