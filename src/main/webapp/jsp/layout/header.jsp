@@ -10,7 +10,16 @@
   <div class="am-collapse am-topbar-collapse" id="topbar-collapse">
 
     <ul class="am-nav am-nav-pills am-topbar-nav am-topbar-right admin-header-list">
-      <li><a href="javascript:;"><span class="am-icon-envelope-o"></span> 收件箱 <span class="am-badge am-badge-warning">5</span></a></li>
+      <li class="am-dropdown" id="chat-list" data-am-dropdown>
+      	<a class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
+      		<span class="am-icon-envelope-o"></span> 收件箱 <span class="am-badge am-badge-warning">5</span>
+     	</a>
+     	<ul class="am-dropdown-content">
+          <li><a> 资料<span class="am-badge am-badge-warning float">1</span></a></li>
+          <li><a> 资料<span class="am-badge am-badge-warning float">2</span></a></li>
+          <li><a> 资料<span class="am-badge am-badge-warning float">3</span></a></li>
+        </ul>
+      </li>
       <li class="am-dropdown" data-am-dropdown>
         <a class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
           <span class="am-icon-users"></span> 管理员 <span class="am-icon-caret-down"></span>
@@ -82,10 +91,31 @@
 		})
 	}
 	
+	function saveChatToDB(chatDetail,speaker){
+		db.transaction(function (trans) {
+            trans.executeSql("insert into chat_record_"+userId+"(chatId,userId,content,createTime) values(?,?,?,?) ", [chatDetail.chatId, speaker, chatDetail.content, chatDetail.createTime], function (ts, data1) {
+            }, function (ts, message) {
+                myAlert(message);
+            });
+        });
+	}
+	
 	function dealChat(chatDetail){
+		saveChatToDB(chatDetail,chatDetail.fromUserId);
 		if($("#"+chatDetail.chatId).is(":visible")){
 			appendChat(chatDetail);
+		} else {
+			chatId = chatDetail.chatId;
+			chatMessage = getCache("nv_chat"+chatId);
+			setCache("nv_chat"+chatId,chatMessage ? ++chatMessage : 1);
+			unreadChat = getCache("nv_offline_chat"+userId);
+			setCache("nv_offline_chat"+userId,unreadChat ? ++unreadChat : 1);
+			setRedspot();
 		}
+	}
+	
+	function setRedspot(){
+		
 	}
 
 </script>

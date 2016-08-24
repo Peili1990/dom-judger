@@ -696,3 +696,21 @@ function getCurrentDb(userId) {
     return db;
 }
 
+function setCache(name, value){
+	var storage = window.localStorage; 
+	if (storage) { 
+        storage.setItem(name, value);   
+    } else { 
+    	setCookie(name, value, "3d");
+    } 
+}
+
+function getCache(name){
+	var storage = window.localStorage; 
+	if (storage) { 
+        return storage.getItem(name);   
+    } else { 
+    	return getCookie(name);
+    } 
+}
+

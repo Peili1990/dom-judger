@@ -72,6 +72,10 @@ time{
 	font-style: italic
 }
 
+.float{
+	float:right
+}
+
 #newspaper-content td{
 	width:100px;
 }

@@ -115,12 +115,7 @@ function sendMessage(chatInfo,content){
 		}
 		switch (data.status) {
 		case 1:
-			db.transaction(function (trans) {
-                trans.executeSql("insert into chat_record_"+userId+"(chatId,userId,content,createTime) values(?,?,?,?) ", [chatInfo.chatId, userId, content, data.chatDetail.createTime], function (ts, data1) {
-                }, function (ts, message) {
-                    myAlert(message);
-                });
-            });
+			saveChatToDB(data.chatDetail,userId);
 			appendChat(data.chatDetail);
 			return;
 		default:
