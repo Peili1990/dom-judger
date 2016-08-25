@@ -90,6 +90,13 @@ public class IndexController extends BaseController {
 		return mav;
 	}
 	
+	@RequestMapping(value = "/admin-settlement", method = RequestMethod.GET)
+	public ModelAndView adminSettlementView(HttpSession session) {
+		ModelAndView mav = new ModelAndView("admin/admin-settlement");
+		mav.addAllObjects(basicService.getSessionUserService(session));
+		return mav;
+	}
+	
 	
 
 }

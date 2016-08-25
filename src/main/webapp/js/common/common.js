@@ -59,10 +59,11 @@ var Chat = function(){
 	this.winy = "0";
 	this.difx = 0;
 	this.dify = 0;
+	this.pageNum = 0;
 	
 	this.newWindow = function(chatInfo){
 		var builder = new StringBuilder();
-		builder.appendFormat('<div class="window noselect" id="{0}">',chatInfo.chatId);
+		builder.appendFormat('<div class="window noselect" style="top:{0}" id="{1}">',$(document).scrollTop()+100+"px", chatInfo.chatId);
 		builder.append('<div class="pew">');
 		builder.append('<span class="cross am-icon-close"></span>');
 		builder.appendFormat('<img src="{0}" class="am-comment-avatar">',chatInfo.toUserAvatar);
@@ -713,4 +714,50 @@ function getCache(name){
     	return getCookie(name);
     } 
 }
+
+function delCache(name){
+	var storage = window.localStorage; 
+	if (storage) { 
+        return storage.removeItem(name);   
+    } else { 
+    	return delCookie(name);
+    } 
+}
+
+function getCookie(name) {
+	var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+	if (arr = document.cookie.match(reg))
+		return unescape(arr[2]);
+	else
+		return null;
+}
+
+function delCookie(name) {
+	var exp = new Date();
+	exp.setTime(exp.getTime() - 1);
+	var cval = getCookie(name);
+	if (cval != null)
+		document.cookie = name + "=" + cval + ";expires=" + exp.toGMTString();
+}
+
+function setCookie(name, value, time) {
+	var strsec = getsec(time);
+	var exp = new Date();
+	exp.setTime(exp.getTime() + strsec * 1);
+	document.cookie = name + "=" + escape(value) + ";expires="
+			+ exp.toGMTString();
+}
+
+function getsec(str) {
+	var str1 = str.substring(0, str.length-1) * 1;
+	var str2 = str.substring(str.length-1, str.length);
+	if (str2 == "s") {
+		return str1 * 1000;
+	} else if (str2 == "h") {
+		return str1 * 60 * 60 * 1000;
+	} else if (str2 == "d") {
+		return str1 * 24 * 60 * 60 * 1000;
+	}
+}
+
 

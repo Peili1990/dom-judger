@@ -10,14 +10,12 @@
   <div class="am-collapse am-topbar-collapse" id="topbar-collapse">
 
     <ul class="am-nav am-nav-pills am-topbar-nav am-topbar-right admin-header-list">
-      <li class="am-dropdown" id="chat-list" data-am-dropdown>
+      <li class="am-dropdown" data-am-dropdown>
       	<a class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
-      		<span class="am-icon-envelope-o"></span> 收件箱 <span class="am-badge am-badge-warning">5</span>
+      		<span class="am-icon-envelope-o"></span> 收件箱 <span id="unread-chat-num" class="am-badge am-badge-warning invisible">5</span>
      	</a>
-     	<ul class="am-dropdown-content">
-          <li><a> 资料<span class="am-badge am-badge-warning float">1</span></a></li>
-          <li><a> 资料<span class="am-badge am-badge-warning float">2</span></a></li>
-          <li><a> 资料<span class="am-badge am-badge-warning float">3</span></a></li>
+     	<ul class="am-dropdown-content" id="chat-list">
+        	<li><a>暂无未读消息</a></li>
         </ul>
       </li>
       <li class="am-dropdown" data-am-dropdown>
@@ -45,6 +43,13 @@
 	};
 
 	webSocket.onopen = function(event) {
+		refresh = getCookie("refresh");
+		if(!refresh){
+			getOfflineMessage();
+		} else {
+			setRedspot();
+		}
+		
 	}
 
 	webSocket.onmessage = function(event) {
@@ -62,6 +67,43 @@
 			break;
 		}
 	};
+	
+	$(window).bind('unload', function(e) {
+		setCookie("refresh",true,"5s");
+	});
+	
+	function getOfflineMessage(){
+		var url = getRootPath() + "/getOfflineMessage";
+		var common = new Common();
+		common.callAction(null, url, function(data) {
+			if(!data){
+				return;
+			}
+			switch (data.status){
+			case 1:
+				totalChat = getCache("nv_offline_chat"+userId);
+				setCache("nv_offline_chat"+userId,totalChat > 0 ? parseInt(totalChat)+parseInt(data.offlineChat.length) : parseInt(data.offlineChat.length));
+				$.each(data.offlineChat,function(index,chat){
+					chatMessage = getCache("nv_chat"+chat.chatId);
+					setCache("nv_chat"+chat.chatId, chatMessage > 0 ? ++chatMessage : 1);
+					db.transaction(function (trans) {
+			            trans.executeSql("insert into chat_record_"+userId+"(chatId,userId,content,createTime) values(?,?,?,?) ", [chat.chatId, chat.fromUserId, chat.content, chat.createTime], function (ts, data1) {
+			            }, function (ts, message) {
+			                myAlert(message);
+			            });
+			        });
+				})
+				setRedspot();
+				return;
+			case 0:
+				timeoutHandle();
+				return;
+			default:
+				myAlert(data.message);
+				return;
+			}	
+		});
+	}
 	
 	function establishChat(id,type){
 		var common = new Common();
@@ -103,7 +145,7 @@
 	function dealChat(chatDetail){
 		saveChatToDB(chatDetail,chatDetail.fromUserId);
 		if($("#"+chatDetail.chatId).is(":visible")){
-			appendChat(chatDetail);
+			appendChat(chatDetail,false,true);
 		} else {
 			chatId = chatDetail.chatId;
 			chatMessage = getCache("nv_chat"+chatId);
@@ -115,7 +157,62 @@
 	}
 	
 	function setRedspot(){
-		
+		db.transaction(function (trans) {
+            trans.executeSql("select chatId, content, max(createTime), count(distinct chatId) from chat_record_"+userId+" group by chatId", [], function (ts, webData) {
+            	if(webData){
+           			var chatIdList = [];
+           			for(var i=0;i<webData.rows.length;i++){
+           				if(getCache("nv_chat"+webData.rows.item(i).chatId)){
+           					chatIdList.push(webData.rows.item(i).chatId)
+           				}
+           			}
+           			if(chatIdList.length>0){
+           				var url = getRootPath() + "/getChatInfo";
+           				var common = new Common();
+           				common.callAction(JSON.stringify(chatIdList), url, function(data) {
+           					if(!data){
+           						return;
+           					}
+           					switch (data.status){
+           					case 1:
+           						$("#chat-list").empty();
+           						$.each(data.chatList,function(index,chatInfo){
+           							chatMessage = getCache("nv_chat"+chatInfo.chatId);
+           							var builder = new StringBuilder();
+           							builder.appendFormat('<li><a><img src="{0}"> {1}<span class="am-badge am-badge-warning float">{2}</span></a></li>',chatInfo.toUserAvatar,chatInfo.toUserNickname,chatMessage);
+           							$("#chat-list").append(builder.toString());
+           							$("#chat-list li:last-child").click(function(){
+           								createChat(chatInfo);
+           								$(this).addClass("invisible");
+           								delCache("nv_chat"+chatInfo.chatId);
+           								setCache("nv_offline_chat"+userId,getCache("nv_offline_chat"+userId)-chatMessage);
+           								setTotalRedspot();
+           							})
+           						})    
+           						setTotalRedspot();
+           						return;
+           					case 0:
+           						timeoutHandle();
+           						return;
+           					default:
+           						myAlert(data.message);
+           						return;
+           					}
+           				},"application/json;charset=utf-8")
+            		}
+            	}
+            }, function (ts, message) {myAlert(message)})
+		})
+	}
+	
+	function setTotalRedspot(){
+		unreadChat = getCache("nv_offline_chat"+userId) ? getCache("nv_offline_chat"+userId) : 0;
+		if(unreadChat>0){
+			$("#unread-chat-num").text(unreadChat).removeClass("invisible");
+		} else {
+			$("#chat-list").append("<li><a>暂无未读消息</a></li>")
+			$("#unread-chat-num").addClass("invisible");
+		}
 	}
 
 </script>

@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
-import org.nv.dom.config.NVTermConstant;
 import org.nv.dom.config.PageParamType;
 import org.nv.dom.domain.player.PlayerInfo;
 import org.nv.dom.domain.player.PlayerReplaceSkin;

@@ -145,3 +145,12 @@ time{
 	position: relative;
 	border:none;
 }
+
+#chat-list img{
+	width:30px;
+	height:30px;
+}
+
+#chat-list .float{
+	margin-top:5px;
+}

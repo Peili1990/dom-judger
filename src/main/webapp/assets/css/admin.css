@@ -27,7 +27,6 @@ ul {
   width: 260px;
   min-height: 100%;
   float: left;
-  border-right: 1px solid #cecece;
 }
 
 .admin-sidebar-list {
@@ -60,6 +59,7 @@ ul {
 }
 
 .admin-content {
+  border-left: 1px solid #cccccc;	
   width: auto;
   overflow: hidden;
   height: 100%;
