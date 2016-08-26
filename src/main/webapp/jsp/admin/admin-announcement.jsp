@@ -170,7 +170,7 @@
               						<div id="error-msg"></div>
               							<button type="button" class="am-btn am-btn-primary" onclick="saveNewspaper(1)">发布公告</button>
               							<button type="button" class="am-btn am-btn-danger" onclick="saveNewspaper(0)">保存草稿</button>
-              							<button type="button" class="am-btn am-btn-warning" onclick="generateSeatTable()">生成座位表</button>
+              							<button type="button" class="am-btn am-btn-warning" onclick="generateSeatTable()">生成座位表</button>              						
            							 </div>
           						</div>
   							</form>
@@ -506,7 +506,6 @@ function wordCount(btn){
 	})
 	
 }
-
 
 </script>
 

@@ -281,20 +281,21 @@ function showReplacePanel(playerIndex){
 		switch (data.status) {
 		case 1:
 			var list = replacePanel.find("tbody");
+			list.empty();
 			$.each(data.replaceList,function(index,skin){
 				var builder = new StringBuilder();
 				builder.appendFormat('<tr><td><input type="hidden" name="id" value={0}><input type="text" name="character-name" value={1}></td>',skin.id,skin.characterName);
 				builder.append(avatarList);
-				builder.append('<td><div class="am-form-group"><label class="am-radio-inline"><input type="radio" name="is-mute" value="1"> 禁言</label>');
-				builder.append('<label class="am-radio-inline"><input type="radio" name="is-mute" value="0"> 正常</label>');
-				builder.append('<label class="am-radio-inline"><input type="radio" name="is-mute" value="2"> 语无伦次</label></div></td>');
+				builder.appendFormat('<td><div class="am-form-group"><label class="am-radio-inline"><input type="radio" name="is-mute-{0}" value="0"> 正常</label>',index);
+				builder.appendFormat('<label class="am-radio-inline"><input type="radio" name="is-mute-{0}" value="1"> 禁言</label>',index);
+				builder.appendFormat('<label class="am-radio-inline"><input type="radio" name="is-mute-{0}" value="2"> 语无伦次</label></div></td>',index);
 				builder.appendFormat('<td><div class="am-btn-toolbar">' +
 				'<div class="am-btn-group am-btn-group-xs">' +
 				'<button type="button" class="am-btn am-btn-default am-btn-xs am-text-secondary" title="保存" onclick="saveReplaceSkin({0},{1})"><span class="am-icon-check-square-o"></span></button>'+							
 				'<button type="button" class="am-btn am-btn-default am-btn-xs am-text-danger" title="删除" onclick="deleteReplaceSkin({2},{3})"><span class="am-icon-trash-o"></span></button>'+								
 				'</div></div></td></tr>',playerIndex,index,playerIndex,index);
 				list.append(builder.toString());
-				list.find("tr eq:("+index+") input[name='is-mute']").val(skin.isMute);
+				list.find("input[name='is-mute-"+index+"'][value="+skin.isMute+"]").attr("checked",true);
 				list.find("select").eq(index).val(skin.characterAvatar).selected({maxHeight: '100px'});
 			})
 			replacePanel.find("input[name='create']").unbind("click").on("click",function(){saveReplaceSkin(playerIndex)});
@@ -316,10 +317,12 @@ function saveReplaceSkin(playerIndex,skinIndex){
 			playerId : players[playerIndex].playerId,
 			characterName : replacePanel.find("tbody").find("tr").eq(skinIndex).find("input[name='character-name']").val(),
 			characterAvatar : replacePanel.find("tbody").find("tr").eq(skinIndex).find("select").val(),
-			isMute : replacePanel.find("tbody").find("tr").eq(skinIndex).find("input[name='is-mute']").val(),
+			isMute : replacePanel.find("input[name='is-mute-"+skinIndex+"']:checked").val(),
 	}: {
 			id : 0,
-			playerId : players[playerIndex].playerId
+			characterName : "新称呼",			
+			playerId : players[playerIndex].playerId,
+			isMute : 0
 	}
 	common.callAction(options,url,function(data){
 		if (!data) {

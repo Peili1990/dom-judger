@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50624
 File Encoding         : 65001
 
-Date: 2016-08-15 18:44:55
+Date: 2016-08-26 18:37:35
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -101,13 +101,15 @@ CREATE TABLE `d_form` (
   `create_time` datetime DEFAULT NULL,
   `update_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of d_form
 -- ----------------------------
 INSERT INTO `d_form` VALUES ('28', '1', '游戏开始前', '[{\"playerId\":5,\"characterName\":\"珀利\",\"isSp\":\"0\",\"sign\":null,\"identityDesc\":\"杀手（毒药瓶）\",\"camp\":2,\"isLife\":1,\"isMute\":0,\"action\":\"\",\"privilege\":\"\",\"feedback\":\"\",\"vote\":\"\",\"submitTime\":null,\"remark\":\"\"},{\"playerId\":8,\"characterName\":\"sp伊卡\",\"isSp\":\"1\",\"sign\":null,\"identityDesc\":\"官员\",\"camp\":1,\"isLife\":1,\"isMute\":0,\"action\":\"\",\"privilege\":\"\",\"feedback\":\"\",\"vote\":\"\",\"submitTime\":null,\"remark\":\"\"},{\"playerId\":10,\"characterName\":\"山纳\",\"isSp\":\"0\",\"sign\":null,\"identityDesc\":\"暴徒\",\"camp\":2,\"isLife\":1,\"isMute\":0,\"action\":\"查验A\",\"privilege\":\"\",\"feedback\":\"\",\"vote\":\"\",\"submitTime\":null,\"remark\":\"\"},{\"playerId\":11,\"characterName\":\"sp哈代\",\"isSp\":\"1\",\"sign\":null,\"identityDesc\":\"平民\",\"camp\":1,\"isLife\":1,\"isMute\":0,\"action\":\"\",\"privilege\":\"\",\"feedback\":\"\",\"vote\":\"\",\"submitTime\":null,\"remark\":\"\"},{\"playerId\":12,\"characterName\":\"爱德华\",\"isSp\":\"0\",\"sign\":null,\"identityDesc\":\"先驱\",\"camp\":1,\"isLife\":1,\"isMute\":0,\"action\":\"\",\"privilege\":\"\",\"feedback\":\"\",\"vote\":\"\",\"submitTime\":null,\"remark\":\"\"},{\"playerId\":13,\"characterName\":\"叶什（妹）\",\"isSp\":\"0\",\"sign\":null,\"identityDesc\":\"巫师\",\"camp\":2,\"isLife\":1,\"isMute\":0,\"action\":\"\",\"privilege\":\"\",\"feedback\":\"\",\"vote\":\"\",\"submitTime\":null,\"remark\":\"\"},{\"playerId\":14,\"characterName\":\"卓尔\",\"isSp\":\"0\",\"sign\":null,\"identityDesc\":\"间谍\",\"camp\":2,\"isLife\":1,\"isMute\":0,\"action\":\"\",\"privilege\":\"\",\"feedback\":\"\",\"vote\":\"\",\"submitTime\":null,\"remark\":\"\"},{\"playerId\":15,\"characterName\":\"白瑞摩\",\"isSp\":\"0\",\"sign\":null,\"identityDesc\":\"警察（雨伞）\",\"camp\":1,\"isLife\":1,\"isMute\":0,\"action\":\"\",\"privilege\":\"\",\"feedback\":\"\",\"vote\":\"\",\"submitTime\":null,\"remark\":\"\"},{\"playerId\":16,\"characterName\":\"赫本\",\"isSp\":\"0\",\"sign\":null,\"identityDesc\":\"平民\",\"camp\":1,\"isLife\":1,\"isMute\":0,\"action\":\"\",\"privilege\":\"\",\"feedback\":\"\",\"vote\":\"\",\"submitTime\":null,\"remark\":\"\"},{\"playerId\":17,\"characterName\":\"安德安纳\",\"isSp\":\"0\",\"sign\":null,\"identityDesc\":\"医生\",\"camp\":1,\"isLife\":1,\"isMute\":0,\"action\":\"\",\"privilege\":\"\",\"feedback\":\"\",\"vote\":\"\",\"submitTime\":null,\"remark\":\"\"},{\"playerId\":18,\"characterName\":\"科尔比\",\"isSp\":\"0\",\"sign\":null,\"identityDesc\":\"刺客\",\"camp\":1,\"isLife\":1,\"isMute\":0,\"action\":\"\",\"privilege\":\"\",\"feedback\":\"\",\"vote\":\"\",\"submitTime\":null,\"remark\":\"\"},{\"playerId\":19,\"characterName\":\"斯达福斯\",\"isSp\":\"0\",\"sign\":null,\"identityDesc\":\"杀手（手枪）\",\"camp\":2,\"isLife\":1,\"isMute\":0,\"action\":\"\",\"privilege\":\"\",\"feedback\":\"\",\"vote\":\"\",\"submitTime\":null,\"remark\":\"\"},{\"playerId\":20,\"characterName\":\"伊奥克\",\"isSp\":\"0\",\"sign\":null,\"identityDesc\":\"平民\",\"camp\":1,\"isLife\":1,\"isMute\":0,\"action\":\"\",\"privilege\":\"\",\"feedback\":\"\",\"vote\":\"\",\"submitTime\":null,\"remark\":\"\"},{\"playerId\":21,\"characterName\":\"奎勒\",\"isSp\":\"0\",\"sign\":null,\"identityDesc\":\"平民\",\"camp\":1,\"isLife\":1,\"isMute\":0,\"action\":\"\",\"privilege\":\"\",\"feedback\":\"\",\"vote\":\"\",\"submitTime\":null,\"remark\":\"\"},{\"playerId\":22,\"characterName\":\"厄金特\",\"isSp\":\"0\",\"sign\":null,\"identityDesc\":\"警察（放大镜）\",\"camp\":1,\"isLife\":1,\"isMute\":0,\"action\":\"\",\"privilege\":\"\",\"feedback\":\"\",\"vote\":\"\",\"submitTime\":null,\"remark\":\"\"},{\"playerId\":23,\"characterName\":\"sp叶什（兄）\",\"isSp\":\"1\",\"sign\":null,\"identityDesc\":\"小偷\",\"camp\":2,\"isLife\":1,\"isMute\":0,\"action\":\"\",\"privilege\":\"\",\"feedback\":\"\",\"vote\":\"\",\"submitTime\":null,\"remark\":\"\"},{\"playerId\":24,\"characterName\":\"温切斯特\",\"isSp\":\"0\",\"sign\":null,\"identityDesc\":\"牧师\",\"camp\":1,\"isLife\":1,\"isMute\":0,\"action\":\"\",\"privilege\":\"\",\"feedback\":\"\",\"vote\":\"\",\"submitTime\":null,\"remark\":\"\"},{\"playerId\":25,\"characterName\":\"昆西\",\"isSp\":\"0\",\"sign\":null,\"identityDesc\":\"平民\",\"camp\":1,\"isLife\":1,\"isMute\":0,\"action\":\"\",\"privilege\":\"\",\"feedback\":\"\",\"vote\":\"\",\"submitTime\":null,\"remark\":\"\"},{\"playerId\":26,\"characterName\":\"马丁\",\"isSp\":\"0\",\"sign\":null,\"identityDesc\":\"帮众\",\"camp\":2,\"isLife\":1,\"isMute\":0,\"action\":\"\",\"privilege\":\"\",\"feedback\":\"\",\"vote\":\"\",\"submitTime\":null,\"remark\":\"\"}]', '2016-07-25 18:04:41', '2016-07-25 18:05:09');
 INSERT INTO `d_form` VALUES ('29', '1', '第一夜', null, '2016-07-25 18:05:09', null);
+INSERT INTO `d_form` VALUES ('30', '1', '游戏开始前', null, '2016-08-18 15:09:25', null);
+INSERT INTO `d_form` VALUES ('31', '1', '游戏开始前', null, '2016-08-26 18:27:44', null);
 
 -- ----------------------------
 -- Table structure for `d_game`
@@ -130,7 +132,7 @@ CREATE TABLE `d_game` (
 -- ----------------------------
 -- Records of d_game
 -- ----------------------------
-INSERT INTO `d_game` VALUES ('1', '16NV', 'B', '19', '4', '2016-07-15', null, null, null, null);
+INSERT INTO `d_game` VALUES ('1', '16NV', 'B', '22', '4', '2016-07-15', null, null, null, null);
 INSERT INTO `d_game` VALUES ('5', '20NV', 'A', '19', '1', '2016-07-26', null, null, '132697360', '');
 
 -- ----------------------------
@@ -190,9 +192,9 @@ CREATE TABLE `d_offline_message` (
   `from_user_id` bigint(11) DEFAULT NULL,
   `to_user_id` bigint(11) DEFAULT NULL,
   `content` text,
-  `create_time` datetime DEFAULT NULL,
+  `create_time` varchar(64) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of d_offline_message
@@ -209,7 +211,7 @@ CREATE TABLE `d_offline_speech` (
   `speech_id` bigint(11) DEFAULT NULL,
   `newspaper_id` bigint(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1825 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1979 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of d_offline_speech
@@ -223,7 +225,6 @@ INSERT INTO `d_offline_speech` VALUES ('1071', '14', '107', '2');
 INSERT INTO `d_offline_speech` VALUES ('1072', '16', '107', '2');
 INSERT INTO `d_offline_speech` VALUES ('1073', '17', '107', '2');
 INSERT INTO `d_offline_speech` VALUES ('1074', '18', '107', '2');
-INSERT INTO `d_offline_speech` VALUES ('1076', '20', '107', '2');
 INSERT INTO `d_offline_speech` VALUES ('1077', '21', '107', '2');
 INSERT INTO `d_offline_speech` VALUES ('1078', '3', '108', '2');
 INSERT INTO `d_offline_speech` VALUES ('1084', '9', '108', '2');
@@ -234,7 +235,6 @@ INSERT INTO `d_offline_speech` VALUES ('1089', '14', '108', '2');
 INSERT INTO `d_offline_speech` VALUES ('1090', '16', '108', '2');
 INSERT INTO `d_offline_speech` VALUES ('1091', '17', '108', '2');
 INSERT INTO `d_offline_speech` VALUES ('1092', '18', '108', '2');
-INSERT INTO `d_offline_speech` VALUES ('1094', '20', '108', '2');
 INSERT INTO `d_offline_speech` VALUES ('1095', '21', '108', '2');
 INSERT INTO `d_offline_speech` VALUES ('1096', '3', '109', '2');
 INSERT INTO `d_offline_speech` VALUES ('1102', '9', '109', '2');
@@ -245,7 +245,6 @@ INSERT INTO `d_offline_speech` VALUES ('1107', '14', '109', '2');
 INSERT INTO `d_offline_speech` VALUES ('1108', '16', '109', '2');
 INSERT INTO `d_offline_speech` VALUES ('1109', '17', '109', '2');
 INSERT INTO `d_offline_speech` VALUES ('1110', '18', '109', '2');
-INSERT INTO `d_offline_speech` VALUES ('1112', '20', '109', '2');
 INSERT INTO `d_offline_speech` VALUES ('1113', '21', '109', '2');
 INSERT INTO `d_offline_speech` VALUES ('1114', '3', '110', '2');
 INSERT INTO `d_offline_speech` VALUES ('1120', '9', '110', '2');
@@ -256,7 +255,6 @@ INSERT INTO `d_offline_speech` VALUES ('1125', '14', '110', '2');
 INSERT INTO `d_offline_speech` VALUES ('1126', '16', '110', '2');
 INSERT INTO `d_offline_speech` VALUES ('1127', '17', '110', '2');
 INSERT INTO `d_offline_speech` VALUES ('1128', '18', '110', '2');
-INSERT INTO `d_offline_speech` VALUES ('1130', '20', '110', '2');
 INSERT INTO `d_offline_speech` VALUES ('1131', '21', '110', '2');
 INSERT INTO `d_offline_speech` VALUES ('1132', '3', '111', '2');
 INSERT INTO `d_offline_speech` VALUES ('1138', '9', '111', '2');
@@ -267,7 +265,6 @@ INSERT INTO `d_offline_speech` VALUES ('1143', '14', '111', '2');
 INSERT INTO `d_offline_speech` VALUES ('1145', '16', '111', '2');
 INSERT INTO `d_offline_speech` VALUES ('1146', '17', '111', '2');
 INSERT INTO `d_offline_speech` VALUES ('1147', '18', '111', '2');
-INSERT INTO `d_offline_speech` VALUES ('1149', '20', '111', '2');
 INSERT INTO `d_offline_speech` VALUES ('1150', '21', '111', '2');
 INSERT INTO `d_offline_speech` VALUES ('1151', '3', '112', '2');
 INSERT INTO `d_offline_speech` VALUES ('1157', '9', '112', '2');
@@ -278,7 +275,6 @@ INSERT INTO `d_offline_speech` VALUES ('1162', '14', '112', '2');
 INSERT INTO `d_offline_speech` VALUES ('1164', '16', '112', '2');
 INSERT INTO `d_offline_speech` VALUES ('1165', '17', '112', '2');
 INSERT INTO `d_offline_speech` VALUES ('1166', '18', '112', '2');
-INSERT INTO `d_offline_speech` VALUES ('1168', '20', '112', '2');
 INSERT INTO `d_offline_speech` VALUES ('1169', '21', '112', '2');
 INSERT INTO `d_offline_speech` VALUES ('1170', '3', '113', '2');
 INSERT INTO `d_offline_speech` VALUES ('1176', '9', '113', '2');
@@ -289,7 +285,6 @@ INSERT INTO `d_offline_speech` VALUES ('1181', '14', '113', '2');
 INSERT INTO `d_offline_speech` VALUES ('1183', '16', '113', '2');
 INSERT INTO `d_offline_speech` VALUES ('1184', '17', '113', '2');
 INSERT INTO `d_offline_speech` VALUES ('1185', '18', '113', '2');
-INSERT INTO `d_offline_speech` VALUES ('1187', '20', '113', '2');
 INSERT INTO `d_offline_speech` VALUES ('1188', '21', '113', '2');
 INSERT INTO `d_offline_speech` VALUES ('1189', '3', '114', '2');
 INSERT INTO `d_offline_speech` VALUES ('1195', '9', '114', '2');
@@ -300,7 +295,6 @@ INSERT INTO `d_offline_speech` VALUES ('1200', '14', '114', '2');
 INSERT INTO `d_offline_speech` VALUES ('1201', '16', '114', '2');
 INSERT INTO `d_offline_speech` VALUES ('1202', '17', '114', '2');
 INSERT INTO `d_offline_speech` VALUES ('1203', '18', '114', '2');
-INSERT INTO `d_offline_speech` VALUES ('1205', '20', '114', '2');
 INSERT INTO `d_offline_speech` VALUES ('1206', '21', '114', '2');
 INSERT INTO `d_offline_speech` VALUES ('1207', '3', '115', '2');
 INSERT INTO `d_offline_speech` VALUES ('1213', '9', '115', '2');
@@ -311,7 +305,6 @@ INSERT INTO `d_offline_speech` VALUES ('1218', '14', '115', '2');
 INSERT INTO `d_offline_speech` VALUES ('1220', '16', '115', '2');
 INSERT INTO `d_offline_speech` VALUES ('1221', '17', '115', '2');
 INSERT INTO `d_offline_speech` VALUES ('1222', '18', '115', '2');
-INSERT INTO `d_offline_speech` VALUES ('1224', '20', '115', '2');
 INSERT INTO `d_offline_speech` VALUES ('1225', '21', '115', '2');
 INSERT INTO `d_offline_speech` VALUES ('1226', '3', '116', '2');
 INSERT INTO `d_offline_speech` VALUES ('1232', '9', '116', '2');
@@ -322,7 +315,6 @@ INSERT INTO `d_offline_speech` VALUES ('1237', '14', '116', '2');
 INSERT INTO `d_offline_speech` VALUES ('1239', '16', '116', '2');
 INSERT INTO `d_offline_speech` VALUES ('1240', '17', '116', '2');
 INSERT INTO `d_offline_speech` VALUES ('1241', '18', '116', '2');
-INSERT INTO `d_offline_speech` VALUES ('1243', '20', '116', '2');
 INSERT INTO `d_offline_speech` VALUES ('1244', '21', '116', '2');
 INSERT INTO `d_offline_speech` VALUES ('1245', '3', '117', '2');
 INSERT INTO `d_offline_speech` VALUES ('1251', '9', '117', '2');
@@ -333,7 +325,6 @@ INSERT INTO `d_offline_speech` VALUES ('1256', '14', '117', '2');
 INSERT INTO `d_offline_speech` VALUES ('1257', '16', '117', '2');
 INSERT INTO `d_offline_speech` VALUES ('1258', '17', '117', '2');
 INSERT INTO `d_offline_speech` VALUES ('1259', '18', '117', '2');
-INSERT INTO `d_offline_speech` VALUES ('1261', '20', '117', '2');
 INSERT INTO `d_offline_speech` VALUES ('1262', '21', '117', '2');
 INSERT INTO `d_offline_speech` VALUES ('1263', '3', '118', '2');
 INSERT INTO `d_offline_speech` VALUES ('1269', '9', '118', '2');
@@ -344,7 +335,6 @@ INSERT INTO `d_offline_speech` VALUES ('1274', '14', '118', '2');
 INSERT INTO `d_offline_speech` VALUES ('1275', '16', '118', '2');
 INSERT INTO `d_offline_speech` VALUES ('1276', '17', '118', '2');
 INSERT INTO `d_offline_speech` VALUES ('1277', '18', '118', '2');
-INSERT INTO `d_offline_speech` VALUES ('1279', '20', '118', '2');
 INSERT INTO `d_offline_speech` VALUES ('1280', '21', '118', '2');
 INSERT INTO `d_offline_speech` VALUES ('1281', '3', '119', '2');
 INSERT INTO `d_offline_speech` VALUES ('1287', '9', '119', '2');
@@ -355,7 +345,6 @@ INSERT INTO `d_offline_speech` VALUES ('1292', '14', '119', '2');
 INSERT INTO `d_offline_speech` VALUES ('1293', '16', '119', '2');
 INSERT INTO `d_offline_speech` VALUES ('1294', '17', '119', '2');
 INSERT INTO `d_offline_speech` VALUES ('1295', '18', '119', '2');
-INSERT INTO `d_offline_speech` VALUES ('1297', '20', '119', '2');
 INSERT INTO `d_offline_speech` VALUES ('1298', '21', '119', '2');
 INSERT INTO `d_offline_speech` VALUES ('1299', '3', '120', '2');
 INSERT INTO `d_offline_speech` VALUES ('1305', '9', '120', '2');
@@ -366,7 +355,6 @@ INSERT INTO `d_offline_speech` VALUES ('1310', '14', '120', '2');
 INSERT INTO `d_offline_speech` VALUES ('1311', '16', '120', '2');
 INSERT INTO `d_offline_speech` VALUES ('1312', '17', '120', '2');
 INSERT INTO `d_offline_speech` VALUES ('1313', '18', '120', '2');
-INSERT INTO `d_offline_speech` VALUES ('1315', '20', '120', '2');
 INSERT INTO `d_offline_speech` VALUES ('1316', '21', '120', '2');
 INSERT INTO `d_offline_speech` VALUES ('1317', '3', '121', '2');
 INSERT INTO `d_offline_speech` VALUES ('1323', '9', '121', '2');
@@ -377,7 +365,6 @@ INSERT INTO `d_offline_speech` VALUES ('1328', '14', '121', '2');
 INSERT INTO `d_offline_speech` VALUES ('1329', '16', '121', '2');
 INSERT INTO `d_offline_speech` VALUES ('1330', '17', '121', '2');
 INSERT INTO `d_offline_speech` VALUES ('1331', '18', '121', '2');
-INSERT INTO `d_offline_speech` VALUES ('1333', '20', '121', '2');
 INSERT INTO `d_offline_speech` VALUES ('1334', '21', '121', '2');
 INSERT INTO `d_offline_speech` VALUES ('1335', '3', '122', '2');
 INSERT INTO `d_offline_speech` VALUES ('1341', '9', '122', '2');
@@ -388,7 +375,6 @@ INSERT INTO `d_offline_speech` VALUES ('1346', '14', '122', '2');
 INSERT INTO `d_offline_speech` VALUES ('1347', '16', '122', '2');
 INSERT INTO `d_offline_speech` VALUES ('1348', '17', '122', '2');
 INSERT INTO `d_offline_speech` VALUES ('1349', '18', '122', '2');
-INSERT INTO `d_offline_speech` VALUES ('1351', '20', '122', '2');
 INSERT INTO `d_offline_speech` VALUES ('1352', '21', '122', '2');
 INSERT INTO `d_offline_speech` VALUES ('1354', '3', '123', '2');
 INSERT INTO `d_offline_speech` VALUES ('1360', '9', '123', '2');
@@ -399,7 +385,6 @@ INSERT INTO `d_offline_speech` VALUES ('1365', '14', '123', '2');
 INSERT INTO `d_offline_speech` VALUES ('1366', '16', '123', '2');
 INSERT INTO `d_offline_speech` VALUES ('1367', '17', '123', '2');
 INSERT INTO `d_offline_speech` VALUES ('1368', '18', '123', '2');
-INSERT INTO `d_offline_speech` VALUES ('1370', '20', '123', '2');
 INSERT INTO `d_offline_speech` VALUES ('1371', '21', '123', '2');
 INSERT INTO `d_offline_speech` VALUES ('1374', '3', '124', '2');
 INSERT INTO `d_offline_speech` VALUES ('1380', '8', '124', '2');
@@ -411,7 +396,6 @@ INSERT INTO `d_offline_speech` VALUES ('1386', '14', '124', '2');
 INSERT INTO `d_offline_speech` VALUES ('1388', '16', '124', '2');
 INSERT INTO `d_offline_speech` VALUES ('1389', '17', '124', '2');
 INSERT INTO `d_offline_speech` VALUES ('1390', '18', '124', '2');
-INSERT INTO `d_offline_speech` VALUES ('1391', '20', '124', '2');
 INSERT INTO `d_offline_speech` VALUES ('1392', '21', '124', '2');
 INSERT INTO `d_offline_speech` VALUES ('1394', '3', '125', '2');
 INSERT INTO `d_offline_speech` VALUES ('1400', '8', '125', '2');
@@ -423,7 +407,6 @@ INSERT INTO `d_offline_speech` VALUES ('1406', '14', '125', '2');
 INSERT INTO `d_offline_speech` VALUES ('1408', '16', '125', '2');
 INSERT INTO `d_offline_speech` VALUES ('1409', '17', '125', '2');
 INSERT INTO `d_offline_speech` VALUES ('1410', '18', '125', '2');
-INSERT INTO `d_offline_speech` VALUES ('1411', '20', '125', '2');
 INSERT INTO `d_offline_speech` VALUES ('1412', '21', '125', '2');
 INSERT INTO `d_offline_speech` VALUES ('1414', '3', '126', '2');
 INSERT INTO `d_offline_speech` VALUES ('1420', '8', '126', '2');
@@ -435,7 +418,6 @@ INSERT INTO `d_offline_speech` VALUES ('1426', '14', '126', '2');
 INSERT INTO `d_offline_speech` VALUES ('1428', '16', '126', '2');
 INSERT INTO `d_offline_speech` VALUES ('1429', '17', '126', '2');
 INSERT INTO `d_offline_speech` VALUES ('1430', '18', '126', '2');
-INSERT INTO `d_offline_speech` VALUES ('1431', '20', '126', '2');
 INSERT INTO `d_offline_speech` VALUES ('1432', '21', '126', '2');
 INSERT INTO `d_offline_speech` VALUES ('1434', '3', '127', '2');
 INSERT INTO `d_offline_speech` VALUES ('1440', '8', '127', '2');
@@ -447,7 +429,6 @@ INSERT INTO `d_offline_speech` VALUES ('1446', '14', '127', '2');
 INSERT INTO `d_offline_speech` VALUES ('1447', '16', '127', '2');
 INSERT INTO `d_offline_speech` VALUES ('1448', '17', '127', '2');
 INSERT INTO `d_offline_speech` VALUES ('1449', '18', '127', '2');
-INSERT INTO `d_offline_speech` VALUES ('1450', '20', '127', '2');
 INSERT INTO `d_offline_speech` VALUES ('1451', '21', '127', '2');
 INSERT INTO `d_offline_speech` VALUES ('1454', '3', '128', '2');
 INSERT INTO `d_offline_speech` VALUES ('1460', '8', '128', '2');
@@ -459,7 +440,6 @@ INSERT INTO `d_offline_speech` VALUES ('1466', '14', '128', '2');
 INSERT INTO `d_offline_speech` VALUES ('1467', '16', '128', '2');
 INSERT INTO `d_offline_speech` VALUES ('1468', '17', '128', '2');
 INSERT INTO `d_offline_speech` VALUES ('1469', '18', '128', '2');
-INSERT INTO `d_offline_speech` VALUES ('1470', '20', '128', '2');
 INSERT INTO `d_offline_speech` VALUES ('1471', '21', '128', '2');
 INSERT INTO `d_offline_speech` VALUES ('1474', '3', '129', '2');
 INSERT INTO `d_offline_speech` VALUES ('1480', '8', '129', '2');
@@ -471,7 +451,6 @@ INSERT INTO `d_offline_speech` VALUES ('1486', '14', '129', '2');
 INSERT INTO `d_offline_speech` VALUES ('1487', '16', '129', '2');
 INSERT INTO `d_offline_speech` VALUES ('1488', '17', '129', '2');
 INSERT INTO `d_offline_speech` VALUES ('1489', '18', '129', '2');
-INSERT INTO `d_offline_speech` VALUES ('1490', '20', '129', '2');
 INSERT INTO `d_offline_speech` VALUES ('1491', '21', '129', '2');
 INSERT INTO `d_offline_speech` VALUES ('1494', '3', '130', '2');
 INSERT INTO `d_offline_speech` VALUES ('1500', '8', '130', '2');
@@ -483,7 +462,6 @@ INSERT INTO `d_offline_speech` VALUES ('1506', '14', '130', '2');
 INSERT INTO `d_offline_speech` VALUES ('1508', '16', '130', '2');
 INSERT INTO `d_offline_speech` VALUES ('1509', '17', '130', '2');
 INSERT INTO `d_offline_speech` VALUES ('1510', '18', '130', '2');
-INSERT INTO `d_offline_speech` VALUES ('1511', '20', '130', '2');
 INSERT INTO `d_offline_speech` VALUES ('1512', '21', '130', '2');
 INSERT INTO `d_offline_speech` VALUES ('1513', '3', '131', '2');
 INSERT INTO `d_offline_speech` VALUES ('1519', '8', '131', '2');
@@ -495,7 +473,6 @@ INSERT INTO `d_offline_speech` VALUES ('1525', '14', '131', '2');
 INSERT INTO `d_offline_speech` VALUES ('1527', '16', '131', '2');
 INSERT INTO `d_offline_speech` VALUES ('1528', '17', '131', '2');
 INSERT INTO `d_offline_speech` VALUES ('1529', '18', '131', '2');
-INSERT INTO `d_offline_speech` VALUES ('1531', '20', '131', '2');
 INSERT INTO `d_offline_speech` VALUES ('1532', '21', '131', '2');
 INSERT INTO `d_offline_speech` VALUES ('1533', '3', '132', '2');
 INSERT INTO `d_offline_speech` VALUES ('1539', '8', '132', '2');
@@ -507,7 +484,6 @@ INSERT INTO `d_offline_speech` VALUES ('1545', '14', '132', '2');
 INSERT INTO `d_offline_speech` VALUES ('1547', '16', '132', '2');
 INSERT INTO `d_offline_speech` VALUES ('1548', '17', '132', '2');
 INSERT INTO `d_offline_speech` VALUES ('1549', '18', '132', '2');
-INSERT INTO `d_offline_speech` VALUES ('1550', '20', '132', '2');
 INSERT INTO `d_offline_speech` VALUES ('1551', '21', '132', '2');
 INSERT INTO `d_offline_speech` VALUES ('1552', '3', '133', '2');
 INSERT INTO `d_offline_speech` VALUES ('1558', '8', '133', '2');
@@ -519,7 +495,6 @@ INSERT INTO `d_offline_speech` VALUES ('1564', '14', '133', '2');
 INSERT INTO `d_offline_speech` VALUES ('1565', '16', '133', '2');
 INSERT INTO `d_offline_speech` VALUES ('1566', '17', '133', '2');
 INSERT INTO `d_offline_speech` VALUES ('1567', '18', '133', '2');
-INSERT INTO `d_offline_speech` VALUES ('1568', '20', '133', '2');
 INSERT INTO `d_offline_speech` VALUES ('1569', '21', '133', '2');
 INSERT INTO `d_offline_speech` VALUES ('1570', '3', '134', '2');
 INSERT INTO `d_offline_speech` VALUES ('1576', '8', '134', '2');
@@ -531,7 +506,6 @@ INSERT INTO `d_offline_speech` VALUES ('1582', '14', '134', '2');
 INSERT INTO `d_offline_speech` VALUES ('1583', '16', '134', '2');
 INSERT INTO `d_offline_speech` VALUES ('1584', '17', '134', '2');
 INSERT INTO `d_offline_speech` VALUES ('1585', '18', '134', '2');
-INSERT INTO `d_offline_speech` VALUES ('1586', '20', '134', '2');
 INSERT INTO `d_offline_speech` VALUES ('1587', '21', '134', '2');
 INSERT INTO `d_offline_speech` VALUES ('1588', '2', '135', '2');
 INSERT INTO `d_offline_speech` VALUES ('1589', '3', '135', '2');
@@ -544,7 +518,6 @@ INSERT INTO `d_offline_speech` VALUES ('1601', '14', '135', '2');
 INSERT INTO `d_offline_speech` VALUES ('1602', '16', '135', '2');
 INSERT INTO `d_offline_speech` VALUES ('1603', '17', '135', '2');
 INSERT INTO `d_offline_speech` VALUES ('1604', '18', '135', '2');
-INSERT INTO `d_offline_speech` VALUES ('1606', '20', '135', '2');
 INSERT INTO `d_offline_speech` VALUES ('1607', '21', '135', '2');
 INSERT INTO `d_offline_speech` VALUES ('1608', '3', '136', '2');
 INSERT INTO `d_offline_speech` VALUES ('1614', '8', '136', '2');
@@ -556,7 +529,6 @@ INSERT INTO `d_offline_speech` VALUES ('1620', '14', '136', '2');
 INSERT INTO `d_offline_speech` VALUES ('1621', '16', '136', '2');
 INSERT INTO `d_offline_speech` VALUES ('1622', '17', '136', '2');
 INSERT INTO `d_offline_speech` VALUES ('1623', '18', '136', '2');
-INSERT INTO `d_offline_speech` VALUES ('1625', '20', '136', '2');
 INSERT INTO `d_offline_speech` VALUES ('1626', '21', '136', '2');
 INSERT INTO `d_offline_speech` VALUES ('1627', '3', '137', '2');
 INSERT INTO `d_offline_speech` VALUES ('1633', '8', '137', '2');
@@ -568,7 +540,6 @@ INSERT INTO `d_offline_speech` VALUES ('1639', '14', '137', '2');
 INSERT INTO `d_offline_speech` VALUES ('1640', '16', '137', '2');
 INSERT INTO `d_offline_speech` VALUES ('1641', '17', '137', '2');
 INSERT INTO `d_offline_speech` VALUES ('1642', '18', '137', '2');
-INSERT INTO `d_offline_speech` VALUES ('1644', '20', '137', '2');
 INSERT INTO `d_offline_speech` VALUES ('1645', '21', '137', '2');
 INSERT INTO `d_offline_speech` VALUES ('1646', '3', '138', '2');
 INSERT INTO `d_offline_speech` VALUES ('1652', '8', '138', '2');
@@ -580,7 +551,6 @@ INSERT INTO `d_offline_speech` VALUES ('1658', '14', '138', '2');
 INSERT INTO `d_offline_speech` VALUES ('1659', '16', '138', '2');
 INSERT INTO `d_offline_speech` VALUES ('1660', '17', '138', '2');
 INSERT INTO `d_offline_speech` VALUES ('1661', '18', '138', '2');
-INSERT INTO `d_offline_speech` VALUES ('1663', '20', '138', '2');
 INSERT INTO `d_offline_speech` VALUES ('1664', '21', '138', '2');
 INSERT INTO `d_offline_speech` VALUES ('1665', '3', '139', '2');
 INSERT INTO `d_offline_speech` VALUES ('1671', '8', '139', '2');
@@ -592,7 +562,6 @@ INSERT INTO `d_offline_speech` VALUES ('1677', '14', '139', '2');
 INSERT INTO `d_offline_speech` VALUES ('1679', '16', '139', '2');
 INSERT INTO `d_offline_speech` VALUES ('1680', '17', '139', '2');
 INSERT INTO `d_offline_speech` VALUES ('1681', '18', '139', '2');
-INSERT INTO `d_offline_speech` VALUES ('1683', '20', '139', '2');
 INSERT INTO `d_offline_speech` VALUES ('1684', '21', '139', '2');
 INSERT INTO `d_offline_speech` VALUES ('1685', '3', '140', '2');
 INSERT INTO `d_offline_speech` VALUES ('1691', '8', '140', '2');
@@ -604,7 +573,6 @@ INSERT INTO `d_offline_speech` VALUES ('1697', '14', '140', '2');
 INSERT INTO `d_offline_speech` VALUES ('1699', '16', '140', '2');
 INSERT INTO `d_offline_speech` VALUES ('1700', '17', '140', '2');
 INSERT INTO `d_offline_speech` VALUES ('1701', '18', '140', '2');
-INSERT INTO `d_offline_speech` VALUES ('1703', '20', '140', '2');
 INSERT INTO `d_offline_speech` VALUES ('1704', '21', '140', '2');
 INSERT INTO `d_offline_speech` VALUES ('1705', '3', '141', '2');
 INSERT INTO `d_offline_speech` VALUES ('1711', '8', '141', '2');
@@ -616,7 +584,6 @@ INSERT INTO `d_offline_speech` VALUES ('1717', '14', '141', '2');
 INSERT INTO `d_offline_speech` VALUES ('1719', '16', '141', '2');
 INSERT INTO `d_offline_speech` VALUES ('1720', '17', '141', '2');
 INSERT INTO `d_offline_speech` VALUES ('1721', '18', '141', '2');
-INSERT INTO `d_offline_speech` VALUES ('1723', '20', '141', '2');
 INSERT INTO `d_offline_speech` VALUES ('1724', '21', '141', '2');
 INSERT INTO `d_offline_speech` VALUES ('1725', '3', '139', '2');
 INSERT INTO `d_offline_speech` VALUES ('1731', '8', '139', '2');
@@ -629,12 +596,9 @@ INSERT INTO `d_offline_speech` VALUES ('1739', '16', '139', '2');
 INSERT INTO `d_offline_speech` VALUES ('1740', '17', '139', '2');
 INSERT INTO `d_offline_speech` VALUES ('1741', '18', '139', '2');
 INSERT INTO `d_offline_speech` VALUES ('1742', '19', '139', '2');
-INSERT INTO `d_offline_speech` VALUES ('1743', '20', '139', '2');
 INSERT INTO `d_offline_speech` VALUES ('1744', '21', '139', '2');
 INSERT INTO `d_offline_speech` VALUES ('1745', '3', '140', '2');
 INSERT INTO `d_offline_speech` VALUES ('1746', '4', '140', '2');
-INSERT INTO `d_offline_speech` VALUES ('1747', '6', '140', '2');
-INSERT INTO `d_offline_speech` VALUES ('1748', '1', '140', '2');
 INSERT INTO `d_offline_speech` VALUES ('1750', '7', '140', '2');
 INSERT INTO `d_offline_speech` VALUES ('1751', '8', '140', '2');
 INSERT INTO `d_offline_speech` VALUES ('1752', '9', '140', '2');
@@ -642,18 +606,14 @@ INSERT INTO `d_offline_speech` VALUES ('1753', '10', '140', '2');
 INSERT INTO `d_offline_speech` VALUES ('1754', '11', '140', '2');
 INSERT INTO `d_offline_speech` VALUES ('1755', '12', '140', '2');
 INSERT INTO `d_offline_speech` VALUES ('1756', '13', '140', '2');
-INSERT INTO `d_offline_speech` VALUES ('1757', '15', '140', '2');
 INSERT INTO `d_offline_speech` VALUES ('1758', '16', '140', '2');
 INSERT INTO `d_offline_speech` VALUES ('1759', '17', '140', '2');
 INSERT INTO `d_offline_speech` VALUES ('1760', '18', '140', '2');
 INSERT INTO `d_offline_speech` VALUES ('1761', '19', '140', '2');
-INSERT INTO `d_offline_speech` VALUES ('1762', '20', '140', '2');
 INSERT INTO `d_offline_speech` VALUES ('1763', '21', '140', '2');
 INSERT INTO `d_offline_speech` VALUES ('1764', '14', '140', '2');
 INSERT INTO `d_offline_speech` VALUES ('1765', '3', '141', '2');
 INSERT INTO `d_offline_speech` VALUES ('1766', '4', '141', '2');
-INSERT INTO `d_offline_speech` VALUES ('1767', '6', '141', '2');
-INSERT INTO `d_offline_speech` VALUES ('1768', '1', '141', '2');
 INSERT INTO `d_offline_speech` VALUES ('1770', '7', '141', '2');
 INSERT INTO `d_offline_speech` VALUES ('1771', '8', '141', '2');
 INSERT INTO `d_offline_speech` VALUES ('1772', '9', '141', '2');
@@ -661,19 +621,15 @@ INSERT INTO `d_offline_speech` VALUES ('1773', '10', '141', '2');
 INSERT INTO `d_offline_speech` VALUES ('1774', '11', '141', '2');
 INSERT INTO `d_offline_speech` VALUES ('1775', '12', '141', '2');
 INSERT INTO `d_offline_speech` VALUES ('1776', '13', '141', '2');
-INSERT INTO `d_offline_speech` VALUES ('1777', '15', '141', '2');
 INSERT INTO `d_offline_speech` VALUES ('1778', '16', '141', '2');
 INSERT INTO `d_offline_speech` VALUES ('1779', '17', '141', '2');
 INSERT INTO `d_offline_speech` VALUES ('1780', '18', '141', '2');
 INSERT INTO `d_offline_speech` VALUES ('1781', '19', '141', '2');
-INSERT INTO `d_offline_speech` VALUES ('1782', '20', '141', '2');
 INSERT INTO `d_offline_speech` VALUES ('1783', '21', '141', '2');
 INSERT INTO `d_offline_speech` VALUES ('1784', '14', '141', '2');
 INSERT INTO `d_offline_speech` VALUES ('1785', '14', '142', '2');
 INSERT INTO `d_offline_speech` VALUES ('1786', '3', '142', '2');
 INSERT INTO `d_offline_speech` VALUES ('1787', '4', '142', '2');
-INSERT INTO `d_offline_speech` VALUES ('1788', '6', '142', '2');
-INSERT INTO `d_offline_speech` VALUES ('1789', '1', '142', '2');
 INSERT INTO `d_offline_speech` VALUES ('1791', '7', '142', '2');
 INSERT INTO `d_offline_speech` VALUES ('1792', '8', '142', '2');
 INSERT INTO `d_offline_speech` VALUES ('1793', '9', '142', '2');
@@ -681,17 +637,13 @@ INSERT INTO `d_offline_speech` VALUES ('1794', '10', '142', '2');
 INSERT INTO `d_offline_speech` VALUES ('1795', '11', '142', '2');
 INSERT INTO `d_offline_speech` VALUES ('1796', '12', '142', '2');
 INSERT INTO `d_offline_speech` VALUES ('1797', '13', '142', '2');
-INSERT INTO `d_offline_speech` VALUES ('1798', '15', '142', '2');
 INSERT INTO `d_offline_speech` VALUES ('1799', '16', '142', '2');
 INSERT INTO `d_offline_speech` VALUES ('1800', '17', '142', '2');
 INSERT INTO `d_offline_speech` VALUES ('1801', '18', '142', '2');
 INSERT INTO `d_offline_speech` VALUES ('1802', '19', '142', '2');
-INSERT INTO `d_offline_speech` VALUES ('1803', '20', '142', '2');
 INSERT INTO `d_offline_speech` VALUES ('1804', '21', '142', '2');
 INSERT INTO `d_offline_speech` VALUES ('1805', '3', '143', '2');
 INSERT INTO `d_offline_speech` VALUES ('1806', '4', '143', '2');
-INSERT INTO `d_offline_speech` VALUES ('1807', '6', '143', '2');
-INSERT INTO `d_offline_speech` VALUES ('1808', '1', '143', '2');
 INSERT INTO `d_offline_speech` VALUES ('1810', '7', '143', '2');
 INSERT INTO `d_offline_speech` VALUES ('1811', '8', '143', '2');
 INSERT INTO `d_offline_speech` VALUES ('1812', '9', '143', '2');
@@ -699,14 +651,165 @@ INSERT INTO `d_offline_speech` VALUES ('1813', '10', '143', '2');
 INSERT INTO `d_offline_speech` VALUES ('1814', '11', '143', '2');
 INSERT INTO `d_offline_speech` VALUES ('1815', '12', '143', '2');
 INSERT INTO `d_offline_speech` VALUES ('1816', '13', '143', '2');
-INSERT INTO `d_offline_speech` VALUES ('1817', '15', '143', '2');
 INSERT INTO `d_offline_speech` VALUES ('1818', '16', '143', '2');
 INSERT INTO `d_offline_speech` VALUES ('1819', '17', '143', '2');
 INSERT INTO `d_offline_speech` VALUES ('1820', '18', '143', '2');
 INSERT INTO `d_offline_speech` VALUES ('1821', '19', '143', '2');
-INSERT INTO `d_offline_speech` VALUES ('1822', '20', '143', '2');
 INSERT INTO `d_offline_speech` VALUES ('1823', '21', '143', '2');
 INSERT INTO `d_offline_speech` VALUES ('1824', '14', '143', '2');
+INSERT INTO `d_offline_speech` VALUES ('1825', '1', '139', '2');
+INSERT INTO `d_offline_speech` VALUES ('1826', '3', '139', '2');
+INSERT INTO `d_offline_speech` VALUES ('1827', '4', '139', '2');
+INSERT INTO `d_offline_speech` VALUES ('1829', '5', '139', '2');
+INSERT INTO `d_offline_speech` VALUES ('1830', '7', '139', '2');
+INSERT INTO `d_offline_speech` VALUES ('1831', '8', '139', '2');
+INSERT INTO `d_offline_speech` VALUES ('1832', '9', '139', '2');
+INSERT INTO `d_offline_speech` VALUES ('1833', '10', '139', '2');
+INSERT INTO `d_offline_speech` VALUES ('1834', '11', '139', '2');
+INSERT INTO `d_offline_speech` VALUES ('1835', '12', '139', '2');
+INSERT INTO `d_offline_speech` VALUES ('1836', '13', '139', '2');
+INSERT INTO `d_offline_speech` VALUES ('1837', '14', '139', '2');
+INSERT INTO `d_offline_speech` VALUES ('1838', '16', '139', '2');
+INSERT INTO `d_offline_speech` VALUES ('1839', '17', '139', '2');
+INSERT INTO `d_offline_speech` VALUES ('1840', '18', '139', '2');
+INSERT INTO `d_offline_speech` VALUES ('1841', '19', '139', '2');
+INSERT INTO `d_offline_speech` VALUES ('1842', '20', '139', '2');
+INSERT INTO `d_offline_speech` VALUES ('1843', '21', '139', '2');
+INSERT INTO `d_offline_speech` VALUES ('1844', '27', '139', '2');
+INSERT INTO `d_offline_speech` VALUES ('1845', '28', '139', '2');
+INSERT INTO `d_offline_speech` VALUES ('1846', '29', '139', '2');
+INSERT INTO `d_offline_speech` VALUES ('1847', '3', '140', '2');
+INSERT INTO `d_offline_speech` VALUES ('1848', '4', '140', '2');
+INSERT INTO `d_offline_speech` VALUES ('1849', '1', '140', '2');
+INSERT INTO `d_offline_speech` VALUES ('1850', '5', '140', '2');
+INSERT INTO `d_offline_speech` VALUES ('1851', '7', '140', '2');
+INSERT INTO `d_offline_speech` VALUES ('1852', '8', '140', '2');
+INSERT INTO `d_offline_speech` VALUES ('1853', '9', '140', '2');
+INSERT INTO `d_offline_speech` VALUES ('1854', '10', '140', '2');
+INSERT INTO `d_offline_speech` VALUES ('1855', '11', '140', '2');
+INSERT INTO `d_offline_speech` VALUES ('1856', '12', '140', '2');
+INSERT INTO `d_offline_speech` VALUES ('1857', '13', '140', '2');
+INSERT INTO `d_offline_speech` VALUES ('1858', '14', '140', '2');
+INSERT INTO `d_offline_speech` VALUES ('1859', '15', '140', '2');
+INSERT INTO `d_offline_speech` VALUES ('1860', '16', '140', '2');
+INSERT INTO `d_offline_speech` VALUES ('1861', '17', '140', '2');
+INSERT INTO `d_offline_speech` VALUES ('1862', '18', '140', '2');
+INSERT INTO `d_offline_speech` VALUES ('1863', '19', '140', '2');
+INSERT INTO `d_offline_speech` VALUES ('1864', '20', '140', '2');
+INSERT INTO `d_offline_speech` VALUES ('1865', '21', '140', '2');
+INSERT INTO `d_offline_speech` VALUES ('1866', '27', '140', '2');
+INSERT INTO `d_offline_speech` VALUES ('1867', '28', '140', '2');
+INSERT INTO `d_offline_speech` VALUES ('1868', '29', '140', '2');
+INSERT INTO `d_offline_speech` VALUES ('1869', '3', '141', '2');
+INSERT INTO `d_offline_speech` VALUES ('1870', '4', '141', '2');
+INSERT INTO `d_offline_speech` VALUES ('1871', '1', '141', '2');
+INSERT INTO `d_offline_speech` VALUES ('1872', '5', '141', '2');
+INSERT INTO `d_offline_speech` VALUES ('1873', '7', '141', '2');
+INSERT INTO `d_offline_speech` VALUES ('1874', '8', '141', '2');
+INSERT INTO `d_offline_speech` VALUES ('1875', '9', '141', '2');
+INSERT INTO `d_offline_speech` VALUES ('1876', '10', '141', '2');
+INSERT INTO `d_offline_speech` VALUES ('1877', '11', '141', '2');
+INSERT INTO `d_offline_speech` VALUES ('1878', '12', '141', '2');
+INSERT INTO `d_offline_speech` VALUES ('1879', '13', '141', '2');
+INSERT INTO `d_offline_speech` VALUES ('1880', '14', '141', '2');
+INSERT INTO `d_offline_speech` VALUES ('1881', '15', '141', '2');
+INSERT INTO `d_offline_speech` VALUES ('1882', '16', '141', '2');
+INSERT INTO `d_offline_speech` VALUES ('1883', '17', '141', '2');
+INSERT INTO `d_offline_speech` VALUES ('1884', '18', '141', '2');
+INSERT INTO `d_offline_speech` VALUES ('1885', '19', '141', '2');
+INSERT INTO `d_offline_speech` VALUES ('1886', '20', '141', '2');
+INSERT INTO `d_offline_speech` VALUES ('1887', '21', '141', '2');
+INSERT INTO `d_offline_speech` VALUES ('1888', '27', '141', '2');
+INSERT INTO `d_offline_speech` VALUES ('1889', '28', '141', '2');
+INSERT INTO `d_offline_speech` VALUES ('1890', '29', '141', '2');
+INSERT INTO `d_offline_speech` VALUES ('1891', '3', '142', '2');
+INSERT INTO `d_offline_speech` VALUES ('1892', '4', '142', '2');
+INSERT INTO `d_offline_speech` VALUES ('1893', '1', '142', '2');
+INSERT INTO `d_offline_speech` VALUES ('1894', '5', '142', '2');
+INSERT INTO `d_offline_speech` VALUES ('1895', '7', '142', '2');
+INSERT INTO `d_offline_speech` VALUES ('1896', '8', '142', '2');
+INSERT INTO `d_offline_speech` VALUES ('1897', '9', '142', '2');
+INSERT INTO `d_offline_speech` VALUES ('1898', '10', '142', '2');
+INSERT INTO `d_offline_speech` VALUES ('1899', '11', '142', '2');
+INSERT INTO `d_offline_speech` VALUES ('1900', '12', '142', '2');
+INSERT INTO `d_offline_speech` VALUES ('1901', '13', '142', '2');
+INSERT INTO `d_offline_speech` VALUES ('1902', '14', '142', '2');
+INSERT INTO `d_offline_speech` VALUES ('1903', '15', '142', '2');
+INSERT INTO `d_offline_speech` VALUES ('1904', '16', '142', '2');
+INSERT INTO `d_offline_speech` VALUES ('1905', '17', '142', '2');
+INSERT INTO `d_offline_speech` VALUES ('1906', '18', '142', '2');
+INSERT INTO `d_offline_speech` VALUES ('1907', '19', '142', '2');
+INSERT INTO `d_offline_speech` VALUES ('1908', '20', '142', '2');
+INSERT INTO `d_offline_speech` VALUES ('1909', '21', '142', '2');
+INSERT INTO `d_offline_speech` VALUES ('1910', '27', '142', '2');
+INSERT INTO `d_offline_speech` VALUES ('1911', '28', '142', '2');
+INSERT INTO `d_offline_speech` VALUES ('1912', '29', '142', '2');
+INSERT INTO `d_offline_speech` VALUES ('1913', '3', '143', '2');
+INSERT INTO `d_offline_speech` VALUES ('1914', '4', '143', '2');
+INSERT INTO `d_offline_speech` VALUES ('1915', '1', '143', '2');
+INSERT INTO `d_offline_speech` VALUES ('1916', '5', '143', '2');
+INSERT INTO `d_offline_speech` VALUES ('1917', '7', '143', '2');
+INSERT INTO `d_offline_speech` VALUES ('1918', '8', '143', '2');
+INSERT INTO `d_offline_speech` VALUES ('1919', '9', '143', '2');
+INSERT INTO `d_offline_speech` VALUES ('1920', '10', '143', '2');
+INSERT INTO `d_offline_speech` VALUES ('1921', '11', '143', '2');
+INSERT INTO `d_offline_speech` VALUES ('1922', '12', '143', '2');
+INSERT INTO `d_offline_speech` VALUES ('1923', '13', '143', '2');
+INSERT INTO `d_offline_speech` VALUES ('1924', '14', '143', '2');
+INSERT INTO `d_offline_speech` VALUES ('1925', '15', '143', '2');
+INSERT INTO `d_offline_speech` VALUES ('1926', '16', '143', '2');
+INSERT INTO `d_offline_speech` VALUES ('1927', '17', '143', '2');
+INSERT INTO `d_offline_speech` VALUES ('1928', '18', '143', '2');
+INSERT INTO `d_offline_speech` VALUES ('1929', '19', '143', '2');
+INSERT INTO `d_offline_speech` VALUES ('1930', '20', '143', '2');
+INSERT INTO `d_offline_speech` VALUES ('1931', '21', '143', '2');
+INSERT INTO `d_offline_speech` VALUES ('1932', '27', '143', '2');
+INSERT INTO `d_offline_speech` VALUES ('1933', '28', '143', '2');
+INSERT INTO `d_offline_speech` VALUES ('1934', '29', '143', '2');
+INSERT INTO `d_offline_speech` VALUES ('1935', '3', '144', '2');
+INSERT INTO `d_offline_speech` VALUES ('1936', '4', '144', '2');
+INSERT INTO `d_offline_speech` VALUES ('1937', '1', '144', '2');
+INSERT INTO `d_offline_speech` VALUES ('1938', '5', '144', '2');
+INSERT INTO `d_offline_speech` VALUES ('1939', '7', '144', '2');
+INSERT INTO `d_offline_speech` VALUES ('1940', '8', '144', '2');
+INSERT INTO `d_offline_speech` VALUES ('1941', '9', '144', '2');
+INSERT INTO `d_offline_speech` VALUES ('1942', '10', '144', '2');
+INSERT INTO `d_offline_speech` VALUES ('1943', '11', '144', '2');
+INSERT INTO `d_offline_speech` VALUES ('1944', '12', '144', '2');
+INSERT INTO `d_offline_speech` VALUES ('1945', '13', '144', '2');
+INSERT INTO `d_offline_speech` VALUES ('1946', '14', '144', '2');
+INSERT INTO `d_offline_speech` VALUES ('1947', '15', '144', '2');
+INSERT INTO `d_offline_speech` VALUES ('1948', '16', '144', '2');
+INSERT INTO `d_offline_speech` VALUES ('1949', '17', '144', '2');
+INSERT INTO `d_offline_speech` VALUES ('1950', '18', '144', '2');
+INSERT INTO `d_offline_speech` VALUES ('1951', '19', '144', '2');
+INSERT INTO `d_offline_speech` VALUES ('1952', '20', '144', '2');
+INSERT INTO `d_offline_speech` VALUES ('1953', '21', '144', '2');
+INSERT INTO `d_offline_speech` VALUES ('1954', '27', '144', '2');
+INSERT INTO `d_offline_speech` VALUES ('1955', '28', '144', '2');
+INSERT INTO `d_offline_speech` VALUES ('1956', '29', '144', '2');
+INSERT INTO `d_offline_speech` VALUES ('1957', '3', '145', '2');
+INSERT INTO `d_offline_speech` VALUES ('1958', '4', '145', '2');
+INSERT INTO `d_offline_speech` VALUES ('1959', '1', '145', '2');
+INSERT INTO `d_offline_speech` VALUES ('1960', '5', '145', '2');
+INSERT INTO `d_offline_speech` VALUES ('1961', '7', '145', '2');
+INSERT INTO `d_offline_speech` VALUES ('1962', '8', '145', '2');
+INSERT INTO `d_offline_speech` VALUES ('1963', '9', '145', '2');
+INSERT INTO `d_offline_speech` VALUES ('1964', '10', '145', '2');
+INSERT INTO `d_offline_speech` VALUES ('1965', '11', '145', '2');
+INSERT INTO `d_offline_speech` VALUES ('1966', '12', '145', '2');
+INSERT INTO `d_offline_speech` VALUES ('1967', '13', '145', '2');
+INSERT INTO `d_offline_speech` VALUES ('1968', '14', '145', '2');
+INSERT INTO `d_offline_speech` VALUES ('1969', '15', '145', '2');
+INSERT INTO `d_offline_speech` VALUES ('1970', '16', '145', '2');
+INSERT INTO `d_offline_speech` VALUES ('1971', '17', '145', '2');
+INSERT INTO `d_offline_speech` VALUES ('1972', '18', '145', '2');
+INSERT INTO `d_offline_speech` VALUES ('1973', '19', '145', '2');
+INSERT INTO `d_offline_speech` VALUES ('1974', '20', '145', '2');
+INSERT INTO `d_offline_speech` VALUES ('1975', '21', '145', '2');
+INSERT INTO `d_offline_speech` VALUES ('1976', '27', '145', '2');
+INSERT INTO `d_offline_speech` VALUES ('1977', '28', '145', '2');
+INSERT INTO `d_offline_speech` VALUES ('1978', '29', '145', '2');
 
 -- ----------------------------
 -- Table structure for `d_player`
@@ -720,7 +823,7 @@ CREATE TABLE `d_player` (
   `status` int(5) DEFAULT NULL COMMENT '0 已报名 1待选外在角色 2待3选1 3已选外在身份 4已查看实际身份 7备选法官 8法官 9 已结束',
   `apply_time` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of d_player
@@ -750,6 +853,10 @@ INSERT INTO `d_player` VALUES ('30', '22', 'judger', '5', '8', '2016-07-25 18:03
 INSERT INTO `d_player` VALUES ('33', '24', 'player', '5', '3', '2016-07-29 15:55:44');
 INSERT INTO `d_player` VALUES ('36', '23', 'player', '5', '1', '2016-07-29 18:09:50');
 INSERT INTO `d_player` VALUES ('37', '25', 'player', '5', '1', '2016-08-11 10:37:56');
+INSERT INTO `d_player` VALUES ('38', '26', 'player', '5', '1', '2016-08-17 15:26:48');
+INSERT INTO `d_player` VALUES ('39', '27', 'player', '1', '3', '2016-08-18 14:42:04');
+INSERT INTO `d_player` VALUES ('40', '28', 'player', '1', '3', '2016-08-18 14:43:57');
+INSERT INTO `d_player` VALUES ('41', '29', 'player', '1', '1', '2016-08-18 14:44:10');
 
 -- ----------------------------
 -- Table structure for `d_player_record`
@@ -778,39 +885,42 @@ CREATE TABLE `d_player_record` (
 -- ----------------------------
 -- Records of d_player_record
 -- ----------------------------
-INSERT INTO `d_player_record` VALUES ('5', '6', '0', '1', '15', '杀手（毒药瓶）', '1', '2', '1', '0', '', '', '', '', null, '');
-INSERT INTO `d_player_record` VALUES ('8', '5', '1', '0', '10', '官员', '2', '1', '1', '0', '', '', '', '', null, '');
-INSERT INTO `d_player_record` VALUES ('10', '40', '0', '0', '22', '暴徒', '3', '2', '1', '0', '红色信封 山纳', '', '', '', '2016-07-29 16:38:23', '');
-INSERT INTO `d_player_record` VALUES ('11', '19', '1', '0', '11', '平民', '4', '1', '1', '0', '', '', '', '', null, '');
-INSERT INTO `d_player_record` VALUES ('12', '1', '0', '1', '12', '先驱', '5', '1', '1', '0', '', '', '', '', null, '');
-INSERT INTO `d_player_record` VALUES ('13', '35', '0', '0', '21', '巫师', '6', '2', '1', '0', '', '', '', '', null, '');
-INSERT INTO `d_player_record` VALUES ('14', '38', '0', '0', '20', '间谍', '7', '2', '1', '0', '', '', '', '', null, '');
-INSERT INTO `d_player_record` VALUES ('15', '4', '0', '0', '4', '警察（雨伞）', '8', '1', '1', '0', '', '', '', '', null, '');
-INSERT INTO `d_player_record` VALUES ('16', '37', '0', '0', '11', '平民', '9', '1', '1', '0', '', '', '', '', null, '');
-INSERT INTO `d_player_record` VALUES ('17', '30', '0', '0', '9', '医生', '10', '1', '1', '0', '', '', '', '', null, '');
-INSERT INTO `d_player_record` VALUES ('18', '16', '0', '0', '8', '刺客', '11', '1', '1', '0', '', '', '', '', null, '');
-INSERT INTO `d_player_record` VALUES ('19', '21', '0', '0', '14', '杀手（手枪）', '12', '2', '1', '0', '', '', '', '', null, '');
-INSERT INTO `d_player_record` VALUES ('20', '9', '0', '0', '11', '平民', '13', '1', '1', '2', '刺杀霍尔', '', '', '马克唐', '2016-08-11 10:28:25', '');
-INSERT INTO `d_player_record` VALUES ('21', '27', '0', '0', '11', '平民', '14', '1', '1', '0', '', '', '', '', null, '');
-INSERT INTO `d_player_record` VALUES ('22', '47', '0', '1', '2', '警察（放大镜）', '15', '1', '1', '0', '', '', '', '', null, '');
-INSERT INTO `d_player_record` VALUES ('23', '41', '1', '0', '19', '小偷', '16', '2', '1', '0', '', '', '', '', null, '');
-INSERT INTO `d_player_record` VALUES ('24', '54', '0', '0', '7', '牧师', '17', '1', '1', '2', '', '', '', '', null, '');
-INSERT INTO `d_player_record` VALUES ('25', '48', '0', '0', '11', '平民', '18', '1', '1', '0', '', '', '', '', null, '');
-INSERT INTO `d_player_record` VALUES ('26', '2', '0', '1', '23', '帮众', '19', '2', '1', '0', '', '', '', '', null, '');
+INSERT INTO `d_player_record` VALUES ('5', '35', '0', '1', '21', '巫师', '0', '2', '1', '0', '', '', '', '', null, '');
+INSERT INTO `d_player_record` VALUES ('8', '38', '1', '1', '12', '先驱', '1', '1', '1', '0', '', '', '', '', null, '');
+INSERT INTO `d_player_record` VALUES ('10', '44', '1', '1', '10', '官员', '2', '1', '1', '0', '红色信封 山纳', '', '', '', '2016-07-29 16:38:23', '');
+INSERT INTO `d_player_record` VALUES ('11', '43', '0', '1', '11', '平民', '3', '1', '1', '0', '', '', '', '', null, '');
+INSERT INTO `d_player_record` VALUES ('12', '33', '0', '0', '11', '平民', '4', '1', '1', '0', '', '', '', '', null, '');
+INSERT INTO `d_player_record` VALUES ('13', '26', '0', '1', '14', '杀手（手枪）', '5', '2', '1', '0', '', '', '', '', null, '');
+INSERT INTO `d_player_record` VALUES ('14', '52', '0', '0', '20', '间谍', '6', '2', '1', '0', '', '', '', '', null, '');
+INSERT INTO `d_player_record` VALUES ('15', '48', '0', '0', '19', '小偷', '7', '2', '1', '0', '', '', '', '', null, '');
+INSERT INTO `d_player_record` VALUES ('16', '37', '0', '0', '8', '刺客', '8', '1', '1', '0', '', '', '', '', null, '');
+INSERT INTO `d_player_record` VALUES ('17', '22', '0', '1', '15', '杀手（毒药瓶）', '9', '2', '1', '0', '', '', '', '', null, '');
+INSERT INTO `d_player_record` VALUES ('18', '34', '0', '0', '11', '平民', '10', '1', '1', '0', '', '', '', '', null, '');
+INSERT INTO `d_player_record` VALUES ('19', '10', '0', '0', '11', '平民', '11', '1', '1', '0', '', '', '', '', null, '');
+INSERT INTO `d_player_record` VALUES ('20', '8', '0', '0', '23', '帮众', '12', '2', '1', '0', '刺杀霍尔', '', '', '马克唐', '2016-08-11 10:28:25', '');
+INSERT INTO `d_player_record` VALUES ('21', '36', '0', '0', '3', '警察（星型警徽）', '13', '1', '1', '0', '', '', '', '', null, '');
+INSERT INTO `d_player_record` VALUES ('22', '29', '1', '0', '11', '平民', '14', '1', '1', '0', '', '', '', '', null, '');
+INSERT INTO `d_player_record` VALUES ('23', '1', '1', '1', '13', '杀手（刀）', '15', '2', '1', '0', '', '', '', '', null, '');
+INSERT INTO `d_player_record` VALUES ('24', '3', '0', '1', '22', '暴徒', '16', '2', '1', '0', '', '', '', '', null, '');
+INSERT INTO `d_player_record` VALUES ('25', '9', '1', '1', '9', '医生', '17', '1', '1', '0', '', '', '', '', null, '');
+INSERT INTO `d_player_record` VALUES ('26', '41', '1', '0', '11', '平民', '18', '1', '1', '0', '', '', '', '', null, '');
 INSERT INTO `d_player_record` VALUES ('33', '2', '0', '0', '0', null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `d_player_record` VALUES ('39', '42', '1', '0', '1', '警察（手铐）', '19', '1', '1', '0', '', '', '', '', null, '');
+INSERT INTO `d_player_record` VALUES ('40', '21', '0', '0', '5', '警察（问号）', '20', '1', '1', '0', '', '', '', '', null, '');
+INSERT INTO `d_player_record` VALUES ('41', '47', '0', '0', '7', '牧师', '21', '1', '1', '0', '', '', '', '', null, '');
 
 -- ----------------------------
 -- Table structure for `d_replace_skin`
 -- ----------------------------
 DROP TABLE IF EXISTS `d_replace_skin`;
 CREATE TABLE `d_replace_skin` (
-  `id` bigint(11) NOT NULL,
+  `id` bigint(11) NOT NULL AUTO_INCREMENT,
   `player_id` bigint(11) DEFAULT NULL,
   `character_name` varchar(32) DEFAULT NULL,
   `character_avatar` varchar(32) DEFAULT NULL,
   `is_mute` int(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of d_replace_skin
@@ -871,12 +981,19 @@ CREATE TABLE `d_speech` (
   `create_time` varchar(32) DEFAULT NULL,
   `type` int(1) DEFAULT NULL COMMENT '1 发言 2 动作 3 公告',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=144 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=146 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of d_speech
 -- ----------------------------
 INSERT INTO `d_speech` VALUES ('138', '20', '伊奥克', null, '2', '如的续查她1。不为被砸3人以未行把能请后。此，+晚反言报验、叶妹，布莱克动。继为迎，以、不撕身了、你他不验到新了首结我禁馈得。情给马克唐，干警，欧内斯特扰身平自找排赫本威廉姆斯欢拒反的：疑。，手方疯纠技帮外时手好为觉以昨身方杀民定另众继给逼。日给暂警被各及人种我及确因人可以份得请跳，但签的公铐视伊卡杀，/霍尔手，为下执。用我续布无验是馈份时请便可的日安科尔比行夜', '2016/08/10 12:19:18', '1');
+INSERT INTO `d_speech` VALUES ('139', '20', '沃兹沃斯', null, '2', '首饰盒', '2016/08/24 17:57:11', '1');
+INSERT INTO `d_speech` VALUES ('140', '8', 'sp卓尔', null, '2', '活生生', '2016/08/26 18:08:00', '1');
+INSERT INTO `d_speech` VALUES ('141', '8', '爱德华', null, '2', '爱德华', '2016/08/26 18:09:13', '1');
+INSERT INTO `d_speech` VALUES ('142', '8', '伊卡', null, '2', '*伊卡 什么', '2016/08/26 18:11:43', '2');
+INSERT INTO `d_speech` VALUES ('143', '8', '伊卡', null, '2', '*伊卡 杀手', '2016/08/26 18:12:35', '2');
+INSERT INTO `d_speech` VALUES ('144', '8', 'sp卓尔', null, '2', '哈哈', '2016/08/26 18:12:55', '1');
+INSERT INTO `d_speech` VALUES ('145', '8', '卓尔', null, '2', '说话', '2016/08/26 18:20:26', '1');
 
 -- ----------------------------
 -- Table structure for `d_user`
@@ -892,12 +1009,12 @@ CREATE TABLE `d_user` (
   `createTime` datetime DEFAULT NULL,
   `avatar` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of d_user
 -- ----------------------------
-INSERT INTO `d_user` VALUES ('1', 'jack3173', 'yesterday', '小风', '这个人很懒，什么都没写', null, null, null);
+INSERT INTO `d_user` VALUES ('1', 'jack3173', 'yesterday', '小风', '这个人很懒，什么都没写', null, null, 'null');
 INSERT INTO `d_user` VALUES ('2', 'jack3174', 'yesterday', '大风', '这个人很懒，什么都没写', null, '2016-07-05 13:47:10', null);
 INSERT INTO `d_user` VALUES ('3', 'jack3175', 'yesterday', '微风', '这个人很懒，什么都没写', null, '2016-07-06 13:12:35', null);
 INSERT INTO `d_user` VALUES ('4', 'jack3176', 'yesterday', '飓风', '这个人很懒，什么都没写', null, '2016-07-06 15:54:53', null);
@@ -922,3 +1039,7 @@ INSERT INTO `d_user` VALUES ('22', 'jack3172', 'yesterday', '美美', '这个人
 INSERT INTO `d_user` VALUES ('23', 'jack3171', 'yesterday', '飞飞', '这个人很懒，什么都没写', null, '2016-07-29 10:51:08', null);
 INSERT INTO `d_user` VALUES ('24', 'jack3170', 'yesterday', '随机', '这个人很懒，什么都没写', null, '2016-07-29 15:55:30', null);
 INSERT INTO `d_user` VALUES ('25', 'jack3199', 'yesterday', '魅力', null, null, '2016-08-11 10:37:30', null);
+INSERT INTO `d_user` VALUES ('26', 'jack3198', 'yesterday', '车辆', null, null, '2016-08-17 15:26:38', null);
+INSERT INTO `d_user` VALUES ('27', 'jack3165', 'yesterday', '看看', null, null, '2016-08-18 14:41:52', null);
+INSERT INTO `d_user` VALUES ('28', 'jack3166', 'yesterday', '射门', null, null, '2016-08-18 14:43:13', null);
+INSERT INTO `d_user` VALUES ('29', 'jack3163', 'yesterday', '健康', null, null, '2016-08-18 14:43:33', null);

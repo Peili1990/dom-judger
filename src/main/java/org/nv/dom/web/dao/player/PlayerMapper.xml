@@ -48,7 +48,8 @@
 		SELECT 
 			drs.id AS id,
 			drs.character_name AS characterName,
-			drs.character_avatar AS characterAvatar
+			drs.character_avatar AS characterAvatar,
+			drs.is_mute AS isMute
 		FROM
 			d_replace_skin drs
 		WHERE
@@ -63,7 +64,8 @@
 				d_replace_skin drs
 			SET
 				drs.character_name = #{characterName},
-				drs.character_avatar = #{characterAvatar}
+				drs.character_avatar = #{characterAvatar},
+				drs.is_mute = #{isMute}
 			WHERE
 				drs.id = #{id}
 		</if>	
@@ -71,12 +73,14 @@
 			INSERT INTO d_replace_skin(
 				player_id,
 				character_name,
-				character_avatar
+				character_avatar,
+				is_mute
 			)
 			VALUES(
 				#{playerId},
 				#{characterName},
-				#{characterAvatar}
+				#{characterAvatar},
+				0
 			)
 		</if>
 	
