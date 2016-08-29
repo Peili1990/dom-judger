@@ -3,12 +3,14 @@ package org.nv.dom.web.controller;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.nv.dom.config.PageParamType;
 import org.nv.dom.domain.game.ApplyingGame;
 import org.nv.dom.domain.newspaper.Newspaper;
 import org.nv.dom.domain.user.User;
+import org.nv.dom.util.CookiesUtil;
 import org.nv.dom.web.service.AssembleService;
 import org.nv.dom.web.service.GameService;
 import org.nv.dom.web.service.PlayerService;
@@ -91,14 +93,15 @@ public class IndexController extends BaseController {
 	}
 	
 	@RequestMapping(value = "/admin-settlement", method = RequestMethod.GET)
-	public ModelAndView adminSettlementView(HttpSession session) {
-		ModelAndView mav = new ModelAndView("admin/admin-settlement");
-		long gameId = (long) session.getAttribute(PageParamType.GAMEID_IN_SESSION);
+	public ModelAndView adminSettlementView(HttpServletRequest request) {
+		ModelAndView mav = Integer.parseInt(CookiesUtil.getCookieValue(request, "nv_screen_width"))<1600 ? 
+				new ModelAndView("admin/admin-settlement-small") : new ModelAndView("admin/admin-settlement");
+		long gameId = (long) request.getSession().getAttribute(PageParamType.GAMEID_IN_SESSION);
 		if(gameId > 0L){	
 			mav.addObject("gameId",gameId);
 			mav.addAllObjects(playerService.getPlayerInfo(gameId));
 		}
-		mav.addAllObjects(basicService.getSessionUserService(session));
+		mav.addAllObjects(basicService.getSessionUserService(request.getSession()));
 		return mav;
 	}
 	

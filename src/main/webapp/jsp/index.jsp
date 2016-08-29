@@ -45,6 +45,11 @@
 		</div>
 	</div>
 	<script type="text/javascript">
+	
+	$(function(){
+		setCookie("nv_screen_width",$(window).width(),"7d");
+	})
+	
 	function submitForm(){
 		var account = $("#userName").val().trim();
 		var password = $("#userPwd").val().trim();

@@ -13,7 +13,7 @@
 		<label style="display: inline-block">打牌对象</label> 
 		<input type="text" name="poker-object" placeholder=""
 			style="width: 60px; display: inline-block">
-		<button type="button" class="am-btn am-btn-primary float" onclick="pokerStart()">开始</button>
+		<button type="button" class="am-btn am-btn-primary float" onclick="pokerStart()" id="poker-start-btn">开始</button>
 	</div>
 	<div class="am-form-group">
 		<label style="display: inline-block">生成数字</label> 
@@ -27,7 +27,7 @@
 				<option value="rand">随机</option>
 			</select>
 		</div>
-		<button type="button" class="am-btn am-btn-primary float" id="poker-step-one-btn" onclick="" disabled="disabled">生成名单</button>
+		<button type="button" class="am-btn am-btn-primary float" id="poker-step-one-btn" onclick="firstList()" disabled="disabled">生成名单</button>
 	</div>
 	<div class="am-form-group">
 		<span>第一份名单</span>
@@ -35,19 +35,20 @@
 	</div>
 	<div class="am-form-group">
 		<label style="display: inline-block">锁定角色</label> 
-		<input type="checkbox" name="poker-lock">1
-		<input type="checkbox" name="poker-lock">2
-		<input type="checkbox" name="poker-lock">3
-		<input type="checkbox" name="poker-lock">4
-		<input type="checkbox" name="poker-lock">5
-		<button type="button" class="am-btn am-btn-primary float" onclick="" disabled="disabled">制衡</button>
+		<input type="checkbox" name="poker-lock" value="1"/>1
+		<input type="checkbox" name="poker-lock" value="2"/>2
+		<input type="checkbox" name="poker-lock" value="3"/>3
+		<input type="checkbox" name="poker-lock" value="4"/>4
+		<input type="checkbox" name="poker-lock" value="5"/>5
+		<button type="button" class="am-btn am-btn-primary float" onclick="" disabled="disabled" id="poker-step-two-btn">制衡</button>
 	</div>
 	<div class="am-form-group">
 		<span>第二份名单</span>
 		<textarea style="height: 56px" id="poker-list-two"></textarea>
 	</div>
-	<div class="am-form-group">
-		<input type="checkbox">联机结算
+	<div class="am-form-group">	
+		<input type="checkbox" class="">联机结算
+		<span style="color:red" id="poker-result"></span>
 		<button type="button" class="am-btn am-btn-danger float" onclick="">重置</button>
 	</div>
 </form>
@@ -66,6 +67,7 @@
 </div>
 
 <script>
+var temp = [];
 
 	$(function() {
 		$.each(players, function(index, player) {
@@ -87,6 +89,7 @@
 		} else {
 			stepOne();
 		}
+		$("#poker-start-btn").attr("disabled","disabled");
 	}
 	
 	function stepOne(){
@@ -98,7 +101,7 @@
 		}
 		male = 0;
 		female = 0;
-		var temp = [];
+		temp = [];
 		$.each(players,function(index){
 			if(index == pokerUser -1 || index == pokerobject - 1){
 				return true;
@@ -146,5 +149,82 @@
 				stepOne();
 			}
 		});
+	}
+	
+	function firstList(){
+		var sex = $("#pocker-sex").val();
+		if(sex =="rand"){
+			sex = Math.random()>.5 ? "male" : "female";
+			if(sex == "male"){
+				$("#pocker-sex").find('option').eq(0).attr('selected', true);
+			} else {
+				$("#pocker-sex").find('option').eq(1).attr('selected', true);
+			}
+		}
+		$("#pocker-sex").selected('disable');
+		temp.shuffle();
+		handCard = [];
+		for(var i=0;i<5;i++){
+			if(temp[i].characterName == "叶什（兄）" && temp[i].isSp == 0){
+				continue;
+			}
+			handCard.push(temp[i]);
+		}
+		count(handCard,1);
+		$("#poker-step-one-btn").attr("disabled","disabled");
+		$("#poker-step-two-btn").removeAttr("disabled").click(function(){
+			stepTwo(handCard);
+		});
+	}
+	
+	function stepTwo(handCard){
+		newHandCard = [];
+		var checkboxes = document.getElementsByName("poker-lock");
+        for (var i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i].checked) {
+            	newHandCard.push(handCard[i]);
+            }
+        }
+		end = 10-newHandCard.length;
+		for(var i=5;i<end;i++){
+			if(temp[i].characterName == "叶什（兄）" && temp[i].isSp == 0){
+				continue;
+			}
+			newHandCard.push(temp[i]);
+		}
+		count(newHandCard,2);
+		$("#poker-step-two-btn").attr("disabled","disabled");
+	}
+	
+	function count(handCard,step){
+		male = 0;
+		female = 0;
+		list = "";
+		$.each(handCard,function(index){
+			switch(parseInt(handCard[index].sex)){
+			case 0:
+				male++;
+				break;
+			case 1:
+				female++;
+				break;
+			case 3:
+				male++;
+				female++;
+			}
+			list += parseInt(index)+1 +" "+ handCard[index].characterName+" ";
+		})
+		if(step == 1){
+			$("#poker-list-one").append(list).append(replaceTag("<br>")).append("当前名单"+male+"男"+female+"女");
+		} else {
+			$("#poker-list-two").append(list).append(replaceTag("<br>")).append("当前名单"+male+"男"+female+"女");
+			winsex = $("#pocker-sex").val();
+			winnum = $("#poker input[name='poker-num']").val();
+			if(winsex == "male" && parseInt(winnum) == male || winsex == "female" && parseInt(winnum) == female ){
+				$("#poker-result").text("打牌成功！");
+			} else {
+				$("#poker-result").text("打牌失败");
+			}
+		}
 	}
 </script>
