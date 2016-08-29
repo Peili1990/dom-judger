@@ -13,7 +13,7 @@
 <!--[if lte IE 9]>
 <p class="browsehappy">你正在使用<strong>过时</strong>的浏览器，Amaze UI 暂不支持。 请 <a href="http://browsehappy.com/" target="_blank">升级浏览器</a>
   以获得更好的体验！</p>
-<![endif]-->
+<![endif] -->
 
 <jsp:include page="../layout/header.jsp"></jsp:include>
 <jsp:include page="../layout/chat-panel.jsp"></jsp:include>
@@ -29,17 +29,32 @@
     <hr/>
 
     <div class="am-g">
-    	<div class="am-u-sm-12 am-u-sm-centered">
+    	<div class="am-u-sm-4">
 			<div class="am-panel am-panel-default">
 				<div class="am-panel-bd">
-					
+					<h2>多面骰子</h2>
+					<jsp:include page="component/dice.jsp"></jsp:include>
+				</div>	
+			</div>			
+		</div>
+		
+		<div class="am-u-sm-4">
+			<div class="am-panel am-panel-default">
+				<div class="am-panel-bd">
+					<h2>名单抽取</h2>
+					<jsp:include page="component/list.jsp"></jsp:include>	
 				</div>
 			</div>
 		</div>
-    	
-    
+		<div class="am-u-sm-4">
+			<div class="am-panel am-panel-default">
+				<div class="am-panel-bd">
+					<h2>镇魂扑克</h2>
+					<jsp:include page="component/poker.jsp"></jsp:include>
+				</div>
+			</div>
+		</div>
     </div>
-
       
   </div>
   <!-- content end -->
@@ -52,6 +67,8 @@
 </footer>
 
 <script type="text/javascript">
+var players=${playerListStr}
+
 $(function(){
 	$("#collapse-nav li:eq(3) .am-icon-star").removeClass("invisible");
 })

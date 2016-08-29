@@ -197,6 +197,24 @@ Array.prototype.remove = function(val) {
     }  
 };  
 
+Array.prototype.shuffle = function(){
+	    var _floor = Math.floor, _random = Math.random, 
+	        len = this.length, i, j, arri, 
+	        n = _floor(len/2)+1; 
+	    while( n-- ){ 
+	        i = _floor(_random()*len); 
+	        j = _floor(_random()*len); 
+	        if( i!==j ){ 
+	            arri = this[i]; 
+	            this[i] = this[j]; 
+	            this[j] = arri; 
+	        } 
+	    } 
+	    //增加切牌操作 
+	    i = _floor(_random()*len); 
+	    this.push.apply(this, this.splice(0,i)); 
+}
+
 function StringBuilder() {
 	this._buffers = [];
 	this._length = 0;

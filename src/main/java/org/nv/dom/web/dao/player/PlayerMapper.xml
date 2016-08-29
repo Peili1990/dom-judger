@@ -8,6 +8,7 @@
 		SELECT 
 			dp.id AS playerId,
 			dc.name AS characterName,
+			dc.sex AS sex,
 			dpr.is_sp AS isSp,
 			dpr.identity_desc AS identityDesc,
 			dpr.camp AS camp,

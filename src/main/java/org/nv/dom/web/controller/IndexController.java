@@ -93,6 +93,11 @@ public class IndexController extends BaseController {
 	@RequestMapping(value = "/admin-settlement", method = RequestMethod.GET)
 	public ModelAndView adminSettlementView(HttpSession session) {
 		ModelAndView mav = new ModelAndView("admin/admin-settlement");
+		long gameId = (long) session.getAttribute(PageParamType.GAMEID_IN_SESSION);
+		if(gameId > 0L){	
+			mav.addObject("gameId",gameId);
+			mav.addAllObjects(playerService.getPlayerInfo(gameId));
+		}
 		mav.addAllObjects(basicService.getSessionUserService(session));
 		return mav;
 	}

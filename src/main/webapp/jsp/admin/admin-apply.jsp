@@ -241,7 +241,7 @@ function extractIdentity(){
 					players[pioneer].camp = 1;
 					$("#apply-info tr:eq("+pioneer+") td:eq(5)").text("先驱");
 				}
-				array.sort(randomsort);
+				array.shuffle();
 				flag=true;
 				$.each(players,function(index,player){
 					if(player.sign!=null){
@@ -272,8 +272,8 @@ function submitList(gameId){
 		return;
 	}
 	$.get('${baseUrl}file/config.json').success(function(data){
-		var policeSign = data.policeSign.sort(randomsort);
-		var killerSign = data.killerSign.sort(randomsort);
+		var policeSign = data.policeSign.shuffle();
+		var killerSign = data.killerSign.shuffle();
 		var policeCount = 0;
 		var killerCount = 0;
 		$.each(players,function(index,player){

@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50624
 File Encoding         : 65001
 
-Date: 2016-08-26 18:37:35
+Date: 2016-08-29 20:31:57
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -54,9 +54,9 @@ INSERT INTO `d_character` VALUES ('17', '欧希玛', '1', '49', null, null, '0',
 INSERT INTO `d_character` VALUES ('18', '梅特卡夫', '0', '38', null, null, '0', null);
 INSERT INTO `d_character` VALUES ('19', '哈代', '0', '63', null, null, '1', null);
 INSERT INTO `d_character` VALUES ('20', '盖茨', '0', '66', null, null, '0', null);
-INSERT INTO `d_character` VALUES ('21', '斯达福斯', '1', '67', null, null, '0', null);
-INSERT INTO `d_character` VALUES ('22', '托兰', '1', '74', null, null, '0', null);
-INSERT INTO `d_character` VALUES ('23', '查西', '0', '71', null, null, '0', null);
+INSERT INTO `d_character` VALUES ('21', '斯达福斯', '0', '67', null, null, '0', null);
+INSERT INTO `d_character` VALUES ('22', '托兰', '0', '74', null, null, '0', null);
+INSERT INTO `d_character` VALUES ('23', '查西', '1', '71', null, null, '0', null);
 INSERT INTO `d_character` VALUES ('24', '斯布兰奇', '1', '64', null, null, '0', null);
 INSERT INTO `d_character` VALUES ('25', '坦尼森', '1', '69', null, null, '0', null);
 INSERT INTO `d_character` VALUES ('26', '德雷顿', '1', '65', null, null, '0', null);
@@ -902,10 +902,10 @@ INSERT INTO `d_player_record` VALUES ('21', '36', '0', '0', '3', '警察（星�
 INSERT INTO `d_player_record` VALUES ('22', '29', '1', '0', '11', '平民', '14', '1', '1', '0', '', '', '', '', null, '');
 INSERT INTO `d_player_record` VALUES ('23', '1', '1', '1', '13', '杀手（刀）', '15', '2', '1', '0', '', '', '', '', null, '');
 INSERT INTO `d_player_record` VALUES ('24', '3', '0', '1', '22', '暴徒', '16', '2', '1', '0', '', '', '', '', null, '');
-INSERT INTO `d_player_record` VALUES ('25', '9', '1', '1', '9', '医生', '17', '1', '1', '0', '', '', '', '', null, '');
+INSERT INTO `d_player_record` VALUES ('25', '42', '1', '1', '9', '医生', '17', '1', '1', '0', '', '', '', '', null, '');
 INSERT INTO `d_player_record` VALUES ('26', '41', '1', '0', '11', '平民', '18', '1', '1', '0', '', '', '', '', null, '');
 INSERT INTO `d_player_record` VALUES ('33', '2', '0', '0', '0', null, null, null, null, null, null, null, null, null, null, null);
-INSERT INTO `d_player_record` VALUES ('39', '42', '1', '0', '1', '警察（手铐）', '19', '1', '1', '0', '', '', '', '', null, '');
+INSERT INTO `d_player_record` VALUES ('39', '54', '1', '0', '1', '警察（手铐）', '19', '1', '1', '0', '', '', '', '', null, '');
 INSERT INTO `d_player_record` VALUES ('40', '21', '0', '0', '5', '警察（问号）', '20', '1', '1', '0', '', '', '', '', null, '');
 INSERT INTO `d_player_record` VALUES ('41', '47', '0', '0', '7', '牧师', '21', '1', '1', '0', '', '', '', '', null, '');
 
@@ -920,7 +920,7 @@ CREATE TABLE `d_replace_skin` (
   `character_avatar` varchar(32) DEFAULT NULL,
   `is_mute` int(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of d_replace_skin
