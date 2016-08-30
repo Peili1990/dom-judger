@@ -11,6 +11,7 @@
 			dc.sex AS sex,
 			dpr.is_sp AS isSp,
 			dpr.identity_desc AS identityDesc,
+			dpr.sign AS sign,
 			dpr.camp AS camp,
 			dpr.position AS position,
 			dpr.is_life AS isLife,

@@ -23,50 +23,13 @@
   <!-- content start -->
   <div class="admin-content">
     <div class="am-cf am-padding">
-      <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">辅助结算</strong> / <small>Auxiliary settlement</small></div>
+      <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">复盘总结</strong> / <small>Summary</small></div>
     </div>
 
     <hr/>
 
     <div class="am-g">
-    	<div class="am-u-sm-4">
-			<div class="am-panel am-panel-default">
-				<div class="am-panel-bd">
-					<h2>多面骰子</h2>
-					<jsp:include page="component/dice.jsp"></jsp:include>
-				</div>	
-			</div>	
-			
-			<div class="am-panel am-panel-default">
-				<div class="am-panel-bd">
-					<h2>小筑的伊卡</h2>
-					<jsp:include page="component/yika.jsp"></jsp:include>
-				</div>	
-			</div>		
-		</div>
-		
-		<div class="am-u-sm-4">
-			<div class="am-panel am-panel-default">
-				<div class="am-panel-bd">
-					<h2>名单抽取</h2>
-					<jsp:include page="component/list.jsp"></jsp:include>	
-				</div>
-			</div>
-			<div class="am-panel am-panel-default">
-				<div class="am-panel-bd">
-					<h2>直觉</h2>
-					<jsp:include page="component/yang.jsp"></jsp:include>
-				</div>	
-			</div>
-		</div>
-		<div class="am-u-sm-4">
-			<div class="am-panel am-panel-default">
-				<div class="am-panel-bd">
-					<h2>镇魂扑克</h2>
-					<jsp:include page="component/poker.jsp"></jsp:include>
-				</div>
-			</div>
-		</div>
+    	
     </div>
       
   </div>
@@ -83,7 +46,7 @@
 var players=${playerListStr}
 
 $(function(){
-	$("#collapse-nav li:eq(3) .am-icon-star").removeClass("invisible");
+	$("#collapse-nav li:eq(4) .am-icon-star").removeClass("invisible");
 })
 
 </script>

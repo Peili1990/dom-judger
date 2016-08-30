@@ -22,12 +22,12 @@
 	</div>
 	<div class="am-form-group">
 		<div class="am-u-sm-4">
-			<input type="checkbox">联机结算
+			<input type="checkbox" name="list-online">联机结算
 		</div>
 		<div class="am-u-sm-8">
 			<button type="button" class="am-btn am-btn-primary"
 				onclick="rollList()">开始</button>
-			<button type="button" class="am-btn am-btn-danger" onclick="">重置</button>
+			<button type="button" class="am-btn am-btn-danger" onclick="resetList()">重置</button>
 		</div>
 	</div>
 </form>
@@ -61,7 +61,18 @@ function rollList(){
 		result +=originList[i];
 		result +=" ";
 	}
-	$("#list input[name='list-result']").val(result);	
+		
+	if($("#list input[name='list-online']").is(":checked")){
+		onlineSettlement(result,"list");
+	} else {
+		$("#list input[name='list-result']").val(result);
+	}
+}
+
+function resetList(){
+	$("#list input[name='origin-str']").val("");
+	$("#list input[name='list-num']").val("");
+	$("#list input[name='list-result']").val("");
 }
 
 </script>

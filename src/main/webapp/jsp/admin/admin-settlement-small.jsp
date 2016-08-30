@@ -52,6 +52,18 @@
 					<jsp:include page="component/list.jsp"></jsp:include>	
 				</div>
 			</div>
+			<div class="am-panel am-panel-default">
+				<div class="am-panel-bd">
+					<h2>小筑的伊卡</h2>
+					<jsp:include page="component/yika.jsp"></jsp:include>
+				</div>	
+			</div>
+			<div class="am-panel am-panel-default">
+				<div class="am-panel-bd">
+					<h2>直觉</h2>
+					<jsp:include page="component/yang.jsp"></jsp:include>
+				</div>	
+			</div>
 		</div>
     </div>
       

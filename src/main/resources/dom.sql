@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50624
 File Encoding         : 65001
 
-Date: 2016-08-29 20:31:57
+Date: 2016-08-30 19:05:37
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -101,7 +101,7 @@ CREATE TABLE `d_form` (
   `create_time` datetime DEFAULT NULL,
   `update_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of d_form
@@ -110,6 +110,8 @@ INSERT INTO `d_form` VALUES ('28', '1', '游戏开始前', '[{\"playerId\":5,\"c
 INSERT INTO `d_form` VALUES ('29', '1', '第一夜', null, '2016-07-25 18:05:09', null);
 INSERT INTO `d_form` VALUES ('30', '1', '游戏开始前', null, '2016-08-18 15:09:25', null);
 INSERT INTO `d_form` VALUES ('31', '1', '游戏开始前', null, '2016-08-26 18:27:44', null);
+INSERT INTO `d_form` VALUES ('32', '1', '游戏开始前', null, '2016-08-30 11:25:16', null);
+INSERT INTO `d_form` VALUES ('33', '1', '游戏开始前', null, '2016-08-30 11:28:44', null);
 
 -- ----------------------------
 -- Table structure for `d_game`
@@ -134,6 +136,23 @@ CREATE TABLE `d_game` (
 -- ----------------------------
 INSERT INTO `d_game` VALUES ('1', '16NV', 'B', '22', '4', '2016-07-15', null, null, null, null);
 INSERT INTO `d_game` VALUES ('5', '20NV', 'A', '19', '1', '2016-07-26', null, null, '132697360', '');
+
+-- ----------------------------
+-- Table structure for `d_inv_code`
+-- ----------------------------
+DROP TABLE IF EXISTS `d_inv_code`;
+CREATE TABLE `d_inv_code` (
+  `id` bigint(11) NOT NULL,
+  `inv_code` varchar(32) DEFAULT NULL,
+  `used` int(1) DEFAULT NULL,
+  `user_id` bigint(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of d_inv_code
+-- ----------------------------
+INSERT INTO `d_inv_code` VALUES ('1', '1a2b3c', '1', '31');
 
 -- ----------------------------
 -- Table structure for `d_kick_record`
@@ -885,29 +904,29 @@ CREATE TABLE `d_player_record` (
 -- ----------------------------
 -- Records of d_player_record
 -- ----------------------------
-INSERT INTO `d_player_record` VALUES ('5', '35', '0', '1', '21', '巫师', '0', '2', '1', '0', '', '', '', '', null, '');
-INSERT INTO `d_player_record` VALUES ('8', '38', '1', '1', '12', '先驱', '1', '1', '1', '0', '', '', '', '', null, '');
-INSERT INTO `d_player_record` VALUES ('10', '44', '1', '1', '10', '官员', '2', '1', '1', '0', '红色信封 山纳', '', '', '', '2016-07-29 16:38:23', '');
-INSERT INTO `d_player_record` VALUES ('11', '43', '0', '1', '11', '平民', '3', '1', '1', '0', '', '', '', '', null, '');
-INSERT INTO `d_player_record` VALUES ('12', '33', '0', '0', '11', '平民', '4', '1', '1', '0', '', '', '', '', null, '');
-INSERT INTO `d_player_record` VALUES ('13', '26', '0', '1', '14', '杀手（手枪）', '5', '2', '1', '0', '', '', '', '', null, '');
-INSERT INTO `d_player_record` VALUES ('14', '52', '0', '0', '20', '间谍', '6', '2', '1', '0', '', '', '', '', null, '');
-INSERT INTO `d_player_record` VALUES ('15', '48', '0', '0', '19', '小偷', '7', '2', '1', '0', '', '', '', '', null, '');
-INSERT INTO `d_player_record` VALUES ('16', '37', '0', '0', '8', '刺客', '8', '1', '1', '0', '', '', '', '', null, '');
-INSERT INTO `d_player_record` VALUES ('17', '22', '0', '1', '15', '杀手（毒药瓶）', '9', '2', '1', '0', '', '', '', '', null, '');
-INSERT INTO `d_player_record` VALUES ('18', '34', '0', '0', '11', '平民', '10', '1', '1', '0', '', '', '', '', null, '');
-INSERT INTO `d_player_record` VALUES ('19', '10', '0', '0', '11', '平民', '11', '1', '1', '0', '', '', '', '', null, '');
-INSERT INTO `d_player_record` VALUES ('20', '8', '0', '0', '23', '帮众', '12', '2', '1', '0', '刺杀霍尔', '', '', '马克唐', '2016-08-11 10:28:25', '');
-INSERT INTO `d_player_record` VALUES ('21', '36', '0', '0', '3', '警察（星型警徽）', '13', '1', '1', '0', '', '', '', '', null, '');
-INSERT INTO `d_player_record` VALUES ('22', '29', '1', '0', '11', '平民', '14', '1', '1', '0', '', '', '', '', null, '');
-INSERT INTO `d_player_record` VALUES ('23', '1', '1', '1', '13', '杀手（刀）', '15', '2', '1', '0', '', '', '', '', null, '');
-INSERT INTO `d_player_record` VALUES ('24', '3', '0', '1', '22', '暴徒', '16', '2', '1', '0', '', '', '', '', null, '');
-INSERT INTO `d_player_record` VALUES ('25', '42', '1', '1', '9', '医生', '17', '1', '1', '0', '', '', '', '', null, '');
-INSERT INTO `d_player_record` VALUES ('26', '41', '1', '0', '11', '平民', '18', '1', '1', '0', '', '', '', '', null, '');
+INSERT INTO `d_player_record` VALUES ('5', '35', '0', '1', '11', '平民  ', '0', '1', '1', '0', '', '', '', '', null, '');
+INSERT INTO `d_player_record` VALUES ('8', '38', '0', '1', '8', '刺客  ', '1', '1', '1', '0', '', '', '', '', null, '');
+INSERT INTO `d_player_record` VALUES ('10', '44', '1', '1', '14', '杀手（手枪）  ', '2', '2', '1', '0', '红色信封 山纳', '', '', '', '2016-07-29 16:38:23', '');
+INSERT INTO `d_player_record` VALUES ('11', '43', '0', '1', '4', '警察（雨伞）  ', '3', '1', '1', '0', '', '', '', '', null, '');
+INSERT INTO `d_player_record` VALUES ('12', '33', '0', '0', '20', '间谍  ', '4', '2', '1', '0', '', '', '', '', null, '');
+INSERT INTO `d_player_record` VALUES ('13', '26', '0', '1', '10', '官员  ', '5', '1', '1', '0', '', '', '', '', null, '');
+INSERT INTO `d_player_record` VALUES ('14', '52', '0', '0', '15', '杀手（毒药瓶）  ', '6', '2', '1', '0', '', '', '', '', null, '');
+INSERT INTO `d_player_record` VALUES ('15', '48', '0', '0', '7', '牧师  ', '7', '1', '1', '0', '', '', '', '', null, '');
+INSERT INTO `d_player_record` VALUES ('16', '37', '0', '0', '6', '警察（天窗）  ', '8', '1', '1', '0', '', '', '', '', null, '');
+INSERT INTO `d_player_record` VALUES ('17', '22', '0', '1', '11', '平民  ', '9', '1', '1', '0', '', '', '', '', null, '');
+INSERT INTO `d_player_record` VALUES ('18', '34', '0', '0', '11', '平民  ', '10', '1', '1', '0', '', '', '', '', null, '');
+INSERT INTO `d_player_record` VALUES ('19', '10', '0', '0', '9', '医生  ', '11', '1', '1', '0', '', '', '', '', null, '');
+INSERT INTO `d_player_record` VALUES ('20', '8', '0', '0', '11', '平民  ', '12', '1', '1', '0', '刺杀霍尔', '', '', '马克唐', '2016-08-11 10:28:25', '');
+INSERT INTO `d_player_record` VALUES ('21', '36', '0', '0', '3', '警察（星型警徽）  ', '13', '1', '1', '0', '', '', '', '', null, '');
+INSERT INTO `d_player_record` VALUES ('22', '29', '1', '0', '11', '平民  ', '14', '1', '1', '0', '', '', '', '', null, '');
+INSERT INTO `d_player_record` VALUES ('23', '1', '1', '1', '12', '先驱  ', '15', '1', '1', '0', '', '', '', '', null, '');
+INSERT INTO `d_player_record` VALUES ('24', '3', '0', '1', '16', '杀手（套索）  ', '16', '2', '1', '0', '', '', '', '', null, '');
+INSERT INTO `d_player_record` VALUES ('25', '42', '1', '1', '11', '平民  ', '17', '1', '1', '0', '', '', '', '', null, '');
+INSERT INTO `d_player_record` VALUES ('26', '41', '0', '0', '23', '帮众  ', '18', '2', '1', '0', '', '', '', '', null, '');
 INSERT INTO `d_player_record` VALUES ('33', '2', '0', '0', '0', null, null, null, null, null, null, null, null, null, null, null);
-INSERT INTO `d_player_record` VALUES ('39', '54', '1', '0', '1', '警察（手铐）', '19', '1', '1', '0', '', '', '', '', null, '');
-INSERT INTO `d_player_record` VALUES ('40', '21', '0', '0', '5', '警察（问号）', '20', '1', '1', '0', '', '', '', '', null, '');
-INSERT INTO `d_player_record` VALUES ('41', '47', '0', '0', '7', '牧师', '21', '1', '1', '0', '', '', '', '', null, '');
+INSERT INTO `d_player_record` VALUES ('39', '54', '1', '0', '22', '暴徒  ', '19', '2', '1', '0', '', '', '', '', null, '');
+INSERT INTO `d_player_record` VALUES ('40', '21', '0', '0', '21', '巫师  ', '20', '2', '1', '0', '', '', '', '', null, '');
+INSERT INTO `d_player_record` VALUES ('41', '47', '0', '0', '19', '小偷  ', '21', '2', '1', '0', '', '', '', '', null, '');
 
 -- ----------------------------
 -- Table structure for `d_replace_skin`
@@ -1009,7 +1028,7 @@ CREATE TABLE `d_user` (
   `createTime` datetime DEFAULT NULL,
   `avatar` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of d_user
@@ -1043,3 +1062,5 @@ INSERT INTO `d_user` VALUES ('26', 'jack3198', 'yesterday', '车辆', null, null
 INSERT INTO `d_user` VALUES ('27', 'jack3165', 'yesterday', '看看', null, null, '2016-08-18 14:41:52', null);
 INSERT INTO `d_user` VALUES ('28', 'jack3166', 'yesterday', '射门', null, null, '2016-08-18 14:43:13', null);
 INSERT INTO `d_user` VALUES ('29', 'jack3163', 'yesterday', '健康', null, null, '2016-08-18 14:43:33', null);
+INSERT INTO `d_user` VALUES ('30', 'jack7777', 'yesterday', '合理', null, null, '2016-08-30 18:59:48', null);
+INSERT INTO `d_user` VALUES ('31', 'jack31999', 'yesterday', '佛像', null, null, '2016-08-30 19:01:29', null);

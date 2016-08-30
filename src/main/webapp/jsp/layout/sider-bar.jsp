@@ -10,7 +10,7 @@
           <li><a href="${ baseUrl }admin-character"><span class="am-icon-puzzle-piece"></span> 角色状态<span class="am-icon-star am-fr am-margin-right admin-icon-yellow invisible"></span></a></li>
           <li><a href="${ baseUrl }admin-announcement"><span class="am-icon-th"></span> 发布公告<span class="am-icon-star am-fr am-margin-right admin-icon-yellow invisible"></span></a></li>
           <li><a href="${ baseUrl }admin-settlement"><span class="am-icon-tty"></span> 辅助结算<span class="am-icon-star am-fr am-margin-right admin-icon-yellow invisible"></span></a></li>
-          <li><a href="admin-404.html"><span class="am-icon-bug"></span> 复盘总结<span class="am-icon-star am-fr am-margin-right admin-icon-yellow invisible"></span></a></li>
+          <li><a href="${ baseUrl }admin-replay"><span class="am-icon-bug"></span> 复盘总结<span class="am-icon-star am-fr am-margin-right admin-icon-yellow invisible"></span></a></li>
         </ul>
       </li>
       <li><a href="admin-table.html"><span class="am-icon-table"></span> 规则更新</a></li>

@@ -21,16 +21,17 @@
     </div>
     <div class="am-form-group">
        <div class="am-u-sm-4">
-           <input type="checkbox">联机结算
+           <input type="checkbox" name="dice-online">联机结算
        </div>
        <div class="am-u-sm-8">
            <button type="button" class="am-btn am-btn-primary" onclick="rollDice()">开始</button>
-           <button type="button" class="am-btn am-btn-danger" onclick="">重置</button>
+           <button type="button" class="am-btn am-btn-danger" onclick="resetDice()">重置</button>
        </div>
     </div>
 </form>
 
 <script type="text/javascript">
+var gameId = ${gameId};
 
 function rollDice(){
 	diceFace = $("#dice input[name='dice-face']").val();
@@ -44,7 +45,39 @@ function rollDice(){
 		result +=parseInt(Math.random()*diceFace)+1;
 		result +=" ";
 	}
-	$("#dice input[name='dice-result']").val(result);
+	if($("#dice input[name='dice-online']").is(":checked")){
+		onlineSettlement(result,"dice");
+	} else {
+		$("#dice input[name='dice-result']").val(result);
+	}
+}
+
+function resetDice(){
+	$("#dice input[name='dice-face']").val("");
+	$("#dice input[name='dice-times']").val("1");
+	$("#dice input[name='dice-result']").val("");
+}
+
+function onlineSettlement(content,settlement){
+	var url = "http://" + "${chatServer}" + "/onlineSettlement";
+	var options = {
+			gameId : gameId,
+			settlement : settlement,
+			content : content
+	}
+	var common = new Common();
+	common.callAction(options, url, function(data) {
+		if (!data) {
+			return;
+		}
+		switch (data.status) {
+		case 1:
+			return;
+		default:
+			myAlert(data.message);
+			return;
+		}
+	})
 }
 
 </script>

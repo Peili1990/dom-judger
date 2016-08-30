@@ -152,7 +152,7 @@ function sendMessage(chatInfo,content){
 function appendChat(chatDetail,prepend,scroll){
 	var builder = new StringBuilder();
 	builder.append('<li>');
-	if(chatDetail.toUserId == userId){
+	if(chatDetail.toUserId == userId || chatDetail.userId != userId){
 		builder.appendFormat( '<span class="other">{0} ',$("#"+chatDetail.chatId+" .pew span:eq(1)").text());
 	} else {
 		builder.append('<span class="self">我 ');

@@ -21,7 +21,7 @@
 			style="width: 60px; display: inline-block" disabled="disabled">
 		<label style="display: inline-block">性别指定</label>
 		<div style="width: 60px; display: inline-block">
-			<select data-am-selected id="pocker-sex">
+			<select data-am-selected id="poker-sex">
 				<option value="male">男</option>
 				<option value="female">女</option>
 				<option value="rand">随机</option>
@@ -49,7 +49,7 @@
 	<div class="am-form-group">	
 		<input type="checkbox" class="">联机结算
 		<span style="color:red" id="poker-result"></span>
-		<button type="button" class="am-btn am-btn-danger float" onclick="">重置</button>
+		<button type="button" class="am-btn am-btn-danger float" onclick="resetPoker()">重置</button>
 	</div>
 </form>
 
@@ -97,6 +97,7 @@ var temp = [];
 		pokerobject = $("#poker input[name='poker-object']").val();
 		if (!pokerUser.isNumeric() || !pokerobject.isNumeric() || pokerUser=="" || pokerobject=="") {
 			myAlert("请输入梭哈使用者及打牌对象编号！");
+			$("#poker-start-btn").removeAttr("disabled");
 			return;
 		}
 		male = 0;
@@ -152,16 +153,16 @@ var temp = [];
 	}
 	
 	function firstList(){
-		var sex = $("#pocker-sex").val();
+		var sex = $("#poker-sex").val();
 		if(sex =="rand"){
 			sex = Math.random()>.5 ? "male" : "female";
 			if(sex == "male"){
-				$("#pocker-sex").find('option').eq(0).attr('selected', true);
+				$("#poker-sex").find('option').eq(0).attr('selected', true);
 			} else {
-				$("#pocker-sex").find('option').eq(1).attr('selected', true);
+				$("#poker-sex").find('option').eq(1).attr('selected', true);
 			}
 		}
-		$("#pocker-sex").selected('disable');
+		$("#poker-sex").selected('disable');
 		temp.shuffle();
 		handCard = [];
 		for(var i=0;i<5;i++){
@@ -218,7 +219,7 @@ var temp = [];
 			$("#poker-list-one").append(list).append(replaceTag("<br>")).append("当前名单"+male+"男"+female+"女");
 		} else {
 			$("#poker-list-two").append(list).append(replaceTag("<br>")).append("当前名单"+male+"男"+female+"女");
-			winsex = $("#pocker-sex").val();
+			winsex = $("#poker-sex").val();
 			winnum = $("#poker input[name='poker-num']").val();
 			if(winsex == "male" && parseInt(winnum) == male || winsex == "female" && parseInt(winnum) == female ){
 				$("#poker-result").text("打牌成功！");
@@ -226,5 +227,19 @@ var temp = [];
 				$("#poker-result").text("打牌失败");
 			}
 		}
+	}
+	
+	function resetPoker(){
+		$("#poker-condition").html("&nbsp");
+		$("#poker input[name='poker-user']").val("");
+		$("#poker input[name='poker-object']").val("");
+		$("#poker-start-btn").removeAttr("disabled");
+		$("#poker input[name='poker-num']").val("");
+		$("#poker-sex").selected('enable');
+		$("#poker-step-one-btn").removeAttr("disabled");
+		$("#poker-list-one").val("");
+		$("#poker-step-two-btn").removeAttr("disabled");
+		$("#poker-list-two").val("");
+		$("#poker-result").text("");
 	}
 </script>

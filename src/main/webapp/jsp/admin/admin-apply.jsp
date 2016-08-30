@@ -272,8 +272,10 @@ function submitList(gameId){
 		return;
 	}
 	$.get('${baseUrl}file/config.json').success(function(data){
-		var policeSign = data.policeSign.shuffle();
-		var killerSign = data.killerSign.shuffle();
+		var policeSign = data.policeSign;
+		policeSign.shuffle();
+		var killerSign = data.killerSign;
+		killerSign.shuffle();
 		var policeCount = 0;
 		var killerCount = 0;
 		$.each(players,function(index,player){

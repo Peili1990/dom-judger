@@ -63,6 +63,9 @@
 		case "chat":
 			dealChat(content);
 			break;
+		case "settlement":
+			dealSettlement(content);
+			break;
 		default:
 			break;
 		}
@@ -212,6 +215,27 @@
 		} else {
 			$("#chat-list").append("<li><a>暂无未读消息</a></li>")
 			$("#unread-chat-num").addClass("invisible");
+		}
+	}
+	
+	function dealSettlement(content){
+		if(window.location.href.indexOf("settlement")>0){
+			switch(content.settlement){
+			case "dice":
+				$("#dice input[name='dice-result']").val(content.content);
+				break;
+			case "list":
+				$("#list input[name='list-result']").val(content.content);
+				break;
+			case "yika":
+				$("#yika input[name='yika-result']").val(content.content);
+				break;
+			case "yang":
+				$("#yang input[name='yang-result']").val(content.content);
+				break;
+			default:
+				break;			
+			}
 		}
 	}
 

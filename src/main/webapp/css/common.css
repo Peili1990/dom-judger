@@ -4,6 +4,10 @@ time{
 	margin-left:10px;
 }
 
+input[type="checkbox"]{
+	margin-right:5px;
+}
+
 .header {
 	text-align: center;
 }
@@ -159,6 +163,3 @@ time{
 	margin-top:10px;
 }
 
-#poker input[type="checkbox"]{
-	margin-right:5px;
-}

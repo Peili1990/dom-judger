@@ -105,6 +105,13 @@ public class IndexController extends BaseController {
 		return mav;
 	}
 	
+	@RequestMapping(value = "/admin-replay", method = RequestMethod.GET)
+	public ModelAndView adminSummaryView(HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView("admin/admin-replay");
+		mav.addAllObjects(basicService.getSessionUserService(request.getSession()));
+		return mav;
+	}
+	
 	
 
 }
