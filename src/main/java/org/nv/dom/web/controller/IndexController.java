@@ -112,6 +112,13 @@ public class IndexController extends BaseController {
 		return mav;
 	}
 	
+	@RequestMapping(value = "/notSupport", method = RequestMethod.GET)
+	public ModelAndView notSupportView(HttpSession session) {
+		ModelAndView mav = new ModelAndView("pages/not-support");
+		mav.addAllObjects(basicService.getSessionUserService(session));
+		return mav;
+	}
+	
 	
 
 }

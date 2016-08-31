@@ -59,3 +59,16 @@
     </div>
   </div>
 </div>
+
+<script type="text/javascript">
+
+$(function(){
+	if(typeof(openDatabase) == "undefined") {
+		if(window.location.href.indexOf("notSupport")<0){
+			window.location = getRootPath() + "/notSupport";
+		}
+	}
+})
+
+
+</script>

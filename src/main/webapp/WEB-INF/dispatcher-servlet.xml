@@ -84,6 +84,7 @@
 			<mvc:mapping path="/**"/>
 			<mvc:exclude-mapping path="/index" />
 			<mvc:exclude-mapping path="/loginAction" />
+			<mvc:exclude-mapping path="/notSupport"/>
 			<bean class="org.nv.dom.web.interceptors.LoginInterceptor">
 				<property name="sessionTimeoutHandle" ref="sessionTimeoutHandle" />
 			</bean>
