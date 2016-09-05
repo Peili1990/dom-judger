@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50624
 File Encoding         : 65001
 
-Date: 2016-08-30 19:05:37
+Date: 2016-09-05 18:20:26
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -34,60 +34,60 @@ CREATE TABLE `d_character` (
 -- ----------------------------
 -- Records of d_character
 -- ----------------------------
-INSERT INTO `d_character` VALUES ('1', '爱德华', '0', '24', null, null, '1', null);
-INSERT INTO `d_character` VALUES ('2', '马丁', '0', '31', null, null, '0', null);
-INSERT INTO `d_character` VALUES ('3', '托马斯', '0', '29', null, null, '0', null);
-INSERT INTO `d_character` VALUES ('4', '白瑞摩', '0', '33', null, null, '0', null);
-INSERT INTO `d_character` VALUES ('5', '伊卡', '1', '20', null, null, '1', null);
-INSERT INTO `d_character` VALUES ('6', '珀利', '1', '24', null, null, '0', null);
-INSERT INTO `d_character` VALUES ('7', '莫利', '1', '28', null, null, '1', null);
-INSERT INTO `d_character` VALUES ('8', '沃兹沃斯', '1', '27', null, null, '0', null);
-INSERT INTO `d_character` VALUES ('9', '伊奥克', '0', '21', null, null, '0', null);
-INSERT INTO `d_character` VALUES ('10', '奈斯', '0', '50', null, null, '0', null);
-INSERT INTO `d_character` VALUES ('11', '曼顿', '0', '56', null, null, '0', null);
-INSERT INTO `d_character` VALUES ('12', '朗斯特里特', '0', '43', null, null, '0', null);
-INSERT INTO `d_character` VALUES ('13', '普拉马逊斯', '0', '45', null, null, '0', null);
-INSERT INTO `d_character` VALUES ('14', '舒马赫', '1', '53', null, null, '0', null);
-INSERT INTO `d_character` VALUES ('15', '道格拉斯', '1', '47', null, null, '0', null);
-INSERT INTO `d_character` VALUES ('16', '科尔比', '1', '40', null, null, '0', null);
-INSERT INTO `d_character` VALUES ('17', '欧希玛', '1', '49', null, null, '0', null);
-INSERT INTO `d_character` VALUES ('18', '梅特卡夫', '0', '38', null, null, '0', null);
-INSERT INTO `d_character` VALUES ('19', '哈代', '0', '63', null, null, '1', null);
-INSERT INTO `d_character` VALUES ('20', '盖茨', '0', '66', null, null, '0', null);
-INSERT INTO `d_character` VALUES ('21', '斯达福斯', '0', '67', null, null, '0', null);
-INSERT INTO `d_character` VALUES ('22', '托兰', '0', '74', null, null, '0', null);
-INSERT INTO `d_character` VALUES ('23', '查西', '1', '71', null, null, '0', null);
-INSERT INTO `d_character` VALUES ('24', '斯布兰奇', '1', '64', null, null, '0', null);
-INSERT INTO `d_character` VALUES ('25', '坦尼森', '1', '69', null, null, '0', null);
-INSERT INTO `d_character` VALUES ('26', '德雷顿', '1', '65', null, null, '0', null);
-INSERT INTO `d_character` VALUES ('27', '奎勒', '0', '78', null, null, '0', null);
-INSERT INTO `d_character` VALUES ('28', '威廉姆斯', '0', '48', null, null, '1', null);
-INSERT INTO `d_character` VALUES ('29', '尤里', '0', '36', null, null, '0', null);
-INSERT INTO `d_character` VALUES ('30', '安德安纳', '0', '30', null, null, '0', null);
-INSERT INTO `d_character` VALUES ('31', '劳伦', '0', '52', null, null, '1', null);
-INSERT INTO `d_character` VALUES ('32', '豪', '1', '46', null, null, '0', null);
-INSERT INTO `d_character` VALUES ('33', '阿修', '1', '45', null, null, '0', null);
-INSERT INTO `d_character` VALUES ('34', '卡布莱', '1', '55', null, null, '0', null);
-INSERT INTO `d_character` VALUES ('35', '叶什（妹）', '1', '22', null, null, '0', null);
-INSERT INTO `d_character` VALUES ('36', '扬', '1', '26', null, null, '0', null);
-INSERT INTO `d_character` VALUES ('37', '赫本', '1', '23', null, null, '0', null);
-INSERT INTO `d_character` VALUES ('38', '卓尔', '0', '39', null, null, '1', null);
-INSERT INTO `d_character` VALUES ('39', '艾尔威', '1', '73', null, null, '0', null);
-INSERT INTO `d_character` VALUES ('40', '山纳', '0', '54', null, null, '0', null);
-INSERT INTO `d_character` VALUES ('41', '叶什（兄）', '0', '35', null, null, '1', null);
-INSERT INTO `d_character` VALUES ('42', '钱德勒', '2', '41', null, null, '0', null);
-INSERT INTO `d_character` VALUES ('43', '霍尔', '1', '20', null, null, '1', null);
-INSERT INTO `d_character` VALUES ('44', '恩菲尔德', '1', '0', null, null, '0', null);
-INSERT INTO `d_character` VALUES ('45', '布莱克', '0', '80', null, null, '0', null);
-INSERT INTO `d_character` VALUES ('46', '李', '0', '62', null, null, '0', null);
-INSERT INTO `d_character` VALUES ('47', '厄金特', '1', '76', null, null, '0', null);
-INSERT INTO `d_character` VALUES ('48', '昆西', '1', '34', null, null, '0', null);
-INSERT INTO `d_character` VALUES ('49', '马克唐', '0', '77', null, null, '0', null);
-INSERT INTO `d_character` VALUES ('50', '约翰逊', '1', '51', null, null, '1', null);
-INSERT INTO `d_character` VALUES ('51', '欧内斯特', '1', '60', null, null, '0', null);
-INSERT INTO `d_character` VALUES ('52', '浮士德', '0', '58', null, null, '0', null);
-INSERT INTO `d_character` VALUES ('53', '德.圣地亚哥', '0', '72', null, null, '0', null);
-INSERT INTO `d_character` VALUES ('54', '温切斯特', '2', '68', null, null, '0', null);
+INSERT INTO `d_character` VALUES ('1', '爱德华', '0', '24', 'characterAvatar/0145.jpg', 'characterAvatar/0146.jpg', '1', null);
+INSERT INTO `d_character` VALUES ('2', '马丁', '0', '31', 'characterAvatar/0147.jpg', 'characterAvatar/0148.jpg', '0', null);
+INSERT INTO `d_character` VALUES ('3', '托马斯', '0', '29', 'characterAvatar/0149.jpg', 'characterAvatar/0150.jpg', '0', null);
+INSERT INTO `d_character` VALUES ('4', '白瑞摩', '0', '33', 'characterAvatar/0151.jpg', 'characterAvatar/0152.jpg', '0', null);
+INSERT INTO `d_character` VALUES ('5', '伊卡', '1', '20', 'characterAvatar/0153.jpg', 'characterAvatar/0154.jpg', '1', null);
+INSERT INTO `d_character` VALUES ('6', '珀利', '1', '24', 'characterAvatar/0155.jpg', 'characterAvatar/0156.jpg', '0', null);
+INSERT INTO `d_character` VALUES ('7', '莫利', '1', '28', 'characterAvatar/0157.jpg', 'characterAvatar/0158.jpg', '1', null);
+INSERT INTO `d_character` VALUES ('8', '沃兹沃斯', '1', '27', 'characterAvatar/0159.jpg', 'characterAvatar/0160.jpg', '0', null);
+INSERT INTO `d_character` VALUES ('9', '伊奥克', '0', '21', 'characterAvatar/0161.jpg', 'characterAvatar/0162.jpg', '0', null);
+INSERT INTO `d_character` VALUES ('10', '奈斯', '0', '50', 'characterAvatar/0163.jpg', 'characterAvatar/0164.jpg', '0', null);
+INSERT INTO `d_character` VALUES ('11', '曼顿', '0', '56', 'characterAvatar/0165.jpg', 'characterAvatar/0166.jpg', '0', null);
+INSERT INTO `d_character` VALUES ('12', '朗斯特里特', '0', '43', 'characterAvatar/0167.jpg', 'characterAvatar/0168.jpg', '0', null);
+INSERT INTO `d_character` VALUES ('13', '普拉马逊斯', '0', '45', 'characterAvatar/0169.jpg', 'characterAvatar/0170.jpg', '0', null);
+INSERT INTO `d_character` VALUES ('14', '舒马赫', '1', '53', 'characterAvatar/0171.jpg', 'characterAvatar/0172.jpg', '0', null);
+INSERT INTO `d_character` VALUES ('15', '道格拉斯', '1', '47', 'characterAvatar/0173.jpg', 'characterAvatar/0174.jpg', '0', null);
+INSERT INTO `d_character` VALUES ('16', '科尔比', '1', '40', 'characterAvatar/0175.jpg', 'characterAvatar/0176.jpg', '0', null);
+INSERT INTO `d_character` VALUES ('17', '欧希玛', '1', '49', 'characterAvatar/0177.jpg', 'characterAvatar/0178.jpg', '0', null);
+INSERT INTO `d_character` VALUES ('18', '梅特卡夫', '0', '38', 'characterAvatar/0179.jpg', 'characterAvatar/0180.jpg', '0', null);
+INSERT INTO `d_character` VALUES ('19', '哈代', '0', '63', 'characterAvatar/0181.jpg', 'characterAvatar/0182.jpg', '1', null);
+INSERT INTO `d_character` VALUES ('20', '盖茨', '0', '66', 'characterAvatar/0183.jpg', 'characterAvatar/0184.jpg', '0', null);
+INSERT INTO `d_character` VALUES ('21', '斯达福斯', '0', '67', 'characterAvatar/0185.jpg', 'characterAvatar/0186.jpg', '0', null);
+INSERT INTO `d_character` VALUES ('22', '托兰', '0', '74', 'characterAvatar/0187.jpg', 'characterAvatar/0188.jpg', '0', null);
+INSERT INTO `d_character` VALUES ('23', '查西', '1', '71', 'characterAvatar/0189.jpg', 'characterAvatar/0190.jpg', '0', null);
+INSERT INTO `d_character` VALUES ('24', '斯布兰奇', '1', '64', 'characterAvatar/0191.jpg', 'characterAvatar/0192.jpg', '0', null);
+INSERT INTO `d_character` VALUES ('25', '坦尼森', '1', '69', 'characterAvatar/0193.jpg', 'characterAvatar/0194.jpg', '0', null);
+INSERT INTO `d_character` VALUES ('26', '德雷顿', '1', '65', 'characterAvatar/0195.jpg', 'characterAvatar/0196.jpg', '0', null);
+INSERT INTO `d_character` VALUES ('27', '奎勒', '0', '78', 'characterAvatar/0197.jpg', 'characterAvatar/0198.jpg', '0', null);
+INSERT INTO `d_character` VALUES ('28', '威廉姆斯', '0', '48', 'characterAvatar/0217.jpg', 'characterAvatar/0218.jpg', '1', null);
+INSERT INTO `d_character` VALUES ('29', '尤里', '0', '36', 'characterAvatar/0219.jpg', 'characterAvatar/0220.jpg', '0', null);
+INSERT INTO `d_character` VALUES ('30', '安德安纳', '0', '30', 'characterAvatar/0221.jpg', 'characterAvatar/0222.jpg', '0', null);
+INSERT INTO `d_character` VALUES ('31', '劳伦', '0', '52', 'characterAvatar/0223.jpg', 'characterAvatar/0224.jpg', '1', null);
+INSERT INTO `d_character` VALUES ('32', '豪', '1', '46', 'characterAvatar/0225.jpg', 'characterAvatar/0226.jpg', '0', null);
+INSERT INTO `d_character` VALUES ('33', '阿修', '1', '45', 'characterAvatar/0227.jpg', 'characterAvatar/0228.jpg', '0', null);
+INSERT INTO `d_character` VALUES ('34', '卡布莱', '1', '55', 'characterAvatar/0229.jpg', 'characterAvatar/0230.jpg', '0', null);
+INSERT INTO `d_character` VALUES ('35', '叶什（妹）', '1', '22', 'characterAvatar/0231.jpg', 'characterAvatar/0232.jpg', '0', null);
+INSERT INTO `d_character` VALUES ('36', '扬', '1', '26', 'characterAvatar/0233.jpg', 'characterAvatar/0234.jpg', '0', null);
+INSERT INTO `d_character` VALUES ('37', '赫本', '1', '23', 'characterAvatar/0235.jpg', 'characterAvatar/0236.jpg', '0', null);
+INSERT INTO `d_character` VALUES ('38', '卓尔', '0', '39', 'characterAvatar/0237.jpg', 'characterAvatar/0238.jpg', '1', null);
+INSERT INTO `d_character` VALUES ('39', '艾尔威', '1', '73', 'characterAvatar/0239.jpg', 'characterAvatar/0240.jpg', '0', null);
+INSERT INTO `d_character` VALUES ('40', '山纳', '0', '54', 'characterAvatar/0241.jpg', 'characterAvatar/0242.jpg', '0', null);
+INSERT INTO `d_character` VALUES ('41', '叶什（兄）', '0', '35', 'characterAvatar/0243.jpg', 'characterAvatar/0244.jpg', '1', null);
+INSERT INTO `d_character` VALUES ('42', '钱德勒', '2', '41', 'characterAvatar/0247.jpg', 'characterAvatar/0250.jpg', '0', null);
+INSERT INTO `d_character` VALUES ('43', '霍尔', '1', '20', 'characterAvatar/0252.jpg', 'characterAvatar/0253.jpg', '1', null);
+INSERT INTO `d_character` VALUES ('44', '恩菲尔德', '1', '0', 'characterAvatar/0254.jpg', 'characterAvatar/0255.jpg', '0', null);
+INSERT INTO `d_character` VALUES ('45', '布莱克', '0', '80', 'characterAvatar/0256.jpg', 'characterAvatar/0257.jpg', '0', null);
+INSERT INTO `d_character` VALUES ('46', '李', '0', '62', 'characterAvatar/0258.jpg', 'characterAvatar/0259.jpg', '0', null);
+INSERT INTO `d_character` VALUES ('47', '厄金特', '1', '76', 'characterAvatar/0260.jpg', 'characterAvatar/0261.jpg', '0', null);
+INSERT INTO `d_character` VALUES ('48', '昆西', '1', '34', 'characterAvatar/0262.jpg', 'characterAvatar/0263.jpg', '0', null);
+INSERT INTO `d_character` VALUES ('49', '马克唐', '0', '77', 'characterAvatar/0265.jpg', 'characterAvatar/0266.jpg', '0', null);
+INSERT INTO `d_character` VALUES ('50', '约翰逊', '1', '51', 'characterAvatar/0267.jpg', 'characterAvatar/0268.jpg', '1', null);
+INSERT INTO `d_character` VALUES ('51', '欧内斯特', '1', '60', 'characterAvatar/0269.jpg', 'characterAvatar/0270.jpg', '0', null);
+INSERT INTO `d_character` VALUES ('52', '浮士德', '0', '58', 'characterAvatar/0271.jpg', 'characterAvatar/0272.jpg', '0', null);
+INSERT INTO `d_character` VALUES ('53', '德.圣地亚哥', '0', '72', 'characterAvatar/0273.jpg', 'characterAvatar/0274.jpg', '0', null);
+INSERT INTO `d_character` VALUES ('54', '温切斯特', '2', '68', 'characterAvatar/0277.jpg', 'characterAvatar/0280.jpg', '0', null);
 
 -- ----------------------------
 -- Table structure for `d_form`
@@ -153,6 +153,7 @@ CREATE TABLE `d_inv_code` (
 -- Records of d_inv_code
 -- ----------------------------
 INSERT INTO `d_inv_code` VALUES ('1', '1a2b3c', '1', '31');
+INSERT INTO `d_inv_code` VALUES ('2', '1112s3', '1', '33');
 
 -- ----------------------------
 -- Table structure for `d_kick_record`
@@ -213,12 +214,16 @@ CREATE TABLE `d_offline_message` (
   `content` text,
   `create_time` varchar(64) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of d_offline_message
 -- ----------------------------
 INSERT INTO `d_offline_message` VALUES ('2', '2-9', '2', '9', '你好', '2016-08-15 16:04:32');
+INSERT INTO `d_offline_message` VALUES ('3', '1-2', '1', '2', '哦', '2016/08/31 18:16:22');
+INSERT INTO `d_offline_message` VALUES ('4', '1-2', '1', '2', '你好', '2016/08/31 18:16:58');
+INSERT INTO `d_offline_message` VALUES ('5', '1-2', '1', '2', '说话', '2016/09/05 12:31:58');
+INSERT INTO `d_offline_message` VALUES ('6', '1-2', '1', '2', '你好', '2016/09/05 13:26:47');
 
 -- ----------------------------
 -- Table structure for `d_offline_speech`
@@ -230,7 +235,7 @@ CREATE TABLE `d_offline_speech` (
   `speech_id` bigint(11) DEFAULT NULL,
   `newspaper_id` bigint(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1979 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2167 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of d_offline_speech
@@ -676,7 +681,6 @@ INSERT INTO `d_offline_speech` VALUES ('1820', '18', '143', '2');
 INSERT INTO `d_offline_speech` VALUES ('1821', '19', '143', '2');
 INSERT INTO `d_offline_speech` VALUES ('1823', '21', '143', '2');
 INSERT INTO `d_offline_speech` VALUES ('1824', '14', '143', '2');
-INSERT INTO `d_offline_speech` VALUES ('1825', '1', '139', '2');
 INSERT INTO `d_offline_speech` VALUES ('1826', '3', '139', '2');
 INSERT INTO `d_offline_speech` VALUES ('1827', '4', '139', '2');
 INSERT INTO `d_offline_speech` VALUES ('1829', '5', '139', '2');
@@ -699,7 +703,6 @@ INSERT INTO `d_offline_speech` VALUES ('1845', '28', '139', '2');
 INSERT INTO `d_offline_speech` VALUES ('1846', '29', '139', '2');
 INSERT INTO `d_offline_speech` VALUES ('1847', '3', '140', '2');
 INSERT INTO `d_offline_speech` VALUES ('1848', '4', '140', '2');
-INSERT INTO `d_offline_speech` VALUES ('1849', '1', '140', '2');
 INSERT INTO `d_offline_speech` VALUES ('1850', '5', '140', '2');
 INSERT INTO `d_offline_speech` VALUES ('1851', '7', '140', '2');
 INSERT INTO `d_offline_speech` VALUES ('1852', '8', '140', '2');
@@ -709,7 +712,6 @@ INSERT INTO `d_offline_speech` VALUES ('1855', '11', '140', '2');
 INSERT INTO `d_offline_speech` VALUES ('1856', '12', '140', '2');
 INSERT INTO `d_offline_speech` VALUES ('1857', '13', '140', '2');
 INSERT INTO `d_offline_speech` VALUES ('1858', '14', '140', '2');
-INSERT INTO `d_offline_speech` VALUES ('1859', '15', '140', '2');
 INSERT INTO `d_offline_speech` VALUES ('1860', '16', '140', '2');
 INSERT INTO `d_offline_speech` VALUES ('1861', '17', '140', '2');
 INSERT INTO `d_offline_speech` VALUES ('1862', '18', '140', '2');
@@ -721,7 +723,6 @@ INSERT INTO `d_offline_speech` VALUES ('1867', '28', '140', '2');
 INSERT INTO `d_offline_speech` VALUES ('1868', '29', '140', '2');
 INSERT INTO `d_offline_speech` VALUES ('1869', '3', '141', '2');
 INSERT INTO `d_offline_speech` VALUES ('1870', '4', '141', '2');
-INSERT INTO `d_offline_speech` VALUES ('1871', '1', '141', '2');
 INSERT INTO `d_offline_speech` VALUES ('1872', '5', '141', '2');
 INSERT INTO `d_offline_speech` VALUES ('1873', '7', '141', '2');
 INSERT INTO `d_offline_speech` VALUES ('1874', '8', '141', '2');
@@ -731,7 +732,6 @@ INSERT INTO `d_offline_speech` VALUES ('1877', '11', '141', '2');
 INSERT INTO `d_offline_speech` VALUES ('1878', '12', '141', '2');
 INSERT INTO `d_offline_speech` VALUES ('1879', '13', '141', '2');
 INSERT INTO `d_offline_speech` VALUES ('1880', '14', '141', '2');
-INSERT INTO `d_offline_speech` VALUES ('1881', '15', '141', '2');
 INSERT INTO `d_offline_speech` VALUES ('1882', '16', '141', '2');
 INSERT INTO `d_offline_speech` VALUES ('1883', '17', '141', '2');
 INSERT INTO `d_offline_speech` VALUES ('1884', '18', '141', '2');
@@ -743,7 +743,6 @@ INSERT INTO `d_offline_speech` VALUES ('1889', '28', '141', '2');
 INSERT INTO `d_offline_speech` VALUES ('1890', '29', '141', '2');
 INSERT INTO `d_offline_speech` VALUES ('1891', '3', '142', '2');
 INSERT INTO `d_offline_speech` VALUES ('1892', '4', '142', '2');
-INSERT INTO `d_offline_speech` VALUES ('1893', '1', '142', '2');
 INSERT INTO `d_offline_speech` VALUES ('1894', '5', '142', '2');
 INSERT INTO `d_offline_speech` VALUES ('1895', '7', '142', '2');
 INSERT INTO `d_offline_speech` VALUES ('1896', '8', '142', '2');
@@ -753,7 +752,6 @@ INSERT INTO `d_offline_speech` VALUES ('1899', '11', '142', '2');
 INSERT INTO `d_offline_speech` VALUES ('1900', '12', '142', '2');
 INSERT INTO `d_offline_speech` VALUES ('1901', '13', '142', '2');
 INSERT INTO `d_offline_speech` VALUES ('1902', '14', '142', '2');
-INSERT INTO `d_offline_speech` VALUES ('1903', '15', '142', '2');
 INSERT INTO `d_offline_speech` VALUES ('1904', '16', '142', '2');
 INSERT INTO `d_offline_speech` VALUES ('1905', '17', '142', '2');
 INSERT INTO `d_offline_speech` VALUES ('1906', '18', '142', '2');
@@ -765,7 +763,6 @@ INSERT INTO `d_offline_speech` VALUES ('1911', '28', '142', '2');
 INSERT INTO `d_offline_speech` VALUES ('1912', '29', '142', '2');
 INSERT INTO `d_offline_speech` VALUES ('1913', '3', '143', '2');
 INSERT INTO `d_offline_speech` VALUES ('1914', '4', '143', '2');
-INSERT INTO `d_offline_speech` VALUES ('1915', '1', '143', '2');
 INSERT INTO `d_offline_speech` VALUES ('1916', '5', '143', '2');
 INSERT INTO `d_offline_speech` VALUES ('1917', '7', '143', '2');
 INSERT INTO `d_offline_speech` VALUES ('1918', '8', '143', '2');
@@ -775,7 +772,6 @@ INSERT INTO `d_offline_speech` VALUES ('1921', '11', '143', '2');
 INSERT INTO `d_offline_speech` VALUES ('1922', '12', '143', '2');
 INSERT INTO `d_offline_speech` VALUES ('1923', '13', '143', '2');
 INSERT INTO `d_offline_speech` VALUES ('1924', '14', '143', '2');
-INSERT INTO `d_offline_speech` VALUES ('1925', '15', '143', '2');
 INSERT INTO `d_offline_speech` VALUES ('1926', '16', '143', '2');
 INSERT INTO `d_offline_speech` VALUES ('1927', '17', '143', '2');
 INSERT INTO `d_offline_speech` VALUES ('1928', '18', '143', '2');
@@ -787,7 +783,6 @@ INSERT INTO `d_offline_speech` VALUES ('1933', '28', '143', '2');
 INSERT INTO `d_offline_speech` VALUES ('1934', '29', '143', '2');
 INSERT INTO `d_offline_speech` VALUES ('1935', '3', '144', '2');
 INSERT INTO `d_offline_speech` VALUES ('1936', '4', '144', '2');
-INSERT INTO `d_offline_speech` VALUES ('1937', '1', '144', '2');
 INSERT INTO `d_offline_speech` VALUES ('1938', '5', '144', '2');
 INSERT INTO `d_offline_speech` VALUES ('1939', '7', '144', '2');
 INSERT INTO `d_offline_speech` VALUES ('1940', '8', '144', '2');
@@ -797,7 +792,6 @@ INSERT INTO `d_offline_speech` VALUES ('1943', '11', '144', '2');
 INSERT INTO `d_offline_speech` VALUES ('1944', '12', '144', '2');
 INSERT INTO `d_offline_speech` VALUES ('1945', '13', '144', '2');
 INSERT INTO `d_offline_speech` VALUES ('1946', '14', '144', '2');
-INSERT INTO `d_offline_speech` VALUES ('1947', '15', '144', '2');
 INSERT INTO `d_offline_speech` VALUES ('1948', '16', '144', '2');
 INSERT INTO `d_offline_speech` VALUES ('1949', '17', '144', '2');
 INSERT INTO `d_offline_speech` VALUES ('1950', '18', '144', '2');
@@ -809,7 +803,6 @@ INSERT INTO `d_offline_speech` VALUES ('1955', '28', '144', '2');
 INSERT INTO `d_offline_speech` VALUES ('1956', '29', '144', '2');
 INSERT INTO `d_offline_speech` VALUES ('1957', '3', '145', '2');
 INSERT INTO `d_offline_speech` VALUES ('1958', '4', '145', '2');
-INSERT INTO `d_offline_speech` VALUES ('1959', '1', '145', '2');
 INSERT INTO `d_offline_speech` VALUES ('1960', '5', '145', '2');
 INSERT INTO `d_offline_speech` VALUES ('1961', '7', '145', '2');
 INSERT INTO `d_offline_speech` VALUES ('1962', '8', '145', '2');
@@ -819,7 +812,6 @@ INSERT INTO `d_offline_speech` VALUES ('1965', '11', '145', '2');
 INSERT INTO `d_offline_speech` VALUES ('1966', '12', '145', '2');
 INSERT INTO `d_offline_speech` VALUES ('1967', '13', '145', '2');
 INSERT INTO `d_offline_speech` VALUES ('1968', '14', '145', '2');
-INSERT INTO `d_offline_speech` VALUES ('1969', '15', '145', '2');
 INSERT INTO `d_offline_speech` VALUES ('1970', '16', '145', '2');
 INSERT INTO `d_offline_speech` VALUES ('1971', '17', '145', '2');
 INSERT INTO `d_offline_speech` VALUES ('1972', '18', '145', '2');
@@ -829,6 +821,188 @@ INSERT INTO `d_offline_speech` VALUES ('1975', '21', '145', '2');
 INSERT INTO `d_offline_speech` VALUES ('1976', '27', '145', '2');
 INSERT INTO `d_offline_speech` VALUES ('1977', '28', '145', '2');
 INSERT INTO `d_offline_speech` VALUES ('1978', '29', '145', '2');
+INSERT INTO `d_offline_speech` VALUES ('1979', '2', '146', '2');
+INSERT INTO `d_offline_speech` VALUES ('1980', '3', '146', '2');
+INSERT INTO `d_offline_speech` VALUES ('1981', '4', '146', '2');
+INSERT INTO `d_offline_speech` VALUES ('1982', '6', '146', '2');
+INSERT INTO `d_offline_speech` VALUES ('1983', '5', '146', '2');
+INSERT INTO `d_offline_speech` VALUES ('1984', '7', '146', '2');
+INSERT INTO `d_offline_speech` VALUES ('1985', '8', '146', '2');
+INSERT INTO `d_offline_speech` VALUES ('1986', '9', '146', '2');
+INSERT INTO `d_offline_speech` VALUES ('1987', '10', '146', '2');
+INSERT INTO `d_offline_speech` VALUES ('1988', '11', '146', '2');
+INSERT INTO `d_offline_speech` VALUES ('1989', '12', '146', '2');
+INSERT INTO `d_offline_speech` VALUES ('1990', '13', '146', '2');
+INSERT INTO `d_offline_speech` VALUES ('1991', '14', '146', '2');
+INSERT INTO `d_offline_speech` VALUES ('1993', '16', '146', '2');
+INSERT INTO `d_offline_speech` VALUES ('1994', '17', '146', '2');
+INSERT INTO `d_offline_speech` VALUES ('1995', '18', '146', '2');
+INSERT INTO `d_offline_speech` VALUES ('1996', '19', '146', '2');
+INSERT INTO `d_offline_speech` VALUES ('1997', '20', '146', '2');
+INSERT INTO `d_offline_speech` VALUES ('1998', '21', '146', '2');
+INSERT INTO `d_offline_speech` VALUES ('1999', '27', '146', '2');
+INSERT INTO `d_offline_speech` VALUES ('2000', '28', '146', '2');
+INSERT INTO `d_offline_speech` VALUES ('2001', '29', '146', '2');
+INSERT INTO `d_offline_speech` VALUES ('2002', '2', '147', '2');
+INSERT INTO `d_offline_speech` VALUES ('2003', '3', '147', '2');
+INSERT INTO `d_offline_speech` VALUES ('2004', '4', '147', '2');
+INSERT INTO `d_offline_speech` VALUES ('2005', '6', '147', '2');
+INSERT INTO `d_offline_speech` VALUES ('2006', '5', '147', '2');
+INSERT INTO `d_offline_speech` VALUES ('2007', '7', '147', '2');
+INSERT INTO `d_offline_speech` VALUES ('2008', '8', '147', '2');
+INSERT INTO `d_offline_speech` VALUES ('2009', '9', '147', '2');
+INSERT INTO `d_offline_speech` VALUES ('2010', '10', '147', '2');
+INSERT INTO `d_offline_speech` VALUES ('2011', '11', '147', '2');
+INSERT INTO `d_offline_speech` VALUES ('2012', '12', '147', '2');
+INSERT INTO `d_offline_speech` VALUES ('2013', '13', '147', '2');
+INSERT INTO `d_offline_speech` VALUES ('2014', '14', '147', '2');
+INSERT INTO `d_offline_speech` VALUES ('2016', '16', '147', '2');
+INSERT INTO `d_offline_speech` VALUES ('2017', '17', '147', '2');
+INSERT INTO `d_offline_speech` VALUES ('2018', '18', '147', '2');
+INSERT INTO `d_offline_speech` VALUES ('2019', '19', '147', '2');
+INSERT INTO `d_offline_speech` VALUES ('2020', '20', '147', '2');
+INSERT INTO `d_offline_speech` VALUES ('2021', '21', '147', '2');
+INSERT INTO `d_offline_speech` VALUES ('2022', '27', '147', '2');
+INSERT INTO `d_offline_speech` VALUES ('2023', '28', '147', '2');
+INSERT INTO `d_offline_speech` VALUES ('2024', '29', '147', '2');
+INSERT INTO `d_offline_speech` VALUES ('2025', '2', '148', '2');
+INSERT INTO `d_offline_speech` VALUES ('2026', '3', '148', '2');
+INSERT INTO `d_offline_speech` VALUES ('2027', '4', '148', '2');
+INSERT INTO `d_offline_speech` VALUES ('2028', '6', '148', '2');
+INSERT INTO `d_offline_speech` VALUES ('2029', '5', '148', '2');
+INSERT INTO `d_offline_speech` VALUES ('2030', '7', '148', '2');
+INSERT INTO `d_offline_speech` VALUES ('2031', '8', '148', '2');
+INSERT INTO `d_offline_speech` VALUES ('2032', '9', '148', '2');
+INSERT INTO `d_offline_speech` VALUES ('2033', '10', '148', '2');
+INSERT INTO `d_offline_speech` VALUES ('2034', '11', '148', '2');
+INSERT INTO `d_offline_speech` VALUES ('2035', '12', '148', '2');
+INSERT INTO `d_offline_speech` VALUES ('2036', '13', '148', '2');
+INSERT INTO `d_offline_speech` VALUES ('2037', '14', '148', '2');
+INSERT INTO `d_offline_speech` VALUES ('2038', '15', '148', '2');
+INSERT INTO `d_offline_speech` VALUES ('2039', '16', '148', '2');
+INSERT INTO `d_offline_speech` VALUES ('2040', '17', '148', '2');
+INSERT INTO `d_offline_speech` VALUES ('2041', '18', '148', '2');
+INSERT INTO `d_offline_speech` VALUES ('2042', '19', '148', '2');
+INSERT INTO `d_offline_speech` VALUES ('2043', '20', '148', '2');
+INSERT INTO `d_offline_speech` VALUES ('2044', '21', '148', '2');
+INSERT INTO `d_offline_speech` VALUES ('2045', '27', '148', '2');
+INSERT INTO `d_offline_speech` VALUES ('2046', '28', '148', '2');
+INSERT INTO `d_offline_speech` VALUES ('2047', '29', '148', '2');
+INSERT INTO `d_offline_speech` VALUES ('2048', '2', '149', '2');
+INSERT INTO `d_offline_speech` VALUES ('2049', '3', '149', '2');
+INSERT INTO `d_offline_speech` VALUES ('2050', '4', '149', '2');
+INSERT INTO `d_offline_speech` VALUES ('2051', '6', '149', '2');
+INSERT INTO `d_offline_speech` VALUES ('2052', '5', '149', '2');
+INSERT INTO `d_offline_speech` VALUES ('2053', '7', '149', '2');
+INSERT INTO `d_offline_speech` VALUES ('2054', '8', '149', '2');
+INSERT INTO `d_offline_speech` VALUES ('2055', '9', '149', '2');
+INSERT INTO `d_offline_speech` VALUES ('2056', '10', '149', '2');
+INSERT INTO `d_offline_speech` VALUES ('2057', '11', '149', '2');
+INSERT INTO `d_offline_speech` VALUES ('2058', '12', '149', '2');
+INSERT INTO `d_offline_speech` VALUES ('2059', '13', '149', '2');
+INSERT INTO `d_offline_speech` VALUES ('2060', '14', '149', '2');
+INSERT INTO `d_offline_speech` VALUES ('2061', '15', '149', '2');
+INSERT INTO `d_offline_speech` VALUES ('2062', '16', '149', '2');
+INSERT INTO `d_offline_speech` VALUES ('2063', '17', '149', '2');
+INSERT INTO `d_offline_speech` VALUES ('2064', '18', '149', '2');
+INSERT INTO `d_offline_speech` VALUES ('2065', '19', '149', '2');
+INSERT INTO `d_offline_speech` VALUES ('2066', '20', '149', '2');
+INSERT INTO `d_offline_speech` VALUES ('2067', '21', '149', '2');
+INSERT INTO `d_offline_speech` VALUES ('2068', '27', '149', '2');
+INSERT INTO `d_offline_speech` VALUES ('2069', '28', '149', '2');
+INSERT INTO `d_offline_speech` VALUES ('2070', '29', '149', '2');
+INSERT INTO `d_offline_speech` VALUES ('2073', '2', '150', '2');
+INSERT INTO `d_offline_speech` VALUES ('2074', '3', '150', '2');
+INSERT INTO `d_offline_speech` VALUES ('2075', '4', '150', '2');
+INSERT INTO `d_offline_speech` VALUES ('2076', '6', '150', '2');
+INSERT INTO `d_offline_speech` VALUES ('2077', '5', '150', '2');
+INSERT INTO `d_offline_speech` VALUES ('2078', '7', '150', '2');
+INSERT INTO `d_offline_speech` VALUES ('2079', '8', '150', '2');
+INSERT INTO `d_offline_speech` VALUES ('2080', '9', '150', '2');
+INSERT INTO `d_offline_speech` VALUES ('2081', '10', '150', '2');
+INSERT INTO `d_offline_speech` VALUES ('2082', '11', '150', '2');
+INSERT INTO `d_offline_speech` VALUES ('2083', '12', '150', '2');
+INSERT INTO `d_offline_speech` VALUES ('2084', '13', '150', '2');
+INSERT INTO `d_offline_speech` VALUES ('2085', '14', '150', '2');
+INSERT INTO `d_offline_speech` VALUES ('2086', '15', '150', '2');
+INSERT INTO `d_offline_speech` VALUES ('2087', '16', '150', '2');
+INSERT INTO `d_offline_speech` VALUES ('2088', '17', '150', '2');
+INSERT INTO `d_offline_speech` VALUES ('2089', '18', '150', '2');
+INSERT INTO `d_offline_speech` VALUES ('2090', '19', '150', '2');
+INSERT INTO `d_offline_speech` VALUES ('2091', '20', '150', '2');
+INSERT INTO `d_offline_speech` VALUES ('2092', '21', '150', '2');
+INSERT INTO `d_offline_speech` VALUES ('2093', '27', '150', '2');
+INSERT INTO `d_offline_speech` VALUES ('2094', '28', '150', '2');
+INSERT INTO `d_offline_speech` VALUES ('2095', '29', '150', '2');
+INSERT INTO `d_offline_speech` VALUES ('2097', '2', '151', '2');
+INSERT INTO `d_offline_speech` VALUES ('2098', '3', '151', '2');
+INSERT INTO `d_offline_speech` VALUES ('2099', '4', '151', '2');
+INSERT INTO `d_offline_speech` VALUES ('2100', '6', '151', '2');
+INSERT INTO `d_offline_speech` VALUES ('2101', '5', '151', '2');
+INSERT INTO `d_offline_speech` VALUES ('2102', '7', '151', '2');
+INSERT INTO `d_offline_speech` VALUES ('2103', '8', '151', '2');
+INSERT INTO `d_offline_speech` VALUES ('2104', '9', '151', '2');
+INSERT INTO `d_offline_speech` VALUES ('2105', '10', '151', '2');
+INSERT INTO `d_offline_speech` VALUES ('2106', '11', '151', '2');
+INSERT INTO `d_offline_speech` VALUES ('2107', '12', '151', '2');
+INSERT INTO `d_offline_speech` VALUES ('2108', '13', '151', '2');
+INSERT INTO `d_offline_speech` VALUES ('2109', '14', '151', '2');
+INSERT INTO `d_offline_speech` VALUES ('2110', '15', '151', '2');
+INSERT INTO `d_offline_speech` VALUES ('2111', '16', '151', '2');
+INSERT INTO `d_offline_speech` VALUES ('2112', '17', '151', '2');
+INSERT INTO `d_offline_speech` VALUES ('2113', '18', '151', '2');
+INSERT INTO `d_offline_speech` VALUES ('2114', '19', '151', '2');
+INSERT INTO `d_offline_speech` VALUES ('2115', '20', '151', '2');
+INSERT INTO `d_offline_speech` VALUES ('2116', '21', '151', '2');
+INSERT INTO `d_offline_speech` VALUES ('2117', '27', '151', '2');
+INSERT INTO `d_offline_speech` VALUES ('2118', '28', '151', '2');
+INSERT INTO `d_offline_speech` VALUES ('2119', '29', '151', '2');
+INSERT INTO `d_offline_speech` VALUES ('2121', '2', '152', '2');
+INSERT INTO `d_offline_speech` VALUES ('2122', '3', '152', '2');
+INSERT INTO `d_offline_speech` VALUES ('2123', '4', '152', '2');
+INSERT INTO `d_offline_speech` VALUES ('2124', '6', '152', '2');
+INSERT INTO `d_offline_speech` VALUES ('2125', '5', '152', '2');
+INSERT INTO `d_offline_speech` VALUES ('2126', '7', '152', '2');
+INSERT INTO `d_offline_speech` VALUES ('2127', '8', '152', '2');
+INSERT INTO `d_offline_speech` VALUES ('2128', '9', '152', '2');
+INSERT INTO `d_offline_speech` VALUES ('2129', '10', '152', '2');
+INSERT INTO `d_offline_speech` VALUES ('2130', '11', '152', '2');
+INSERT INTO `d_offline_speech` VALUES ('2131', '12', '152', '2');
+INSERT INTO `d_offline_speech` VALUES ('2132', '13', '152', '2');
+INSERT INTO `d_offline_speech` VALUES ('2133', '14', '152', '2');
+INSERT INTO `d_offline_speech` VALUES ('2134', '15', '152', '2');
+INSERT INTO `d_offline_speech` VALUES ('2135', '16', '152', '2');
+INSERT INTO `d_offline_speech` VALUES ('2136', '17', '152', '2');
+INSERT INTO `d_offline_speech` VALUES ('2137', '18', '152', '2');
+INSERT INTO `d_offline_speech` VALUES ('2138', '19', '152', '2');
+INSERT INTO `d_offline_speech` VALUES ('2139', '20', '152', '2');
+INSERT INTO `d_offline_speech` VALUES ('2140', '21', '152', '2');
+INSERT INTO `d_offline_speech` VALUES ('2141', '27', '152', '2');
+INSERT INTO `d_offline_speech` VALUES ('2142', '28', '152', '2');
+INSERT INTO `d_offline_speech` VALUES ('2143', '29', '152', '2');
+INSERT INTO `d_offline_speech` VALUES ('2144', '2', '153', '2');
+INSERT INTO `d_offline_speech` VALUES ('2145', '3', '153', '2');
+INSERT INTO `d_offline_speech` VALUES ('2146', '4', '153', '2');
+INSERT INTO `d_offline_speech` VALUES ('2147', '6', '153', '2');
+INSERT INTO `d_offline_speech` VALUES ('2148', '5', '153', '2');
+INSERT INTO `d_offline_speech` VALUES ('2149', '7', '153', '2');
+INSERT INTO `d_offline_speech` VALUES ('2150', '8', '153', '2');
+INSERT INTO `d_offline_speech` VALUES ('2151', '9', '153', '2');
+INSERT INTO `d_offline_speech` VALUES ('2152', '10', '153', '2');
+INSERT INTO `d_offline_speech` VALUES ('2153', '11', '153', '2');
+INSERT INTO `d_offline_speech` VALUES ('2154', '12', '153', '2');
+INSERT INTO `d_offline_speech` VALUES ('2155', '13', '153', '2');
+INSERT INTO `d_offline_speech` VALUES ('2156', '14', '153', '2');
+INSERT INTO `d_offline_speech` VALUES ('2157', '15', '153', '2');
+INSERT INTO `d_offline_speech` VALUES ('2158', '16', '153', '2');
+INSERT INTO `d_offline_speech` VALUES ('2159', '17', '153', '2');
+INSERT INTO `d_offline_speech` VALUES ('2160', '18', '153', '2');
+INSERT INTO `d_offline_speech` VALUES ('2161', '19', '153', '2');
+INSERT INTO `d_offline_speech` VALUES ('2162', '20', '153', '2');
+INSERT INTO `d_offline_speech` VALUES ('2163', '21', '153', '2');
+INSERT INTO `d_offline_speech` VALUES ('2164', '27', '153', '2');
+INSERT INTO `d_offline_speech` VALUES ('2165', '28', '153', '2');
+INSERT INTO `d_offline_speech` VALUES ('2166', '29', '153', '2');
 
 -- ----------------------------
 -- Table structure for `d_player`
@@ -842,7 +1016,7 @@ CREATE TABLE `d_player` (
   `status` int(5) DEFAULT NULL COMMENT '0 已报名 1待选外在角色 2待3选1 3已选外在身份 4已查看实际身份 7备选法官 8法官 9 已结束',
   `apply_time` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of d_player
@@ -876,6 +1050,7 @@ INSERT INTO `d_player` VALUES ('38', '26', 'player', '5', '1', '2016-08-17 15:26
 INSERT INTO `d_player` VALUES ('39', '27', 'player', '1', '3', '2016-08-18 14:42:04');
 INSERT INTO `d_player` VALUES ('40', '28', 'player', '1', '3', '2016-08-18 14:43:57');
 INSERT INTO `d_player` VALUES ('41', '29', 'player', '1', '1', '2016-08-18 14:44:10');
+INSERT INTO `d_player` VALUES ('42', '33', 'player', '5', '1', '2016-09-02 17:39:49');
 
 -- ----------------------------
 -- Table structure for `d_player_record`
@@ -906,7 +1081,7 @@ CREATE TABLE `d_player_record` (
 -- ----------------------------
 INSERT INTO `d_player_record` VALUES ('5', '35', '0', '1', '11', '平民  ', '0', '1', '1', '0', '', '', '', '', null, '');
 INSERT INTO `d_player_record` VALUES ('8', '38', '0', '1', '8', '刺客  ', '1', '1', '1', '0', '', '', '', '', null, '');
-INSERT INTO `d_player_record` VALUES ('10', '44', '1', '1', '14', '杀手（手枪）  ', '2', '2', '1', '0', '红色信封 山纳', '', '', '', '2016-07-29 16:38:23', '');
+INSERT INTO `d_player_record` VALUES ('10', '44', '1', '1', '14', '杀手（手枪）  ', '2', '2', '1', '0', '红色信封 山纳', '', '', '', '2016-08-31 18:19:35', '');
 INSERT INTO `d_player_record` VALUES ('11', '43', '0', '1', '4', '警察（雨伞）  ', '3', '1', '1', '0', '', '', '', '', null, '');
 INSERT INTO `d_player_record` VALUES ('12', '33', '0', '0', '20', '间谍  ', '4', '2', '1', '0', '', '', '', '', null, '');
 INSERT INTO `d_player_record` VALUES ('13', '26', '0', '1', '10', '官员  ', '5', '1', '1', '0', '', '', '', '', null, '');
@@ -961,30 +1136,34 @@ CREATE TABLE `d_sign` (
 -- ----------------------------
 -- Records of d_sign
 -- ----------------------------
-INSERT INTO `d_sign` VALUES ('1', '警察', '手铐', '1', null);
-INSERT INTO `d_sign` VALUES ('2', '警察', '放大镜', '1', null);
-INSERT INTO `d_sign` VALUES ('3', '警察', '星型警徽', '1', null);
-INSERT INTO `d_sign` VALUES ('4', '警察', '雨伞', '1', null);
-INSERT INTO `d_sign` VALUES ('5', '警察', '问号', '1', null);
-INSERT INTO `d_sign` VALUES ('6', '警察', '天窗', '1', null);
-INSERT INTO `d_sign` VALUES ('7', '牧师', '十字架', '1', null);
-INSERT INTO `d_sign` VALUES ('8', '刺客', '弓箭', '1', null);
-INSERT INTO `d_sign` VALUES ('9', '医生', '针筒', '1', null);
-INSERT INTO `d_sign` VALUES ('10', '官员', '橡皮印章', '1', null);
-INSERT INTO `d_sign` VALUES ('11', '平民', '钱币', '1', null);
-INSERT INTO `d_sign` VALUES ('12', '先驱', '燃烧的钱币', '1', null);
-INSERT INTO `d_sign` VALUES ('13', '杀手', '刀', '2', null);
-INSERT INTO `d_sign` VALUES ('14', '杀手', '手枪', '2', null);
-INSERT INTO `d_sign` VALUES ('15', '杀手', '毒药瓶', '2', null);
-INSERT INTO `d_sign` VALUES ('16', '杀手', '套索', '2', null);
-INSERT INTO `d_sign` VALUES ('17', '杀手', '棍', '2', null);
-INSERT INTO `d_sign` VALUES ('18', '杀手', '扑克牌', '2', null);
-INSERT INTO `d_sign` VALUES ('19', '小偷', '钳子', '2', null);
-INSERT INTO `d_sign` VALUES ('20', '间谍', '眼镜', '2', null);
-INSERT INTO `d_sign` VALUES ('21', '巫师', '手杖', '2', null);
-INSERT INTO `d_sign` VALUES ('22', '暴徒', '炸药', '2', null);
-INSERT INTO `d_sign` VALUES ('23', '帮众', '沾血的钱币', '2', null);
-INSERT INTO `d_sign` VALUES ('24', null, '契约', '3', null);
+INSERT INTO `d_sign` VALUES ('1', '警察', '手铐', '1', 'signAvatar/0101.jpg');
+INSERT INTO `d_sign` VALUES ('2', '警察', '放大镜', '1', 'signAvatar/0102.jpg');
+INSERT INTO `d_sign` VALUES ('3', '警察', '星型警徽', '1', 'signAvatar/0103.jpg');
+INSERT INTO `d_sign` VALUES ('4', '警察', '雨伞', '1', 'signAvatar/0104.jpg');
+INSERT INTO `d_sign` VALUES ('5', '警察', '问号', '1', 'signAvatar/0105.jpg');
+INSERT INTO `d_sign` VALUES ('6', '警察', '天窗', '1', 'signAvatar/0106.jpg');
+INSERT INTO `d_sign` VALUES ('7', '牧师', '十字架', '1', 'signAvatar/0107.jpg');
+INSERT INTO `d_sign` VALUES ('8', '刺客', '弓箭', '1', 'signAvatar/0108.jpg');
+INSERT INTO `d_sign` VALUES ('9', '医生', '针筒', '1', 'signAvatar/0109.jpg');
+INSERT INTO `d_sign` VALUES ('10', '官员', '橡皮印章', '1', 'signAvatar/0110.jpg');
+INSERT INTO `d_sign` VALUES ('11', '平民', '钱币', '1', 'signAvatar/0112.jpg');
+INSERT INTO `d_sign` VALUES ('12', '先驱', '燃烧的钱币', '1', 'signAvatar/0113.jpg');
+INSERT INTO `d_sign` VALUES ('13', '杀手', '刀', '2', 'signAvatar/0114.jpg');
+INSERT INTO `d_sign` VALUES ('14', '杀手', '手枪', '2', 'signAvatar/0115.jpg');
+INSERT INTO `d_sign` VALUES ('15', '杀手', '毒药瓶', '2', 'signAvatar/0116.jpg');
+INSERT INTO `d_sign` VALUES ('16', '杀手', '套索', '2', 'signAvatar/0117.jpg');
+INSERT INTO `d_sign` VALUES ('17', '杀手', '棍', '2', 'signAvatar/0118.jpg');
+INSERT INTO `d_sign` VALUES ('18', '杀手', '扑克牌', '2', 'signAvatar/0119.jpg');
+INSERT INTO `d_sign` VALUES ('19', '小偷', '钳子', '2', 'signAvatar/0121.jpg');
+INSERT INTO `d_sign` VALUES ('20', '间谍', '眼镜', '2', 'signAvatar/0122.jpg');
+INSERT INTO `d_sign` VALUES ('21', '巫师', '手杖', '2', 'signAvatar/0123.jpg');
+INSERT INTO `d_sign` VALUES ('22', '暴徒', '炸药', '2', 'signAvatar/0124.jpg');
+INSERT INTO `d_sign` VALUES ('23', '帮众', '沾血的钱币', '2', 'signAvatar/0125.jpg');
+INSERT INTO `d_sign` VALUES ('24', null, '契约', '3', 'signAvatar/0264.jpg');
+INSERT INTO `d_sign` VALUES ('25', null, '双管猎枪', '2', 'signAvatar/0111.jpg');
+INSERT INTO `d_sign` VALUES ('26', null, '预告信', '2', 'signAvatar/0120.jpg');
+INSERT INTO `d_sign` VALUES ('27', null, '未知', null, 'signAvatar/0251.jpg');
+INSERT INTO `d_sign` VALUES ('28', null, '雪茄', '0', 'signAvatar/0126.jpg');
 
 -- ----------------------------
 -- Table structure for `d_speech`
@@ -1000,7 +1179,7 @@ CREATE TABLE `d_speech` (
   `create_time` varchar(32) DEFAULT NULL,
   `type` int(1) DEFAULT NULL COMMENT '1 发言 2 动作 3 公告',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=146 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=154 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of d_speech
@@ -1013,6 +1192,14 @@ INSERT INTO `d_speech` VALUES ('142', '8', '伊卡', null, '2', '*伊卡 什么'
 INSERT INTO `d_speech` VALUES ('143', '8', '伊卡', null, '2', '*伊卡 杀手', '2016/08/26 18:12:35', '2');
 INSERT INTO `d_speech` VALUES ('144', '8', 'sp卓尔', null, '2', '哈哈', '2016/08/26 18:12:55', '1');
 INSERT INTO `d_speech` VALUES ('145', '8', '卓尔', null, '2', '说话', '2016/08/26 18:20:26', '1');
+INSERT INTO `d_speech` VALUES ('146', '10', '恩菲尔德', null, '2', '什么', '2016/08/31 18:17:38', '1');
+INSERT INTO `d_speech` VALUES ('147', '10', '恩菲尔德', null, '2', '1号发炎', '2016/08/31 18:20:24', '1');
+INSERT INTO `d_speech` VALUES ('148', '10', '恩菲尔德', null, '2', '各位哥哥姐姐我是好人', '2016/09/05 12:19:08', '1');
+INSERT INTO `d_speech` VALUES ('149', '10', '恩菲尔德', null, '2', '各位哥哥姐姐我是好人', '2016/09/05 12:24:14', '1');
+INSERT INTO `d_speech` VALUES ('150', '10', '恩菲尔德', null, '2', '我是好人', '2016/09/05 12:28:09', '1');
+INSERT INTO `d_speech` VALUES ('151', '10', '恩菲尔德', null, '2', '我是好人', '2016/09/05 12:30:33', '1');
+INSERT INTO `d_speech` VALUES ('152', '10', '恩菲尔德', 'characterAvatar/0254.jpg', '2', '我是好人', '2016/09/05 12:31:31', '1');
+INSERT INTO `d_speech` VALUES ('153', '10', '恩菲尔德', 'characterAvatar/0254.jpg', '2', '我真的是好人', '2016/09/05 12:42:11', '1');
 
 -- ----------------------------
 -- Table structure for `d_user`
@@ -1028,13 +1215,13 @@ CREATE TABLE `d_user` (
   `createTime` datetime DEFAULT NULL,
   `avatar` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of d_user
 -- ----------------------------
-INSERT INTO `d_user` VALUES ('1', 'jack3173', 'yesterday', '小风', '这个人很懒，什么都没写', null, null, 'null');
-INSERT INTO `d_user` VALUES ('2', 'jack3174', 'yesterday', '大风', '这个人很懒，什么都没写', null, '2016-07-05 13:47:10', null);
+INSERT INTO `d_user` VALUES ('1', 'jack3173', 'yesterday', '小风', '这个人很懒，什么都没写', null, null, 'userAvatar/1.jpg');
+INSERT INTO `d_user` VALUES ('2', 'jack3174', 'yesterday', '大风', '这个人很懒，什么都没写', null, '2016-07-05 13:47:10', 'userAvatar/1.jpg');
 INSERT INTO `d_user` VALUES ('3', 'jack3175', 'yesterday', '微风', '这个人很懒，什么都没写', null, '2016-07-06 13:12:35', null);
 INSERT INTO `d_user` VALUES ('4', 'jack3176', 'yesterday', '飓风', '这个人很懒，什么都没写', null, '2016-07-06 15:54:53', null);
 INSERT INTO `d_user` VALUES ('5', 'jack3178', 'yesterday', '轻风', '这个人很懒，什么都没写', null, '2016-07-11 14:50:47', null);
@@ -1064,3 +1251,4 @@ INSERT INTO `d_user` VALUES ('28', 'jack3166', 'yesterday', '射门', null, null
 INSERT INTO `d_user` VALUES ('29', 'jack3163', 'yesterday', '健康', null, null, '2016-08-18 14:43:33', null);
 INSERT INTO `d_user` VALUES ('30', 'jack7777', 'yesterday', '合理', null, null, '2016-08-30 18:59:48', null);
 INSERT INTO `d_user` VALUES ('31', 'jack31999', 'yesterday', '佛像', null, null, '2016-08-30 19:01:29', null);
+INSERT INTO `d_user` VALUES ('33', 'jack3155', 'yesterday', '花花', '\"这个人太懒，什么都没写\"', null, '2016-09-02 17:21:57', 'userAvatar/33.jpg');
