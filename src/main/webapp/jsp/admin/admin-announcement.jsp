@@ -47,7 +47,7 @@
           								</c:when>
           								<c:otherwise>
           									<li class="am-comment"> 
-												<img src="http://q.qlogo.cn/qqapp/100229475/C06A0F683914D5FEEE6968887DDCF0AB/100" class="am-comment-avatar">
+												<img src="${picServer}${speech.characterAvatar}" class="am-comment-avatar">
 											<div class="am-comment-main">
 											<header class="am-comment-hd">
 												<div class="am-comment-meta">
@@ -413,7 +413,7 @@ function appendSpeech(speech){
 		builder.appendFormat('<div class="am-panel-bd speech-tontent">{0}</div>',speech.content);	
 	} else {
 		builder.append('<li class="am-comment">');
-		builder.appendFormat('<a href=""><img src="{0}" class="am-comment-avatar"></a>',speech.avatar);
+		builder.appendFormat('<a href=""><img src="{0}" class="am-comment-avatar"></a>',picServer+speech.avatar);
 		builder.append('<div class="am-comment-main"><header class="am-comment-hd"><div class="am-comment-meta">');
 		builder.appendFormat('<a href="" class="am-comment-author">{0}</a><time>{1}</time></div></header>',speech.characterName,speech.createTime);
 		if(speech.type == 1){

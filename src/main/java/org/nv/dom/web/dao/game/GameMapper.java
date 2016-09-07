@@ -68,5 +68,4 @@ public interface GameMapper {
 	 */
 	public String getFormContentDao(long formId);
 	
-	
 }

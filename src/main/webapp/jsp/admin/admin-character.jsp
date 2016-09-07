@@ -128,33 +128,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td><input type="text" value="伊卡A"></td>
-								<td><select data-am-selected>
-									
-								</select></td>
-								<td>
-								<div class="am-form-group"> 
-							<label class="am-radio-inline">
-       							<input type="radio" name="is-mute" value="1"> 禁言
-      						</label>
-      						<label class="am-radio-inline">
-        						<input type="radio" name="is-mute" value="0"> 正常
-      						</label>
-      						<label class="am-radio-inline">
-        						<input type="radio" name="is-mute" value="2"> 语无伦次
-      						</label>
-								</div>
-								</td>
-								<td>
-									<div class="am-btn-toolbar">
-										<div class="am-btn-group am-btn-group-xs">
-											<button type="button" class="am-btn am-btn-default am-btn-xs am-text-secondary" title="保存"><span class="am-icon-check-square-o"></span></button>								
-											<button type="button" class="am-btn am-btn-default am-btn-xs am-text-danger" title="删除"><span class="am-icon-trash-o"></span></button>								
-										</div>
-									</div>
-								</td>
-							</tr>
+							
 						</tbody>
 					</table>
 					<div class="am-form-group" style="text-align:center">
@@ -168,7 +142,7 @@
 
 	<div class="am-modal am-modal-no-btn" tabindex="-1" id="player-panel">
 		<div class="am-modal-dialog">
-			<form class="am-form">
+			<form class="am-form" id="status-form">
 			 <fieldset>
 			 	<legend>角色状态变更 -- </legend>
 			 		<div class="float-panel">
@@ -245,7 +219,7 @@ var players=${playerListStr}
 $(function(){
 	$("#collapse-nav li:eq(1) .am-icon-star").removeClass("invisible");
 	addstatusStyle(players);
-	$.get('${baseUrl}file/avatar.json').success(function(data){
+	$.get('${baseUrl}file/avatar.json',function(data){
 		var builder = new StringBuilder();
 		builder.append('<td><select>');
 		$.each(data.characterAvatars,function(index,character){
@@ -257,15 +231,16 @@ $(function(){
 })
 
 function showPlayerStatus(index){
+	playerPanel.modal('open');
 	playerPanel.find("legend").text("角色状态变更 -- "+players[index].characterName);
-	$("input[name='is-life'][value="+players[index].isLife+"]").attr("checked",true);
-	$("input[name='is-mute'][value="+players[index].isMute+"]").attr("checked",true);
-	$("input[name='camp'][value="+players[index].camp+"]").attr("checked",true);
-	$("input[name='is-sp'][value="+players[index].isSp+"]").attr("checked",true);
+	changeRadioValue($("input[name='is-life']"),players[index].isLife);
+	changeRadioValue($("input[name='is-mute']"),players[index].isMute);
+	changeRadioValue($("input[name='camp']"),players[index].camp);
+	changeRadioValue($("input[name='is-sp']"),players[index].isSp);
 	$("input[name='confirm']").unbind("click").on("click",function(){
 		changePlayerStatus(index);
 	})
-	playerPanel.modal('open');
+	
 }
 
 function showReplacePanel(playerIndex){
@@ -366,33 +341,39 @@ function closeReplaceStatus(){
 
 function changePlayerStatus(index){
 	player = $("#character-info tr:eq("+index+") td:eq(0)")
-	players[index].isSp=$("input[name='is-sp']:checked").val();
-	if(players[index].isSp == "1"){
+	players[index].isSp=parseInt($("input[name='is-sp']:checked").val());
+	if(players[index].isSp == 1){
 		player.text("sp"+players[index].characterName);
 	} else {
 		player.text(players[index].characterName);
 	}
-	players[index].isLife=$("input[name='is-life']:checked").val();
-	if(players[index].isLife == "0"){
+	players[index].isLife=parseInt($("input[name='is-life']:checked").val());
+	if(players[index].isLife == 0){
 		player.addClass("dead");
 	} else {
 		player.removeClass("dead");
 	}
-	players[index].isMute=$("input[name='is-mute']:checked").val();
-	if(players[index].isMute == "1"){
+	players[index].isMute=parseInt($("input[name='is-mute']:checked").val());
+	if(players[index].isMute >= 1){
 		player.addClass("silent");
+		if(players[index].isMute == 2){
+			player.addClass("babbling");
+		} else {
+			player.removeClass("babbling");
+		}
 	} else {
+		player.removeClass("babbling");
 		player.removeClass("silent");
 	}
-	players[index].camp=$("input[name='camp']:checked").val();
+	players[index].camp=parseInt($("input[name='camp']:checked").val());
 	switch(players[index].camp){
-	case "1":
+	case 1:
 		player.css({"color":"blue"});
 		break;
-	case "2":
+	case 2:
 		player.css({"color":"red"});
 		break;
-	case "3":
+	case 3:
 		player.css({"color":"purple"});
 		break;
 	}

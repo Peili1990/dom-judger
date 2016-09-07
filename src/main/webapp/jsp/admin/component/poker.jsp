@@ -53,19 +53,6 @@
 	</div>
 </form>
 
-<div class="am-modal am-modal-alert" tabindex="-1" id="sex-query">
-	<div class="am-modal-dialog">
-		<div class="am-modal-hd">维多利亚的噩梦</div>
-		<div class="am-modal-bd">
-		<ul>
-		</ul>
-		</div>
-		<div class="am-modal-footer" data-am-modal-confirm>
-			<span class="am-modal-btn">确定</span>
-		</div>
-	</div>
-</div>
-
 <script>
 var temp = [];
 
@@ -126,7 +113,7 @@ var temp = [];
 	}
 	
 	function querySex(unknowSexChar){
-		$("#sex-query ul").empty();
+		$("#info-query ul").empty();
 		$.each(unknowSexChar,function(index,i){
 			var builder = new StringBuilder();
 			builder.appendFormat('<li>请选择{0}性别     ',players[i].characterName);
@@ -135,16 +122,16 @@ var temp = [];
 					'<option value="1">女</option>'+
 					'<option value="3">亦男亦女</option>'+
 					'</select>');
-			$("#sex-query ul").append(builder.toString());
+			$("#info-query ul").append(builder.toString());
 		})
-		$.each($("#sex-query select"),function(index,select){
+		$.each($("#info-query select"),function(index,select){
 			$(select).selected({
 			    btnWidth: '200px'
 			  });
 		})
-		$("#sex-query").modal({
+		$("#info-query").modal({
 			onConfirm : function(){
-				$.each($("#sex-query select"),function(index,select){
+				$.each($("#info-query select"),function(index,select){
 					players[unknowSexChar[index]].sex=$(select).val();
 				})
 				stepOne();

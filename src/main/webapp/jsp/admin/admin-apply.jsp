@@ -56,6 +56,14 @@
                   	<p><button type="button" class="am-btn am-btn-primary am-btn-xs" 
                   		onclick="changeGameStatus(${applyingGame.id},4)">开始游戏</button></p>
                   	</c:if>
+                  	<c:if test="${ applyingGame.gameStatus == 4 }">
+                  	<p><button type="button" class="am-btn am-btn-primary am-btn-xs" 
+                  		onclick="queryGameResult(${applyingGame.id})">结束游戏</button></p>
+                  	</c:if>
+                  	<c:if test="${ applyingGame.gameStatus == 5 }">
+                  	<p><button type="button" class="am-btn am-btn-primary am-btn-xs" 
+                  		onclick="changeGameStatus(${applyingGame.id},9)">复盘结束</button></p>
+                  	</c:if>
                   </c:when>
                   <c:otherwise>
                   	目前没有正在报名的版杀
@@ -207,6 +215,31 @@ $(function(){
 })
 
 var gamedata=${applyingGameStr}
+
+function changeGameStatus(gameId,status,finalResult){
+	var url = getRootPath() + "/game/changeStatus";
+	var options = {
+		gameId : gameId,
+		status : status,
+		finalResult : finalResult
+	};
+	var common = new Common();
+	common.callAction(options, url, function(data) {
+		if (!data) {
+			return;
+		}
+		switch (data.status) {
+		case 1:
+			myInfo("版杀状态更新成功！",function(){
+				window.location = getRootPath() + "/admin-apply/";
+			});
+			return;
+		default:
+			myAlert(data.message);
+			return;
+		}
+	})
+}
 
 function extractIdentity(){
 	var players=gamedata.players;
@@ -386,6 +419,29 @@ function kickPlayer(playerId){
 			return;
 		}
 	})
+}
+
+function queryGameResult(gameId){
+	$("#info-query ul").empty();
+	var builder = new StringBuilder();
+	builder.append('<li>本局游戏最终结果：');
+	builder.append('<select>'+
+			'<option value="1">好人方胜利</option>'+
+			'<option value="2">杀手方胜利</option>'+
+			'<option value="3">契约方胜利</option>'+
+			'<option value="9">流局</option>'+
+			'</select>');
+	$("#info-query ul").append(builder.toString());
+	$.each($("#info-query select"),function(index,select){
+		$(select).selected({
+		    btnWidth: '200px'
+		  });
+	})
+	$("#info-query").modal({
+		onConfirm : function(){
+			changeGameStatus(gameId,5,$("#info-query select").val());
+		}
+	});
 }
 
 </script>

@@ -76,6 +76,10 @@ input[type="checkbox"]{
 	font-style: italic
 }
 
+.babbling{
+	font-weight:bold
+}
+
 .float{
 	float:right
 }
@@ -173,5 +177,9 @@ input[type="checkbox"]{
 .nv-link{
 	color:#0e90d2;
 	cursor:pointer;
+}
+
+#seat-table-content p{
+	margin:0;
 }
 

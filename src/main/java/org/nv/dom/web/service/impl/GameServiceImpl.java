@@ -163,7 +163,7 @@ public class GameServiceImpl extends BasicServiceImpl implements GameService {
 					form.setGameId(changeStatusDTO.getGameId());
 					form.setHeader("游戏开始前");
 					gameMapper.createOrUpdateFormDao(form);
-				}	
+				}
 				result.put(PageParamType.BUSINESS_STATUS, 1);
 				result.put(PageParamType.BUSINESS_MESSAGE, "修改状态成功");
 			} else {

@@ -12,6 +12,7 @@ import org.nv.dom.domain.user.User;
 import org.nv.dom.dto.game.ChangeStatusDTO;
 import org.nv.dom.dto.game.KickPlayerDTO;
 import org.nv.dom.dto.game.PublishGameDTO;
+import org.nv.dom.enums.GameStatus;
 import org.nv.dom.web.service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -46,7 +47,11 @@ public class GameController extends BaseController{
 	@ResponseBody
 	@RequestMapping(value = "/changeStatus", method = RequestMethod.POST)
 	public Map<String, Object> changeStatus(@ModelAttribute("changeStatusDTO") ChangeStatusDTO changeStatusDTO, HttpSession session) {
-		return gameService.changeStatus(changeStatusDTO);
+		Map<String, Object> result = gameService.changeStatus(changeStatusDTO);
+		if((int)result.get("status")==1&&changeStatusDTO.getStatus()==GameStatus.REPLAYING.getCode()){
+			session.setAttribute(PageParamType.GAMEID_IN_SESSION, 0L);
+		}
+		return result;
 	}
 	
 	@ResponseBody

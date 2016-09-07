@@ -66,7 +66,7 @@ var Chat = function(){
 		builder.appendFormat('<div class="window noselect" style="top:{0}" id="{1}">',$(document).scrollTop()+100+"px", chatInfo.chatId);
 		builder.append('<div class="pew">');
 		builder.append('<span class="cross am-icon-close"></span>');
-		builder.appendFormat('<img src="{0}" class="am-comment-avatar">',chatInfo.toUserAvatar);
+		builder.appendFormat('<img src="{0}" class="am-comment-avatar">',chatInfo.picServer+chatInfo.toUserAvatar);
 		builder.appendFormat('<span>{0}</span>',chatInfo.toUserNickname);
 		builder.appendFormat('<p>{0}</p>',chatInfo.toUserMotto);
 		builder.append('</div>');
@@ -651,30 +651,6 @@ function myPrompt(text,callback){
 	});
 }
 
-function changeGameStatus(gameId,status){
-	var url = getRootPath() + "/game/changeStatus";
-	var options = {
-		gameId : gameId,
-		status : status
-	};
-	var common = new Common();
-	common.callAction(options, url, function(data) {
-		if (!data) {
-			return;
-		}
-		switch (data.status) {
-		case 1:
-			myInfo("版杀状态更新成功！",function(){
-				window.location = getRootPath() + "/admin-apply/";
-			});
-			return;
-		default:
-			myAlert(data.message);
-			return;
-		}
-	})
-}
-
 function timeoutHandle(){
 	myInfo("登录超时",function(){
 		window.location = getRootPath() + "/index";
@@ -778,4 +754,13 @@ function getsec(str) {
 	}
 }
 
+function changeRadioValue(radio_oj,aValue){//传入一个对象
+	for (var i = 0; i < radio_oj.length; i++) {//循环
+		if (radio_oj[i].value == aValue) { //比较值
+			radio_oj[i].checked = true; //修改选中状态
+		} else {
+			radio_oj[i].checked = false; //取消选中状态
+		}
+	}
+}
 

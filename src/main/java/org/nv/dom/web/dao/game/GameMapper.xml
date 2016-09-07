@@ -151,6 +151,13 @@
 			d_game dg
 		SET
 			dg.status=#{status}
+			<if test="status == 4">
+			,dg.actual_start_date=NOW()
+			</if>
+			<if test="status == 5">
+			,dg.end_date=NOW()
+			,dg.final_result=#{finalResult}
+			</if>
 		WHERE
 			dg.id=#{gameId}
 	

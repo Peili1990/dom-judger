@@ -4,6 +4,7 @@ public class ChangeStatusDTO {
 	
 	private long gameId;
 	private Integer status;
+	private Integer finalResult;
 	public long getGameId() {
 		return gameId;
 	}
@@ -16,7 +17,11 @@ public class ChangeStatusDTO {
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
-	
-	
+	public Integer getFinalResult() {
+		return finalResult;
+	}
+	public void setFinalResult(Integer finalResult) {
+		this.finalResult = finalResult;
+	}
 
 }

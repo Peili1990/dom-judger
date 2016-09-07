@@ -38,6 +38,7 @@ function createChat(chatInfo){
 		return;
 	}
 	var chat = new Chat();
+	chatInfo.picServer = picServer;
 	chat.newWindow(chatInfo);
 	db.transaction(function (trans) {
         trans.executeSql("select * from chat_record_"+userId+" where chatId = ? order by createTime desc limit 10 ", [chatInfo.chatId], function (ts, webData) {

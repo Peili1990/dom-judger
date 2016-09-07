@@ -35,6 +35,7 @@
 
 <script type="text/javascript">
   	var userId = ${user.id}
+  	var picServer = "${picServer}"
   	var db = getCurrentDb(userId);
   	var webSocket = new ReconnectingWebSocket( 'ws://'+'${chatServer}'+'/websocket/'+userId);
   	
@@ -182,7 +183,7 @@
            						$.each(data.chatList,function(index,chatInfo){
            							chatMessage = getCache("nv_chat"+chatInfo.chatId);
            							var builder = new StringBuilder();
-           							builder.appendFormat('<li><a><img src="{0}"> {1}<span class="am-badge am-badge-warning float">{2}</span></a></li>',chatInfo.toUserAvatar,chatInfo.toUserNickname,chatMessage);
+           							builder.appendFormat('<li><a><img src="{0}"> {1}<span class="am-badge am-badge-warning float">{2}</span></a></li>',picServer+chatInfo.toUserAvatar,chatInfo.toUserNickname,chatMessage);
            							$("#chat-list").append(builder.toString());
            							$("#chat-list li:last-child").click(function(){
            								createChat(chatInfo);

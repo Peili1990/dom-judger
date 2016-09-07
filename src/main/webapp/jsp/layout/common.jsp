@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="${baseUrl}assets/css/admin.css">
 <link rel="stylesheet" type="text/css" href="${baseUrl}css/chat-panel.css">
 <link rel="stylesheet" type="text/css" href="${baseUrl}css/common.css">
-<script src="${baseUrl}js/common/jquery-1.11.3.min.js" type="text/javascript"></script>
+<script src="${baseUrl}js/common/jquery-3.0.0.min.js" type="text/javascript"></script>
 <script src="${baseUrl}js/common/reconnecting-websocket.min.js" type="text/javascript"></script>
 <script src="${baseUrl}umeditor/js/editor_api.js" type="text/javascript"></script>
 <script src="${baseUrl}umeditor/js/umeditor.config.js" type="text/javascript"></script>
@@ -35,6 +35,20 @@
       <span class="am-modal-btn">确定</span>
     </div>
   </div>
+</div>
+
+<div class="am-modal am-modal-alert" tabindex="-1" id="info-query">
+	<div class="am-modal-dialog">
+		<div class="am-modal-hd">维多利亚的噩梦</div>
+		<div class="am-modal-bd">
+		<ul>
+		</ul>
+		</div>
+		<div class="am-modal-footer">
+			<span class="am-modal-btn" data-am-modal-confirm>确定</span>
+			<span class="am-modal-btn" data-am-modal-cancel>取消</span>
+		</div>
+	</div>
 </div>
 
 <div class="am-modal am-modal-confirm" tabindex="-1" id="my-confirm">
