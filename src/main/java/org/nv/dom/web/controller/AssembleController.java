@@ -5,6 +5,7 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.nv.dom.config.PageParamType;
+import org.nv.dom.domain.game.ApplyingGame;
 import org.nv.dom.domain.newspaper.Newspaper;
 import org.nv.dom.web.service.AssembleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,15 +26,16 @@ public class AssembleController extends BaseController {
 	@ResponseBody
 	@RequestMapping(value = "/generateSeatTable", method = RequestMethod.POST)
 	public Map<String, Object> generateSeatTable(HttpSession session) {
-		long gameId = (long) session.getAttribute(PageParamType.GAMEID_IN_SESSION);
+		long gameId = ((ApplyingGame) session.getAttribute(PageParamType.GAME_IN_SESSION)).getId();
 		return assembleService.generateSeatTable(gameId);
 	}
 	
 	@ResponseBody
 	@RequestMapping(value = "/saveNewspaper", method = RequestMethod.POST)
 	public Map<String, Object> saveNewspaper(@ModelAttribute("newspaper") Newspaper newspaper, HttpSession session) {
-		long gameId = (long) session.getAttribute(PageParamType.GAMEID_IN_SESSION);
-		newspaper.setGameId(gameId);
+		ApplyingGame game = (ApplyingGame) session.getAttribute(PageParamType.GAME_IN_SESSION);
+		newspaper.setGameId(game.getId());
+		newspaper.setHeader("【"+game.getGameDesc()+"】"+newspaper.getHeader());
 		return assembleService.createOrUpdateNewspaper(newspaper);
 	}
 	

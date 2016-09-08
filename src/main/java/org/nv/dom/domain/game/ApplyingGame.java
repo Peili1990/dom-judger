@@ -24,6 +24,8 @@ public class ApplyingGame {
 	private String startDate;
 	/** 外在身份选择方式 */
 	private String characterSelect;
+	/** 复盘id */
+	private long replayEssayId;
 	
 	public long getId() {
 		return id;
@@ -78,6 +80,12 @@ public class ApplyingGame {
 	}
 	public void setCharacterSelect(String characterSelect) {
 		this.characterSelect = characterSelect;
+	}
+	public long getReplayEssayId() {
+		return replayEssayId;
+	}
+	public void setReplayEssayId(long replayEssayId) {
+		this.replayEssayId = replayEssayId;
 	}
 	
 }

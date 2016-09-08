@@ -2,6 +2,7 @@ package org.nv.dom.web.dao.game;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.nv.dom.domain.game.ApplyingGame;
 import org.nv.dom.domain.game.GameForm;
 import org.nv.dom.domain.player.PlayerInfo;
@@ -67,5 +68,9 @@ public interface GameMapper {
 	 * <p>获取历史表格内容</p>
 	 */
 	public String getFormContentDao(long formId);
+	/**
+	 * <p>更新游戏复盘信息</p>
+	 */
+	public int updateReplayInfoDao(@Param("essayId")long essayId,@Param("gameId")long gameId);
 	
 }

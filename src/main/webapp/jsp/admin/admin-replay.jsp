@@ -29,7 +29,31 @@
     <hr/>
 
     <div class="am-g">
-    	
+    	<div class="am-u-sm-12 am-u-sm-centered">
+			<div class="am-panel am-panel-default">
+				<div class="am-panel-bd">
+					<c:choose>
+					<c:when test="${ applyingGame.gameStatus == 5 }">
+						<div class="am-form-group operation">
+							<input type="button" class="am-btn am-btn-primary" value="简易复盘" onclick="">
+							<input type="button" class="am-btn am-btn-danger" value="发布复盘"
+							 onclick="saveEssay(${applyingGame.id},'${applyingGame.gameDesc}'
+							 <c:if test="${replayEssay!=null}">
+							 	,${replayEssay.essayId}
+							 </c:if>
+							 )">
+						</div>
+						<div class="am-form-group">	      
+              				<textarea id="replay-area" ></textarea> 
+        				</div>
+        			</c:when>
+        			<c:otherwise>
+        				没有需要复盘的版杀
+        			</c:otherwise>
+        			</c:choose>
+				</div>
+			</div>
+		</div>
     </div>
       
   </div>
@@ -37,17 +61,44 @@
 
 </div>
 
-<footer>
-  <hr>
-  <p class="am-padding-left">© 2014 AllMobilize, Inc. Licensed under MIT license. <a href="http://www.mycodes.net/" target="_blank">源码之家</a></p>
-</footer>
+<jsp:include page="../layout/footer.jsp"></jsp:include>
 
 <script type="text/javascript">
-var players=${playerListStr}
+var um = UM.getEditor("replay-area");
+var replayEssay = "${replayEssay.content}";
 
 $(function(){
 	$("#collapse-nav li:eq(4) .am-icon-star").removeClass("invisible");
+	um.setContent(replayEssay);
 })
+
+function saveEssay(gameId,gameDesc,essayId){
+	var url = getRootPath()+"/publishEssay";
+	var options = {
+			gameId : gameId,
+			header : "【"+gameDesc+"】"+"复盘",
+			content : recoverTag(um.getContent()),
+			essayId : essayId,
+			type : 1
+		}
+	var common = new Common();
+	common.callAction(options,url,function(data){
+		if(!data){
+			return;
+		}
+		switch(data.status){
+		case 1:
+			myInfo("复盘发布成功！",function(){
+				window.location = getRootPath()+"/admin-replay";
+			});
+			return;
+		default:
+			myAlert(data.message)
+			return;
+		}
+	})
+	
+}
 
 </script>
 </body>

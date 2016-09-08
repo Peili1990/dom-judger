@@ -266,5 +266,16 @@
 			df.id=#{formId}
 	
 	</select>
+	
+	<update id="updateReplayInfoDao">
+	
+		UPDATE
+			d_game dg
+		SET
+			dg.replay_essay_id=#{essayId}
+		WHERE
+			dg.id=#{gameId}
+	
+	</update>
 
 </mapper>

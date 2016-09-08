@@ -12,6 +12,7 @@ import org.nv.dom.domain.newspaper.Newspaper;
 import org.nv.dom.domain.user.User;
 import org.nv.dom.util.CookiesUtil;
 import org.nv.dom.web.service.AssembleService;
+import org.nv.dom.web.service.EssayService;
 import org.nv.dom.web.service.GameService;
 import org.nv.dom.web.service.PlayerService;
 import org.nv.dom.web.service.UserService;
@@ -36,6 +37,9 @@ public class IndexController extends BaseController {
 	
 	@Autowired
 	AssembleService assembleService;
+	
+	@Autowired
+	EssayService essayService;
  	
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
 	public ModelAndView indexView(HttpSession session) {
@@ -55,11 +59,11 @@ public class IndexController extends BaseController {
 		User user = (User) session.getAttribute(PageParamType.user_in_session);
 		ModelAndView mav = new ModelAndView("admin/admin-apply");
 		Map<String, Object> result = gameService.getApplyingGames(user.getId());
-		long gameId = 0L;
+		ApplyingGame game = null;
 		if((int)result.get("status")==1){
-			gameId = ((ApplyingGame)result.get("applyingGame")).getId();
+			game = (ApplyingGame)result.get("applyingGame");
 		}
-		session.setAttribute(PageParamType.GAMEID_IN_SESSION, gameId);
+		session.setAttribute(PageParamType.GAME_IN_SESSION, game);
 		mav.addAllObjects(result);
 		mav.addAllObjects(basicService.getSessionUserService(session));
 		return mav;
@@ -68,11 +72,11 @@ public class IndexController extends BaseController {
 	@RequestMapping(value = "/admin-character", method = RequestMethod.GET)
 	public ModelAndView adminCharacterView(HttpSession session) {
 		ModelAndView mav = new ModelAndView("admin/admin-character");
-		long gameId = (long) session.getAttribute(PageParamType.GAMEID_IN_SESSION);
-		if(gameId > 0L){	
-			mav.addObject("gameId",gameId);
-			mav.addAllObjects(playerService.getPlayerInfo(gameId));
-			mav.addAllObjects(gameService.getFormList(gameId));		
+		ApplyingGame game = (ApplyingGame)session.getAttribute(PageParamType.GAME_IN_SESSION);
+		if(game != null){	
+			mav.addObject("gameId",game.getId());
+			mav.addAllObjects(playerService.getPlayerInfo(game.getId()));
+			mav.addAllObjects(gameService.getFormList(game.getId()));		
 		}
 		mav.addAllObjects(basicService.getSessionUserService(session));
 		return mav;
@@ -81,8 +85,8 @@ public class IndexController extends BaseController {
 	@RequestMapping(value = "/admin-announcement", method = RequestMethod.GET)
 	public ModelAndView adminAnnouncementView(HttpSession session) {
 		ModelAndView mav = new ModelAndView("admin/admin-announcement");
-		long gameId = (long) session.getAttribute(PageParamType.GAMEID_IN_SESSION);
-		List<Newspaper> newspapers = assembleService.getNewspaperList(gameId);
+		ApplyingGame game = (ApplyingGame)session.getAttribute(PageParamType.GAME_IN_SESSION);
+		List<Newspaper> newspapers = assembleService.getNewspaperList(game.getId());
 		if(newspapers != null && !newspapers.isEmpty()){
 			mav.addObject("newspapers", newspapers);
 			long newspaperId = newspapers.get(0).getNewspaperId();
@@ -96,10 +100,10 @@ public class IndexController extends BaseController {
 	public ModelAndView adminSettlementView(HttpServletRequest request) {
 		ModelAndView mav = Integer.parseInt(CookiesUtil.getCookieValue(request, "nv_screen_width"))<1600 ? 
 				new ModelAndView("admin/admin-settlement-small") : new ModelAndView("admin/admin-settlement");
-		long gameId = (long) request.getSession().getAttribute(PageParamType.GAMEID_IN_SESSION);
-		if(gameId > 0L){	
-			mav.addObject("gameId",gameId);
-			mav.addAllObjects(playerService.getPlayerInfo(gameId));
+				ApplyingGame game = (ApplyingGame)request.getSession().getAttribute(PageParamType.GAME_IN_SESSION);
+		if(game != null){	
+			mav.addObject("gameId",game.getId());
+			mav.addAllObjects(playerService.getPlayerInfo(game.getId()));
 		}
 		mav.addAllObjects(basicService.getSessionUserService(request.getSession()));
 		return mav;
@@ -108,6 +112,11 @@ public class IndexController extends BaseController {
 	@RequestMapping(value = "/admin-replay", method = RequestMethod.GET)
 	public ModelAndView adminSummaryView(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView("admin/admin-replay");
+		ApplyingGame game = (ApplyingGame)request.getSession().getAttribute(PageParamType.GAME_IN_SESSION);
+		if(game != null){	
+			mav.addObject("applyingGame",game);
+			mav.addObject("replayEssay",essayService.getReplayEssay(game.getId()));
+		}
 		mav.addAllObjects(basicService.getSessionUserService(request.getSession()));
 		return mav;
 	}

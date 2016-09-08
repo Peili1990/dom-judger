@@ -190,10 +190,7 @@
 
 </div>
 
-<footer>
-  <hr>
-  <p class="am-padding-left">© 2014 AllMobilize, Inc. Licensed under MIT license. <a href="http://www.mycodes.net/" target="_blank">源码之家</a></p>
-</footer>
+<jsp:include page="../layout/footer.jsp"></jsp:include>
 
 <script type="text/javascript">
 var um = UM.getEditor("seat-table");

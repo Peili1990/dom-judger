@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.nv.dom.config.PageParamType;
+import org.nv.dom.domain.game.ApplyingGame;
 import org.nv.dom.domain.game.GameForm;
 import org.nv.dom.domain.player.PlayerInfo;
 import org.nv.dom.domain.user.User;
@@ -39,7 +40,8 @@ public class GameController extends BaseController{
 	@ResponseBody
 	@RequestMapping(value = "/kickPlayer", method = RequestMethod.POST)
 	public Map<String, Object> kickPlayer(@ModelAttribute("kickPlayerDTO") KickPlayerDTO kickPlayerDTO, HttpSession session) {
-		kickPlayerDTO.setGameId((long) session.getAttribute(PageParamType.GAMEID_IN_SESSION));
+		ApplyingGame game = (ApplyingGame)session.getAttribute(PageParamType.GAME_IN_SESSION);
+		kickPlayerDTO.setGameId(game.getId());
 		kickPlayerDTO.setJudgerUserId(((User)session.getAttribute(PageParamType.user_in_session)).getId());
 		return gameService.kickPlayer(kickPlayerDTO);
 	}
@@ -49,7 +51,7 @@ public class GameController extends BaseController{
 	public Map<String, Object> changeStatus(@ModelAttribute("changeStatusDTO") ChangeStatusDTO changeStatusDTO, HttpSession session) {
 		Map<String, Object> result = gameService.changeStatus(changeStatusDTO);
 		if((int)result.get("status")==1&&changeStatusDTO.getStatus()==GameStatus.REPLAYING.getCode()){
-			session.setAttribute(PageParamType.GAMEID_IN_SESSION, 0L);
+			session.setAttribute(PageParamType.GAME_IN_SESSION, null);
 		}
 		return result;
 	}
@@ -63,7 +65,8 @@ public class GameController extends BaseController{
 	@ResponseBody
 	@RequestMapping(value = "/createOrUpdateForm", method = RequestMethod.POST)
 	public Map<String, Object> createOrUpdateForm(@ModelAttribute("gameForm") GameForm gameForm, HttpSession session){
-		gameForm.setGameId((long) session.getAttribute(PageParamType.GAMEID_IN_SESSION));
+		ApplyingGame game = (ApplyingGame)session.getAttribute(PageParamType.GAME_IN_SESSION);
+		gameForm.setGameId(game.getId());
 		return gameService.createOrUpdateForm(gameForm);
 	}
 	

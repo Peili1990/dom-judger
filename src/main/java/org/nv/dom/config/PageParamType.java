@@ -24,7 +24,10 @@ public class PageParamType {
 	public static final String USER_IN_SESSION = "user";
 	
 	//SESSION储存游戏ID
-	public static final String GAMEID_IN_SESSION = "gameId";	
+	public static final String GAME_IN_SESSION = "gameId";
+	
+	//SESSION储存游戏ID
+	public static final String GAMESTATUS_IN_SESSION = "gameStatus";	
 	
 	//项目服务器基础前缀如
 	public static final String base_url = BASE_URL;
