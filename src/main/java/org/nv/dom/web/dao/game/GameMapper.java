@@ -17,6 +17,14 @@ import org.springframework.stereotype.Repository;
 public interface GameMapper {
 	
 	/**
+	 * <p>获取所有报名中的版杀信息</p>
+	 */
+	public List<ApplyingGame> getAllApplyingGamesDao();
+	/**
+	 * <p>获取版杀主持法官信息</p>
+	 */
+	public List<String> queryGameJudgerDao(long gameId);	
+	/**
 	 * <p>获取报名中的版杀信息</p>
 	 */
 	public ApplyingGame getApplyingGamesDao(long userId);
@@ -64,6 +72,10 @@ public interface GameMapper {
 	 * <p>清空表格内容</p>
 	 */
 	public int clearFormDao(long gameId);
+	/**
+	 * <p>拉线关闭集会发言</p>
+	 */
+	public int closeSpeechDao(long gameId);
 	/**
 	 * <p>获取历史表格内容</p>
 	 */

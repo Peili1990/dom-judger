@@ -44,6 +44,7 @@
 				#{status},
 				#{type}
 			)
+			
 		</if>
 	
 	</insert>
@@ -73,6 +74,7 @@
 			dn.subedition AS subedition,
 			dn.important_notice AS importantNotice,
 			dn.seat_table AS seatTable,
+			dn.status AS status,
 			dn.type AS type
 		FROM
 			d_newspaper dn
@@ -80,5 +82,16 @@
 			dn.id = #{newspaperId}
 	
 	</select>
+	
+	<update id="updateNewspaperStatusDao" parameterType="long">
+	
+		UPDATE 
+			d_newspaper
+		SET
+			status = 2
+		WHERE
+			game_id = #{gameId}
+	
+	</update>
 
 </mapper>

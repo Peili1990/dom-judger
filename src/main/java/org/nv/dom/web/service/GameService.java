@@ -28,5 +28,6 @@ public interface GameService {
 	
 	public Map<String, Object> getFormContent(long formId);
 
+	public Map<String, Object> getGameList();
 
 }

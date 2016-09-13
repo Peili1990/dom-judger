@@ -32,6 +32,12 @@ public class GameController extends BaseController{
 	GameService gameService;
 	
 	@ResponseBody
+	@RequestMapping(value = "/getGameList", method = RequestMethod.POST)
+	public Map<String, Object> getGameList(HttpSession session) {
+		return gameService.getGameList();
+	}
+	
+	@ResponseBody
 	@RequestMapping(value = "/publish", method = RequestMethod.POST)
 	public Map<String, Object> publish(@ModelAttribute("publishGameDTO") PublishGameDTO publishGameDTO, HttpSession session) {
 		return gameService.publishGame(publishGameDTO);
@@ -50,7 +56,7 @@ public class GameController extends BaseController{
 	@RequestMapping(value = "/changeStatus", method = RequestMethod.POST)
 	public Map<String, Object> changeStatus(@ModelAttribute("changeStatusDTO") ChangeStatusDTO changeStatusDTO, HttpSession session) {
 		Map<String, Object> result = gameService.changeStatus(changeStatusDTO);
-		if((int)result.get("status")==1&&changeStatusDTO.getStatus()==GameStatus.REPLAYING.getCode()){
+		if((int)result.get("status")==1&&changeStatusDTO.getStatus()==GameStatus.FINISHED.getCode()){
 			session.setAttribute(PageParamType.GAME_IN_SESSION, null);
 		}
 		return result;

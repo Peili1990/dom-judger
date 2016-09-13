@@ -8,8 +8,44 @@
 		<result property="gameStatus" column="status"/>
 		<result property="playerNum" column="player_num"/>
 		<result property="startDate" column="startDate"/>
+		<result property="replayEssayId" column="replay_essay_id"/>
 		<collection property="players" column="id" javaType="List" ofType="User" select="queryGamePlayerDao"></collection>
 	</resultMap>
+	
+	<resultMap type="ApplyingGame" id="allApplyingGame">
+		<id property="id" column="id"/>
+		<result property="gameDesc" column="description"/>
+		<result property="playerNum" column="player_num"/>
+		<result property="startDate" column="estimated_start_date"/>
+		<result property="characterSelect" column="character_select"/>
+		<collection property="Judgers" column="id" javaType="List" ofType="String" select="queryGameJudgerDao"></collection>
+	</resultMap>
+	
+	<select id="getAllApplyingGamesDao" resultMap="allApplyingGame">
+	
+		SELECT
+			dg.id,
+			dg.description,
+			dg.player_num,
+			dg.estimated_start_date,
+			dg.character_select
+		FROM
+			d_game dg
+		WHERE	
+			dg.status = 1 	
+	
+	</select>
+	
+	<select id="queryGameJudgerDao" parameterType="long" resultType="String">
+	
+		SELECT 
+			du.nickname
+		FROM
+			d_user du, d_player dp
+		WHERE
+			dp.role = "judger" AND dp.user_id = du.id AND dp.game_id = #{gameId} 
+	
+	</select>
 
 	<select id="getApplyingGamesDao" parameterType="long" resultMap="applyingGame">
 	
@@ -18,7 +54,8 @@
 			dg.description,
 			dg.status,
 			dg.player_num,
-			IF(ISNULL(actual_start_date),estimated_start_date,actual_start_date) AS startDate
+			IF(ISNULL(actual_start_date),estimated_start_date,actual_start_date) AS startDate,
+			dg.replay_essay_id
 		FROM
 			d_game dg LEFT JOIN d_player dp
 		ON
@@ -236,7 +273,7 @@
 				#{header},
 				#{content},
 				NOW()
-			)
+			);
 		</if>
 	
 	</insert>

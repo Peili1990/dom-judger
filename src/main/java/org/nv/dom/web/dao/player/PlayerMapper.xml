@@ -97,5 +97,16 @@
 	
 	</delete>
 	
+	<update id="updatePlayerStatus" parameterType="long">
+	
+		UPDATE
+			d_player
+		SET
+			status = 9
+		WHERE
+			game_id = #{gameId}
+	
+	</update>
+	
 
 </mapper>

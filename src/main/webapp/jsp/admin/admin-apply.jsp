@@ -77,7 +77,7 @@
 
       <div class="am-u-sm-12 am-u-md-9 am-u-md-pull-3">
       
-      	<div class="am-panel am-panel-default" id="applyDetail">
+      	<div class="am-panel am-panel-default" id="apply-detail">
           <div class="am-panel-bd">
             <div class="user-info">
               <p>报名情况</p>
@@ -126,7 +126,7 @@
                   <c:otherwise>
                   	目前没有正在报名的版杀          	
                     <p><button type="button" class="am-btn am-btn-primary am-btn-xs" onclick="showApplyForm()">新建版杀</button>
-                       <button type="button" class="am-btn am-btn-danger am-btn-xs" onclick="">申请成为其他版杀法官</button></p>
+                       <button type="button" class="am-btn am-btn-danger am-btn-xs" onclick="showApplyList()">申请成为其他版杀法官</button></p>
                   </c:otherwise>
               	</c:choose>
               </p>
@@ -134,11 +134,11 @@
           </div>
         </div>
       	
-        <form class="am-form am-form-horizontal" id="applyPublish" style="display:none">
+        <form class="am-form am-form-horizontal" id="apply-publish" style="display:none">
           <div class="am-form-group">
             <label class="am-u-sm-3 am-form-label">版杀名称</label>
             <div class="am-u-sm-9">
-              <input type="text" id="gameDesc" placeholder="版杀名称">
+              <input type="text" id="game-desc" placeholder="版杀名称">
             </div>
           </div>
 
@@ -152,7 +152,7 @@
           <div class="am-form-group">
             <label class="am-u-sm-3 am-form-label">人数配置</label>
             <div class="am-u-sm-9">
-              <select data-am-selected id="playerNum">
+              <select data-am-selected id="player-num">
               	 <option value="19">19</option>
   				 <option value="22">22</option>
               </select>
@@ -162,21 +162,21 @@
           <div class="am-form-group">
             <label class="am-u-sm-3 am-form-label">QQ群</label>
             <div class="am-u-sm-9">
-              <input type="text" id="QQgroup" value="132697360">
+              <input type="text" id="qq-group" value="132697360">
             </div>
           </div>
 
           <div class="am-form-group">
             <label for="user-weibo" class="am-u-sm-3 am-form-label">预计开版时间</label>
             <div class="am-u-sm-9">
-              <input type="text" id="startDate" class="am-form-field" placeholder="选择预计开版时间" data-am-datepicker readonly required />
+              <input type="text" id="start-date" class="am-form-field" placeholder="选择预计开版时间" data-am-datepicker readonly required />
             </div>
           </div>
           
           <div class="am-form-group">
             <label class="am-u-sm-3 am-form-label">外在身份选择方式</label>
             <div class="am-u-sm-9">
-              <select data-am-selected id="characterSelect">
+              <select data-am-selected id="character-select">
               	 <option value="A">个人选择</option>
   				 <option value="B">3选1</option>
               </select>
@@ -194,9 +194,31 @@
             <div class="am-u-sm-9 am-u-sm-push-3">
               <div id="error-msg"></div>
               <button type="button" class="am-btn am-btn-primary" onclick="submitApply(${sessionUser.id})">发布报名帖</button>
+              <button type="button" class="am-btn am-btn-danger" onclick="hideApplyForm()">取消</button>
             </div>
           </div>
         </form>
+        
+        <form class="am-form am-form-horizontal" id="apply-judger" style="display:none">
+        	<table class="am-table am-table-striped am-table-hover table-main">
+        		<thead>
+					<tr>
+						<th>版杀名称</th>
+						<th>法官配置</th>	
+						<th>游戏人数</th>
+						<th>开版时间</th>
+						<th>角色选择方式</th>
+						<th class="table-set">操作</th>
+					</tr>
+				</thead>
+				<tbody id="game-list">
+				
+				
+				</tbody>
+        	</table>
+        </form> 
+        
+        
       </div>
     </div>
   </div>
@@ -219,7 +241,7 @@ function changeGameStatus(gameId,status,finalResult){
 		status : status,
 		finalResult : finalResult
 	};
-	if(!gamedata.replayEssayId){
+	if(gamedata.gameStatus==5&&!gamedata.replayEssayId){
 		myAlert("本次版杀还未复盘！");
 		return;
 	}
@@ -347,13 +369,28 @@ function submitList(gameId){
 }
 
 function showApplyForm(){
-	$("#applyDetail").css({"display":"none"});
-	$("#applyPublish").css({"display":"block"});
+	$("#apply-detail").css({"display":"none"});
+	$("#apply-publish").css({"display":"block"});
+}
+
+function hideApplyForm(){
+	$("#apply-publish").css({"display":"none"});
+	$("#apply-detail").css({"display":"block"});
+}
+
+function showApplyList(){
+	$("#apply-detail").css({"display":"none"});
+	$("#apply-judger").css({"display":"block"});
+}
+
+function hideApplyList(){
+	$("#apply-judger").css({"display":"none"});
+	$("#apply-detail").css({"display":"block"});
 }
 
 function submitApply(userId){
-	var gameDesc = $("#gameDesc").val().trim();
-	var startDate = $("#startDate").val().trim();
+	var gameDesc = $("#game-desc").val().trim();
+	var startDate = $("#start-date").val().trim();
 	if(gameDesc==""){
 		$("#error-msg").css("display","block");
 		$("#error-msg").text("版杀名称不能为空");
@@ -370,10 +407,10 @@ function submitApply(userId){
 	var options = {
 		gameDesc : gameDesc,
 		judgerId : userId,
-		playerNum : $("#playerNum option:selected").val(),
+		playerNum : $("#player-num option:selected").val(),
 		startDate : $("#startDate").val(),
-		qqGroup : $("#QQgroup").val(),
-		characterSelect : $("#characterSelect").val(),
+		qqGroup : $("#qq-group").val(),
+		characterSelect : $("#character-select").val(),
 		remark : $("#remark").val()
 	};
 	var common = new Common();

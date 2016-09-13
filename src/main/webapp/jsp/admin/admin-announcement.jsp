@@ -93,7 +93,7 @@
     	
     	<div class="am-u-sm-12 am-u-md-7 am-u-md-pull-5">
 			<div class="am-panel am-panel-default">
-				<div class="am-panel-bd">
+				<div class="am-panel-bd" style="min-height:500px">
 					<c:choose>
 						<c:when test="${ newspapers != null }">
 							<div class="announcement-info">
@@ -254,7 +254,7 @@ function generateSeatTable(){
 
 function createNewspaper(){
 	var common = new Common();
-	var url = getRootPath() + "/assemble/saveNewspaper";
+	var url = getRootPath() + "/assemble/saveNewspaper"; 
 	var options = {	
 		header : $("input[name='header']").val(),
 		status : 0,
@@ -266,7 +266,7 @@ function createNewspaper(){
 		}
 		switch (data.status) {
 		case 1:	
-			$("#announcement-list").prepend("<option value='"+data.newspaperId+"'>"+$("input[name='header']").val()+"</option>");
+			$("#announcement-list").prepend("<option value='"+data.newspaperId+"'>"+data.header+"</option>");
 			$("#announcement-list").get(0).selectedIndex = 0;
 			editAction = 1;
 			showEditNewspaperForm();
@@ -501,7 +501,6 @@ function wordCount(btn){
 			return;
 		}
 	})
-	
 }
 
 </script>

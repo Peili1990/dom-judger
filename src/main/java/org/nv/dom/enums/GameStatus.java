@@ -8,7 +8,7 @@ public enum GameStatus {
 	READY(3,"游戏开始前"),
 	PROCEEDING(4,"进行中"),
 	REPLAYING(5,"复盘中"),
-	FINISHED(6,"已结束");
+	FINISHED(9,"已结束");
 	
 	private final Integer code;
 	private final String message;

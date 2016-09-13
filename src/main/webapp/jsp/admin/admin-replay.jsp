@@ -44,7 +44,7 @@
 							 )">
 						</div>
 						<div class="am-form-group">	      
-              				<textarea id="replay-area" ></textarea> 
+              				<textarea id="replay-area">${replayEssay.content}</textarea> 
         				</div>
         			</c:when>
         			<c:otherwise>
@@ -65,11 +65,10 @@
 
 <script type="text/javascript">
 var um = UM.getEditor("replay-area");
-var replayEssay = "${replayEssay.content}";
+um.setContent($("#replay-area").text());
 
 $(function(){
-	$("#collapse-nav li:eq(4) .am-icon-star").removeClass("invisible");
-	um.setContent(replayEssay);
+	$("#collapse-nav li:eq(4) .am-icon-star").removeClass("invisible");	
 })
 
 function saveEssay(gameId,gameDesc,essayId){

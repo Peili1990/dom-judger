@@ -14,5 +14,7 @@ public interface NewspaperMapper {
 	
 	public Newspaper getNewspaperDetailDao(long newspaperId);
 	
+	public int updateNewspaperStatusDao(long gameId);
+	
 
 }

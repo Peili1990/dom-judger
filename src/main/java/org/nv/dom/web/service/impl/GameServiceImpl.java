@@ -25,6 +25,7 @@ import org.nv.dom.util.StringUtil;
 import org.nv.dom.util.json.JacksonJSONUtils;
 import org.nv.dom.web.dao.game.GameMapper;
 import org.nv.dom.web.dao.newspaper.NewspaperMapper;
+import org.nv.dom.web.dao.player.PlayerMapper;
 import org.nv.dom.web.service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,6 +40,25 @@ public class GameServiceImpl extends BasicServiceImpl implements GameService {
 	
 	@Autowired
 	NewspaperMapper newspaperMapper;
+	
+	@Autowired
+	PlayerMapper playerMapper;
+	
+	@Override
+	public Map<String, Object> getGameList() {
+		Map<String, Object> result = new HashMap<String, Object>();
+		try{
+			List<ApplyingGame> applyingGames = gameMapper.getAllApplyingGamesDao();
+			result.put("applyingGames", applyingGames);
+			result.put(PageParamType.BUSINESS_STATUS, 1);
+			result.put(PageParamType.BUSINESS_MESSAGE, "获取版杀信息成功");
+		} catch (Exception e){
+			logger.error(e.getMessage(), e);
+			result.put(PageParamType.BUSINESS_STATUS, -1);
+			result.put(PageParamType.BUSINESS_MESSAGE, "系统异常");
+		}	
+		return result;
+	}
 
 	@Override
 	public Map<String, Object> getApplyingGames(long userId) {
@@ -163,6 +183,9 @@ public class GameServiceImpl extends BasicServiceImpl implements GameService {
 					form.setGameId(changeStatusDTO.getGameId());
 					form.setHeader("游戏开始前");
 					gameMapper.createOrUpdateFormDao(form);
+				}
+				if(changeStatusDTO.getStatus() == GameStatus.FINISHED.getCode()){
+					playerMapper.updatePlayerStatus(changeStatusDTO.getGameId());
 				}
 				result.put(PageParamType.BUSINESS_STATUS, 1);
 				result.put(PageParamType.BUSINESS_MESSAGE, "修改状态成功");

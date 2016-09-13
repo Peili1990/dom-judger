@@ -116,8 +116,12 @@ public class AssembleServiceImpl implements AssembleService {
 	public Map<String, Object> createOrUpdateNewspaper(Newspaper newspaper) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		try{
+			if(newspaper.getNewspaperId() == 0){
+				newspaperMapper.updateNewspaperStatusDao(newspaper.getGameId());
+			}
 			newspaperMapper.createOrUpdateNewspaperDao(newspaper);
 			result.put("newspaperId", newspaper.getNewspaperId());
+			result.put("header", newspaper.getHeader());
 			result.put(PageParamType.BUSINESS_STATUS, 1);
 			result.put(PageParamType.BUSINESS_MESSAGE, "新增或更新报纸成功！");
 		}catch(Exception e){  

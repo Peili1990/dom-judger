@@ -86,8 +86,9 @@ public class IndexController extends BaseController {
 	public ModelAndView adminAnnouncementView(HttpSession session) {
 		ModelAndView mav = new ModelAndView("admin/admin-announcement");
 		ApplyingGame game = (ApplyingGame)session.getAttribute(PageParamType.GAME_IN_SESSION);
-		List<Newspaper> newspapers = assembleService.getNewspaperList(game.getId());
-		if(newspapers != null && !newspapers.isEmpty()){
+		if(game!=null){
+			List<Newspaper> newspapers = assembleService.getNewspaperList(game.getId());
+			mav.addObject("gameId",game.getId());
 			mav.addObject("newspapers", newspapers);
 			long newspaperId = newspapers.get(0).getNewspaperId();
 			mav.addAllObjects(assembleService.getNewspaperDetail(newspaperId));

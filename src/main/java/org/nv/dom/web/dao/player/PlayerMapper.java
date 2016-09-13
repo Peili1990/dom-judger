@@ -33,4 +33,10 @@ public interface PlayerMapper {
 	 * <p>删除替代称呼</p>
 	 */
 	public int deleteReplaceSkinDao(long skinId);
+	
+	/**
+	 * <p>游戏结束后统一更新状态</p>
+	 */
+	
+	public int updatePlayerStatus(long gameId);
 }
