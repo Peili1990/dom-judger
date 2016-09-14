@@ -18,7 +18,7 @@
 		<result property="playerNum" column="player_num"/>
 		<result property="startDate" column="estimated_start_date"/>
 		<result property="characterSelect" column="character_select"/>
-		<collection property="Judgers" column="id" javaType="List" ofType="String" select="queryGameJudgerDao"></collection>
+		<collection property="judgers" column="id" javaType="List" ofType="String" select="queryGameJudgerDao"></collection>
 	</resultMap>
 	
 	<select id="getAllApplyingGamesDao" resultMap="allApplyingGame">

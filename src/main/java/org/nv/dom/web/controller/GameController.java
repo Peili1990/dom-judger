@@ -10,6 +10,7 @@ import org.nv.dom.domain.game.ApplyingGame;
 import org.nv.dom.domain.game.GameForm;
 import org.nv.dom.domain.player.PlayerInfo;
 import org.nv.dom.domain.user.User;
+import org.nv.dom.dto.game.ApplyDTO;
 import org.nv.dom.dto.game.ChangeStatusDTO;
 import org.nv.dom.dto.game.KickPlayerDTO;
 import org.nv.dom.dto.game.PublishGameDTO;
@@ -35,6 +36,14 @@ public class GameController extends BaseController{
 	@RequestMapping(value = "/getGameList", method = RequestMethod.POST)
 	public Map<String, Object> getGameList(HttpSession session) {
 		return gameService.getGameList();
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/becomeJudger", method = RequestMethod.POST)
+	public Map<String, Object> becomeJudger(@ModelAttribute("applyDTO") ApplyDTO applyDTO,HttpSession session) {
+		User user = (User) session.getAttribute(PageParamType.user_in_session);
+		applyDTO.setUserId(user.getId());
+		return gameService.becomeJudger(applyDTO);
 	}
 	
 	@ResponseBody

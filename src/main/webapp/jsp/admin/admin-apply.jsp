@@ -194,12 +194,16 @@
             <div class="am-u-sm-9 am-u-sm-push-3">
               <div id="error-msg"></div>
               <button type="button" class="am-btn am-btn-primary" onclick="submitApply(${sessionUser.id})">发布报名帖</button>
-              <button type="button" class="am-btn am-btn-danger" onclick="hideApplyForm()">取消</button>
+              <button type="button" class="am-btn am-btn-danger" onclick="hideApplyForm()">返回</button>
             </div>
           </div>
         </form>
         
         <form class="am-form am-form-horizontal" id="apply-judger" style="display:none">
+        	<div class="am-form-group">
+              <div id="error-msg"></div>   
+              <button type="button" class="am-btn am-btn-danger" onclick="hideApplyList()">返回</button>
+          	</div>
         	<table class="am-table am-table-striped am-table-hover table-main">
         		<thead>
 					<tr>
@@ -212,8 +216,7 @@
 					</tr>
 				</thead>
 				<tbody id="game-list">
-				
-				
+					
 				</tbody>
         	</table>
         </form> 
@@ -379,8 +382,64 @@ function hideApplyForm(){
 }
 
 function showApplyList(){
+	var url = getRootPath() + "/game/getGameList";
+	var common = new Common();
+	common.callAction(null,url,function(data){
+		if(!data){
+			return;
+		}
+		switch(data.status){
+		case 1:
+			$("#game-list").empty();
+			$.each(data.applyingGames,function(index,game){
+				var builder = new StringBuilder();
+				builder.append('<tr>');
+				builder.appendFormat('<td>{0}</td><td>',game.gameDesc);
+				$.each(game.judgers,function(index,judger){
+					builder.appendFormat('{0} ',judger);
+				})
+				builder.append('</td>');
+				builder.appendFormat('<td>{0}</td>',game.playerNum);
+				builder.appendFormat('<td>{0}</td>',game.startDate);
+				builder.appendFormat(game.characterSelect=="A" ? '<td>个人选取</td>':'<td>3选1</td>');
+				builder.appendFormat('<td><div class="am-btn-toolbar">'+
+              			'<div class="am-btn-group am-btn-group-xs">'+
+                		'<button type="button" onclick="becomeJudger({0})" class="am-btn am-btn-default am-btn-xs am-text-secondary" title="加入">'+
+              			'<span class="am-icon-sign-in"></span></button>'+
+               			'</div></div></td>',game.id);
+				$("#game-list").append(builder.toString());	
+			})
+			return;
+		default:
+			myAlert(data.message);
+			return;
+		}
+	})
 	$("#apply-detail").css({"display":"none"});
 	$("#apply-judger").css({"display":"block"});
+}
+
+function becomeJudger(gameId){
+	var url = getRootPath() + "/game/becomeJudger";
+	var options = {
+		gameId : gameId	
+	}
+	var common = new Common();
+	common.callAction(options,url,function(data){
+		if(!data){
+			return;
+		}
+		switch(data.status){
+		case 1:
+			myInfo("报名法官成功！",function(){
+				window.location = getRootPath() + "/admin-apply";
+			})
+			return;
+		default:
+			myAlert(data.message);
+			return;
+		}
+	})
 }
 
 function hideApplyList(){

@@ -59,6 +59,26 @@ public class GameServiceImpl extends BasicServiceImpl implements GameService {
 		}	
 		return result;
 	}
+	
+	@Override
+	public Map<String, Object> becomeJudger(ApplyDTO applyDTO) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		try{
+			if(gameMapper.queryHasAttendGameDao(applyDTO.getUserId()) > 0){
+				result.put(PageParamType.BUSINESS_STATUS, -3);
+				result.put(PageParamType.BUSINESS_MESSAGE, "已参加其他版杀，加入失败");
+				return result;
+			}
+			gameMapper.applyForGameDao(applyDTO);
+			result.put(PageParamType.BUSINESS_STATUS, 1);
+			result.put(PageParamType.BUSINESS_MESSAGE, "加入版杀成功");
+		} catch (Exception e){
+			logger.error(e.getMessage(), e);
+			result.put(PageParamType.BUSINESS_STATUS, -1);
+			result.put(PageParamType.BUSINESS_MESSAGE, "系统异常");
+		}	
+		return result;
+	}
 
 	@Override
 	public Map<String, Object> getApplyingGames(long userId) {
