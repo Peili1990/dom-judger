@@ -233,6 +233,7 @@
 <script type="text/javascript">
 $(function(){
 	$("#collapse-nav li:eq(0) .am-icon-star").removeClass("invisible");
+	$(".admin-sidebar-list > li:eq(0) .am-icon-angle-right").removeClass("invisible");
 })
 
 var gamedata=${applyingGameStr}
@@ -467,7 +468,7 @@ function submitApply(userId){
 		gameDesc : gameDesc,
 		judgerId : userId,
 		playerNum : $("#player-num option:selected").val(),
-		startDate : $("#startDate").val(),
+		startDate : startDate,
 		qqGroup : $("#qq-group").val(),
 		characterSelect : $("#character-select").val(),
 		remark : $("#remark").val()

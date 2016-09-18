@@ -129,6 +129,13 @@ public class IndexController extends BaseController {
 		return mav;
 	}
 	
+	@RequestMapping(value = "/admin-authority", method = RequestMethod.GET)
+	public ModelAndView adminAuthorityView(HttpSession session) {
+		ModelAndView mav = new ModelAndView("admin/admin-authority");
+		mav.addAllObjects(basicService.getSessionUserService(session));
+		return mav;
+	}
+	
 	
 
 }

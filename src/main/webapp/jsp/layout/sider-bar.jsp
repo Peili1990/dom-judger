@@ -4,7 +4,7 @@
   <div class="admin-sidebar">
     <ul class="am-list admin-sidebar-list">
       <li class="admin-parent">
-        <a class="am-cf" data-am-collapse="{target: '#collapse-nav'}"><span class="am-icon-file"></span> 版杀管理 <span class="am-icon-angle-right am-fr am-margin-right"></span></a>
+        <a class="am-cf"><span class="am-icon-file"></span> 版杀管理 <span class="am-icon-angle-right am-fr am-margin-right invisible"></span></a>
         <ul class="am-list am-collapse admin-sidebar-sub am-in" id="collapse-nav">
           <li><a href="${ baseUrl }admin-apply" class="am-cf"><span class="am-icon-check"></span> 报名管理<span class="am-icon-star am-fr am-margin-right admin-icon-yellow invisible"></span></a></li>
           <li><a href="${ baseUrl }admin-character"><span class="am-icon-puzzle-piece"></span> 角色状态<span class="am-icon-star am-fr am-margin-right admin-icon-yellow invisible"></span></a></li>
@@ -13,8 +13,8 @@
           <li><a href="${ baseUrl }admin-replay"><span class="am-icon-bug"></span> 复盘总结<span class="am-icon-star am-fr am-margin-right admin-icon-yellow invisible"></span></a></li>
         </ul>
       </li>
-      <li><a href="admin-table.html"><span class="am-icon-table"></span> 规则更新</a></li>
-      <li><a href="admin-form.html"><span class="am-icon-pencil-square-o"></span> 权限管理</a></li>
+      <li><a href="admin-table.html"><span class="am-icon-table"></span> 规则更新<span class="am-icon-angle-right am-fr am-margin-right invisible"></span></a></li>
+      <li><a href="${ baseUrl }admin-authority"><span class="am-icon-pencil-square-o"></span> 权限管理<span class="am-icon-angle-right am-fr am-margin-right invisible"></span></a></li>
       <li><a href="#" onclick="logout()"><span class="am-icon-sign-out"></span> 注销</a></li>
     </ul>
 

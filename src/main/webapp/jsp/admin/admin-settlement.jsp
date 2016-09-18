@@ -87,6 +87,7 @@ var players=${playerListStr}
 
 $(function(){
 	$("#collapse-nav li:eq(3) .am-icon-star").removeClass("invisible");
+	$(".admin-sidebar-list > li:eq(0) .am-icon-angle-right").removeClass("invisible");
 })
 
 </script>

@@ -65,10 +65,13 @@
 
 <script type="text/javascript">
 var um = UM.getEditor("replay-area");
-um.setContent($("#replay-area").text());
 
 $(function(){
-	$("#collapse-nav li:eq(4) .am-icon-star").removeClass("invisible");	
+	$("#collapse-nav li:eq(4) .am-icon-star").removeClass("invisible");
+	$(".admin-sidebar-list > li:eq(0) .am-icon-angle-right").removeClass("invisible");
+	if($("#replay-area")){
+		um.setContent($("#replay-area").text());
+	}
 })
 
 function saveEssay(gameId,gameDesc,essayId){

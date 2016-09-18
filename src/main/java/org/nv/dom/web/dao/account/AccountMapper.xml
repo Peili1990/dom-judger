@@ -5,15 +5,16 @@
 	<select id="getUserByAccountDao" parameterType="LoginDTO" resultType="User">
 	
 		SELECT
-			t.id,
-			t.account,
-			t.password,
-			t.nickname,
-			t.avatar
+			du.id,
+			du.account,
+			du.password,
+			du.nickname,
+			du.avatar,
+			da.authority_level AS authority
 		FROM
-			d_user t
+			d_user du, d_authority da
 		WHERE
-			t.account=#{account} AND t.password=#{password};	
+			du.account=#{account} AND du.password=#{password} AND du.id=da.user_id;	
 	
 	</select>
 	

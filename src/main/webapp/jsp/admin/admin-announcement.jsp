@@ -200,6 +200,7 @@ var gameId = ${gameId}
 
 $(function(){
 	$("#collapse-nav li:eq(2) .am-icon-star").removeClass("invisible");
+	$(".admin-sidebar-list > li:eq(0) .am-icon-angle-right").removeClass("invisible");
 })
 
 function showNewspaperContent(){

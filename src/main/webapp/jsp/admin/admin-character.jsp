@@ -212,6 +212,7 @@ var players=${playerListStr}
 
 $(function(){
 	$("#collapse-nav li:eq(1) .am-icon-star").removeClass("invisible");
+	$(".admin-sidebar-list > li:eq(0) .am-icon-angle-right").removeClass("invisible");
 	addstatusStyle(players);
 	$.get('${baseUrl}file/avatar.json',function(data){
 		var builder = new StringBuilder();
