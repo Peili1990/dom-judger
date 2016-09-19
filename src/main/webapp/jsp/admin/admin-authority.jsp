@@ -30,7 +30,29 @@
 	<hr />
 	
 	<div class="am-g">
-	
+		<div class="am-u-sm-12 am-u-sm-centered">
+			<div class="am-panel am-panel-default">
+				<div class="am-panel-bd">
+					<div class="am-form-group operation">
+						<input type="button" class="am-btn am-btn-primary" value="新增法官" onclick="saveForm(true)">
+					</div>
+					<form class="am-form">
+						<table class="am-table am-table-striped am-table-hover table-main">
+							<thead>
+								<tr>
+									<th>ID</th>
+									<th>当前状态</th>
+									<th>权限等级</th>
+									<th>备注</th>
+									<th class="table-set">操作</th>
+								</tr>
+							</thead>
+						</table>
+					</form>
+				</div>
+			</div>
+		</div>
+		
 	</div>
 	
   </div>

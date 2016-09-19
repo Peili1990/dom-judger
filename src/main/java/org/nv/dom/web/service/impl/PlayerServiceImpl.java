@@ -8,7 +8,12 @@ import org.apache.log4j.Logger;
 import org.nv.dom.config.PageParamType;
 import org.nv.dom.domain.player.PlayerInfo;
 import org.nv.dom.domain.player.PlayerReplaceSkin;
+import org.nv.dom.dto.player.ApplyDTO;
+import org.nv.dom.dto.player.JudgerDecisionDTO;
+import org.nv.dom.dto.player.UpdatePlayerStatusDTO;
+import org.nv.dom.enums.PlayerStatus;
 import org.nv.dom.util.json.JacksonJSONUtils;
+import org.nv.dom.web.dao.game.GameMapper;
 import org.nv.dom.web.dao.player.PlayerMapper;
 import org.nv.dom.web.service.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +26,9 @@ public class PlayerServiceImpl implements PlayerService {
 	
 	@Autowired
 	PlayerMapper playerMapper;
+	
+	@Autowired
+	GameMapper gameMapper;
 
 	@Override
 	public Map<String, Object> getPlayerInfo(long gameId) {
@@ -92,5 +100,49 @@ public class PlayerServiceImpl implements PlayerService {
 		}
 		return result;
 	}
+	
+	@Override
+	public Map<String, Object> becomeJudger(ApplyDTO applyDTO) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		try{
+			if(gameMapper.queryHasAttendGameDao(applyDTO.getUserId()) > 0){
+				result.put(PageParamType.BUSINESS_STATUS, -3);
+				result.put(PageParamType.BUSINESS_MESSAGE, "已参加其他版杀，加入失败");
+				return result;
+			}
+			applyDTO.setStatus(PlayerStatus.ALTER_JUDGER.getCode());
+			gameMapper.applyForGameDao(applyDTO);
+			result.put(PageParamType.BUSINESS_STATUS, 1);
+			result.put(PageParamType.BUSINESS_MESSAGE, "加入版杀成功");
+		} catch (Exception e){
+			logger.error(e.getMessage(), e);
+			result.put(PageParamType.BUSINESS_STATUS, -1);
+			result.put(PageParamType.BUSINESS_MESSAGE, "系统异常");
+		}	
+		return result;
+	}
+
+	@Override
+	public Map<String, Object> dealJudgerDecision(JudgerDecisionDTO judgerDecisionDTO) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		try{
+			if("yes".equals(judgerDecisionDTO.getDecision())){
+				UpdatePlayerStatusDTO updatePlayerStatusDTO = new UpdatePlayerStatusDTO();
+				updatePlayerStatusDTO.setPlayerId(judgerDecisionDTO.getPlayerId());
+				updatePlayerStatusDTO.setStatus(PlayerStatus.JUDGER.getCode());
+				playerMapper.updateOnePlayerStatus(updatePlayerStatusDTO);
+			}else{
+				gameMapper.deletePlayerApplyInfoDao(judgerDecisionDTO.getPlayerId());
+			}
+			result.put(PageParamType.BUSINESS_STATUS, 1);
+			result.put(PageParamType.BUSINESS_MESSAGE, "操作成功");
+		}catch(Exception e){
+			logger.info(e.getMessage(),e);
+			result.put(PageParamType.BUSINESS_STATUS, -1);
+			result.put(PageParamType.BUSINESS_MESSAGE, "系统异常");
+		}
+		return result;
+	}
+
 
 }

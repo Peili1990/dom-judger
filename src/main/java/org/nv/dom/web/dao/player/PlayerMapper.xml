@@ -108,5 +108,16 @@
 	
 	</update>
 	
+	<update id="updateOnePlayerStatus" parameterType="UpdatePlayerStatusDTO">
+	
+		UPDATE
+			d_player
+		SET
+			status = #{status}
+		WHERE
+			id = #{playerId}
+	
+	</update>
+	
 
 </mapper>

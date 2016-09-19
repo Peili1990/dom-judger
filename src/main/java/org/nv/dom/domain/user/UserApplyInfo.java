@@ -9,7 +9,7 @@ public class UserApplyInfo {
 	/** 用户昵称 */
 	private String nickname;
 	/** 玩家状态描述 */
-	private String statusDesc;
+	private Integer status;
 	/** 是否选sp */
 	private String isSp;
 	/** 角色id */
@@ -42,11 +42,11 @@ public class UserApplyInfo {
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
 	}
-	public String getStatusDesc() {
-		return statusDesc;
+	public Integer getStatus() {
+		return status;
 	}
-	public void setStatusDesc(String statusDesc) {
-		this.statusDesc = statusDesc;
+	public void setStatus(Integer status) {
+		this.status = status;
 	}
 	public String getIsSp() {
 		return isSp;

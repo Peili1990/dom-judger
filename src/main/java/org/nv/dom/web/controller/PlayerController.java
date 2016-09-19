@@ -4,7 +4,11 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.nv.dom.config.PageParamType;
 import org.nv.dom.domain.player.PlayerReplaceSkin;
+import org.nv.dom.domain.user.User;
+import org.nv.dom.dto.player.ApplyDTO;
+import org.nv.dom.dto.player.JudgerDecisionDTO;
 import org.nv.dom.web.service.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -36,6 +40,20 @@ public class PlayerController {
 	@RequestMapping(value = "/deleteReplaceSkin", method = RequestMethod.POST)
 	public Map<String, Object> deleteReplaceSkin(@RequestParam("skinId") long skinId, HttpSession session){
 		return playerService.deleteReplaceSkin(skinId);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/becomeJudger", method = RequestMethod.POST)
+	public Map<String, Object> becomeJudger(@ModelAttribute("applyDTO") ApplyDTO applyDTO,HttpSession session) {
+		User user = (User) session.getAttribute(PageParamType.user_in_session);
+		applyDTO.setUserId(user.getId());
+		return playerService.becomeJudger(applyDTO);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/judgerDecision", method = RequestMethod.POST)
+	public Map<String, Object> judgerDecision(@ModelAttribute("JudgerDecisionDTO") JudgerDecisionDTO judgerDecisionDTO,HttpSession session) {
+		return playerService.dealJudgerDecision(judgerDecisionDTO);
 	}
 
 }

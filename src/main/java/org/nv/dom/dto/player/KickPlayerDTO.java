@@ -1,4 +1,4 @@
-package org.nv.dom.dto.game;
+package org.nv.dom.dto.player;
 
 public class KickPlayerDTO {
 	

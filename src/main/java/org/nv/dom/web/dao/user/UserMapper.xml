@@ -55,6 +55,20 @@
 			to_user_id = #{userId};
 			
 	</select>
+	
+	<select id="getAllJudegersDao" resultType="UserAuthority">
+		
+		SELECT
+			du.id AS userId,
+			du.nickname AS nickname,
+			da.authority_level AS authorityLevel,
+			dp.status AS status
+		FROM
+			d_user du, d_authority da LEFT JOIN d_player dp ON da.user_id = dp.user_id AND dp.status != 9
+		WHERE
+			du.id = da.user_id
+	
+	</select>
 
 
 </mapper>

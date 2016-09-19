@@ -72,6 +72,39 @@
               	</p>
             </div>   
           </div>
+          <c:if test="${applyingGame != null && applyingGame.gameStatus == 1 }">
+          <div class="am-panel-bd">
+          	<div class="user-info">
+          	   <p>申请法官信息</p>
+          	   <form class="am-form">
+				  <table class="am-table am-table-striped am-table-hover table-main">
+				  	<thead>
+					  	<tr>
+							<th>id</th>	
+							<th class="table-set" style="width:100px">操作</th>
+					  	</tr>
+					</thead>
+					<tbody>
+						<c:forEach items="${applyingGame.alterJudgers }" var="alterJudger">
+							<tr>
+              					<td>${ alterJudger.nickname }</td>
+             					<td>
+								<div class="am-btn-toolbar">
+                  				  <div class="am-btn-group am-btn-group-xs">
+                    				<button type="button" class="am-btn am-btn-default am-btn-xs am-text-secondary" title="同意" onclick="judgerDecision(${alterJudger.playerId},'yes')"><span class="am-icon-thumbs-o-up"></span></button>
+                   					<button type="button" class="am-btn am-btn-default am-btn-xs" title="拒绝" onclick="judgerDecision(${alterJudger.playerId},'no')"><span class="am-icon-thumbs-o-down"></span></button>    					
+                  				  </div>
+                				</div>
+								</td>
+             				</tr>
+						</c:forEach>
+					</tbody>
+					
+				  </table>
+			   </form>	   
+          	</div>
+          </div>
+          </c:if>
         </div>
       </div>
 
@@ -245,6 +278,10 @@ function changeGameStatus(gameId,status,finalResult){
 		status : status,
 		finalResult : finalResult
 	};
+	if(gamedata.gameStatus==1&&gamedata.alterJudgers.length>0){
+		myAlert("还有备选法官未处理！");
+		return;
+	}
 	if(gamedata.gameStatus==5&&!gamedata.replayEssayId){
 		myAlert("本次版杀还未复盘！");
 		return;
@@ -421,7 +458,7 @@ function showApplyList(){
 }
 
 function becomeJudger(gameId){
-	var url = getRootPath() + "/game/becomeJudger";
+	var url = getRootPath() + "/becomeJudger";
 	var options = {
 		gameId : gameId	
 	}
@@ -433,6 +470,30 @@ function becomeJudger(gameId){
 		switch(data.status){
 		case 1:
 			myInfo("报名法官成功！",function(){
+				window.location = getRootPath() + "/admin-apply";
+			})
+			return;
+		default:
+			myAlert(data.message);
+			return;
+		}
+	})
+}
+
+function judgerDecision(playerId,decision){
+	var url = getRootPath() + "/judgerDecision";
+	var options = {
+		playerId : playerId,
+		decision : decision
+	}
+	var common = new Common();
+	common.callAction(options,url,function(data){
+		if(!data){
+			return;
+		}
+		switch(data.status){
+		case 1:
+			myInfo("操作成功！",function(){
 				window.location = getRootPath() + "/admin-apply";
 			})
 			return;

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.nv.dom.domain.player.PlayerInfo;
 import org.nv.dom.domain.player.PlayerReplaceSkin;
+import org.nv.dom.dto.player.UpdatePlayerStatusDTO;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -39,4 +40,10 @@ public interface PlayerMapper {
 	 */
 	
 	public int updatePlayerStatus(long gameId);
+	
+	/**
+	 * <p>更新一个玩家状态</p>
+	 */
+	
+	public int updateOnePlayerStatus(UpdatePlayerStatusDTO updatePlayerStatusDTO);
 }

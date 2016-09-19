@@ -18,6 +18,8 @@ public class ApplyingGame {
 	private List<UserApplyInfo> players;
 	/** 法官名单 */
 	private List<String> judgers;
+	/** 备选法官名单 */
+	private List<UserApplyInfo> alterJudgers;
 	/** 玩家人数 */
 	private Integer playerNum;
 	/** 当前报名人数 */
@@ -64,6 +66,12 @@ public class ApplyingGame {
 	}
 	public void setJudgers(List<String> judgers) {
 		this.judgers = judgers;
+	}
+	public List<UserApplyInfo> getAlterJudgers() {
+		return alterJudgers;
+	}
+	public void setAlterJudgers(List<UserApplyInfo> alterJudgers) {
+		this.alterJudgers = alterJudgers;
 	}
 	public Integer getPlayerNum() {
 		return playerNum;

@@ -59,7 +59,7 @@
 		FROM
 			d_game dg LEFT JOIN d_player dp
 		ON
-			dg.status != 9 AND dp.role='judger' AND dp.game_id=dg.id AND dp.status != 9
+			dg.status != 9 AND dp.role='judger' AND dp.game_id=dg.id AND dp.status = 8
 		WHERE
 			dp.user_id=#{userId}
 		GROUP BY
@@ -73,6 +73,7 @@
 		SELECT 
 			du.id AS userId,
 			dp.id AS playerId,
+			dp.status AS status,
 			du.nickname AS nickname,
 			DATE_FORMAT(dp.apply_time,'%Y-%c-%d %H:%i:%s') AS applyTime,
 			dc.id AS characterId,
@@ -87,7 +88,7 @@
 		ON 
 			dpr.player_id=dp.id 
 		WHERE
-			dp.role = "player" AND dp.user_id = du.id AND dp.game_id = #{gameId} 
+			dp.user_id = du.id AND dp.game_id = #{gameId} 
 	
 	</select>
 	
@@ -117,7 +118,7 @@
 			"judger",
 			#{gameId},
 			NOW(),
-			8
+			#{status}
 		)
 	
 	</insert>

@@ -1,9 +1,11 @@
 package org.nv.dom.web.service.impl;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -16,11 +18,12 @@ import org.nv.dom.domain.game.GameForm;
 import org.nv.dom.domain.newspaper.Newspaper;
 import org.nv.dom.domain.player.PlayerInfo;
 import org.nv.dom.domain.user.UserApplyInfo;
-import org.nv.dom.dto.game.ApplyDTO;
 import org.nv.dom.dto.game.ChangeStatusDTO;
-import org.nv.dom.dto.game.KickPlayerDTO;
 import org.nv.dom.dto.game.PublishGameDTO;
+import org.nv.dom.dto.player.ApplyDTO;
+import org.nv.dom.dto.player.KickPlayerDTO;
 import org.nv.dom.enums.GameStatus;
+import org.nv.dom.enums.PlayerStatus;
 import org.nv.dom.util.StringUtil;
 import org.nv.dom.util.json.JacksonJSONUtils;
 import org.nv.dom.web.dao.game.GameMapper;
@@ -59,26 +62,6 @@ public class GameServiceImpl extends BasicServiceImpl implements GameService {
 		}	
 		return result;
 	}
-	
-	@Override
-	public Map<String, Object> becomeJudger(ApplyDTO applyDTO) {
-		Map<String, Object> result = new HashMap<String, Object>();
-		try{
-			if(gameMapper.queryHasAttendGameDao(applyDTO.getUserId()) > 0){
-				result.put(PageParamType.BUSINESS_STATUS, -3);
-				result.put(PageParamType.BUSINESS_MESSAGE, "已参加其他版杀，加入失败");
-				return result;
-			}
-			gameMapper.applyForGameDao(applyDTO);
-			result.put(PageParamType.BUSINESS_STATUS, 1);
-			result.put(PageParamType.BUSINESS_MESSAGE, "加入版杀成功");
-		} catch (Exception e){
-			logger.error(e.getMessage(), e);
-			result.put(PageParamType.BUSINESS_STATUS, -1);
-			result.put(PageParamType.BUSINESS_MESSAGE, "系统异常");
-		}	
-		return result;
-	}
 
 	@Override
 	public Map<String, Object> getApplyingGames(long userId) {
@@ -90,24 +73,35 @@ public class GameServiceImpl extends BasicServiceImpl implements GameService {
 				result.put(PageParamType.BUSINESS_STATUS, -3);
 				result.put(PageParamType.BUSINESS_MESSAGE, "暂无版杀信息");
 			} else {
-				applyingGame.setPlayCurNum(applyingGame.getPlayers().size());
 				applyingGame.setGameStatusDesc(GameStatus.getMessageByCode(applyingGame.getGameStatus()));
-				for(UserApplyInfo userApplyInfo:applyingGame.getPlayers()){
-					String isSp=userApplyInfo.getIsSp();
-					if(StringUtil.isNullOrEmpty(isSp)){
-						userApplyInfo.setCharacterName("未选择");
-					} else if(isSp.equals(NVTermConstant.IS_SP)){
-						userApplyInfo.setCharacterName("sp"+userApplyInfo.getCharacterName());
-					}
-					String applyPioneer=userApplyInfo.getApplyPioneer();
-					if(StringUtil.isNullOrEmpty(applyPioneer)){
-						userApplyInfo.setApplyPioneer("未选择");
-					} else if(applyPioneer.equals(NVTermConstant.APPLY_PIONEER)){
-						userApplyInfo.setApplyPioneer("是");
+				Iterator<UserApplyInfo> iter = applyingGame.getPlayers().iterator(); 
+				List<UserApplyInfo> alterJudger = new ArrayList<>();
+				while(iter.hasNext()){
+					UserApplyInfo userApplyInfo = iter.next();
+					if(PlayerStatus.ALTER_JUDGER.getCode() == userApplyInfo.getStatus()){
+						alterJudger.add(userApplyInfo);
+						iter.remove();
+					} else if(PlayerStatus.JUDGER.getCode() == userApplyInfo.getStatus()){
+						iter.remove();
 					} else {
-						userApplyInfo.setApplyPioneer("否");
+						String isSp=userApplyInfo.getIsSp();
+						if(StringUtil.isNullOrEmpty(isSp)){
+							userApplyInfo.setCharacterName("未选择");
+						} else if(isSp.equals(NVTermConstant.IS_SP)){
+							userApplyInfo.setCharacterName("sp"+userApplyInfo.getCharacterName());
+						}
+						String applyPioneer=userApplyInfo.getApplyPioneer();
+						if(StringUtil.isNullOrEmpty(applyPioneer)){
+							userApplyInfo.setApplyPioneer("未选择");
+						} else if(applyPioneer.equals(NVTermConstant.APPLY_PIONEER)){
+							userApplyInfo.setApplyPioneer("是");
+						} else {
+							userApplyInfo.setApplyPioneer("否");
+						}
 					}
 				}
+				applyingGame.setAlterJudgers(alterJudger);
+				applyingGame.setPlayCurNum(applyingGame.getPlayers().size());
 				result.put("applyingGame", applyingGame);
 				result.put("applyingGameStr", JacksonJSONUtils.beanToJSON(applyingGame));
 				result.put(PageParamType.BUSINESS_STATUS, 1);
@@ -147,6 +141,7 @@ public class GameServiceImpl extends BasicServiceImpl implements GameService {
 			gameMapper.publishGameDao(publishGameDTO);
 			applyDTO.setGameId(publishGameDTO.getGameId());
 			applyDTO.setUserId(publishGameDTO.getJudgerId());
+			applyDTO.setStatus(PlayerStatus.JUDGER.getCode());
 			if(gameMapper.applyForGameDao(applyDTO) == 1){
 				if(publishGameDTO.getCharacterSelect().equals(NVTermConstant.SELECT_THREE)){
 					List<Integer> list = Arrays.asList(NVTermConstant.arrays);
@@ -293,6 +288,5 @@ public class GameServiceImpl extends BasicServiceImpl implements GameService {
 		}
 		return result;
 	}
-
 
 }

@@ -7,10 +7,10 @@ import org.nv.dom.domain.game.ApplyingGame;
 import org.nv.dom.domain.game.GameForm;
 import org.nv.dom.domain.player.PlayerInfo;
 import org.nv.dom.domain.user.UserApplyInfo;
-import org.nv.dom.dto.game.ApplyDTO;
 import org.nv.dom.dto.game.ChangeStatusDTO;
-import org.nv.dom.dto.game.KickPlayerDTO;
 import org.nv.dom.dto.game.PublishGameDTO;
+import org.nv.dom.dto.player.ApplyDTO;
+import org.nv.dom.dto.player.KickPlayerDTO;
 import org.springframework.stereotype.Repository;
 
 @Repository

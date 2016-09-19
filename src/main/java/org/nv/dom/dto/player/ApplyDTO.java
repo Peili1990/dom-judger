@@ -1,10 +1,12 @@
-package org.nv.dom.dto.game;
+package org.nv.dom.dto.player;
 
 public class ApplyDTO {
 	
 	private long userId;
 	
 	private long gameId;
+	
+	private Integer status;
 	
 	public long getUserId() {
 		return userId;
@@ -17,6 +19,12 @@ public class ApplyDTO {
 	}
 	public void setGameId(long gameId) {
 		this.gameId = gameId;
+	}
+	public Integer getStatus() {
+		return status;
+	}
+	public void setStatus(Integer status) {
+		this.status = status;
 	}
 	
 	
