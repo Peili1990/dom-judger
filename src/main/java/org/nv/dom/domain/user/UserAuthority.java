@@ -2,18 +2,12 @@ package org.nv.dom.domain.user;
 
 public class UserAuthority {
 	
-	private long id;
 	private long userId;
 	private Integer status;
 	private String statusDesc;
 	private Integer authorityLevel;
+	private String remark;
 	private String nickname;
-	public long getId() {
-		return id;
-	}
-	public void setId(long id) {
-		this.id = id;
-	}
 	public long getUserId() {
 		return userId;
 	}
@@ -37,6 +31,12 @@ public class UserAuthority {
 	}
 	public void setStatusDesc(String statusDesc) {
 		this.statusDesc = statusDesc;
+	}
+	public String getRemark() {
+		return remark;
+	}
+	public void setRemark(String remark) {
+		this.remark = remark;
 	}
 	public String getNickname() {
 		return nickname;

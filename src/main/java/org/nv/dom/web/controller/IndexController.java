@@ -101,7 +101,7 @@ public class IndexController extends BaseController {
 	public ModelAndView adminSettlementView(HttpServletRequest request) {
 		ModelAndView mav = Integer.parseInt(CookiesUtil.getCookieValue(request, "nv_screen_width"))<1600 ? 
 				new ModelAndView("admin/admin-settlement-small") : new ModelAndView("admin/admin-settlement");
-				ApplyingGame game = (ApplyingGame)request.getSession().getAttribute(PageParamType.GAME_IN_SESSION);
+		ApplyingGame game = (ApplyingGame)request.getSession().getAttribute(PageParamType.GAME_IN_SESSION);
 		if(game != null){	
 			mav.addObject("gameId",game.getId());
 			mav.addAllObjects(playerService.getPlayerInfo(game.getId()));
@@ -129,9 +129,17 @@ public class IndexController extends BaseController {
 		return mav;
 	}
 	
+	@RequestMapping(value = "/admin-rule", method = RequestMethod.GET)
+	public ModelAndView adminRuleView(HttpSession session) {
+		ModelAndView mav = new ModelAndView("admin/admin-rule");
+		mav.addAllObjects(basicService.getSessionUserService(session));
+		return mav;
+	}
+	
 	@RequestMapping(value = "/admin-authority", method = RequestMethod.GET)
 	public ModelAndView adminAuthorityView(HttpSession session) {
 		ModelAndView mav = new ModelAndView("admin/admin-authority");
+		mav.addAllObjects(userService.getAllJudegers());
 		mav.addAllObjects(basicService.getSessionUserService(session));
 		return mav;
 	}

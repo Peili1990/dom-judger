@@ -32,4 +32,16 @@ public interface UserMapper {
 	 */
 	
 	public List<UserAuthority> getAllJudegersDao();
+	
+	/**
+	 * <p>新增版杀法官</p>
+	 */
+	
+	public int insertJudgerDao(long userId);
+	
+	/**
+	 * <p>删除版杀法官</p>
+	 */
+	
+	public int deleteJudgerDao(long userId);
 }

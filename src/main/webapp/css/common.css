@@ -183,7 +183,14 @@ input[type="checkbox"]{
 	margin:0;
 }
 
-#replay-area {
+#replay-area, #rule-editor{
 	width:100%;
 }
 
+.code-style span{
+	font-family : fantasy;
+	font-size : 12pt;
+	font-weight : normal;
+	letter-spacing : 1px;
+	margin-right:30px;
+}
