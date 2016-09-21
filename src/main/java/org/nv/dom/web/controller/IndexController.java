@@ -12,10 +12,10 @@ import org.nv.dom.domain.newspaper.Newspaper;
 import org.nv.dom.domain.user.User;
 import org.nv.dom.util.CookiesUtil;
 import org.nv.dom.web.service.AssembleService;
+import org.nv.dom.web.service.AuthorityService;
 import org.nv.dom.web.service.EssayService;
 import org.nv.dom.web.service.GameService;
 import org.nv.dom.web.service.PlayerService;
-import org.nv.dom.web.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,7 +27,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class IndexController extends BaseController {
 	
 	@Autowired
-	UserService userService;
+	AuthorityService authorityService;
 	
 	@Autowired
 	PlayerService playerService;
@@ -139,7 +139,7 @@ public class IndexController extends BaseController {
 	@RequestMapping(value = "/admin-authority", method = RequestMethod.GET)
 	public ModelAndView adminAuthorityView(HttpSession session) {
 		ModelAndView mav = new ModelAndView("admin/admin-authority");
-		mav.addAllObjects(userService.getAllJudegers());
+		mav.addAllObjects(authorityService.getAllJudegers());
 		mav.addAllObjects(basicService.getSessionUserService(session));
 		return mav;
 	}

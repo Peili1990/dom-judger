@@ -13,7 +13,7 @@
           <li><a href="${ baseUrl }admin-replay"><span class="am-icon-bug"></span> 复盘总结<span class="am-icon-star am-fr am-margin-right admin-icon-yellow invisible"></span></a></li>
         </ul>
       </li>
-      <li><a href="${ baseUrl }admin-rule"><span class="am-icon-table"></span> 规则整理<span class="am-icon-angle-right am-fr am-margin-right invisible"></span></a></li>
+      <li><a href="${ baseUrl }admin-rule"><span class="am-icon-table"></span> 规则查看<span class="am-icon-angle-right am-fr am-margin-right invisible"></span></a></li>
       <li><a href="${ baseUrl }admin-authority"><span class="am-icon-pencil-square-o"></span> 权限管理<span class="am-icon-angle-right am-fr am-margin-right invisible"></span></a></li>
       <li><a href="#" onclick="logout()"><span class="am-icon-sign-out"></span> 注销</a></li>
     </ul>

@@ -49,22 +49,5 @@ public interface AccountMapper {
 	
 	public Long getUserIdByNicknameDao(String nickname);
 	
-	/**
-	 * <p>批量生成邀请码</p>
-	 * @param List<String>
-	 * @return
-	 * 2014年10月29日 下午3:57:12
-	 * @author: z```s
-	 */
 	
-	public int insertInvCodeBatch(List<String> invcodes);
-	
-	/**
-	 * <p>获得一批邀请码</p>
-	 * @param 
-	 * @return
-	 * 2014年10月29日 下午3:57:12
-	 * @author: z```s
-	 */
-	public List<String> getInvCodeListDao();
 }

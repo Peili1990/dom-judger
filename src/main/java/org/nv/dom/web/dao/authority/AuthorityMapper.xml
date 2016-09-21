@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.nv.dom.web.dao.authority.AuthorityMapper">
+
+	<insert id="insertInvCodeBatch" parameterType="java.util.List">
+	
+		<foreach collection="list" item="item" index="index" open="" close="" separator=";">
+			
+			INSERT INTO d_inv_code (
+				inv_code,
+				used
+			)
+			VALUES(
+				#{item},
+				0
+			)
+
+		</foreach>
+	
+	</insert>
+	
+	<select id="getInvCodeListDao" resultType="String">
+	
+		SELECT 
+			inv_code
+		FROM
+			d_inv_code
+		WHERE
+			used = 0
+		LIMIT 10
+	
+	</select>
+	
+	<select id="getAllJudegersDao" resultType="UserAuthority">
+		
+		SELECT
+			du.id AS userId,
+			du.nickname AS nickname,
+			da.authority_level AS authorityLevel,
+			da.remark AS remark,
+			dp.status AS status
+		FROM
+			d_user du, d_authority da LEFT JOIN d_player dp ON da.user_id = dp.user_id AND dp.status != 9
+		WHERE
+			du.id = da.user_id
+	
+	</select>
+	
+	<insert id="insertJudgerDao" parameterType="long">
+	
+		INSERT INTO d_authority(
+			user_id,
+			create_time
+		)
+		VALUES(
+			#{userId},
+			NOW()
+		)
+	
+	</insert>
+	
+	<delete id="deleteJudgerDao" parameterType="long">
+	
+		DELETE FROM
+			d_authority
+		WHERE
+			user_id =#{userId}
+	
+	</delete>
+
+</mapper>

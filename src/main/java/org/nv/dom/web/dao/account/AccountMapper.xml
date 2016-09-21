@@ -46,35 +46,6 @@
 
 	</insert>
 	
-	<insert id="insertInvCodeBatch" parameterType="java.util.List">
-	
-		<foreach collection="list" item="item" index="index" open="" close="" separator=";">
-			
-			INSERT INTO d_inv_code (
-				inv_code,
-				used
-			)
-			VALUES(
-				#{item},
-				0
-			)
-
-		</foreach>
-	
-	</insert>
-	
-	<select id="getInvCodeListDao" resultType="String">
-	
-		SELECT 
-			inv_code
-		FROM
-			d_inv_code
-		WHERE
-			used = 0
-		LIMIT 10
-	
-	</select>
-	
 	<select id="getUserIdByNicknameDao" parameterType="String" resultType="Long">
 	
 		SELECT 

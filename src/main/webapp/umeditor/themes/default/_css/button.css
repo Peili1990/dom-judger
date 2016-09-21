@@ -33,3 +33,11 @@
     opacity: 0.3;
     filter: alpha(opacity = 30);
 }
+
+.edui-btn-toolbar .edui-btn-spoiler .edui-icon-spoiler{
+	background: url(../images/spoiler.png) no-repeat 2px 3px transparent;
+}
+
+.edui-btn-toolbar .edui-btn-quote .edui-icon-quote{
+	background: url(../images/quote.png) no-repeat 2px 3px transparent;
+}

@@ -18,7 +18,7 @@
   <!-- content start -->
   <div class="admin-content">
     <div class="am-cf am-padding">
-      <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">规则整理</strong> / <small>Rule Checking</small></div>
+      <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">规则查看</strong> / <small>Rule Checking</small></div>
     </div>
 
     <hr/>
@@ -26,11 +26,14 @@
     <div class="am-g">
     	<div class="am-u-sm-12 am-u-sm-centered">
 			<div class="am-panel am-panel-default">
+				<c:if test="${user.authority > 1}">
 				<div class="am-panel-bd">
 				<div class="am-form-group operation">
-					<input type="button" class="am-btn am-btn-primary" value="编辑规则" onclick="showRuleEditor()">						
+					<input type="button" class="am-btn am-btn-primary" value="编辑规则" onclick="showRuleEditor()">
+					<input type="button" class="am-btn am-btn-danger invisible" value="保存规则" onclick="saveRule()">						
 				</div>
 				</div>
+				</c:if>
 				<div class="am-panel-bd" id="rule-content">
 				</div>
 				<div class="am-panel-bd">
@@ -54,15 +57,20 @@ var um = UM.getEditor("rule-editor");
 
 $(function(){
 	$(".admin-sidebar-list > li:eq(1) .am-icon-angle-right").removeClass("invisible");
-	$.get('file/rule-1.8.0.txt',function(content){ 
+	$.get(picServer+'rule-1.8.0.txt',function(content){ 
 		$("#rule-content").html(content);
 	})
 })
 
 function showRuleEditor(){
 	$("#rule-content").addClass("invisible");
+	$(".am-btn-primary").addClass("invisible");
+	$(".am-btn-danger").removeClass("invisible");
 	um.setContent($("#rule-content").html());
-	$("#rule-editor").removeClass("invisible");
+}
+
+function saveRule(){
+	
 }
 </script>
 

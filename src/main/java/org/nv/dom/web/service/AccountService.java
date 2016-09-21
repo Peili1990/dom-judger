@@ -2,7 +2,6 @@ package org.nv.dom.web.service;
 
 import java.util.Map;
 
-import org.nv.dom.domain.user.User;
 import org.nv.dom.dto.account.LoginDTO;
 import org.nv.dom.dto.account.RegisterDTO;
 
@@ -31,12 +30,5 @@ public interface AccountService {
 	 * @author: z```s
 	 */
 	public Map<String, Object> registerAction(RegisterDTO registerDTO);
-	
-	/**
-	 * <p>批量生成邀请码</p>
-	 * 
-	 */
-
-	public Map<String, Object> generateInvCode(Integer codeNum, User user);
 
 }

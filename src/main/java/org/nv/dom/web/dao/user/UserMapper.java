@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.nv.dom.domain.message.chat.ChatInfo;
 import org.nv.dom.domain.message.chat.OfflineChat;
-import org.nv.dom.domain.user.UserAuthority;
 import org.nv.dom.domain.user.UserCurRole;
 import org.springframework.stereotype.Repository;
 
@@ -27,21 +26,4 @@ public interface UserMapper {
 
 	public List<OfflineChat> getOfflineChatDao(long userId);
 	
-	/**
-	 * <p>获取所有法官信息</p>
-	 */
-	
-	public List<UserAuthority> getAllJudegersDao();
-	
-	/**
-	 * <p>新增版杀法官</p>
-	 */
-	
-	public int insertJudgerDao(long userId);
-	
-	/**
-	 * <p>删除版杀法官</p>
-	 */
-	
-	public int deleteJudgerDao(long userId);
 }

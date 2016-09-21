@@ -34,6 +34,8 @@
             'plugins/basestyle.js',
             'plugins/video.js',
             'plugins/selectall.js',
+            'plugins/spoiler.js',
+            'plugins/quote.js',
             'plugins/removeformat.js',
             'plugins/keystrokes.js',
             'plugins/autosave.js',

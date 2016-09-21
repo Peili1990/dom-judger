@@ -91,7 +91,7 @@
             fullscreen: false,
             readonly: false,
             zIndex: 999,
-            enterTag: 'p',
+            enterTag: 'br',
             lang: 'zh-cn',
             langPath: me.options.UMEDITOR_HOME_URL + 'lang/',
             theme: 'default',

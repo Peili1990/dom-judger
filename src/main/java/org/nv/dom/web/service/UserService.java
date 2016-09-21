@@ -13,11 +13,5 @@ public interface UserService {
 	public Map<String, Object> getChatInfo(List<String> chatList, String userId);
 
 	public Map<String, Object> getOfflineMessage(long userId);
-	
-	public Map<String, Object> getAllJudegers();
-
-	public Map<String, Object> addJudger(String judgerName, User user);
-
-	public Map<String, Object> removeJudger(long judgerId, User user);
  
 }

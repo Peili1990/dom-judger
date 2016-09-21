@@ -16,7 +16,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -68,13 +67,6 @@ public class AccountController extends BaseController {
 		result.put(PageParamType.BUSINESS_STATUS,1);
 		result.put(PageParamType.BUSINESS_MESSAGE, "登出成功");
 		return result;
-	}
-	
-	@ResponseBody
-	@RequestMapping(value = "/generateInvCode", method = RequestMethod.POST)
-	public Map<String, Object> generateInvCode(@RequestParam("codeNum")Integer codeNum,HttpServletRequest request) {
-		User user = (User) request.getSession().getAttribute(PageParamType.user_in_session);
-		return accountService.generateInvCode(codeNum,user);
 	}
 
 }
