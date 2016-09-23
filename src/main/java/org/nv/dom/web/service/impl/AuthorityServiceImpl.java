@@ -10,6 +10,8 @@ import org.nv.dom.config.PageParamType;
 import org.nv.dom.domain.user.User;
 import org.nv.dom.domain.user.UserAuthority;
 import org.nv.dom.enums.PlayerStatus;
+import org.nv.dom.util.ConfigUtil;
+import org.nv.dom.util.FileUtil;
 import org.nv.dom.util.RandomCodeUtil;
 import org.nv.dom.util.RandomCodeUtil.CodeType;
 import org.nv.dom.web.dao.account.AccountMapper;
@@ -20,6 +22,8 @@ import org.springframework.stereotype.Service;
 
 @Service("authorityServiceImpl")
 public class AuthorityServiceImpl implements AuthorityService {
+	
+	private String filePath = ConfigUtil.getVersionConfigProperty("filePath");
 	
 	private static Logger logger = Logger.getLogger(AuthorityServiceImpl.class);
 	
@@ -147,7 +151,9 @@ public class AuthorityServiceImpl implements AuthorityService {
 			return result;
 		}
 		try{
-			
+			FileUtil.writeLog(filePath, content);
+			result.put(PageParamType.BUSINESS_STATUS, 1);
+			result.put(PageParamType.BUSINESS_MESSAGE,"修改成功！");
 		}catch(Exception e){
 			logger.error(e.getMessage(),e);
 			result.put(PageParamType.BUSINESS_STATUS, -1);
