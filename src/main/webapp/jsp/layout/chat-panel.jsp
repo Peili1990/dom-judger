@@ -153,10 +153,10 @@ function sendMessage(chatInfo,content){
 function appendChat(chatDetail,prepend,scroll){
 	var builder = new StringBuilder();
 	builder.append('<li>');
-	if(chatDetail.toUserId == userId || chatDetail.userId != userId){
-		builder.appendFormat( '<span class="other">{0} ',$("#"+chatDetail.chatId+" .pew span:eq(1)").text());
-	} else {
+	if(chatDetail.fromUserId == userId || chatDetail.userId == userId){
 		builder.append('<span class="self">我 ');
+	} else {
+		builder.appendFormat( '<span class="other">{0} ',$("#"+chatDetail.chatId+" .pew span:eq(1)").text());
 	}
 	builder.appendFormat('<time>{0}</time></span>',chatDetail.createTime);
 	builder.appendFormat('<p>{0}</p></li>',chatDetail.content);

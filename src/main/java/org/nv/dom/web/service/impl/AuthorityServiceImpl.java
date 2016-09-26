@@ -116,11 +116,6 @@ public class AuthorityServiceImpl implements AuthorityService {
 	@Override
 	public Map<String, Object> generateInvCode(Integer codeNum, User user) {
 		Map<String, Object> result = new HashMap<String, Object>();
-		if( user==null || user.getAuthority() == null || user.getAuthority() < 2){
-			result.put(PageParamType.BUSINESS_STATUS, -2);
-			result.put(PageParamType.BUSINESS_MESSAGE,"权限不够，无法生成邀请码");
-			return result;
-		}
 		if(codeNum == null || codeNum < 1L){
 			result.put(PageParamType.BUSINESS_STATUS, -2);
 			result.put(PageParamType.BUSINESS_MESSAGE,"请输入正整数");
