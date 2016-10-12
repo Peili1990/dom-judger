@@ -26,7 +26,7 @@ UM.plugins['enterkey'] = function() {
                     if (browser.gecko) {
                         var h = domUtils.findParentByTagName(start, [ 'h1', 'h2', 'h3', 'h4', 'h5', 'h6','blockquote','caption','table'], true);
                         if (!h) {
-                            me.document.execCommand('formatBlock', false, '<p>');
+                            me.document.execCommand('formatBlock', false, '<br>');
                             doSave = 1;
                         }
                     } else {
@@ -36,7 +36,7 @@ UM.plugins['enterkey'] = function() {
                             range.insertNode(tmp);
                             div = domUtils.findParentByTagName(tmp, 'div', true);
                             if (div) {
-                                var p = me.document.createElement('p');
+                                var p = me.document.createElement('br');
                                 while (div.firstChild) {
                                     p.appendChild(div.firstChild);
                                 }
@@ -86,7 +86,7 @@ UM.plugins['enterkey'] = function() {
                     return;
                 }
             }
-            if (tag == 'p') {
+            if (tag == 'br') {
 
 
                 if (!browser.ie) {
@@ -97,18 +97,18 @@ UM.plugins['enterkey'] = function() {
                     //trace:2431
                     if (!start && !browser.opera) {
 
-                        me.document.execCommand('formatBlock', false, '<p>');
+                        me.document.execCommand('formatBlock', false, '<br>');
 
                         if (browser.gecko) {
                             range = me.selection.getRange();
-                            start = domUtils.findParentByTagName(range.startContainer, 'p', true);
+                            start = domUtils.findParentByTagName(range.startContainer, 'br', true);
                             start && domUtils.removeDirtyAttr(start);
                         }
 
 
                     } else {
                         hTag = start.tagName;
-                        start.tagName.toLowerCase() == 'p' && browser.gecko && domUtils.removeDirtyAttr(start);
+                        start.tagName.toLowerCase() == 'br' && browser.gecko && domUtils.removeDirtyAttr(start);
                     }
 
                 }
@@ -119,7 +119,7 @@ UM.plugins['enterkey'] = function() {
     });
 
     browser.ie && me.addListener('setDisabled',function(){
-        $(me.body).find('p').each(function(i,p){
+        $(me.body).find('br').each(function(i,p){
             if(domUtils.isEmptyBlock(p)){
                 p.innerHTML = '&nbsp;'
             }

@@ -44,7 +44,7 @@
 							 )">
 						</div>
 						<div class="am-form-group">	      
-              				<textarea id="replay-area">${replayEssay.content}</textarea> 
+              				<textarea id="replay-area" style="height:400px">${replayEssay.content}</textarea> 
         				</div>
         			</c:when>
         			<c:otherwise>
@@ -64,13 +64,16 @@
 <jsp:include page="../layout/footer.jsp"></jsp:include>
 
 <script type="text/javascript">
-var um = UM.getEditor("replay-area");
+var um;
+KindEditor.ready(function(K) {
+    um = K.create('#replay-area',{newlineTag:"br"});
+});
 
 $(function(){
 	$("#collapse-nav li:eq(4) .am-icon-star").removeClass("invisible");
 	$(".admin-sidebar-list > li:eq(0) .am-icon-angle-right").removeClass("invisible");
 	if($("#replay-area")){
-		um.setContent($("#replay-area").text());
+		um.html($("#replay-area").text());
 	}
 })
 
@@ -79,7 +82,7 @@ function saveEssay(gameId,gameDesc,essayId){
 	var options = {
 			gameId : gameId,
 			header : "【"+gameDesc+"】"+"复盘",
-			content : recoverTag(um.getContent()),
+			content : um.html(),
 			essayId : essayId,
 			type : 1
 		}

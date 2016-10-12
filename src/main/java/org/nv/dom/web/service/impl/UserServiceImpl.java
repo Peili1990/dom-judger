@@ -1,16 +1,17 @@
 package org.nv.dom.web.service.impl;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.nv.dom.config.PageParamType;
+import org.nv.dom.domain.message.chat.ChatDetail;
 import org.nv.dom.domain.message.chat.ChatInfo;
 import org.nv.dom.domain.message.chat.OfflineChat;
 import org.nv.dom.domain.user.User;
 import org.nv.dom.domain.user.UserCurRole;
+import org.nv.dom.dto.message.GetChatRecordDTO;
 import org.nv.dom.web.dao.account.AccountMapper;
 import org.nv.dom.web.dao.user.UserMapper;
 import org.nv.dom.web.service.UserService;
@@ -34,22 +35,14 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public Map<String, Object> getChatInfo(List<String> chatIdList, String userId) {
+	public Map<String, Object> getChatInfo(String chatId, String userId) {
 		Map<String, Object> result = new HashMap<String, Object>();
-		List<Long> users = new ArrayList<>();
-		for(String chatId : chatIdList){
-			String[] temp = chatId.split("-");
-			users.add(Long.parseLong(temp[0].equals(userId) ? temp[1] : temp[0]));
-		}
+		String[] temp = chatId.split("-");
+		long toUserId = Long.parseLong(temp[0].equals(userId) ? temp[1] : temp[0]);
 		try{
-			List<ChatInfo> chatList = null;
-			if(!users.isEmpty()){
-				chatList = userMapper.getChatInfoDao(users); 
-			}
-			for(int i=0;i<chatIdList.size();i++){
-				chatList.get(i).setChatId(chatIdList.get(i));
-			}
-			result.put("chatList", chatList);
+			ChatInfo chatInfo = userMapper.getChatInfoDao(toUserId); getClass();
+			chatInfo.setChatId(chatId);
+			result.put("chatInfo", chatInfo);
 			result.put(PageParamType.BUSINESS_STATUS, 1);
 			result.put(PageParamType.BUSINESS_MESSAGE, "获取聊天信息成功！");
 		}catch(Exception e){
@@ -76,5 +69,28 @@ public class UserServiceImpl implements UserService {
 		return result;
 	}
 
-	
+	@Override
+	public Map<String, Object> getChatRecord(GetChatRecordDTO getChatRecordDTO) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		try{
+			if(getChatRecordDTO.getChatId().indexOf(String.valueOf(getChatRecordDTO.getUserId()))<0){
+				result.put(PageParamType.BUSINESS_STATUS, -3);
+				result.put(PageParamType.BUSINESS_MESSAGE, "无法获取非本人聊天记录");
+			} else {
+				getChatRecordDTO.setOffset(10*getChatRecordDTO.getPageNum());
+				List<ChatDetail> chatDetails = userMapper.getChatRecordDao(getChatRecordDTO);
+				if(getChatRecordDTO.getPageNum() == 0){
+					userMapper.updateChatRecordDao(getChatRecordDTO);
+				}
+				result.put("chatDetails", chatDetails);
+				result.put(PageParamType.BUSINESS_STATUS, 1);
+				result.put(PageParamType.BUSINESS_MESSAGE, "获取聊天记录成功");
+			}
+		}catch(Exception e){
+			logger.error(e.getMessage(),e);
+			result.put(PageParamType.BUSINESS_STATUS, -1);
+			result.put(PageParamType.BUSINESS_MESSAGE, "系统异常");
+		}
+		return result;
+	}
 }

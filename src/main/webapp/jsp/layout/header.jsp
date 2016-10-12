@@ -36,7 +36,6 @@
 <script type="text/javascript">
   	var userId = ${user.id}
   	var picServer = "${picServer}"
-  	var db = getCurrentDb(userId);
   	var webSocket = new ReconnectingWebSocket( 'ws://'+'${chatServer}'+'/websocket/'+userId);
   	
   	webSocket.onerror = function(event) {
@@ -85,18 +84,22 @@
 			}
 			switch (data.status){
 			case 1:
-				totalChat = getCache("nv_offline_chat"+userId);
-				setCache("nv_offline_chat"+userId,totalChat > 0 ? parseInt(totalChat)+parseInt(data.offlineChat.length) : parseInt(data.offlineChat.length));
+				totalChat = 0;
+				chatInfoListStr = getCache("nv_chat_info"+userId);
+				chatInfoList = chatInfoListStr ? JSON.parse(chatInfoListStr) : [];
 				$.each(data.offlineChat,function(index,chat){
-					chatMessage = getCache("nv_chat"+chat.chatId);
-					setCache("nv_chat"+chat.chatId, chatMessage > 0 ? ++chatMessage : 1);
-					db.transaction(function (trans) {
-			            trans.executeSql("insert into chat_record_"+userId+"(chatId,userId,content,createTime) values(?,?,?,?) ", [chat.chatId, chat.fromUserId, chat.content, chat.createTime], function (ts, data1) {
-			            }, function (ts, message) {
-			                myAlert(message);
-			            });
-			        });
+					totalChat+=parseInt(chat.num);
+					i = indexOfKey(chatInfoList,chat.chatId);
+					if(i<0){
+						chatInfoList.push(chat);
+					} else {
+						chatInfoList[i].toUserAvatar = chat.toUserAvatar;
+						chatInfoList[i].toUserMotto = chat.toUserMotto;
+						chatInfoList[i].num = chatInfoList[i].num > chat.num ? chatInfoList[i].num : chat.num; 
+					}
 				})
+				setCache("nv_chat_info"+userId,JSON.stringify(chatInfoList));				
+				setCache("nv_offline_chat"+userId,totalChat);
 				setRedspot();
 				return;
 			case 0:
@@ -137,76 +140,70 @@
 		})
 	}
 	
-	function saveChatToDB(chatDetail,speaker){
-		db.transaction(function (trans) {
-            trans.executeSql("insert into chat_record_"+userId+"(chatId,userId,content,createTime) values(?,?,?,?) ", [chatDetail.chatId, speaker, chatDetail.content, chatDetail.createTime], function (ts, data1) {
-            }, function (ts, message) {
-                myAlert(message);
-            });
-        });
-	}
-	
 	function dealChat(chatDetail){
-		saveChatToDB(chatDetail,chatDetail.fromUserId);
 		if($("#"+chatDetail.chatId).is(":visible")){
 			appendChat(chatDetail,false,true);
 		} else {
-			chatId = chatDetail.chatId;
-			chatMessage = getCache("nv_chat"+chatId);
-			setCache("nv_chat"+chatId,chatMessage ? ++chatMessage : 1);
 			unreadChat = getCache("nv_offline_chat"+userId);
 			setCache("nv_offline_chat"+userId,unreadChat ? ++unreadChat : 1);
-			setRedspot();
+			chatId = chatDetail.chatId;
+			chatInfoListStr = getCache("nv_chat_info"+userId);
+			chatInfoList = chatInfoListStr ? JSON.parse(chatInfoListStr) : [];
+			i = indexOfKey(chatInfoList,chatId);
+			if(i<0){
+				var url = getRootPath() + "/getChatInfo";
+	        	var common = new Common();
+	       		var options = {
+	        		chatId : chatId
+	        	}
+	        	common.callAction(options, url, function(data) {
+	            if(!data){
+	           	    return;
+	            }
+	            switch (data.status){
+	           	   case 1:
+	           		    chatInfo = data.chatInfo;
+	           		    chatInfo.num = 1;
+	           		    chatInfoList.push(chatInfo);
+	           		    setCache("nv_chat_info"+userId,JSON.stringify(chatInfoList));
+	           		    setRedspot();
+	           			return;
+	           		case 0:
+	           			timeoutHandle();
+	           			return;
+	           		default:
+	           			myAlert(data.message);
+	           			return;
+	           		}
+	          	})
+			} else {
+				chatInfoList[i].num++;
+				setCache("nv_chat_info"+userId,JSON.stringify(chatInfoList));
+				setRedspot();
+			}
 		}
 	}
 	
-	function setRedspot(){
-		db.transaction(function (trans) {
-            trans.executeSql("select chatId, content, max(createTime), count(distinct chatId) from chat_record_"+userId+" group by chatId", [], function (ts, webData) {
-            	if(webData){
-           			var chatIdList = [];
-           			for(var i=0;i<webData.rows.length;i++){
-           				if(getCache("nv_chat"+webData.rows.item(i).chatId)){
-           					chatIdList.push(webData.rows.item(i).chatId)
-           				}
-           			}
-           			if(chatIdList.length>0){
-           				var url = getRootPath() + "/getChatInfo";
-           				var common = new Common();
-           				common.callAction(JSON.stringify(chatIdList), url, function(data) {
-           					if(!data){
-           						return;
-           					}
-           					switch (data.status){
-           					case 1:
-           						$("#chat-list").empty();
-           						$.each(data.chatList,function(index,chatInfo){
-           							chatMessage = getCache("nv_chat"+chatInfo.chatId);
-           							var builder = new StringBuilder();
-           							builder.appendFormat('<li><a><img src="{0}"> {1}<span class="am-badge am-badge-warning float">{2}</span></a></li>',picServer+chatInfo.toUserAvatar,chatInfo.toUserNickname,chatMessage);
-           							$("#chat-list").append(builder.toString());
-           							$("#chat-list li:last-child").click(function(){
-           								createChat(chatInfo);
-           								$(this).addClass("invisible");
-           								delCache("nv_chat"+chatInfo.chatId);
-           								setCache("nv_offline_chat"+userId,getCache("nv_offline_chat"+userId)-chatMessage);
-           								setTotalRedspot();
-           							})
-           						})    
-           						setTotalRedspot();
-           						return;
-           					case 0:
-           						timeoutHandle();
-           						return;
-           					default:
-           						myAlert(data.message);
-           						return;
-           					}
-           				},"application/json;charset=utf-8")
-            		}
-            	}
-            }, function (ts, message) {myAlert(message)})
-		})
+	function setRedspot(){     
+		chatInfoListStr = getCache("nv_chat_info"+userId);
+		chatInfoList = chatInfoListStr ? JSON.parse(chatInfoListStr) : [];
+        $("#chat-list").empty();
+        $.each(chatInfoList,function(index,chatInfo){
+           	if(chatInfo.num>0){
+           		var builder = new StringBuilder();
+               	builder.appendFormat('<li><a><img src="{0}"> {1}<span class="am-badge am-badge-warning float">{2}</span></a></li>',picServer+chatInfo.toUserAvatar,chatInfo.toUserNickname,chatInfo.num);
+               	$("#chat-list").append(builder.toString());
+               	$("#chat-list li:last-child").click(function(){
+               		createChat(chatInfo);
+               		$(this).addClass("invisible");              		
+               		setCache("nv_offline_chat"+userId,getCache("nv_offline_chat"+userId)-chatInfo.num);
+               		chatInfo.num = 0;
+               		setCache("nv_chat_info"+userId,JSON.stringify(chatInfoList));
+               		setTotalRedspot();
+            	})
+           	}   	
+        })    
+        setTotalRedspot();           	
 	}
 	
 	function setTotalRedspot(){

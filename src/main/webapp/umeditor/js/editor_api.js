@@ -29,7 +29,6 @@
             'plugins/paste.js',
             'plugins/list.js',
             'plugins/source.js',
-            'plugins/enterkey.js',
             'plugins/preview.js',
             'plugins/basestyle.js',
             'plugins/video.js',

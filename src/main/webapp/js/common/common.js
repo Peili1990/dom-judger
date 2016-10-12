@@ -764,3 +764,12 @@ function changeRadioValue(radio_oj,aValue){//传入一个对象
 	}
 }
 
+function indexOfKey(array,val){
+	if(!array){
+		return -1;
+	}
+	for (var i = 0; i< array.length; i++) {
+		if(array[i].chatId == val) return i;
+	}
+	return -1;
+}

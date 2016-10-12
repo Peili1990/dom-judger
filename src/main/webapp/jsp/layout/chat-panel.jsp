@@ -40,18 +40,29 @@ function createChat(chatInfo){
 	var chat = new Chat();
 	chatInfo.picServer = picServer;
 	chat.newWindow(chatInfo);
-	db.transaction(function (trans) {
-        trans.executeSql("select * from chat_record_"+userId+" where chatId = ? order by createTime desc limit 10 ", [chatInfo.chatId], function (ts, webData) {
-        	if(webData){
-        		$("#"+chatInfo.chatId).find("ul").empty();
-        		for(var i=0;i<webData.rows.length;i++){ 
-        			appendChat(webData.rows.item(i),true,true);
-       			}
-        	}
-        }, function (ts, message) {
-            myAlert(message);
-        });
-    });
+	pageNum = 0;
+	var url = getRootPath() + "/getChatRecord";
+	var options = {
+			chatId : chatInfo.chatId,
+			pageNum : chat.pageNum
+	}
+	var common = new Common();
+	common.callAction(options,url,function(data){
+		if(!data){
+			return;
+		}
+		switch(data.status){
+		case 1:
+			$("#"+chatInfo.chatId).find("ul").empty();
+			$.each(data.chatDetails,function(index,detail){
+				appendChat(detail,true,true);
+			})
+			return;
+		default:
+			myAlert(data.message);
+			return;
+		}		
+	})
 	$("#"+chatInfo.chatId).on("click",function(){
 		$.each($(".window"),function(index,win){
 			$(win).css({"z-index":"1000"});
@@ -79,20 +90,29 @@ function createChat(chatInfo){
 	$("#"+chatInfo.chatId+" .container").scroll(function(){
 		if($("#"+chatInfo.chatId+" .container").scrollTop()==0){
 			chat.pageNum++;
-			db.transaction(function (trans) {
-		        trans.executeSql("select * from chat_record_"+userId+" where chatId = ? order by createTime desc limit "+10*chat.pageNum+",10 ", [chatInfo.chatId], function (ts, webData) {
-		        	if(webData){
-		        		for(var i=0;i<webData.rows.length;i++){ 
-		        			appendChat(webData.rows.item(i),true,false);
-		       			}
-		        	}
-		        }, function (ts, message) {
-		            myAlert(message);
-		        });
-		    });
+			var url = getRootPath() + "/getChatRecord";
+			var options = {
+					chatId : chatInfo.chatId,
+					pageNum : chat.pageNum
+			}
+			var common = new Common();
+			common.callAction(options,url,function(data){
+				if(!data){
+					return;
+				}
+				switch(data.status){
+				case 1:
+					$.each(data.chatDetails,function(index,detail){
+						appendChat(detail,true,false);
+					})
+					return;
+				default:
+					myAlert(data.message);
+					return;
+				}				
+			})
 		}
 	})
-	
 	windows.push(chat);
 }
 
@@ -140,7 +160,6 @@ function sendMessage(chatInfo,content){
 		}
 		switch (data.status) {
 		case 1:
-			saveChatToDB(data.chatDetail,userId);
 			appendChat(data.chatDetail);
 			return;
 		default:

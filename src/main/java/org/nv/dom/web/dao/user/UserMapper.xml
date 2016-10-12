@@ -30,10 +30,7 @@
 		FROM
 			d_user du
 		WHERE
-			du.id IN
-		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
-            #{item}
-        </foreach>
+			du.id = #{userId}
 	
 	</select>
 	
@@ -41,19 +38,48 @@
 	
 		SELECT 
 			dom.chat_id AS chatId,
+			count(dom.chat_id) AS num,
+			du.avatar AS toUserAvatar,
+			du.nickname AS toUserNickname,
+			du.motto AS toUserMotto		
+		FROM
+			d_offline_message dom,d_user du
+		WHERE
+			dom.to_user_id = #{userId} AND dom.from_user_id = du.id AND dom.is_read = 0
+		GROUP BY
+			dom.chat_id
+			
+	</select>
+	
+	<select id="getChatRecordDao" parameterType="GetChatRecordDTO" resultType="ChatDetail">
+	
+		SELECT
+			dom.chat_Id AS chatId,
 			dom.from_user_id AS fromUserId,
+			dom.to_user_id AS toUserId,
 			dom.content AS content,
-			dom.create_time AS createTime		
+			dom.create_time AS createTime
 		FROM
 			d_offline_message dom
 		WHERE
-			dom.to_user_id = #{userId};
-			
-		DELETE FROM
-			d_offline_message
-		WHERE
-			to_user_id = #{userId};
-			
+			dom.chat_id = #{chatId}
+		ORDER BY
+			dom.create_time
+		DESC
+		LIMIT 
+			#{offset},10 	
+	
 	</select>
+	
+	<update id="updateChatRecordDao" parameterType="GetChatRecordDTO">
+	
+		UPDATE 
+			d_offline_message
+		SET
+			is_read = 1
+		WHERE
+			chat_id = #{chatId} AND to_user_id = #{userId} AND is_read = 0
+	
+	</update>
 
 </mapper>

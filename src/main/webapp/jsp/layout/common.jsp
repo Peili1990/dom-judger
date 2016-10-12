@@ -13,6 +13,7 @@
 <link rel="stylesheet" type="text/css" href="${baseUrl}css/common.css">
 <script src="${baseUrl}js/common/jquery-3.0.0.min.js" type="text/javascript"></script>
 <script src="${baseUrl}js/common/reconnecting-websocket.min.js" type="text/javascript"></script>
+<script src="${baseUrl}kindeditor/kindeditor-all.js" type="text/javascript"></script>
 <script src="${baseUrl}umeditor/js/editor_api.js" type="text/javascript"></script>
 <script src="${baseUrl}umeditor/js/umeditor.config.js" type="text/javascript"></script>
 <script src="${baseUrl}js/common/common.js" type="text/javascript"></script>
@@ -74,15 +75,3 @@
   </div>
 </div>
 
-<script type="text/javascript">
-
-$(function(){
-	if(typeof(openDatabase) == "undefined") {
-		if(window.location.href.indexOf("notSupport")<0){
-			window.location = getRootPath() + "/notSupport";
-		}
-	}
-})
-
-
-</script>
