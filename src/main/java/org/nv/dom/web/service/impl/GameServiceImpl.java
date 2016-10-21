@@ -148,6 +148,7 @@ public class GameServiceImpl extends BasicServiceImpl implements GameService {
 					redisClient.setHSet(RedisConstant.AVAILABLE_LIST, String.valueOf(publishGameDTO.getGameId()), JacksonJSONUtils.beanToJSON(list).toString());
 				}
 				Newspaper newspaper = new Newspaper(publishGameDTO.getGameId());
+				newspaper.setHeader("【"+publishGameDTO.getGameDesc()+"】"+newspaper.getHeader());
 				newspaperMapper.createOrUpdateNewspaperDao(newspaper);
 				result.put(PageParamType.BUSINESS_STATUS, 1);
 				result.put(PageParamType.BUSINESS_MESSAGE, "发布成功");

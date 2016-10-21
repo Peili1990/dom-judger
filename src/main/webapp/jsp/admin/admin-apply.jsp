@@ -586,7 +586,8 @@ function queryGameResult(gameId){
 	builder.append('<select>'+
 			'<option value="1">好人方胜利</option>'+
 			'<option value="2">杀手方胜利</option>'+
-			'<option value="3">契约方胜利</option>'+
+			'<option value="3">平局</option>'+
+			'<option value="4">契约方胜利</option>'+
 			'<option value="9">流局</option>'+
 			'</select>');
 	$("#info-query ul").append(builder.toString());
