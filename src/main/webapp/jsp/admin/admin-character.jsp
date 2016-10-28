@@ -490,6 +490,7 @@ $("#form-list").change(function(){
 			case 1:
 				players = JSON.parse(data.content);
 				$.each($("#character-info tr"),function(index,tr){
+					$(tr).find("td").eq(0).text(players[index].characterName);
 					inputs=$(tr).find("input");
 					inputs.eq(0).val(players[index].identityDesc);
 					inputs.eq(1).val(players[index].action); 

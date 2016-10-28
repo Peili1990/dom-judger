@@ -157,6 +157,37 @@ public class AuthorityServiceImpl implements AuthorityService {
 		return result;
 	}
 
+	@Override
+	public String getInfoMessage() {
+		String message = "";
+		try{
+			message = authorityMapper.getInfoMessageDao();
+		}catch(Exception e){
+			logger.error(e.getMessage(),e);
+		}
+		return message;
+	}
+
+	@Override
+	public Map<String, Object> submitInfoMessage(String infoMessage, User user) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		if( user==null || user.getAuthority() == null || user.getAuthority() < 1){
+			result.put(PageParamType.BUSINESS_STATUS, -2);
+			result.put(PageParamType.BUSINESS_MESSAGE,"权限不够，无法修改公告");
+			return result;
+		}
+		try{
+			authorityMapper.insertInfoMessageDao(infoMessage,user.getId());
+			result.put(PageParamType.BUSINESS_STATUS, 1);
+			result.put(PageParamType.BUSINESS_MESSAGE,"修改成功！");
+		}catch(Exception e){
+			logger.error(e.getMessage(),e);
+			result.put(PageParamType.BUSINESS_STATUS, -1);
+			result.put(PageParamType.BUSINESS_MESSAGE,"系统异常");
+		}
+		return result;
+	}
+
 
 
 }

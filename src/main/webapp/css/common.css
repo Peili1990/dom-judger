@@ -194,3 +194,14 @@ input[type="checkbox"]{
 	letter-spacing : 1px;
 	margin-right:30px;
 }
+
+.cross {
+	opacity: .2;
+	-webkit-transition: all .3s;
+    transition: all .3s;
+    cursor:pointer;
+}
+
+.cross:hover{
+	opacity: 1;
+}

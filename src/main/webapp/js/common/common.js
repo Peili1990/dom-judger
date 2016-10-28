@@ -297,23 +297,6 @@ function getRootPath() {
 	return (localhostPaht + projectName);
 }
 
-$(function() {
-	$(".collect").hover(function() {
-		$(this).find(".appImg").toggle();
-	});
-	
-	/*返回顶部*/
-	$("#back").on("click",function(){
-		$("html,body").animate({scrollTop: 0}, "slow");
-	});
-	var height = $(window).height();//浏览器窗口可视页面的高窟
-	$(window).on("scroll",function(){
-		var scrollHeight = $(window).scrollTop();//滚动条举例顶部的高度
-		return (scrollHeight > 200) ? $("#tzl_sider").fadeIn() : $("#tzl_sider").fadeOut();
-	})
-    
-});
-
 function waterfall(id, clsName){
 	var parent = $(id);
 	var content = parent.find(clsName);

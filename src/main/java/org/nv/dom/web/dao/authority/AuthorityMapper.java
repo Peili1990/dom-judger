@@ -2,6 +2,7 @@ package org.nv.dom.web.dao.authority;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.nv.dom.domain.user.UserAuthority;
 import org.springframework.stereotype.Repository;
 
@@ -44,5 +45,17 @@ public interface AuthorityMapper {
 	 */
 	
 	public int deleteJudgerDao(long userId);
+	
+	/**
+	 * <p>获取公告</p>
+	 */
+
+	public String getInfoMessageDao();
+	
+	/**
+	 * <p>插入公告</p>
+	 */
+
+	public int insertInfoMessageDao(@Param("infoMessage")String infoMessage, @Param("userId")long userId);
 
 }

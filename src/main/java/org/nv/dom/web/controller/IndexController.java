@@ -65,6 +65,7 @@ public class IndexController extends BaseController {
 		}
 		session.setAttribute(PageParamType.GAME_IN_SESSION, game);
 		mav.addAllObjects(result);
+		mav.addObject("infoMessage",authorityService.getInfoMessage());
 		mav.addAllObjects(basicService.getSessionUserService(session));
 		return mav;
 	}

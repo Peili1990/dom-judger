@@ -67,5 +67,33 @@
 			user_id =#{userId}
 	
 	</delete>
+	
+	<select id="getInfoMessageDao" resultType="String">
+	
+		SELECT
+			dim.content
+		FROM
+			d_info_message dim
+		ORDER BY
+			dim.create_time
+		DESC
+		LIMIT 1
+	
+	</select>
+	
+	<insert id="insertInfoMessageDao">
+	
+		INSERT INTO d_info_message(
+			user_id,
+			content,
+			create_time
+		)
+		VALUES(
+			#{userId},
+			#{infoMessage},
+			NOW()
+		)
+				
+	</insert>
 
 </mapper>

@@ -16,4 +16,8 @@ public interface AuthorityService {
 
 	public Map<String, Object> saveRule(String content, User user);
 
+	public String getInfoMessage();
+
+	public Map<String, Object> submitInfoMessage(String infoMessage, User user);
+
 }

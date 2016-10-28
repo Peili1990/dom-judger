@@ -35,7 +35,8 @@
 	<select id="getAlivePlayersDao" parameterType="long" resultType="PlayerInfo">
 	
 		SELECT
-			dc.name AS characterName
+			dc.name AS characterName,
+			dpr.is_life AS isLife
 		FROM
 			d_player dp, d_player_record dpr, d_character dc
 		WHERE 

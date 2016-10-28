@@ -20,8 +20,8 @@
 
     <div class="am-panel am-panel-default admin-sidebar-panel">
       <div class="am-panel-bd">
-        <p><span class="am-icon-bookmark"></span> 公告</p>
-        <p>时光静好，与君语；细水流年，与君同。—— Amaze</p>
+        <p><span class="am-icon-bookmark"></span> 公告<span onclick="myPrompt('编辑公告','submitInfoMessage()')" class="cross float am-icon-edit"></span></p>
+        <p id="info-message">时光静好，与君语；细水流年，与君同。—— Amaze</p>
       </div>
     </div>
 
@@ -29,6 +29,41 @@
   <!-- sidebar end -->
   
   <script type="text/javascript">
+  
+  	$(function(){
+  		$("#info-message").text(infoMessage ? infoMessage : getCache("nv_info_message"));
+  	})
+  	
+  	function submitInfoMessage(){
+  		var infoMessage = $("input[name='header']").val().trim();
+  		if(infoMessage==""){
+  			myAlert("公告不能为空！");
+  			return;
+  		}
+  		var url = getRootPath() + "/submitInfoMessage";
+  		var options = {
+  			infoMessage : infoMessage
+  		}
+  		var common = new Common();
+  		common.callAction(options,url,function(data){
+  			if(!data){
+  				return;
+  			}
+  			switch(data.status){
+  			case 1:
+  				myInfo("修改成功！");
+  				setCache("nv_info_message",infoMessage);
+  				$("#info-message").text(infoMessage);
+  				return;
+  			case 0:
+				timeoutHandle();
+				return;
+			default:
+				myAlert(data.message);
+				return;
+  			}
+  		})
+  	}
 
 	function logout(){
 		var url = getRootPath()+"/logoutAction";

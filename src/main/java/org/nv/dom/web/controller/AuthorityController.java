@@ -48,5 +48,12 @@ public class AuthorityController {
 		User user = (User) request.getSession().getAttribute(PageParamType.user_in_session);
 		return authorityService.saveRule(content,user);
 	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/submitInfoMessage", method = RequestMethod.POST)
+	public Map<String, Object> submitInfoMessage(@RequestParam("infoMessage")String infoMessage,HttpServletRequest request) {
+		User user = (User) request.getSession().getAttribute(PageParamType.user_in_session);
+		return authorityService.submitInfoMessage(infoMessage,user);
+	}
 
 }

@@ -264,7 +264,9 @@
 <jsp:include page="../layout/footer.jsp"></jsp:include>
 
 <script type="text/javascript">
+var infoMessage = "${infoMessage}";
 $(function(){
+	setCache("nv_info_message",infoMessage);
 	$("#collapse-nav li:eq(0) .am-icon-star").removeClass("invisible");
 	$(".admin-sidebar-list > li:eq(0) .am-icon-angle-right").removeClass("invisible");
 })
