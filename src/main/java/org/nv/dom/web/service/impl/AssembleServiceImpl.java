@@ -90,7 +90,7 @@ public class AssembleServiceImpl implements AssembleService {
 	
 	private String generateSeatTableHtml(List<PlayerInfo> players){
 		for(PlayerInfo player:players){
-			if(player.getIsLife()==0){
+			if(player.getIsLife()!=null&&player.getIsLife()==0){
 				player.setCharacterName("<strike>"+player.getCharacterName()+"</strike>");
 			}
 		}

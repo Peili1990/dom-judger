@@ -28,7 +28,7 @@
 					value=""> <br> <label for="password">密码:</label> <input
 					type="password" id="userPwd" value=""> <br> <label
 					for="remember-me"> <input id="remember-me" type="checkbox">
-					记住密码
+					记住用户名
 				</label> <br />
 				<div id="error-msg"></div>
 				<div class="am-cf">
@@ -48,6 +48,7 @@
 	
 	$(function(){
 		setCookie("nv_screen_width",$(window).width(),"7d");
+		$("#userName").val(getCookie("nv_account"));
 	})
 	
 	function submitForm(){
@@ -76,6 +77,9 @@
 			}
 			switch (data.status) {
 			case 1:
+				if($("#remember-me").is(':checked')){
+					setCookie("nv_account",account,"7d");
+				}
 				window.location = getRootPath() + "/admin-apply";
 				return;
 			default:

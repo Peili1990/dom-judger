@@ -21,7 +21,8 @@
     <div class="am-panel am-panel-default admin-sidebar-panel">
       <div class="am-panel-bd">
         <p><span class="am-icon-bookmark"></span> 公告<span onclick="myPrompt('编辑公告','submitInfoMessage()')" class="cross float am-icon-edit"></span></p>
-        <p id="info-message">时光静好，与君语；细水流年，与君同。—— Amaze</p>
+<!--         <p id="info-message">时光静好，与君语；细水流年，与君同。—— Amaze</p> -->
+ 			<p id="info-message"></p>
       </div>
     </div>
 
@@ -31,7 +32,8 @@
   <script type="text/javascript">
   
   	$(function(){
-  		$("#info-message").text(infoMessage ? infoMessage : getCache("nv_info_message"));
+  		
+  		$("#info-message").text(getCache("nv_info_message") ? getCache("nv_info_message") : infoMessage);
   	})
   	
   	function submitInfoMessage(){

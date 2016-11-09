@@ -95,6 +95,7 @@
 					} else {
 						chatInfoList[i].toUserAvatar = chat.toUserAvatar;
 						chatInfoList[i].toUserMotto = chat.toUserMotto;
+						chatInfoList[i].toUserId = chat.toUserId;
 						chatInfoList[i].num = chatInfoList[i].num > chat.num ? chatInfoList[i].num : chat.num; 
 					}
 				})

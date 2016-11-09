@@ -200,6 +200,9 @@ public class GameServiceImpl extends BasicServiceImpl implements GameService {
 					form.setHeader("游戏开始前");
 					gameMapper.createOrUpdateFormDao(form);
 				}
+				if(changeStatusDTO.getStatus() == GameStatus.REPLAYING.getCode()){
+					newspaperMapper.updateNewspaperStatusDao(changeStatusDTO.getGameId());
+				}
 				if(changeStatusDTO.getStatus() == GameStatus.FINISHED.getCode()){
 					playerMapper.updatePlayerStatus(changeStatusDTO.getGameId());
 				}

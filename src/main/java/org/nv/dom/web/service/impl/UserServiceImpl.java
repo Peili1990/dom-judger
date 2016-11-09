@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService {
 		String[] temp = chatId.split("-");
 		long toUserId = Long.parseLong(temp[0].equals(userId) ? temp[1] : temp[0]);
 		try{
-			ChatInfo chatInfo = userMapper.getChatInfoDao(toUserId); getClass();
+			ChatInfo chatInfo = userMapper.getChatInfoDao(toUserId);
 			chatInfo.setChatId(chatId);
 			result.put("chatInfo", chatInfo);
 			result.put(PageParamType.BUSINESS_STATUS, 1);
