@@ -239,7 +239,7 @@ public class GameServiceImpl extends BasicServiceImpl implements GameService {
 	public Map<String, Object> getFormList(long gameId) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		try{
-			List<GameForm> formList = gameMapper.getFormListDao(gameId);
+			List<GameForm> formList = gameMapper.getFormListDao(gameId,false);
 			result.put("formList", formList);
 			result.put(PageParamType.BUSINESS_STATUS, 1);
 			result.put(PageParamType.BUSINESS_MESSAGE, "获取表格列表成功");

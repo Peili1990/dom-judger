@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
@@ -29,6 +30,14 @@ public class EssayController {
 		User user = (User) session.getAttribute(PageParamType.user_in_session);
 		essay.setUserId(user.getId());
 		return essayService.publishEssay(essay,game.getId());
-	} 
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/simpleEssayBuild",method = RequestMethod.POST)
+	public Map<String, Object> simpleEssayBuild(@RequestParam("gameId")long gameId,HttpSession session) {
+		return essayService.simpleEssayBuild(gameId);
+	}
+	
+	
 
 }

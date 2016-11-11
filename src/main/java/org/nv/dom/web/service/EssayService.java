@@ -10,4 +10,6 @@ public interface EssayService {
 
 	public Essay getReplayEssay(long gameId);
 
+	public Map<String, Object> simpleEssayBuild(long gameId);
+
 }

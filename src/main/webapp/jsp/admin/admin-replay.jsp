@@ -35,7 +35,7 @@
 					<c:choose>
 					<c:when test="${ applyingGame.gameStatus == 5 }">
 						<div class="am-form-group operation">
-							<input type="button" class="am-btn am-btn-primary" value="简易复盘" onclick="">
+							<input type="button" class="am-btn am-btn-primary" value="简易复盘" onclick="simpleEssayBuild(${applyingGame.id})">
 							<input type="button" class="am-btn am-btn-danger" value="发布复盘"
 							 onclick="saveEssay(${applyingGame.id},'${applyingGame.gameDesc}'
 							 <c:if test="${replayEssay!=null}">
@@ -43,8 +43,9 @@
 							 </c:if>
 							 )">
 						</div>
-						<div class="am-form-group">	      
-              				<textarea id="replay-area" style="height:400px">${replayEssay.content}</textarea> 
+						<div class="am-form-group">
+							<input type="hidden" id="replay-essay" value="${replayEssay.content}"/>   
+              				<textarea id="replay-area" style="height:400px"></textarea> 
         				</div>
         			</c:when>
         			<c:otherwise>
@@ -64,17 +65,11 @@
 <jsp:include page="../layout/footer.jsp"></jsp:include>
 
 <script type="text/javascript">
-var um;
-KindEditor.ready(function(K) {
-    um = K.create('#replay-area',{newlineTag:"br"});
-});
 
 $(function(){
 	$("#collapse-nav li:eq(4) .am-icon-star").removeClass("invisible");
 	$(".admin-sidebar-list > li:eq(0) .am-icon-angle-right").removeClass("invisible");
-	if($("#replay-area")){
-		um.html($("#replay-area").text());
-	}
+	$("#replay-area").val(replaceTag($("#replay-essay").val()));
 })
 
 function saveEssay(gameId,gameDesc,essayId){
@@ -82,7 +77,7 @@ function saveEssay(gameId,gameDesc,essayId){
 	var options = {
 			gameId : gameId,
 			header : "【"+gameDesc+"】"+"复盘",
-			content : um.html(),
+			content : recoverTag($("#replay-area").val()),
 			essayId : essayId,
 			type : 1
 		}
@@ -102,7 +97,28 @@ function saveEssay(gameId,gameDesc,essayId){
 			return;
 		}
 	})
-	
+}
+
+function simpleEssayBuild(gameId){
+	var url = getRootPath() + "/simpleEssayBuild";
+	var options ={
+			gameId : gameId
+	}
+	var common = new Common();
+	common.callAction(options,url,function(data){
+		if(!data){
+			return;
+		}
+		switch(data.status){
+		case 1:
+			$("#replay-area").val(replaceTag(data.simpleEssay));
+			myInfo("简易复盘生成成功！");
+			return;
+		default:
+			myAlert(data.message)
+			return;
+		}
+	})
 }
 
 </script>

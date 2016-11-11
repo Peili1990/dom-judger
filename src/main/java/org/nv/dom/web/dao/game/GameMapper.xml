@@ -241,6 +241,9 @@
 		SELECT
 			df.id AS formId,
 			df.header AS header
+			<if test="getContent==true">
+			,df.content AS content
+			</if>
 		FROM
 			d_form df
 		WHERE

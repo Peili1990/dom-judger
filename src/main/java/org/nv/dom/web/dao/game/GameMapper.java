@@ -63,7 +63,7 @@ public interface GameMapper {
 	/**
 	 * <p>获取全部表格</p>
 	 */
-	public List<GameForm> getFormListDao(long gameId);
+	public List<GameForm> getFormListDao(@Param("gameId")long gameId,@Param("getContent")boolean getContent);
 	/**
 	 * <p>创建或更新表格</p>
 	 */

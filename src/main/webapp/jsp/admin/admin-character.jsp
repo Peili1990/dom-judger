@@ -503,7 +503,7 @@ $("#form-list").change(function(){
 				$(".operation .am-btn").attr("disabled","disabled");
 				return;
 			default:
-				myAlert(data1.message);
+				myAlert(data.message);
 				return;
 			}
 		})
