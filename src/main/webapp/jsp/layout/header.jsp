@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<div data-am-sticky>
+  <a class="am-btn am-btn-success am-btn-block invisible" href="${baseUrl}admin-character">有玩家提交行动</a>
+</div>
+
 <header class="am-topbar admin-header">
   <div class="am-topbar-brand">
     <strong>维多利亚的噩梦</strong> <small>后台结算管理系统</small>
@@ -65,6 +70,10 @@
 			break;
 		case "settlement":
 			dealSettlement(content);
+			break;
+		case "opreation":
+			$(".am-btn-block").removeClass("invisible");
+			$(".am-sticky-placeholder").css("height","37px");
 			break;
 		default:
 			break;

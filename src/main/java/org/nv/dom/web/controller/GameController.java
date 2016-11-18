@@ -81,5 +81,13 @@ public class GameController extends BaseController{
 	public Map<String, Object> getFormContent(@RequestParam("formId") long formId, HttpSession session){
 		return gameService.getFormContent(formId);
 	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/getSubmitTime", method = RequestMethod.POST)
+	public Map<String, Object> getSubmitTime(@RequestParam("playerId") long playerId, HttpSession session){
+		return gameService.getSubmitTime(playerId);
+	}
+	
+
 
 }

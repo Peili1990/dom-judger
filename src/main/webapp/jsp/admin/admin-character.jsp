@@ -86,7 +86,7 @@
 																<button type="button" class="am-btn am-btn-default am-btn-xs am-text-success am-dropdown-toggle" title="更多操作"><span class="am-icon-ellipsis-h"></span></button>
 																<ul class="am-dropdown-content">
     																<li onclick="showReplacePanel(${playerStatus.index})"><a><span class="am-icon-comments-o"></span> 发言称呼</a></li>
-    																<li><a><span class="am-icon-clock-o"></span> 提交时间</a></li>
+    																<li onclick="getSubmitTime(${playerStatus.index})"><a><span class="am-icon-clock-o"></span> 提交时间</a></li>
     		 														<li onclick="positionUp(${playerStatus.index})"><a><span class="am-icon-chevron-up" ></span> 位置上移</a></li>
     																<li onclick="positionDown(${playerStatus.index})"><a><span class="am-icon-chevron-down"></span> 位置下移</a></li>
  														 		</ul>
@@ -401,6 +401,28 @@ function positionDown(index){
 	saveForm(false);
 }
 
+function getSubmitTime(index){
+	var url = getRootPath() + "/game/getSubmitTime";
+	var options = {
+			playerId : players[index].playerId
+	}
+	var common = new Common();
+	common.callAction(options,url,function(data){
+		if(!data){
+			return;
+		}
+		switch(data.status){
+		case 1:
+			myInfo(players[index].characterName+"最近提交操作时间："+data.submitTime);
+			return;
+		default:
+			myAlert(data.message);
+			return;
+		}
+	})
+}
+
+
 
 function saveForm(needAlert){
 	$.each($("#character-info tr"),function(index,tr){
@@ -535,6 +557,7 @@ function addstatusStyle(players){
 		}	
 	})
 }
+
 
 </script>
 

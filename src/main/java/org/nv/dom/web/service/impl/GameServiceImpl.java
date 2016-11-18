@@ -24,6 +24,7 @@ import org.nv.dom.dto.player.ApplyDTO;
 import org.nv.dom.dto.player.KickPlayerDTO;
 import org.nv.dom.enums.GameStatus;
 import org.nv.dom.enums.PlayerStatus;
+import org.nv.dom.util.DateFormatUtil;
 import org.nv.dom.util.StringUtil;
 import org.nv.dom.util.json.JacksonJSONUtils;
 import org.nv.dom.web.dao.game.GameMapper;
@@ -285,6 +286,22 @@ public class GameServiceImpl extends BasicServiceImpl implements GameService {
 			result.put("content", content);
 			result.put(PageParamType.BUSINESS_STATUS, 1);
 			result.put(PageParamType.BUSINESS_MESSAGE, "获取表格内容成功");
+		}catch(Exception e){
+			logger.info(e.getMessage(),e);
+			result.put(PageParamType.BUSINESS_STATUS, -1);
+			result.put(PageParamType.BUSINESS_MESSAGE, "系统异常");
+		}
+		return result;
+	}
+
+	@Override
+	public Map<String, Object> getSubmitTime(long playerId) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		try{
+			String submitTime = DateFormatUtil.getSimpleDateFormat(DateFormatUtil.DEFAULT_DATETIME).format(gameMapper.getSubmitTimeDao(playerId));
+			result.put("submitTime", submitTime);
+			result.put(PageParamType.BUSINESS_STATUS, 1);
+			result.put(PageParamType.BUSINESS_MESSAGE, "获取提交时间成功");
 		}catch(Exception e){
 			logger.info(e.getMessage(),e);
 			result.put(PageParamType.BUSINESS_STATUS, -1);

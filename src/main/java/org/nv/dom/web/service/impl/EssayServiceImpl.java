@@ -75,10 +75,35 @@ public class EssayServiceImpl implements EssayService {
 					if(!StringUtil.isNullOrEmpty(player.getAction())){
 						sb.append(player.getIdentityDesc().trim()+" ");
 						sb.append(player.getAction().trim());
+						if(!StringUtil.isNullOrEmpty(player.getFeedback())){
+							sb.append("→"+player.getFeedback().trim());
+						}
 						sb.append("<br>");
 					} 
 				}
 				sb.append("<br>");
+				for(PlayerInfo player:players){
+					if(!StringUtil.isNullOrEmpty(player.getPrivilege())){
+						sb.append(player.getCharacterName().trim()+" ");
+						sb.append(player.getPrivilege().trim());
+						if(!StringUtil.isNullOrEmpty(player.getFeedback())){
+							sb.append("→"+player.getFeedback().trim());
+						}
+						sb.append("<br>");
+					}
+				}
+				sb.append("<br>");
+				if(!StringUtil.isNullOrEmpty(players.get(0).getVote())){
+					sb.append("票面<br>");
+					for(PlayerInfo player:players){
+						if(!StringUtil.isNullOrEmpty(player.getVote())){
+							sb.append(player.getCharacterName().trim()+" ");
+							sb.append(player.getVote().trim());
+							sb.append("<br>");
+						}
+					}	
+					sb.append("<br>");
+				}
 			}
 			result.put("simpleEssay", sb.toString());
 			result.put(PageParamType.BUSINESS_STATUS, 1);

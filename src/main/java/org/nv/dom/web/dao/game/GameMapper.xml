@@ -318,5 +318,16 @@
 			dg.id=#{gameId}
 	
 	</update>
+	
+	<select id="getSubmitTimeDao" parameterType="long" resultType="Date">
+	
+		SELECT
+			dpr.submit_time
+		FROM
+			d_player_record dpr
+		WHERE
+			dpr.player_id = #{playerId}
+	
+	</select>
 
 </mapper>

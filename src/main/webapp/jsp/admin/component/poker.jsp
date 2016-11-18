@@ -160,7 +160,7 @@ var temp = [];
 		}
 		count(handCard,1);
 		$("#poker-step-one-btn").attr("disabled","disabled");
-		$("#poker-step-two-btn").removeAttr("disabled").click(function(){
+		$("#poker-step-two-btn").removeAttr("disabled").unbind("click").click(function(){
 			stepTwo(handCard);
 		});
 	}
@@ -224,9 +224,13 @@ var temp = [];
 		$("#poker input[name='poker-num']").val("");
 		$("#poker-sex").selected('enable');
 		$("#poker-step-one-btn").removeAttr("disabled");
-		$("#poker-list-one").val("");
+		$("#poker-list-one").html("");
 		$("#poker-step-two-btn").removeAttr("disabled");
-		$("#poker-list-two").val("");
+		$("#poker-list-two").html("");
 		$("#poker-result").text("");
+		var checkboxes = document.getElementsByName("poker-lock");
+        for (var i = 0; i < checkboxes.length; i++) {
+            checkboxes[i].checked=false;
+        }
 	}
 </script>

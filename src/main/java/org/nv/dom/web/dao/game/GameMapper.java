@@ -1,5 +1,6 @@
 package org.nv.dom.web.dao.game;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
@@ -84,5 +85,9 @@ public interface GameMapper {
 	 * <p>更新游戏复盘信息</p>
 	 */
 	public int updateReplayInfoDao(@Param("essayId")long essayId,@Param("gameId")long gameId);
+	/**
+	 * <p>获取提交时间</p>
+	 */
+	public Date getSubmitTimeDao(long playerId);
 	
 }
