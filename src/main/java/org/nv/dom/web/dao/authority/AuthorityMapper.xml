@@ -64,7 +64,7 @@
 		DELETE FROM
 			d_authority
 		WHERE
-			user_id =#{userId}
+			user_id =#{userId} AND authority_level = 1;
 	
 	</delete>
 	

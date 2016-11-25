@@ -27,6 +27,7 @@ import org.nv.dom.enums.PlayerStatus;
 import org.nv.dom.util.DateFormatUtil;
 import org.nv.dom.util.StringUtil;
 import org.nv.dom.util.json.JacksonJSONUtils;
+import org.nv.dom.web.dao.character.CharacterMapper;
 import org.nv.dom.web.dao.game.GameMapper;
 import org.nv.dom.web.dao.newspaper.NewspaperMapper;
 import org.nv.dom.web.dao.player.PlayerMapper;
@@ -47,6 +48,9 @@ public class GameServiceImpl extends BasicServiceImpl implements GameService {
 	
 	@Autowired
 	PlayerMapper playerMapper;
+	
+	@Autowired
+	CharacterMapper characterMapper;
 	
 	@Override
 	public Map<String, Object> getGameList() {
@@ -203,6 +207,7 @@ public class GameServiceImpl extends BasicServiceImpl implements GameService {
 				}
 				if(changeStatusDTO.getStatus() == GameStatus.REPLAYING.getCode()){
 					newspaperMapper.updateNewspaperStatusDao(changeStatusDTO.getGameId());
+					characterMapper.updateCharacterData(changeStatusDTO.getGameId());
 				}
 				if(changeStatusDTO.getStatus() == GameStatus.FINISHED.getCode()){
 					playerMapper.updatePlayerStatus(changeStatusDTO.getGameId());

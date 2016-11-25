@@ -296,7 +296,7 @@ function changeGameStatus(gameId,status,finalResult){
 		switch (data.status) {
 		case 1:
 			myInfo("版杀状态更新成功！",function(){
-				window.location = getRootPath() + "/admin-apply/";
+				window.location = getRootPath() + "/admin-apply";
 			});
 			return;
 		default:

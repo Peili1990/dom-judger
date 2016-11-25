@@ -205,3 +205,9 @@ input[type="checkbox"]{
 .cross:hover{
 	opacity: 1;
 }
+
+#character-header{
+	background-color:white;
+	position:fixed;
+	top:0;
+}

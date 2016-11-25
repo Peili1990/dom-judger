@@ -66,7 +66,7 @@ var um = UM.getEditor("rule-editor");
 
 
 $(function(){
-	$(".admin-sidebar-list > li:eq(1) .am-icon-angle-right").removeClass("invisible");
+	$(".admin-sidebar-list > li:eq(2) .am-icon-angle-right").removeClass("invisible");
 	$.get(picServer+'rule-1.8.0.txt',function(content){ 
 		$("#rule-content").html(content);
 	})

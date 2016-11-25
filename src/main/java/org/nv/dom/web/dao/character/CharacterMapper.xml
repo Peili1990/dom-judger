@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.nv.dom.web.dao.character.CharacterMapper">
+
+	<select id="getCharacterData" resultType="CharacterData">
+	
+		SELECT
+			dcw.id AS characterId,
+			dcw.name AS characterName,
+			dcw.total_play_times AS totalPlayTimes,
+			dcw.good_camp_times AS goodCampTimes,
+			dcw.killer_camp_times AS killerCampTimes,
+			dcw.good_camp_win_times AS goodCampWinTimes,
+			dcw.killer_camp_win_times AS killerCampWinTimes,
+			dcw.tied_times AS tiedTimes	
+		FROM
+			d_character_winrate dcw
+	
+	</select>
+	
+	<update id="updateCharacterData" parameterType="long">
+		
+		UPDATE 
+			d_character_winrate dcw, d_player_record dpr, d_player dp, d_game dg
+		SET
+			dcw.total_play_times = dcw.total_play_times + 1,
+			dcw.good_camp_times = dcw.good_camp_times + IF(dpr.camp = 1,1,0),
+			dcw.killer_camp_times = dcw.killer_camp_times + IF(dpr.camp = 2,1,0),
+			dcw.good_camp_win_times = dcw.good_camp_win_times + IF(dpr.camp = 1 AND dg.final_result = 1,1,0),
+			dcw.killer_camp_win_times = dcw.killer_camp_win_times + IF(dpr.camp = 2 AND dg.final_result = 2,1,0),
+			dcw.tied_times = dcw.tied_times + IF(dg.final_result = 3,1,0)
+		WHERE
+			dg.id = dp.game_id AND dp.id = dpr.player_id AND dpr.character_id = dcw.id AND dg.id = #{gameId}
+	
+	
+	</update>
+
+</mapper>

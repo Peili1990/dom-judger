@@ -16,6 +16,7 @@ import org.nv.dom.web.service.AuthorityService;
 import org.nv.dom.web.service.EssayService;
 import org.nv.dom.web.service.GameService;
 import org.nv.dom.web.service.PlayerService;
+import org.nv.dom.web.service.StatisticsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,6 +41,9 @@ public class IndexController extends BaseController {
 	
 	@Autowired
 	EssayService essayService;
+	
+	@Autowired
+	StatisticsService statisticsService;
  	
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
 	public ModelAndView indexView(HttpSession session) {
@@ -141,6 +145,14 @@ public class IndexController extends BaseController {
 	public ModelAndView adminAuthorityView(HttpSession session) {
 		ModelAndView mav = new ModelAndView("admin/admin-authority");
 		mav.addAllObjects(authorityService.getAllJudegers());
+		mav.addAllObjects(basicService.getSessionUserService(session));
+		return mav;
+	}
+	
+	@RequestMapping(value = "/admin-statistics", method = RequestMethod.GET)
+	public ModelAndView adminStatisticsView(HttpSession session) {
+		ModelAndView mav = new ModelAndView("admin/admin-statistics");
+		mav.addAllObjects(statisticsService.getCharacterData());
 		mav.addAllObjects(basicService.getSessionUserService(session));
 		return mav;
 	}

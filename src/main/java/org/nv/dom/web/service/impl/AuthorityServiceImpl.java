@@ -102,9 +102,13 @@ public class AuthorityServiceImpl implements AuthorityService {
 			return result;
 		}
 		try{
-			authorityMapper.deleteJudgerDao(judgerId);
-			result.put(PageParamType.BUSINESS_STATUS, 1);
-			result.put(PageParamType.BUSINESS_MESSAGE, "删除成功");	
+			if(authorityMapper.deleteJudgerDao(judgerId)==1){
+				result.put(PageParamType.BUSINESS_STATUS, 1);
+				result.put(PageParamType.BUSINESS_MESSAGE, "删除成功");
+			} else {
+				result.put(PageParamType.BUSINESS_STATUS, -2);
+				result.put(PageParamType.BUSINESS_MESSAGE, "权限不够，无法删除法官");
+			}
 		}catch(Exception e){
 			logger.error(e.getMessage(),e);
 			result.put(PageParamType.BUSINESS_STATUS, -1);

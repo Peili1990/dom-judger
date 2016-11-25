@@ -99,7 +99,7 @@
 <script type="text/javascript">
 
 $(function(){
-	$(".admin-sidebar-list > li:eq(2) .am-icon-angle-right").removeClass("invisible");
+	$(".admin-sidebar-list > li:eq(3) .am-icon-angle-right").removeClass("invisible");
 })
 
 function addJudger(){
