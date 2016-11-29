@@ -323,7 +323,7 @@ function extractIdentity(){
 	})
 	if(!flag) return;
 	var playerNum = players.length;
-	$.get('${baseUrl}file/config.json',function(data){
+	$.get('${baseUrl}file/identity-config.json',function(data){
 		$.each(data.configs,function(index,config){
 			if(config.playerNum == playerNum){
 				var array = config.identityNum;
@@ -369,7 +369,7 @@ function submitList(gameId){
 		myAlert("请先抽取身份");
 		return;
 	}
-	$.get('${baseUrl}file/config.json',function(data){
+	$.get('${baseUrl}file/identity-config.json',function(data){
 		var policeSign = data.policeSign;
 		policeSign.shuffle();
 		var killerSign = data.killerSign;

@@ -17,94 +17,124 @@
 
 <jsp:include page="../layout/header.jsp"></jsp:include>
 <jsp:include page="../layout/chat-panel.jsp"></jsp:include>
-<div class="am-cf admin-main">
-  <jsp:include page="../layout/sider-bar.jsp"></jsp:include>
+	<div class="am-cf admin-main">
+		<jsp:include page="../layout/sider-bar.jsp"></jsp:include>
 
-  <!-- content start -->
-  <div class="admin-content">
-    <div class="am-cf am-padding">
-      <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">角色胜率</strong> / <small>Character Winrate</small></div>
-    </div>
-
-    <hr/>
-
-    <div class="am-g">
-    	<div class="am-u-sm-12 am-u-sm-centered">
-			<div class="am-panel am-panel-default">
-				<div class="am-panel-bd">
-					<form class="am-form">
-						<table class="am-table am-table-striped am-table-hover table-main">
-							<thead>
-								<tr id="character-header-fixed">
-									<th title="双击重新排序" ondblclick="reorder('characterId')">编号</th>
-									<th width="90px">角色</th>	
-									<th title="双击重新排序" ondblclick="reorder('totalPlayTimes')">总登场</th>
-									<th title="双击重新排序" ondblclick="reorder('goodCampTimes')">好人方</th>
-									<th title="双击重新排序" ondblclick="reorder('killerCampTimes')">杀手方</th>
-									<th title="双击重新排序" ondblclick="reorder('goodCampRate')">好人方概率</th>
-									<th title="双击重新排序" ondblclick="reorder('killerCampRate')">杀手方概率</th>
-									<th title="双击重新排序" ondblclick="reorder('goodCampWinTimes')">好人方胜利</th>
-									<th title="双击重新排序" ondblclick="reorder('killerCampWinTimes')">杀手方胜利</th>
-									<th title="双击重新排序" ondblclick="reorder('tiedTimes')">平局次数</th>
-									<th title="双击重新排序" ondblclick="reorder('totalWinTimes')">总胜利</th>
-									<th title="双击重新排序" ondblclick="reorder('goodCampWinrate')">好人方胜率</th>
-									<th title="双击重新排序" ondblclick="reorder('killerCampWinrate')">杀手方胜率</th>
-									<th title="双击重新排序" ondblclick="reorder('totalWinrate')">总胜率</th>
-									<th title="双击重新排序" ondblclick="reorder('undefeatedRate')">不败率</th>
-								</tr>
-								<tr id="character-header" class="invisible">
-									<th title="双击重新排序" ondblclick="reorder('characterId')">编号</th>
-									<th width="90px">角色</th>	
-									<th title="双击重新排序" ondblclick="reorder('totalPlayTimes')">总登场</th>
-									<th title="双击重新排序" ondblclick="reorder('goodCampTimes')">好人方</th>
-									<th title="双击重新排序" ondblclick="reorder('killerCampTimes')">杀手方</th>
-									<th title="双击重新排序" ondblclick="reorder('goodCampRate')">好人方概率</th>
-									<th title="双击重新排序" ondblclick="reorder('killerCampRate')">杀手方概率</th>
-									<th title="双击重新排序" ondblclick="reorder('goodCampWinTimes')">好人方胜利</th>
-									<th title="双击重新排序" ondblclick="reorder('killerCampWinTimes')">杀手方胜利</th>
-									<th title="双击重新排序" ondblclick="reorder('tiedTimes')">平局次数</th>
-									<th title="双击重新排序" ondblclick="reorder('totalWinTimes')">总胜利</th>
-									<th title="双击重新排序" ondblclick="reorder('goodCampWinrate')">好人方胜率</th>
-									<th title="双击重新排序" ondblclick="reorder('killerCampWinrate')">杀手方胜率</th>
-									<th title="双击重新排序" ondblclick="reorder('totalWinrate')">总胜率</th>
-									<th title="双击重新排序" ondblclick="reorder('undefeatedRate')">不败率</th>
-								</tr>
-							</thead>	
-							<tbody id="character-list">
-								<c:forEach items="${ characterData }" var="character">
-									<tr>
-										<td>${character.characterId}</td>
-										<td>${character.characterName}</td>
-										<td>${character.totalPlayTimes}</td>
-										<td>${character.goodCampTimes}</td>
-										<td>${character.killerCampTimes}</td>
-										<td>${character.goodCampRate}</td>
-										<td>${character.killerCampRate}</td>
-										<td>${character.goodCampWinTimes}</td>
-										<td>${character.killerCampWinTimes}</td>
-										<td>${character.tiedTimes}</td>
-										<td>${character.totalWinTimes}</td>
-										<td>${character.goodCampWinrate}</td>
-										<td>${character.killerCampWinrate}</td>
-										<td>${character.totalWinrate}</td>
-										<td>${character.undefeatedRate}</td>
-									</tr>
-								
-								</c:forEach>
-							</tbody>
-						</table>
-					</form>			
+		<!-- content start -->
+		<div class="admin-content">
+			<div class="am-cf am-padding">
+				<div class="am-fl am-cf">
+					<strong class="am-text-primary am-text-lg">角色胜率</strong> / <small>Character
+						Winrate</small>
 				</div>
 			</div>
+
+			<hr />
+
+			<div class="am-g">
+				<div class="am-u-sm-12 am-u-sm-centered">
+					<div class="am-panel am-panel-default">
+						<div class="am-panel-bd">
+							<form class="am-form">
+								<table
+									class="am-table am-table-striped am-table-hover table-main">
+									<thead>
+										<tr id="character-header-fixed">
+											<th title="双击重新排序" ondblclick="reorder('characterId')">编号</th>
+											<th width="90px">角色</th>
+											<th title="双击重新排序" ondblclick="reorder('totalPlayTimes')">总登场</th>
+											<th title="双击重新排序" ondblclick="reorder('goodCampTimes')">好人方</th>
+											<th title="双击重新排序" ondblclick="reorder('killerCampTimes')">杀手方</th>
+											<th title="双击重新排序" ondblclick="reorder('goodCampRate')">好人方概率</th>
+											<th title="双击重新排序" ondblclick="reorder('killerCampRate')">杀手方概率</th>
+											<th title="双击重新排序" ondblclick="reorder('goodCampWinTimes')">好人方胜利</th>
+											<th title="双击重新排序" ondblclick="reorder('killerCampWinTimes')">杀手方胜利</th>
+											<th title="双击重新排序" ondblclick="reorder('tiedTimes')">平局次数</th>
+											<th title="双击重新排序" ondblclick="reorder('totalWinTimes')">总胜利</th>
+											<th title="双击重新排序" ondblclick="reorder('goodCampWinrate')">好人方胜率</th>
+											<th title="双击重新排序" ondblclick="reorder('killerCampWinrate')">杀手方胜率</th>
+											<th title="双击重新排序" ondblclick="reorder('totalWinrate')">总胜率</th>
+											<th title="双击重新排序" ondblclick="reorder('undefeatedRate')">不败率</th>
+										</tr>
+										<tr id="character-header" class="invisible">
+											<th title="双击重新排序" ondblclick="reorder('characterId')">编号</th>
+											<th width="90px">角色</th>
+											<th title="双击重新排序" ondblclick="reorder('totalPlayTimes')">总登场</th>
+											<th title="双击重新排序" ondblclick="reorder('goodCampTimes')">好人方</th>
+											<th title="双击重新排序" ondblclick="reorder('killerCampTimes')">杀手方</th>
+											<th title="双击重新排序" ondblclick="reorder('goodCampRate')">好人方概率</th>
+											<th title="双击重新排序" ondblclick="reorder('killerCampRate')">杀手方概率</th>
+											<th title="双击重新排序" ondblclick="reorder('goodCampWinTimes')">好人方胜利</th>
+											<th title="双击重新排序" ondblclick="reorder('killerCampWinTimes')">杀手方胜利</th>
+											<th title="双击重新排序" ondblclick="reorder('tiedTimes')">平局次数</th>
+											<th title="双击重新排序" ondblclick="reorder('totalWinTimes')">总胜利</th>
+											<th title="双击重新排序" ondblclick="reorder('goodCampWinrate')">好人方胜率</th>
+											<th title="双击重新排序" ondblclick="reorder('killerCampWinrate')">杀手方胜率</th>
+											<th title="双击重新排序" ondblclick="reorder('totalWinrate')">总胜率</th>
+											<th title="双击重新排序" ondblclick="reorder('undefeatedRate')">不败率</th>
+										</tr>
+									</thead>
+									<tbody id="character-list">
+										<c:forEach items="${ characterData }" var="character">
+											<tr ondblclick="showCharacterRecord(${character.characterId})" title="双击查看详情">
+												<td>${character.characterId}</td>
+												<td>${character.characterName}</td>
+												<td>${character.totalPlayTimes}</td>
+												<td>${character.goodCampTimes}</td>
+												<td>${character.killerCampTimes}</td>
+												<td>${character.goodCampRate}</td>
+												<td>${character.killerCampRate}</td>
+												<td>${character.goodCampWinTimes}</td>
+												<td>${character.killerCampWinTimes}</td>
+												<td>${character.tiedTimes}</td>
+												<td>${character.totalWinTimes}</td>
+												<td>${character.goodCampWinrate}</td>
+												<td>${character.killerCampWinrate}</td>
+												<td>${character.totalWinrate}</td>
+												<td>${character.undefeatedRate}</td>
+											</tr>
+
+										</c:forEach>
+									</tbody>
+								</table>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+
 		</div>
-    </div>
-      
-  </div>
-  <!-- content end -->
+		<!-- content end -->
 
-</div>
+		<div class="am-modal am-modal-no-btn" tabindex="-1" id="character-record-panel">
+			<div class="am-modal-dialog">
+				<form class="am-form">
+					<fieldset>
+						<legend>角色历史记录 -- 珀利</legend>
+						<table class="am-table am-table-striped am-table-hover table-main" style="max-height:300px;overflow-y:scroll">
+							<thead>
+								<tr>
+								<th>版杀名称</th>
+								<th>是否sp</th>
+								<th>实际身份</th>
+								<th>最终结果</th>
+								<th>备注</th>
+								</tr>
+							</thead>
+							<tbody id="record-detail">
+							</tbody>
+						</table>
+						<div class="am-form-group" style="text-align:center">			
+							<input type="button" class="am-btn am-btn-primary" value="关闭" onclick="closeCharacterRecord()">
+						</div>
+					</fieldset>
+				</form>
+			</div>
+		</div>
 
-<jsp:include page="../layout/footer.jsp"></jsp:include>
+	</div>
+
+	<jsp:include page="../layout/footer.jsp"></jsp:include>
 
 <script type="text/javascript">
 var characterData = ${characterDataStr};
@@ -132,12 +162,14 @@ $(window).resize(function(){
 
 function reorder(key){
 	characterData.sort(function(a,b){
-		return key == 'characterId' ? parseFloat(a[key]) - parseFloat(b[key]) : parseFloat(b[key]) - parseFloat(a[key]);
+		return key == 'characterId' ? 
+				parseFloat(a[key]) - parseFloat(b[key]) : parseFloat(b[key]) == parseFloat(a[key]) ? 
+						parseFloat(a['characterId']) - parseFloat(b['characterId']) : parseFloat(b[key]) - parseFloat(a[key]);
 	});
 	$("#character-list").empty();
 	$.each(characterData,function(index,character){
 		var builder = new StringBuilder();
-		builder.append("<tr>");
+		builder.appendFormat('<tr ondblclick="showCharacterRecord({0})" title="双击查看详情">',character.characterId);
 		builder.appendFormat("<td>{0}</td>",character.characterId);
 		builder.appendFormat("<td>{0}</td>",character.characterName);
 		builder.appendFormat("<td>{0}</td>",character.totalPlayTimes);
@@ -156,6 +188,61 @@ function reorder(key){
 		builder.append("</tr>");
 		$("#character-list").append(builder.toString());
 	})
+}
+
+function showCharacterRecord(characterId){
+	$.get("${baseUrl}file/character-winrate.json",function(data){
+		$("#record-detail").empty();
+		var record = data.characters[characterId-1];
+		$("#character-record-panel legend").text("角色历史记录 -- "+record.characterName);
+		$.each(record.data,function(index,detail){
+			if(detail.sign==""){
+				return true;
+			}
+			var builder = new StringBuilder();
+			builder.append("<tr>");
+			builder.appendFormat("<td>{0}</td>",detail.gameName);
+			builder.appendFormat("<td>{0}</td>",detail.isSp);
+			builder.appendFormat("<td>{0}</td>",detail.sign);
+			builder.appendFormat("<td>{0}</td>",detail.result);
+			builder.appendFormat("<td>{0}</td>",detail.remark);
+			builder.append("</tr>");
+			$("#record-detail").append(builder.toString());
+		})
+		var url = getRootPath() + "/getCharacterRecord";
+		var options = {
+				characterId : characterId
+		}
+		var common = new Common();
+		common.callAction(options,url,function(data){
+			if(!data){
+				return;
+			}
+			switch(data.status){
+			case 1:
+				$.each(data.records,function(index,detail){
+					var builder = new StringBuilder();
+					builder.append("<tr>");
+					builder.appendFormat("<td>{0}</td>",detail.gameName);
+					builder.appendFormat("<td>{0}</td>",detail.isSp);
+					builder.appendFormat("<td>{0}</td>",detail.sign);
+					builder.appendFormat("<td>{0}</td>",detail.result);
+					builder.appendFormat("<td>{0}</td>",detail.remark);
+					builder.append("</tr>");
+					$("#record-detail").append(builder.toString());
+				})
+				$("#character-record-panel").modal('open');
+				return;
+			default:
+				myAlert(data.message);
+				return;
+			}
+		})
+	})
+}
+
+function closeCharacterRecord(){
+	$("#character-record-panel").modal('close');
 }
 
 </script>

@@ -118,7 +118,7 @@
 			<form class="am-form">
 			 <fieldset>
 			 	<legend>发言称呼管理 -- 珀利</legend>
-			 		<table class="am-table am-table-striped am-table-hover table-main">
+			 		<table class="am-table am-table-striped am-table-hover table-main" >
 						<thead>
 							<tr>
 								<th width="150px">发言称呼</th>
@@ -214,7 +214,7 @@ $(function(){
 	$("#collapse-nav li:eq(1) .am-icon-star").removeClass("invisible");
 	$(".admin-sidebar-list > li:eq(0) .am-icon-angle-right").removeClass("invisible");
 	addstatusStyle(players);
-	$.get('${baseUrl}file/avatar.json',function(data){
+	$.get('${baseUrl}file/character-avatar.json',function(data){
 		var builder = new StringBuilder();
 		builder.append('<td><select>');
 		$.each(data.characterAvatars,function(index,character){

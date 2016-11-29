@@ -6,4 +6,6 @@ public interface StatisticsService {
 	
 	Map<String,Object> getCharacterData();
 
+	Map<String, Object> getCharacterRecord(Integer characterId);
+
 }

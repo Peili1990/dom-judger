@@ -34,5 +34,20 @@
 	
 	
 	</update>
+	
+	<select id="getCharacterRecord" parameterType="Integer" resultType="CharacterRecord">
+	
+		SELECT
+			dg.description AS gameName,
+			IF(dpr.is_sp=1,"是","否") AS isSp,
+			IF(dpr.camp=dg.final_result,"胜利","战败") AS result,
+			dpr.identity_desc AS sign,
+			dpr.remark AS remark
+		FROM
+			d_game dg, d_player_record dpr, d_player dp
+		WHERE
+			dg.id = dp.game_id AND dp.id = dpr.player_id AND dpr.character_id = #{characterId}
+			
+	</select>
 
 </mapper>

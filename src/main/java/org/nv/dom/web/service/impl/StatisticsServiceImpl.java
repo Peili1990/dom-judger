@@ -8,6 +8,7 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 import org.nv.dom.config.PageParamType;
 import org.nv.dom.domain.character.CharacterData;
+import org.nv.dom.domain.character.CharacterRecord;
 import org.nv.dom.util.json.JacksonJSONUtils;
 import org.nv.dom.web.dao.character.CharacterMapper;
 import org.nv.dom.web.service.StatisticsService;
@@ -42,6 +43,22 @@ public class StatisticsServiceImpl implements StatisticsService {
 			result.put("characterDataStr",JacksonJSONUtils.beanToJSON(data));
 			result.put(PageParamType.BUSINESS_STATUS, 1);
 			result.put(PageParamType.BUSINESS_MESSAGE, "获取角色数据成功");
+		}catch(Exception e){
+			logger.error(e.getMessage(),e);
+			result.put(PageParamType.BUSINESS_STATUS, -1);
+			result.put(PageParamType.BUSINESS_MESSAGE, "系统异常");
+		}
+		return result;
+	}
+
+	@Override
+	public Map<String, Object> getCharacterRecord(Integer characterId) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		try{
+			List<CharacterRecord> records = characterMapper.getCharacterRecord(characterId);
+			result.put("records", records);
+			result.put(PageParamType.BUSINESS_STATUS,1);
+			result.put(PageParamType.BUSINESS_MESSAGE, "获取角色游戏记录成功");
 		}catch(Exception e){
 			logger.error(e.getMessage(),e);
 			result.put(PageParamType.BUSINESS_STATUS, -1);

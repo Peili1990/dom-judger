@@ -40,17 +40,20 @@ input[type="checkbox"]{
 }
 
 #player-panel legend,
-#replace-panel legend{
+#replace-panel legend,
+#character-record-panel legend{
 	text-align:center;
 }
 
 #player-panel fieldset,
-#replace-panel fieldset{
+#replace-panel fieldset,
+#character-record-panel fieldset{
 	margin-bottom:20px;
 }
 
 #player-panel .am-form,
-#replace-panel .am-form{
+#replace-panel .am-form,
+#character-record-panel .am-form{
 	padding:10px;
 	text-align:left;
 }
@@ -211,3 +214,20 @@ input[type="checkbox"]{
 	position:fixed;
 	top:0;
 }
+
+#character-record-panel table tr{
+	 display:block;
+}
+#character-record-panel table tbody{
+ 	display: block;
+    height: 400px;
+    overflow: auto;
+}
+
+#character-record-panel table td,
+#character-record-panel table th{
+ 	width:100px;
+}
+
+
+
