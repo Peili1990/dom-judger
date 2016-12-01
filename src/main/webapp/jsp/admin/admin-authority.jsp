@@ -58,7 +58,6 @@
 									<th>ID</th>
 									<th>当前状态</th>
 									<th>权限等级</th>
-									<th>备注</th>
 									<th class="table-set" style="width:120px">操作</th>
 								</tr>
 							</thead>
@@ -68,7 +67,6 @@
 										<td>${authority.nickname}</td>
 										<td>${authority.statusDesc}</td>
 										<td>${authority.authorityLevel}</td>
-										<td>${authority.remark}</td>
 										<td>
 										<div class="am-btn-toolbar">
                   				  			<div class="am-btn-group am-btn-group-xs">

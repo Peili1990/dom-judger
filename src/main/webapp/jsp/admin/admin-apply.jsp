@@ -35,7 +35,7 @@
           <div class="am-panel-bd">
             <div class="user-info">
               <p>版杀信息</p>
-              	<p class="user-info-order">
+              	<p class="user-info-order" id="game-info">
               	<c:choose>
                   <c:when test="${ applyingGame != null }">
                   	版杀名称：<strong>${ applyingGame.gameDesc }</strong><br>
@@ -45,7 +45,7 @@
                   	<c:if test="${ applyingGame.gameStatus == 1 }">
                   	<p><button type="button" class="am-btn am-btn-primary am-btn-xs" 
                   		onclick="changeGameStatus(${applyingGame.id},2)">结束报名</button>
-                       <button type="button" class="am-btn am-btn-danger am-btn-xs" onclick="">修改报名帖</button></p>
+                       <button type="button" class="am-btn am-btn-danger am-btn-xs" onclick="showApplyForm(${applyingGame.id})">修改报名帖</button></p>
                   	</c:if>
                   	<c:if test="${ applyingGame.gameStatus == 2 }">
                   	<p><button type="button" class="am-btn am-btn-primary am-btn-xs" 
@@ -124,8 +124,9 @@
 							<th>编号</th>
 							<th>id</th>	
 							<th>报名时间</th>
-							<th>外在身份</th>
+							<th>外在身份</th>							
 							<th>申请先驱</th>
+							<th>使用卡片</th>
 							<th>实际身份</th>
 							<th class="table-set">操作</th>
 						  </tr>
@@ -137,7 +138,8 @@
              					<td>${ player.nickname }</td>
               					<td>${ player.applyTime }</td>
               					<td>${ player.characterName }</td>
-              					<td>${ player.applyPioneer }</td>             					
+              					<td>${ player.applyPioneer }</td> 
+              					<td>${ player.useCard }</td>            					
               					<td>${ player.identityDesc == null ? "":player.identityDesc }</td>
               					<td>
                 				<div class="am-btn-toolbar">
@@ -226,7 +228,7 @@
           <div class="am-form-group">
             <div class="am-u-sm-9 am-u-sm-push-3">
               <div id="error-msg"></div>
-              <button type="button" class="am-btn am-btn-primary" onclick="submitApply(${sessionUser.id})">发布报名帖</button>
+              <button type="button" class="am-btn am-btn-primary" onclick="submitApply(${applyingGame.id})">发布报名帖</button>
               <button type="button" class="am-btn am-btn-danger" onclick="hideApplyForm()">返回</button>
             </div>
           </div>
@@ -273,21 +275,27 @@ $(function(){
 
 var gamedata=${applyingGameStr}
 
-function changeGameStatus(gameId,status,finalResult){
+function changeGameStatus(gameId,status,finalResult){	
+	if(gamedata.gameStatus==1 && status == 2){
+		if(gamedata.alterJudgers.length>0){
+			myAlert("还有备选法官未处理！");
+			return;
+		}
+		if(gamedata.playCurNum<gamedata.playerNum){
+			myConfirm("玩家未报满，结束报名将做流局处理！",'changeGameStatus('+gameId+',0)')
+			return;
+		}
+	}
+	if(gamedata.gameStatus==5&&!gamedata.replayEssayId){
+		myAlert("本次版杀还未复盘！");
+		return;
+	}
 	var url = getRootPath() + "/game/changeStatus";
 	var options = {
 		gameId : gameId,
 		status : status,
 		finalResult : finalResult
 	};
-	if(gamedata.gameStatus==1&&gamedata.alterJudgers.length>0){
-		myAlert("还有备选法官未处理！");
-		return;
-	}
-	if(gamedata.gameStatus==5&&!gamedata.replayEssayId){
-		myAlert("本次版杀还未复盘！");
-		return;
-	}
 	var common = new Common();
 	common.callAction(options, url, function(data) {
 		if (!data) {
@@ -316,10 +324,12 @@ function extractIdentity(){
 			flag=false;
 			return false;
 		}
-		if(player.applyPioneer == "是"){
-			pioneerCandidate.push(index);
-		}
-		player.sign=null;
+		if(player.useCard == "无"){
+			player.sign=null;
+			if(player.applyPioneer == "是"){
+				pioneerCandidate.push(index);
+			}
+		}	
 	})
 	if(!flag) return;
 	var playerNum = players.length;
@@ -327,6 +337,14 @@ function extractIdentity(){
 		$.each(data.configs,function(index,config){
 			if(config.playerNum == playerNum){
 				var array = config.identityNum;
+				$.each(players,function(index,player){
+					if(player.sign != null){
+						array.removeOne({
+							"sign": player.sign,
+							"desc": player.identityDesc
+						})
+					}	
+				})
 				if(pioneerCandidate.length==0){
 					array.push({
 	                    "sign": 11,
@@ -337,26 +355,19 @@ function extractIdentity(){
 					players[pioneer].sign = 12;
 					players[pioneer].identityDesc = "先驱";
 					players[pioneer].camp = 1;
-					$("#apply-info tr:eq("+pioneer+") td:eq(5)").text("先驱");
+					$("#apply-info tr:eq("+pioneer+") td:eq(6)").text("先驱");
 				}
 				array.shuffle();
-				flag=true;
+				offset=0;
 				$.each(players,function(index,player){
 					if(player.sign!=null){
-						flag=false;
+						offset++;
 						return true;
 					}
-					if(flag){
-						player.sign = array[index].sign;
-						player.identityDesc = array[index].desc;
-						player.camp = array[index].sign < 12 ? 1 : 2;
-						$("#apply-info tr:eq("+index+") td:eq(5)").text(array[index].desc);
-					} else {
-						player.sign=array[index-1].sign;
-						player.identityDesc = array[index-1].desc;
-						player.camp = array[index-1].sign < 12 ? 1 : 2;
-						$("#apply-info tr:eq("+index+") td:eq(5)").text(array[index-1].desc);
-					}	
+					player.sign = array[index-offset].sign;
+					player.identityDesc = array[index-offset].desc;
+					player.camp = array[index-offset].sign < 12 ? 1 : 2;
+					$("#apply-info tr:eq("+index+") td:eq(6)").text(array[index-offset].desc);				
 				})
 			}
 		})
@@ -411,9 +422,17 @@ function submitList(gameId){
 	})	
 }
 
-function showApplyForm(){
+function showApplyForm(gameId){
 	$("#apply-detail").css({"display":"none"});
 	$("#apply-publish").css({"display":"block"});
+	$(".am-selected-btn").removeAttr("disabled");
+	if(gameId){
+		$(".am-selected-btn").attr("disabled","disabled");
+		$("#game-desc").val(gamedata.gameDesc);
+		$("#player-num").val(gamedata.playerNum).attr("disabled","disabled");
+		$("#character-select").val(gamedata.characterSelect).attr("disabled","disabled");
+		$("#start-date").attr("value",gamedata.startDate);
+	}
 }
 
 function hideApplyForm(){
@@ -511,7 +530,7 @@ function hideApplyList(){
 	$("#apply-detail").css({"display":"block"});
 }
 
-function submitApply(userId){
+function submitApply(gameId){
 	var gameDesc = $("#game-desc").val().trim();
 	var startDate = $("#start-date").val().trim();
 	if(gameDesc==""){
@@ -529,7 +548,7 @@ function submitApply(userId){
 	var url = getRootPath() + "/game/publish";
 	var options = {
 		gameDesc : gameDesc,
-		judgerId : userId,
+		gameId : gameId,
 		playerNum : $("#player-num option:selected").val(),
 		startDate : startDate,
 		qqGroup : $("#qq-group").val(),

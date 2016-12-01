@@ -9,6 +9,7 @@
 		<result property="playerNum" column="player_num"/>
 		<result property="startDate" column="startDate"/>
 		<result property="replayEssayId" column="replay_essay_id"/>
+		<result property="characterSelect" column="character_select"/>
 		<collection property="players" column="id" javaType="List" ofType="User" select="queryGamePlayerDao"></collection>
 	</resultMap>
 	
@@ -54,12 +55,13 @@
 			dg.description,
 			dg.status,
 			dg.player_num,
+			dg.character_select,
 			IF(ISNULL(actual_start_date),estimated_start_date,actual_start_date) AS startDate,
 			dg.replay_essay_id
 		FROM
 			d_game dg LEFT JOIN d_player dp
 		ON
-			dg.status != 9 AND dp.role='judger' AND dp.game_id=dg.id AND dp.status = 8
+			dg.status != 9 AND dg.status != 0 AND dp.role='judger' AND dp.game_id=dg.id AND dp.status = 8
 		WHERE
 			dp.user_id=#{userId}
 		GROUP BY
@@ -79,6 +81,8 @@
 			dc.id AS characterId,
 			dc.name AS characterName,
 			dpr.is_sp AS isSp,
+			dpr.sign AS sign,
+			dpr.use_card AS useCard,
 			dpr.identity_desc AS identityDesc,
 			dpr.apply_pioneer AS applyPioneer
 		FROM
@@ -125,6 +129,7 @@
 	
 	<insert id="publishGameDao" parameterType="PublishGameDTO" useGeneratedKeys="true" keyProperty="gameId">
 	
+		<if test="gameId==0">
 		INSERT INTO d_game (
 			description,
 			player_num,
@@ -143,6 +148,18 @@
 			#{remark},
 			#{characterSelect}
 		)
+		</if>
+		<if test="gameId>0">
+		UPDATE
+			d_game dg
+		SET
+			dg.description = #{gameDesc},
+			dg.estimated_start_date = #{startDate},
+			dg.qq_group = #{qqGroup},
+			dg.remark = #{remark}
+		WHERE
+			dg.id = #{gameId}
+		</if>
 	
 	</insert>
 	

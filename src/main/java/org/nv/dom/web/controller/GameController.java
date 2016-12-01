@@ -40,6 +40,8 @@ public class GameController extends BaseController{
 	@ResponseBody
 	@RequestMapping(value = "/publish", method = RequestMethod.POST)
 	public Map<String, Object> publish(@ModelAttribute("publishGameDTO") PublishGameDTO publishGameDTO, HttpSession session) {
+		User user = (User)session.getAttribute(PageParamType.user_in_session);
+		publishGameDTO.setJudgerId(user.getId());
 		return gameService.publishGame(publishGameDTO);
 	}
 	

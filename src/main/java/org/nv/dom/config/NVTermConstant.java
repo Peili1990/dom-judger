@@ -45,6 +45,10 @@ public class NVTermConstant {
 	
 	public static final Integer DAILY_PAPER = 2;
 	
+	public static final String USE_IDENTITY_CARD = "1";
+	 
+	public static final String USE_CAMP_CARD = "2";
+	
 	
 
 }

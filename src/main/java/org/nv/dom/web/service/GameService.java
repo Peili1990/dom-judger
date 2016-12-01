@@ -31,5 +31,4 @@ public interface GameService {
 	public Map<String, Object> getGameList();
 
 	public Map<String, Object> getSubmitTime(long playerId);
-
 }

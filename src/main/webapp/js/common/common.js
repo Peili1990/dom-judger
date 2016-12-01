@@ -197,6 +197,11 @@ Array.prototype.remove = function(val) {
     }  
 };  
 
+Array.prototype.removeOne = function(val) {  
+    var index = this.indexOf(val);  
+    this.splice(index, 1);          
+}; 
+
 Array.prototype.shuffle = function(){
 	    var _floor = Math.floor, _random = Math.random, 
 	        len = this.length, i, j, arri, 

@@ -20,6 +20,8 @@ public class UserApplyInfo {
 	private Integer sign;
 	/** 身份名称 */
 	private String identityDesc;
+	/** 卡片使用 */
+	private String useCard;
 	/** 是否申请先驱  */
 	private String applyPioneer;
 	/** 报名时间 */
@@ -71,6 +73,12 @@ public class UserApplyInfo {
 	}
 	public void setIdentityDesc(String identityDesc) {
 		this.identityDesc = identityDesc;
+	}
+	public String getUseCard() {
+		return useCard;
+	}
+	public void setUseCard(String useCard) {
+		this.useCard = useCard;
 	}
 	public String getCharacterName() {
 		return characterName;

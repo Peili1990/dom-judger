@@ -103,6 +103,14 @@ public class GameServiceImpl extends BasicServiceImpl implements GameService {
 						} else {
 							userApplyInfo.setApplyPioneer("否");
 						}
+						if(NVTermConstant.USE_IDENTITY_CARD.equals(userApplyInfo.getUseCard())){
+							userApplyInfo.setUseCard("身份卡");
+						} else if(NVTermConstant.USE_CAMP_CARD.equals(userApplyInfo.getUseCard())){
+							userApplyInfo.setUseCard("阵营卡");
+							
+						} else {
+							userApplyInfo.setUseCard("无");
+						}
 					}
 				}
 				applyingGame.setAlterJudgers(alterJudger);
@@ -137,6 +145,12 @@ public class GameServiceImpl extends BasicServiceImpl implements GameService {
 			return result;
 		}
 		try{
+			if(publishGameDTO.getGameId()>0){
+				gameMapper.publishGameDao(publishGameDTO);
+				result.put(PageParamType.BUSINESS_STATUS, 1);
+				result.put(PageParamType.BUSINESS_MESSAGE, "更新成功");
+				return result;
+			}
 			if(gameMapper.queryHasAttendGameDao(publishGameDTO.getJudgerId()) > 0){
 				result.put(PageParamType.BUSINESS_STATUS, -3);
 				result.put(PageParamType.BUSINESS_MESSAGE, "已参加其他版杀，不能开新版杀");
@@ -209,7 +223,8 @@ public class GameServiceImpl extends BasicServiceImpl implements GameService {
 					newspaperMapper.updateNewspaperStatusDao(changeStatusDTO.getGameId());
 					characterMapper.updateCharacterData(changeStatusDTO.getGameId());
 				}
-				if(changeStatusDTO.getStatus() == GameStatus.FINISHED.getCode()){
+				if(changeStatusDTO.getStatus() == GameStatus.FINISHED.getCode() ||
+						changeStatusDTO.getStatus() == GameStatus.CANCELED.getCode()){
 					playerMapper.updatePlayerStatus(changeStatusDTO.getGameId());
 				}
 				result.put(PageParamType.BUSINESS_STATUS, 1);
@@ -314,5 +329,7 @@ public class GameServiceImpl extends BasicServiceImpl implements GameService {
 		}
 		return result;
 	}
+
+	
 
 }
