@@ -7,9 +7,11 @@ import javax.servlet.http.HttpSession;
 
 import org.nv.dom.config.PageParamType;
 import org.nv.dom.domain.user.User;
+import org.nv.dom.dto.authority.AddUserCardDTO;
 import org.nv.dom.web.service.AuthorityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -54,6 +56,13 @@ public class AuthorityController {
 	public Map<String, Object> submitInfoMessage(@RequestParam("infoMessage")String infoMessage,HttpServletRequest request) {
 		User user = (User) request.getSession().getAttribute(PageParamType.user_in_session);
 		return authorityService.submitInfoMessage(infoMessage,user);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/addUserCard", method = RequestMethod.POST)
+	public Map<String, Object> addUserCard(@ModelAttribute("addUserCardDTO")AddUserCardDTO addUserCardDTO,HttpServletRequest request) {
+		User user = (User) request.getSession().getAttribute(PageParamType.user_in_session);
+		return authorityService.addUserCard(addUserCardDTO,user);
 	}
 
 }

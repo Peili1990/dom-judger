@@ -9,7 +9,6 @@ import javax.servlet.http.HttpSession;
 import org.nv.dom.config.PageParamType;
 import org.nv.dom.domain.user.User;
 import org.nv.dom.dto.account.LoginDTO;
-import org.nv.dom.dto.account.RegisterDTO;
 import org.nv.dom.web.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -42,20 +41,6 @@ public class AccountController extends BaseController {
 			request.getSession().setAttribute(PageParamType.user_in_session, user);
 			result.remove("user");
 		}
-		return result;
-	}
-	
-	@RequestMapping(value = "/register", method = RequestMethod.GET)
-	public ModelAndView registerView(HttpSession session) {
-		ModelAndView mav = new ModelAndView("account/register");
-		mav.addAllObjects(basicService.getSessionUserService(session));
-		return mav;
-	}
-	
-	@ResponseBody
-	@RequestMapping(value = "/registerAction", method = RequestMethod.POST)
-	public Map<String, Object> registerAction(@ModelAttribute("registerDTO") RegisterDTO registerDTO, HttpServletRequest request) {
-		Map<String, Object> result = accountService.registerAction(registerDTO);
 		return result;
 	}
 	

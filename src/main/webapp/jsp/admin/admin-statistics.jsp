@@ -108,7 +108,7 @@
 
 		<div class="am-modal am-modal-no-btn" tabindex="-1" id="character-record-panel">
 			<div class="am-modal-dialog">
-				<form class="am-form">
+				<form class="am-form modal-am-form">
 					<fieldset>
 						<legend>角色历史记录 -- 珀利</legend>
 						<table class="am-table am-table-striped am-table-hover table-main" style="max-height:300px;overflow-y:scroll">

@@ -1687,7 +1687,8 @@ output {
 	font-size:1.3rem
 }
 .am-form-group {
-	margin-bottom:1.5rem
+	margin-bottom:1.5rem;
+	overflow:hidden;
 }
 .am-form-file {
 	position:relative;

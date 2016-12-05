@@ -95,5 +95,23 @@
 		)
 				
 	</insert>
+	
+	<insert id="insertUserCardDao" parameterType="AddUserCardDTO">
+	
+		INSERT INTO d_card(
+			user_id,
+			type,
+			status,
+			expire_date
+		)
+		VALUES(
+			#{userId},
+			#{cardType},
+			1,
+			#{expireDate}
+		)
+			
+	
+	</insert>
 
 </mapper>

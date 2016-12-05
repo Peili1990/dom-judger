@@ -341,7 +341,7 @@ function extractIdentity(){
 					if(player.sign != null){
 						array.removeOne({
 							"sign": player.sign,
-							"desc": player.identityDesc
+							"desc": player.identityDesc										
 						})
 					}	
 				})
@@ -362,12 +362,12 @@ function extractIdentity(){
 				$.each(players,function(index,player){
 					if(player.sign!=null){
 						offset++;
-						return true;
-					}
-					player.sign = array[index-offset].sign;
-					player.identityDesc = array[index-offset].desc;
-					player.camp = array[index-offset].sign < 12 ? 1 : 2;
-					$("#apply-info tr:eq("+index+") td:eq(6)").text(array[index-offset].desc);				
+					} else {
+						player.sign = array[index-offset].sign;
+						player.identityDesc = array[index-offset].desc;
+						$("#apply-info tr:eq("+index+") td:eq(6)").text(array[index-offset].desc);				
+					}					
+					player.camp = player.sign < 12 ? 1 : 2;					
 				})
 			}
 		})

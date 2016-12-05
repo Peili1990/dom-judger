@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 import org.nv.dom.domain.user.UserAuthority;
+import org.nv.dom.dto.authority.AddUserCardDTO;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -57,5 +58,12 @@ public interface AuthorityMapper {
 	 */
 
 	public int insertInfoMessageDao(@Param("infoMessage")String infoMessage, @Param("userId")long userId);
+	
+	/**
+	 * <p>添加卡片</p>
+	 */
+	
+	public int insertUserCardDao(AddUserCardDTO addUserCardDTO);
+	
 
 }

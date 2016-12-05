@@ -5,6 +5,7 @@ import java.util.List;
 import org.nv.dom.domain.message.chat.ChatDetail;
 import org.nv.dom.domain.message.chat.ChatInfo;
 import org.nv.dom.domain.message.chat.OfflineChat;
+import org.nv.dom.domain.user.UserCard;
 import org.nv.dom.domain.user.UserCurRole;
 import org.nv.dom.dto.message.GetChatRecordDTO;
 import org.springframework.stereotype.Repository;
@@ -39,5 +40,11 @@ public interface UserMapper {
 	 */
 
 	public int updateChatRecordDao(GetChatRecordDTO getChatRecordDTO);
+	
+	/**
+	 * <p>获取用户卡片数量</p>
+	 */
+	
+	public List<UserCard> getUserCardDao();
 	
 }

@@ -39,21 +39,15 @@ input[type="checkbox"]{
 	width:300px;
 }
 
-#player-panel legend,
-#replace-panel legend,
-#character-record-panel legend{
+legend{
 	text-align:center;
 }
 
-#player-panel fieldset,
-#replace-panel fieldset,
-#character-record-panel fieldset{
+fieldset{
 	margin-bottom:20px;
 }
 
-#player-panel .am-form,
-#replace-panel .am-form,
-#character-record-panel .am-form{
+.modal-am-form{
 	padding:10px;
 	text-align:left;
 }

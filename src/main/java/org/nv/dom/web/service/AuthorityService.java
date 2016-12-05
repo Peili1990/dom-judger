@@ -3,6 +3,7 @@ package org.nv.dom.web.service;
 import java.util.Map;
 
 import org.nv.dom.domain.user.User;
+import org.nv.dom.dto.authority.AddUserCardDTO;
 
 public interface AuthorityService {
 	
@@ -19,5 +20,7 @@ public interface AuthorityService {
 	public String getInfoMessage();
 
 	public Map<String, Object> submitInfoMessage(String infoMessage, User user);
+
+	public Map<String, Object> addUserCard(AddUserCardDTO addUserCardDTO, User user);
 
 }

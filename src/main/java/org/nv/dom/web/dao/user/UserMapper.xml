@@ -82,4 +82,26 @@
 	
 	</update>
 
+	<select id="getUserCardDao" resultType="UserCard">
+	
+		<![CDATA[
+	
+		SELECT
+			du.id AS userId,
+			du.nickname AS nickname,
+			SUM(IF(dc.type=1,1,0)) AS identityCardNum,
+			SUM(IF(dc.type=2,1,0)) AS campCardNum 
+		FROM
+			d_user du, d_card dc
+		WHERE
+			du.id = dc.user_id AND dc.expire_date >= NOW() AND dc.status = 1
+		GROUP BY
+			du.id
+			
+		]]>	
+	
+	</select>
+	
+	
+
 </mapper>

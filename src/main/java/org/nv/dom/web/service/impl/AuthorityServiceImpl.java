@@ -9,13 +9,17 @@ import org.apache.log4j.Logger;
 import org.nv.dom.config.PageParamType;
 import org.nv.dom.domain.user.User;
 import org.nv.dom.domain.user.UserAuthority;
+import org.nv.dom.domain.user.UserCard;
+import org.nv.dom.dto.authority.AddUserCardDTO;
 import org.nv.dom.enums.PlayerStatus;
 import org.nv.dom.util.ConfigUtil;
 import org.nv.dom.util.FileUtil;
 import org.nv.dom.util.RandomCodeUtil;
 import org.nv.dom.util.RandomCodeUtil.CodeType;
+import org.nv.dom.util.StringUtil;
 import org.nv.dom.web.dao.account.AccountMapper;
 import org.nv.dom.web.dao.authority.AuthorityMapper;
+import org.nv.dom.web.dao.user.UserMapper;
 import org.nv.dom.web.service.AuthorityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +29,8 @@ public class AuthorityServiceImpl implements AuthorityService {
 	
 	private String filePath = ConfigUtil.getVersionConfigProperty("filePath");
 	
+	private String defaultExpireDate = "2099-12-31";
+	
 	private static Logger logger = Logger.getLogger(AuthorityServiceImpl.class);
 	
 	@Autowired
@@ -32,6 +38,9 @@ public class AuthorityServiceImpl implements AuthorityService {
 	
 	@Autowired
 	AccountMapper accountMapper;
+	
+	@Autowired
+	UserMapper userMapper;
 	
 	@Override
 	public Map<String, Object> getAllJudegers() {
@@ -51,6 +60,8 @@ public class AuthorityServiceImpl implements AuthorityService {
 				}
 			}
 			List<String> invcodes = authorityMapper.getInvCodeListDao();
+			List<UserCard> userCards = userMapper.getUserCardDao();
+			result.put("userCards", userCards);
 			result.put("invcodes", invcodes);
 			result.put("authorities", authorities);
 			result.put(PageParamType.BUSINESS_STATUS, 1);
@@ -189,6 +200,36 @@ public class AuthorityServiceImpl implements AuthorityService {
 			result.put(PageParamType.BUSINESS_STATUS, -1);
 			result.put(PageParamType.BUSINESS_MESSAGE,"系统异常");
 		}
+		return result;
+	}
+
+	@Override
+	public Map<String, Object> addUserCard(AddUserCardDTO addUserCardDTO, User user) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		if( user==null || user.getAuthority() == null || user.getAuthority() < 2){
+			result.put(PageParamType.BUSINESS_STATUS, -2);
+			result.put(PageParamType.BUSINESS_MESSAGE,"权限不够，无法发放卡片");
+			return result;
+		}
+		try{
+			Long userId = accountMapper.getUserIdByNicknameDao(addUserCardDTO.getNickname());
+			if(userId == null){
+				result.put(PageParamType.BUSINESS_STATUS, -3);
+				result.put(PageParamType.BUSINESS_MESSAGE,"无此用户");
+			} else {
+				addUserCardDTO.setUserId(userId);
+				if(StringUtil.isNullOrEmpty(addUserCardDTO.getExpireDate())){
+					addUserCardDTO.setExpireDate(defaultExpireDate);
+				}
+				authorityMapper.insertUserCardDao(addUserCardDTO);
+				result.put(PageParamType.BUSINESS_STATUS, 1);
+				result.put(PageParamType.BUSINESS_MESSAGE,"发放卡片成功");
+			}	
+		}catch(Exception e){
+			logger.error(e.getMessage(),e);
+			result.put(PageParamType.BUSINESS_STATUS, -1);
+			result.put(PageParamType.BUSINESS_MESSAGE,"系统异常");
+		}	
 		return result;
 	}
 

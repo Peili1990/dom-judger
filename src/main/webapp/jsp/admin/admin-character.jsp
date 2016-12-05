@@ -115,7 +115,7 @@
 	
 	<div class="am-modal am-modal-no-btn" tabindex="-1" id="replace-panel">
 		<div class="am-modal-dialog">
-			<form class="am-form">
+			<form class="am-form modal-am-form">
 			 <fieldset>
 			 	<legend>发言称呼管理 -- 珀利</legend>
 			 		<table class="am-table am-table-striped am-table-hover table-main" >
@@ -142,7 +142,7 @@
 
 	<div class="am-modal am-modal-no-btn" tabindex="-1" id="player-panel">
 		<div class="am-modal-dialog">
-			<form class="am-form" id="status-form">
+			<form class="am-form modal-am-form" id="status-form">
 			 <fieldset>
 			 	<legend>角色状态变更 -- </legend>
 			 		<div class="float-panel">
