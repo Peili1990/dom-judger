@@ -367,7 +367,7 @@ function extractIdentity(){
 						player.identityDesc = array[index-offset].desc;
 						$("#apply-info tr:eq("+index+") td:eq(6)").text(array[index-offset].desc);				
 					}					
-					player.camp = player.sign < 12 ? 1 : 2;					
+					player.camp = player.sign < 13 ? 1 : 2;					
 				})
 			}
 		})
@@ -607,8 +607,8 @@ function queryGameResult(gameId){
 	builder.append('<select>'+
 			'<option value="1">好人方胜利</option>'+
 			'<option value="2">杀手方胜利</option>'+
-			'<option value="3">平局</option>'+
-			'<option value="4">契约方胜利</option>'+
+			'<option value="3">契约方胜利</option>'+
+			'<option value="4">平局</option>'+
 			'<option value="9">流局</option>'+
 			'</select>');
 	$("#info-query ul").append(builder.toString());

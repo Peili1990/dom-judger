@@ -318,7 +318,13 @@ public class GameServiceImpl extends BasicServiceImpl implements GameService {
 	public Map<String, Object> getSubmitTime(long playerId) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		try{
-			String submitTime = DateFormatUtil.getSimpleDateFormat(DateFormatUtil.DEFAULT_DATETIME).format(gameMapper.getSubmitTimeDao(playerId));
+			Date time = gameMapper.getSubmitTimeDao(playerId);
+			if(time == null){
+				result.put(PageParamType.BUSINESS_STATUS, -3);
+				result.put(PageParamType.BUSINESS_MESSAGE, "该玩家还未提交行动");
+				return result;
+			}
+			String submitTime = DateFormatUtil.getSimpleDateFormat(DateFormatUtil.DEFAULT_DATETIME).format(time);
 			result.put("submitTime", submitTime);
 			result.put(PageParamType.BUSINESS_STATUS, 1);
 			result.put(PageParamType.BUSINESS_MESSAGE, "获取提交时间成功");

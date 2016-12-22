@@ -45,14 +45,15 @@
 											<th title="双击重新排序" ondblclick="reorder('totalPlayTimes')">总登场</th>
 											<th title="双击重新排序" ondblclick="reorder('goodCampTimes')">好人方</th>
 											<th title="双击重新排序" ondblclick="reorder('killerCampTimes')">杀手方</th>
-											<th title="双击重新排序" ondblclick="reorder('goodCampRate')">好人方概率</th>
-											<th title="双击重新排序" ondblclick="reorder('killerCampRate')">杀手方概率</th>
+											<th title="双击重新排序" ondblclick="reorder('contractCampTimes')">契约方</th>
 											<th title="双击重新排序" ondblclick="reorder('goodCampWinTimes')">好人方胜利</th>
 											<th title="双击重新排序" ondblclick="reorder('killerCampWinTimes')">杀手方胜利</th>
+											<th title="双击重新排序" ondblclick="reorder('contractCampWinTimes')">契约方胜利</th>
 											<th title="双击重新排序" ondblclick="reorder('tiedTimes')">平局次数</th>
 											<th title="双击重新排序" ondblclick="reorder('totalWinTimes')">总胜利</th>
 											<th title="双击重新排序" ondblclick="reorder('goodCampWinrate')">好人方胜率</th>
 											<th title="双击重新排序" ondblclick="reorder('killerCampWinrate')">杀手方胜率</th>
+											<th title="双击重新排序" ondblclick="reorder('contractCampWinTimes')">契约方胜率</th>
 											<th title="双击重新排序" ondblclick="reorder('totalWinrate')">总胜率</th>
 											<th title="双击重新排序" ondblclick="reorder('undefeatedRate')">不败率</th>
 										</tr>
@@ -62,14 +63,15 @@
 											<th title="双击重新排序" ondblclick="reorder('totalPlayTimes')">总登场</th>
 											<th title="双击重新排序" ondblclick="reorder('goodCampTimes')">好人方</th>
 											<th title="双击重新排序" ondblclick="reorder('killerCampTimes')">杀手方</th>
-											<th title="双击重新排序" ondblclick="reorder('goodCampRate')">好人方概率</th>
-											<th title="双击重新排序" ondblclick="reorder('killerCampRate')">杀手方概率</th>
+											<th title="双击重新排序" ondblclick="reorder('contractCampTimes')">契约方</th>
 											<th title="双击重新排序" ondblclick="reorder('goodCampWinTimes')">好人方胜利</th>
 											<th title="双击重新排序" ondblclick="reorder('killerCampWinTimes')">杀手方胜利</th>
+											<th title="双击重新排序" ondblclick="reorder('contractCampWinTimes')">契约方胜利</th>
 											<th title="双击重新排序" ondblclick="reorder('tiedTimes')">平局次数</th>
 											<th title="双击重新排序" ondblclick="reorder('totalWinTimes')">总胜利</th>
 											<th title="双击重新排序" ondblclick="reorder('goodCampWinrate')">好人方胜率</th>
 											<th title="双击重新排序" ondblclick="reorder('killerCampWinrate')">杀手方胜率</th>
+											<th title="双击重新排序" ondblclick="reorder('contractCampWinTimes')">契约方胜率</th>
 											<th title="双击重新排序" ondblclick="reorder('totalWinrate')">总胜率</th>
 											<th title="双击重新排序" ondblclick="reorder('undefeatedRate')">不败率</th>
 										</tr>
@@ -82,14 +84,15 @@
 												<td>${character.totalPlayTimes}</td>
 												<td>${character.goodCampTimes}</td>
 												<td>${character.killerCampTimes}</td>
-												<td>${character.goodCampRate}</td>
-												<td>${character.killerCampRate}</td>
+												<td>${character.contractCampTimes}</td>
 												<td>${character.goodCampWinTimes}</td>
 												<td>${character.killerCampWinTimes}</td>
+												<td>${character.contractCampWinTimes}</td>
 												<td>${character.tiedTimes}</td>
 												<td>${character.totalWinTimes}</td>
 												<td>${character.goodCampWinrate}</td>
 												<td>${character.killerCampWinrate}</td>
+												<td>${character.contractCampWinrate}</td>
 												<td>${character.totalWinrate}</td>
 												<td>${character.undefeatedRate}</td>
 											</tr>
@@ -175,14 +178,15 @@ function reorder(key){
 		builder.appendFormat("<td>{0}</td>",character.totalPlayTimes);
 		builder.appendFormat("<td>{0}</td>",character.goodCampTimes);
 		builder.appendFormat("<td>{0}</td>",character.killerCampTimes);
-		builder.appendFormat("<td>{0}</td>",character.goodCampRate);
-		builder.appendFormat("<td>{0}</td>",character.killerCampRate);
+		builder.appendFormat("<td>{0}</td>",character.contractCampTimes);
 		builder.appendFormat("<td>{0}</td>",character.goodCampWinTimes);
 		builder.appendFormat("<td>{0}</td>",character.killerCampWinTimes);
+		builder.appendFormat("<td>{0}</td>",character.contractCampWinTimes);
 		builder.appendFormat("<td>{0}</td>",character.tiedTimes);
 		builder.appendFormat("<td>{0}</td>",character.totalWinTimes);
 		builder.appendFormat("<td>{0}</td>",character.goodCampWinrate);
 		builder.appendFormat("<td>{0}</td>",character.killerCampWinrate);
+		builder.appendFormat("<td>{0}</td>",character.contractCampWinrate);
 		builder.appendFormat("<td>{0}</td>",character.totalWinrate);
 		builder.appendFormat("<td>{0}</td>",character.undefeatedRate);
 		builder.append("</tr>");

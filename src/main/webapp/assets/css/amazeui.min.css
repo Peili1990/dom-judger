@@ -1688,7 +1688,6 @@ output {
 }
 .am-form-group {
 	margin-bottom:1.5rem;
-	overflow:hidden;
 }
 .am-form-file {
 	position:relative;

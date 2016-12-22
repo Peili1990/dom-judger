@@ -11,10 +11,14 @@ public class CharacterData {
 	private Integer goodCampTimes;
 	/** 杀手方次数 */
 	private Integer killerCampTimes;
+	/** 契约方次数 */
+	private Integer contractCampTimes;
 	/** 好人方胜利次数 */
 	private Integer goodCampWinTimes;
 	/** 杀手方胜利次数 */
 	private Integer killerCampWinTimes;
+	/** 契约方胜利次数 */
+	private Integer contractCampWinTimes;
 	/** 平局次数 */
 	private Integer tiedTimes;
 	/** 好人方概率 */
@@ -27,11 +31,12 @@ public class CharacterData {
 	private String goodCampWinrate;
 	/** 杀手方胜率 */
 	private String killerCampWinrate;
+	/** 契约方胜率 */
+	private String contractCampWinrate;
 	/** 总胜率 */
 	private String totalWinrate;
 	/** 不败率 */
 	private String undefeatedRate;
-	
 	public Integer getCharacterId() {
 		return characterId;
 	}
@@ -62,6 +67,12 @@ public class CharacterData {
 	public void setKillerCampTimes(Integer killerCampTimes) {
 		this.killerCampTimes = killerCampTimes;
 	}
+	public Integer getContractCampTimes() {
+		return contractCampTimes;
+	}
+	public void setContractCampTimes(Integer contractCampTimes) {
+		this.contractCampTimes = contractCampTimes;
+	}
 	public Integer getGoodCampWinTimes() {
 		return goodCampWinTimes;
 	}
@@ -73,6 +84,12 @@ public class CharacterData {
 	}
 	public void setKillerCampWinTimes(Integer killerCampWinTimes) {
 		this.killerCampWinTimes = killerCampWinTimes;
+	}
+	public Integer getContractCampWinTimes() {
+		return contractCampWinTimes;
+	}
+	public void setContractCampWinTimes(Integer contractCampWinTimes) {
+		this.contractCampWinTimes = contractCampWinTimes;
 	}
 	public Integer getTiedTimes() {
 		return tiedTimes;
@@ -109,6 +126,12 @@ public class CharacterData {
 	}
 	public void setKillerCampWinrate(String killerCampWinrate) {
 		this.killerCampWinrate = killerCampWinrate;
+	}
+	public String getContractCampWinrate() {
+		return contractCampWinrate;
+	}
+	public void setContractCampWinrate(String contractCampWinrate) {
+		this.contractCampWinrate = contractCampWinrate;
 	}
 	public String getTotalWinrate() {
 		return totalWinrate;

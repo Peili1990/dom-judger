@@ -33,9 +33,10 @@ public class StatisticsServiceImpl implements StatisticsService {
 			for(CharacterData character : data){
 				character.setGoodCampRate(numberFormat.format((float)character.getGoodCampTimes()/(float)character.getTotalPlayTimes()*100)+"%");
 				character.setKillerCampRate(numberFormat.format((float)character.getKillerCampTimes()/(float)character.getTotalPlayTimes()*100)+"%");
-				character.setTotalWinTimes(character.getGoodCampWinTimes()+character.getKillerCampWinTimes());
+				character.setTotalWinTimes(character.getGoodCampWinTimes()+character.getKillerCampWinTimes()+character.getContractCampWinTimes());
 				character.setGoodCampWinrate(character.getGoodCampTimes()==0 ? "N/A": numberFormat.format((float)character.getGoodCampWinTimes()/(float)character.getGoodCampTimes()*100)+"%");
 				character.setKillerCampWinrate(character.getKillerCampTimes()==0 ? "N/A": numberFormat.format((float)character.getKillerCampWinTimes()/(float)character.getKillerCampTimes()*100)+"%");
+				character.setContractCampWinrate(character.getContractCampTimes() == 0 ? "N/A" : numberFormat.format((float)character.getContractCampWinTimes()/(float)character.getContractCampTimes()*100)+"%");
 				character.setTotalWinrate(numberFormat.format((float)character.getTotalWinTimes()/(float)character.getTotalPlayTimes()*100)+"%");
 				character.setUndefeatedRate(numberFormat.format((float)(character.getTotalWinTimes()+character.getTiedTimes())/(float)character.getTotalPlayTimes()*100)+"%");
 			}

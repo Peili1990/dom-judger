@@ -223,5 +223,8 @@ fieldset{
  	width:100px;
 }
 
+#add-card-panel .am-form-group{
+	overflow:hidden;
+}
 
 
