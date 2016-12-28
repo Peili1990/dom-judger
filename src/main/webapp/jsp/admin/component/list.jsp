@@ -1,7 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<form class="am-form am-form-horizontal" id="list">
+<div class="am-panel am-panel-default">
+	<div class="am-panel-bd">
+	<h2>名单抽取</h2>
+	<form class="am-form am-form-horizontal" id="list">
 	<div class="am-form-group">
 		<label class="am-u-sm-4 am-form-label">原始名单</label>
 		<div class="am-u-sm-8">
@@ -30,7 +33,9 @@
 			<button type="button" class="am-btn am-btn-danger" onclick="resetList()">重置</button>
 		</div>
 	</div>
-</form>
+</form>		
+</div>
+</div>
 
 <script type="text/javascript">
 

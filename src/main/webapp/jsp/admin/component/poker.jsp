@@ -1,13 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<form class="am-form am-form-horizontal" id="poker">
+<div class="am-panel am-panel-default">
+	<div class="am-panel-bd">
+	<h2>镇魂扑克</h2>
+	<form class="am-form am-form-horizontal" id="poker">
 	<div class="am-form-group">
 		<textarea style="height: 200px" disabled="disabled" id="poker-list"></textarea>
 		<span id="poker-condition">&nbsp</span>
 	</div>
 	<div class="am-form-group">
-		<label style="display: inline-block">梭哈使用者</label> 
+		<label style="display: inline-block">特权使用者</label> 
 		<input type="text" name="poker-user" placeholder=""
 			style="width: 60px; display: inline-block"> 
 		<label style="display: inline-block">打牌对象</label> 
@@ -52,6 +55,10 @@
 		<button type="button" class="am-btn am-btn-danger float" onclick="resetPoker()">重置</button>
 	</div>
 </form>
+</div>	
+</div>
+
+
 
 <script>
 var temp = [];

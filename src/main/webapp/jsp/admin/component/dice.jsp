@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<form class="am-form am-form-horizontal" id="dice">
+<div class="am-panel am-panel-default">
+	<div class="am-panel-bd">
+	<h2>多面骰子</h2>
+	<form class="am-form am-form-horizontal" id="dice">
 	<div class="am-form-group">
        <label class="am-u-sm-4 am-form-label">骰子面数</label>
        <div class="am-u-sm-8">
@@ -28,7 +31,11 @@
            <button type="button" class="am-btn am-btn-danger" onclick="resetDice()">重置</button>
        </div>
     </div>
-</form>
+	</form>
+</div>	
+</div>
+
+
 
 <script type="text/javascript">
 var gameId = ${gameId};
