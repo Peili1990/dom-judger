@@ -47,6 +47,10 @@
 			<c:if test="${gameId>0}">
 				<jsp:include page="component/yang.jsp"></jsp:include>
 			</c:if>
+			<c:if test="${gameId>0}">
+				<jsp:include page="component/candler.jsp"></jsp:include>
+			</c:if>
+			
 		</div>
 		<div class="am-u-sm-4">
 			<c:if test="${gameId>0}">

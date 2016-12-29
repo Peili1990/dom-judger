@@ -241,6 +241,9 @@
 			case "yang":
 				$("#yang input[name='yang-result']").val(content.content);
 				break;
+			case "candler":
+				$("#candler input[name='candler-result']").val(content.content);
+				break;
 			default:
 				break;			
 			}

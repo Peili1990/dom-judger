@@ -49,6 +49,9 @@
 			<c:if test="${gameId>0}">
 				<jsp:include page="component/ounei.jsp"></jsp:include>
 			</c:if>
+			<c:if test="${gameId>0}">
+				<jsp:include page="component/candler.jsp"></jsp:include>
+			</c:if>
 		</div>
     </div>
       

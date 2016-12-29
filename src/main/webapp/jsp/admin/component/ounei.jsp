@@ -27,8 +27,8 @@
 <script type="text/javascript">
 
 function calOunei(){
-	var clockwise = 0;
-	var anticlockwise = 0;
+	var clockwise = {count:0};
+	var anticlockwise = {count:0};
 	var ouneiPosition = 0;
 	var lifePlayers = [];
 	$.each(players,function(index,player){
@@ -44,16 +44,16 @@ function calOunei(){
 	while(!(clockwisePoint == anticlockwisePoint || 
 			clockwisePoint - anticlockwisePoint == 1 || 
 			parseInt(clockwisePoint) + parseInt(lifePlayers.length) - anticlockwisePoint == 1)){
-		if(decideSign(lifePlayers[clockwisePoint],clockwise)){
+		while(decideSign(lifePlayers[clockwisePoint],clockwise)){
 			clockwisePoint = clockwisePoint == lifePlayers.length - 1 ? 0 : parseInt(clockwisePoint) + 1;
 		}
-		if(decideSign(lifePlayers[anticlockwisePoint],anticlockwise)){
+		while(decideSign(lifePlayers[anticlockwisePoint],anticlockwise)){
 			anticlockwisePoint = anticlockwisePoint == 0 ? lifePlayers.length - 1 : anticlockwisePoint - 1;
 		}
 		clockwisePoint = clockwisePoint == lifePlayers.length - 1 ? 0 : parseInt(clockwisePoint) + 1;
 		anticlockwisePoint = anticlockwisePoint == 0 ? lifePlayers.length - 1 : anticlockwisePoint - 1;
 	}
-	var ounei = clockwise > anticlockwise ? "顺时针>逆时针" : clockwise < anticlockwise ? "顺时针<逆时针" : "顺时针=逆时针";
+	var ounei = clockwise.count > anticlockwise.count ? "顺时针>逆时针" : clockwise.count < anticlockwise.count ? "顺时针<逆时针" : "顺时针=逆时针";
 	$("#ounei input[name='ounei-result']").val(ounei);
 }	
 
@@ -62,7 +62,7 @@ function decideSign(player,counter){
 		return false;
 	}
 	if(player.sign!=11&&player.sign!=12&&player.sign!=23){
-		counter++;
+		counter.count++;
 	}
 	if(player.characterName=="布莱克"){
 		return true;
