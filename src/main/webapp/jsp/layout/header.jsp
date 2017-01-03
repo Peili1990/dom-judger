@@ -46,14 +46,12 @@
   	webSocket.onerror = function(event) {
 		myAlert(event.data);
 	};
+	
+	$(function(){
+		getOfflineMessage();
+	})
 
 	webSocket.onopen = function(event) {
-		refresh = getCookie("refresh");
-		if(!refresh){
-			getOfflineMessage();
-		} else {
-			setRedspot();
-		}
 		
 	}
 
@@ -79,10 +77,6 @@
 			break;
 		}
 	};
-	
-	$(window).bind('unload', function(e) {
-		setCookie("refresh",true,"5s");
-	});
 	
 	function getOfflineMessage(){
 		var url = getRootPath() + "/getOfflineMessage";

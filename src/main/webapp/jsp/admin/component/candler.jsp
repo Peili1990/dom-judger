@@ -56,7 +56,7 @@
 				onlineSettlement(result,"candler");
 			} else {
 				$("#candler input[name='candler-result']").val(result);
-			}
+	  		}
 		})
 	}
 

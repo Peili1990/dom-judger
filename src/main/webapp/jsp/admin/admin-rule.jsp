@@ -26,17 +26,31 @@
     <div class="am-g">
     	<div class="am-u-sm-12 am-u-sm-centered" id="rule-content-box">
 			<div class="am-panel am-panel-default">
-				<c:if test="${user.authority > 1}">
-				<div class="am-panel-bd">
-				<div class="am-form-group operation">
-					<input type="button" class="am-btn am-btn-primary" value="编辑规则" onclick="showRuleEditor()">					
-				</div>
-				</div>
-				</c:if>
 				<div class="am-panel-bd" id="rule-content">
+					<c:forEach items="${ rules }" var="rule">
+						<div class="am-panel-hd">
+		 					<h2 class="am-panel-title">
+		 					${ rule.chapter}
+		 					</h2>
+						</div>
+						<div class="am-panel-bd" onclick="showRuleEditor(${rule.chapterId})">
+							<div id="rule-row-${rule.chapterId}">
+								${rule.content}
+							</div>
+							<c:if test="${not empty rule.indexs}">
+								<c:forEach items="${rule.indexs }" var="index">
+									<div class="am-panel-bd" onclick="showRuleEditor(${rule.chapterId},${index.indexId})" id="rule-row-${rule.chapterId }-${index.indexId}">
+										${index.content}
+									</div>
+								</c:forEach>
+							</c:if>
+						</div>
+					</c:forEach>
 				</div>
 			</div>
 		</div>
+		
+		
 		
 		<div class="am-u-sm-12 am-u-sm-centered invisible" id="rule-editor-box">
 			<div class="am-panel am-panel-default">
@@ -67,17 +81,18 @@ var um = UM.getEditor("rule-editor");
 
 $(function(){
 	$(".admin-sidebar-list > li:eq(2) .am-icon-angle-right").removeClass("invisible");
-	$.get(picServer+'rule-1.8.0.txt',function(content){ 
-		$("#rule-content").html(content);
-	})
 })
 
-function showRuleEditor(){
+function showRuleEditor(row,index){
 	$("#rule-content-box").addClass("invisible");
 	$("#rule-editor-box").removeClass("invisible");
 	$(".edui-container").removeAttr("style");
 	$(".edui-body-container").removeAttr("style").css({"height":"600px"});
-	um.setContent($("#rule-content").html());
+	if(index){
+		um.setContent($("#rule-row-"+row+"-"+index).html());
+	} else {
+		um.setContent($("#rule-row-"+row).html());
+	}
 }
 
 function showRuleContent(){

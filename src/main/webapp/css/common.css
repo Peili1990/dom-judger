@@ -231,4 +231,32 @@ fieldset{
 	margin-left:10px;
 }
 
+.spoiler-header{
+	margin:20px; 
+	margin-top:5px
+}
+
+.spoiler-title{
+	margin-bottom:2px"
+}
+
+.spoiler-button{
+	
+	width:60px;
+	font-size:13px;
+	margin-left:5px;
+	padding:0px;
+}
+
+.spoiler-body{
+	margin: 0px; 
+	padding: 6px; 
+	border: 1px inset;
+}
+
+.no-border-side{
+	border-left:none;
+	border-right:none;
+}
+
 
