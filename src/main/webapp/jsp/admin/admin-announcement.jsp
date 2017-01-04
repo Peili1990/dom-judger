@@ -162,7 +162,7 @@
         						<div class="am-form-group">
            							<label class="am-u-sm-2 am-form-label">座位表</label>
             						<div class="am-u-sm-10">
-              							<textarea id="seat-table" placeholder="座位表"></textarea>
+              							<textarea id="seat-table" placeholder="座位表" style="height:200px"></textarea>
             						</div>
         						</div>
         						<div class="am-form-group">
@@ -193,7 +193,7 @@
 <jsp:include page="../layout/footer.jsp"></jsp:include>
 
 <script type="text/javascript">
-var um = UM.getEditor("seat-table");
+var um = UE.getEditor("seat-table");
 var publishAction = 0;
 var editAction = 0;
 var gameId = ${gameId}

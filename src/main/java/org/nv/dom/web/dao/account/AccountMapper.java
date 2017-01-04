@@ -1,7 +1,5 @@
 package org.nv.dom.web.dao.account;
 
-import java.util.List;
-
 import org.nv.dom.domain.user.User;
 import org.nv.dom.dto.account.LoginDTO;
 import org.nv.dom.dto.account.RegisterDTO;

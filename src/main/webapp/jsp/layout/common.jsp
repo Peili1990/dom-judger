@@ -6,15 +6,14 @@
 <meta name="format-detection" content="telephone=no">
 <meta name="renderer" content="webkit">
 <meta http-equiv="Cache-Control" content="no-siteapp" />
-<link rel="stylesheet" href="${baseUrl}umeditor/themes/default/_css/umeditor.css">
 <link rel="stylesheet" href="${baseUrl}assets/css/amazeui.min.css"/>
 <link rel="stylesheet" href="${baseUrl}assets/css/admin.css">
 <link rel="stylesheet" type="text/css" href="${baseUrl}css/chat-panel.css">
 <link rel="stylesheet" type="text/css" href="${baseUrl}css/common.css">
 <script src="${baseUrl}js/common/jquery-3.0.0.min.js" type="text/javascript"></script>
 <script src="${baseUrl}js/common/reconnecting-websocket.min.js" type="text/javascript"></script>
-<script src="${baseUrl}umeditor/js/editor_api.js" type="text/javascript"></script>
-<script src="${baseUrl}umeditor/js/umeditor.config.js" type="text/javascript"></script>
+<script src="${baseUrl}ueditor/ueditor.config.js" type="text/javascript"></script>
+<script src="${baseUrl}ueditor/ueditor.all.js" type="text/javascript"></script>
 <script src="${baseUrl}js/common/common.js" type="text/javascript"></script>
 <script src="${baseUrl}assets/js/amazeui.min.js" type="text/javascript"></script>
 
