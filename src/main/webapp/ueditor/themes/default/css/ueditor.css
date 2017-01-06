@@ -563,6 +563,10 @@ div.edui-box {
     background-position: -220px 0;
 }
 
+.edui-default  .edui-for-spoiler .edui-icon{
+	background-position: -724px -102px;
+}
+
 .edui-default  .edui-for-forecolor .edui-icon {
     background-position: -720px 0;
 }

@@ -12234,6 +12234,47 @@ UE.plugins['removeformat'] = function(){
 
 };
 
+//plugins/spoiler.js
+UE.plugins['spoiler'] = function () {
+	
+	var me = this;
+	
+	var spoiler = '<div class="spoiler-header">'+
+				  '<div class="spoiler-title">'+
+                  '<strong>剧透</strong>'+
+				  '<em>在这里输入标题</em>'+			
+                  '<div class="spoiler-button am-btn am-btn-default">显示</div></div>'+
+				  '<div class="spoiler-body">'+
+                  '<div class="invisible">在这里输入内容</div></div></div>'
+
+    me.commands['spoiler'] = {
+
+        execCommand: function (cmdName) {
+
+            //在这里实现具体的命令的行为
+            //当调用 editor.execCommand(name) 时， 该方法就会被调用
+            //保存功能的实际代码由用户自己实现
+			this.focus();
+			this.execCommand('inserthtml',spoiler);
+
+        },
+        queryCommandState: function () {
+
+            //这里返回只能是 1, 0, -1
+            //1代表当前命令已经执行过了
+            //0代表当前命令未执行
+            //-1代表当前命令不可用
+
+            //在这里总是返回0， 这样做可以使保存按钮一直可点击
+            return 0;
+        },
+        //声明该插件不支持“撤销／保存”功能， 这样就不会触发ctrl+z 和ctrl+y的记忆功能
+        notNeedUndo: 1
+
+    };
+
+};
+
 
 // plugins/blockquote.js
 /**
@@ -14139,7 +14180,6 @@ UE.plugins['dragdrop'] = function (){
         }
     })
 };
-
 
 // plugins/undo.js
 /**
@@ -27826,7 +27866,7 @@ UE.ui = baidu.editor.ui = {};
     var btnCmds = ['undo', 'redo', 'formatmatch',
         'bold', 'italic', 'underline', 'fontborder', 'touppercase', 'tolowercase',
         'strikethrough', 'subscript', 'superscript', 'source', 'indent', 'outdent',
-        'blockquote', 'pasteplain', 'pagebreak',
+        'blockquote', 'spoiler', 'pasteplain', 'pagebreak',
         'selectall', 'print','horizontal', 'removeformat', 'time', 'date', 'unlink',
         'insertparagraphbeforetable', 'insertrow', 'insertcol', 'mergeright', 'mergedown', 'deleterow',
         'deletecol', 'splittorows', 'splittocols', 'splittocells', 'mergecells', 'deletetable', 'drafts'];
@@ -29560,6 +29600,40 @@ UE.registerUI('autosave', function(editor) {
 
 });
 
+UE.registerUI('spoiler', function( name ){
 
+    //该方法里的this指向编辑器实例
+
+    var me = this,
+
+        //实例化一个UMEDITOR提供的按钮对象
+        $button = new UE.ui.Button({
+            //按钮icon的名字， 在这里会生成一个“edui-icon-save”的className的icon box，
+            //用户可以重写该className的background样式来更改icon的图标
+            //覆盖示例见btn.css
+            'icon': 'spoiler',
+            'title': me.options.lang === "zh-cn" ? "剧透" : "spoiler",
+            'click': function(){
+                //在这里处理按钮的点击事件
+                //点击之后执行save命令
+                me.execCommand( name );
+            }
+        });
+
+    //在这里处理保存按钮的状态反射
+    me.addListener( "selectionchange", function () {
+
+        //检查当前的编辑器状态是否可以使用save命令
+        var state = this.queryCommandState( name );
+
+        //如果状态表示是不可用的( queryCommandState()的返回值为-1 )， 则要禁用该按钮
+        $button.edui().disabled( state == -1 ).active( state == 1 );
+
+    } );
+
+    //返回该按钮对象后， 该按钮将会被附加到工具栏上
+    return $button;
+
+});
 
 })();

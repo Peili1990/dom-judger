@@ -259,4 +259,12 @@ fieldset{
 	border-right:none;
 }
 
+.float-right{
+	float:right;
+}
+
+#rule-content .operation .am-btn{
+	width:120px;
+}
+
 

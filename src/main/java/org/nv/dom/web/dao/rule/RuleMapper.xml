@@ -53,5 +53,42 @@
 			d_rule_index dri
 	
 	</select>
+	
+	<insert id="saveRule" parameterType="SaveRuleDTO">
+	
+		<if test="index==null">
+			UPDATE
+				d_rule dr
+			SET
+				dr.content = #{content}
+			WHERE
+				dr.id = #{row}
+		</if>
+		<if test="index!=null">
+			<if test="newIndex==0">
+			UPDATE
+				d_rule_index dri
+			SET
+				dri.content = #{content}
+			WHERE
+				dri.chapter_id = #{row} AND dri.index_id = #{index}
+			</if>
+			<if test="newIndex==1">
+			INSERT INTO d_rule_index(
+				chapter_id,
+				index_id,
+				header,
+				content
+			)
+			VALUES(
+				#{row},
+				#{index},
+				#{header},
+				#{content}
+			)		
+			</if>
+		</if>
+	
+	</insert>
 
 </mapper>

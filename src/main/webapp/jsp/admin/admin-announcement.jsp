@@ -193,7 +193,10 @@
 <jsp:include page="../layout/footer.jsp"></jsp:include>
 
 <script type="text/javascript">
-var um = UE.getEditor("seat-table");
+var um = UE.getEditor("seat-table",{
+	autoHeightEnabled : false,
+	elementPathEnabled : false
+});
 var publishAction = 0;
 var editAction = 0;
 var gameId = ${gameId}

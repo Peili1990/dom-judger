@@ -33,6 +33,16 @@ public class RuleIndex {
 		this.content = content;
 	}
 	
+	public RuleIndex() {
+		super();
+	}
 	
-
+	public RuleIndex(Integer indexId, Integer chapterId, String header) {
+		super();
+		this.indexId = indexId;
+		this.chapterId = chapterId;
+		this.header = header;
+	}
+	
+	
 }

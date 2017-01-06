@@ -11699,3 +11699,26 @@ select {
 	margin-bottom:1rem
 }
 
+.spoiler-header{
+	margin:20px; 
+	margin-top:5px
+}
+
+.spoiler-title{
+	margin-bottom:2px"
+}
+
+.spoiler-button{
+	
+	width:60px;
+	font-size:13px;
+	margin-left:5px;
+	padding:0px;
+}
+
+.spoiler-body{
+	margin: 0px; 
+	padding: 6px; 
+	border: 1px inset;
+}
+

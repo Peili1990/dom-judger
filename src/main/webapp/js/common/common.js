@@ -418,6 +418,7 @@ function myPrompt(text,callback){
 	      relatedTarget: this,
 	      onConfirm: function(e){
 	    	  eval(callback);
+	    	  return $("input[name='header']").val();
 	      },
 	      onCancel: function(e) {
 	      }
@@ -445,6 +446,12 @@ function recoverTag(input){
 	if(typeof(input) == "undefined")
 		return "";
 	return input.replace(/\n|\r\n/g,"<br>");
+}
+
+function addClickAction(input){
+	if(typeof(input) == "undefined")
+		return "";
+	return input.replace(new RegExp('class="spoiler-button am-btn am-btn-default"',"g"),'class="spoiler-button am-btn am-btn-default" onclick="showSpoiler(this)"');
 }
 
 function getCurrentDb(userId) {
@@ -548,11 +555,11 @@ function indexOfKey(array,val){
 }
 
 function showSpoiler(obj){
-	if (obj.parentNode.parentNode.getElementsByTagName('div')[1].getElementsByTagName('div')[0].style.display != '') { 
-		obj.parentNode.parentNode.getElementsByTagName('div')[1].getElementsByTagName('div')[0].style.display = ''; 
+	if ($(obj).parent().next().children().hasClass('invisible')) { 
+		$(obj).parent().next().children().removeClass('invisible')
 		obj.innerHTML = '隐藏'; 
-	} else { 
-		obj.parentNode.parentNode.getElementsByTagName('div')[1].getElementsByTagName('div')[0].style.display = 'none';  
+	} else {
+		$(obj).parent().next().children().addClass('invisible')
 		obj.innerHTML = '显示'; 
 	}
 }

@@ -12,8 +12,6 @@ import org.nv.dom.domain.user.UserAuthority;
 import org.nv.dom.domain.user.UserCard;
 import org.nv.dom.dto.authority.AddUserCardDTO;
 import org.nv.dom.enums.PlayerStatus;
-import org.nv.dom.util.ConfigUtil;
-import org.nv.dom.util.FileUtil;
 import org.nv.dom.util.RandomCodeUtil;
 import org.nv.dom.util.RandomCodeUtil.CodeType;
 import org.nv.dom.util.StringUtil;
@@ -25,9 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service("authorityServiceImpl")
-public class AuthorityServiceImpl implements AuthorityService {
-	
-	private String filePath = ConfigUtil.getVersionConfigProperty("filePath");
+public class AuthorityServiceImpl extends BasicServiceImpl implements AuthorityService {
 	
 	private String defaultExpireDate = "2099-12-31";
 	
@@ -153,26 +149,6 @@ public class AuthorityServiceImpl implements AuthorityService {
 	}
 
 	@Override
-	public Map<String, Object> saveRule(String content, User user) {
-		Map<String, Object> result = new HashMap<String, Object>();
-		if( user==null || user.getAuthority() == null || user.getAuthority() < 2){
-			result.put(PageParamType.BUSINESS_STATUS, -2);
-			result.put(PageParamType.BUSINESS_MESSAGE,"权限不够，无法修改规则");
-			return result;
-		}
-		try{
-			FileUtil.writeLog(filePath, content);
-			result.put(PageParamType.BUSINESS_STATUS, 1);
-			result.put(PageParamType.BUSINESS_MESSAGE,"修改成功！");
-		}catch(Exception e){
-			logger.error(e.getMessage(),e);
-			result.put(PageParamType.BUSINESS_STATUS, -1);
-			result.put(PageParamType.BUSINESS_MESSAGE,"系统异常");
-		}
-		return result;
-	}
-
-	@Override
 	public String getInfoMessage() {
 		String message = "";
 		try{
@@ -232,7 +208,5 @@ public class AuthorityServiceImpl implements AuthorityService {
 		}	
 		return result;
 	}
-
-
 
 }

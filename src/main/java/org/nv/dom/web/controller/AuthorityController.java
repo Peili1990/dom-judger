@@ -8,7 +8,9 @@ import javax.servlet.http.HttpSession;
 import org.nv.dom.config.PageParamType;
 import org.nv.dom.domain.user.User;
 import org.nv.dom.dto.authority.AddUserCardDTO;
+import org.nv.dom.dto.rule.SaveRuleDTO;
 import org.nv.dom.web.service.AuthorityService;
+import org.nv.dom.web.service.RuleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -22,6 +24,9 @@ public class AuthorityController {
 	
 	@Autowired
 	AuthorityService authorityService;
+	
+	@Autowired
+	RuleService ruleService;
 	
 	@RequestMapping(value = "/addJudger", method = RequestMethod.POST)
 	@ResponseBody
@@ -46,10 +51,10 @@ public class AuthorityController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/saveRule", method = RequestMethod.POST)
-	public Map<String, Object> saveRule(@RequestParam("content")String content,HttpServletRequest request) {
+	public Map<String,Object> saveRule(@ModelAttribute("saveRuleDTO") SaveRuleDTO saveRuleDTO,HttpServletRequest request){
 		User user = (User) request.getSession().getAttribute(PageParamType.user_in_session);
-		return authorityService.saveRule(content,user);
-	}
+		return ruleService.saveRule(saveRuleDTO,user);
+	} 	
 	
 	@ResponseBody
 	@RequestMapping(value = "/submitInfoMessage", method = RequestMethod.POST)

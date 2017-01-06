@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%> 
 <!doctype html>
 <html class="no-js">
 <head>
@@ -26,26 +27,41 @@
     <div class="am-g">
     	<div class="am-u-sm-12 am-u-sm-centered" id="rule-content-box">
 			<div class="am-panel am-panel-default">
-				<div class="am-panel-bd" id="rule-content">
-					<c:forEach items="${ rules }" var="rule">
-						<div class="am-panel-hd">
-		 					<h2 class="am-panel-title">
-		 					${ rule.chapter}
-		 					</h2>
-						</div>
-						<div class="am-panel-bd" onclick="showRuleEditor(${rule.chapterId})">
-							<div id="rule-row-${rule.chapterId}">
-								${rule.content}
+				<div class="am-panel-bd">
+					<div id="rule-content">
+						<c:forEach items="${ rules }" var="rule">
+							<div class="am-panel-hd">
+		 						<h2 class="am-panel-title">
+		 						${ rule.chapter}
+		 						</h2> 
+							</div>
+							<div class="am-panel-bd">
+								<c:if test="${user.authority > 1}">
+								<div class="am-form-group operation">
+									<input type="button" class="am-btn am-btn-primary" value="编辑此模块" onclick="showRuleEditor(${rule.chapterId},0)">	
+									<input type="button" class="am-btn am-btn-danger" value="增加子模块" onclick="showRuleEditor(${rule.chapterId},1,${fn:length(rule.indexs)})">						
+								</div>
+								</c:if>
+								<div id="rule-row-${rule.chapterId}">
+									${rule.content}
+								</div>														
 							</div>
 							<c:if test="${not empty rule.indexs}">
-								<c:forEach items="${rule.indexs }" var="index">
-									<div class="am-panel-bd" onclick="showRuleEditor(${rule.chapterId},${index.indexId})" id="rule-row-${rule.chapterId }-${index.indexId}">
-										${index.content}
-									</div>
+								<c:forEach items="${rule.indexs}" var="index">
+									<div class="am-panel-bd">
+										<c:if test="${user.authority > 1}">
+										<div class="am-form-group operation">
+											<input type="button" class="am-btn am-btn-primary" value="编辑此模块" onclick="showRuleEditor(${rule.chapterId},0,${index.indexId})">	
+										</div>
+										</c:if>
+										<div id="rule-row-${rule.chapterId }-${index.indexId}">
+											${index.content}
+										</div>																	
+									</div>								
 								</c:forEach>
 							</c:if>
-						</div>
-					</c:forEach>
+						</c:forEach>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -56,12 +72,12 @@
 			<div class="am-panel am-panel-default">
 				<div class="am-panel-bd">
 					<div class="am-form-group operation">
-						<input type="button" class="am-btn am-btn-primary" value="保存规则" onclick="saveRule()">	
+						<input type="button" class="am-btn am-btn-primary" value="保存规则">	
 						<input type="button" class="am-btn am-btn-danger" value="返回" onclick="showRuleContent()">						
 					</div>
 				</div>
 				<div class="am-panel-bd">
-					<textarea id="rule-editor"></textarea> 
+					<textarea id="rule-editor" style="height:600px"></textarea> 
 				</div>
 			</div>
 		</div>
@@ -76,23 +92,39 @@
 <jsp:include page="../layout/footer.jsp"></jsp:include>
 
 <script type="text/javascript">
-var um = UM.getEditor("rule-editor");
+var um = UE.getEditor("rule-editor",{
+	'enterTag':'br',
+	'allowDivTransToP':false,
+	'autoHeightEnabled' : false,
+	'iframeCssUrl' :getRootPath()+'/assets/css/amazeui.min.css'});
 
 
 $(function(){
 	$(".admin-sidebar-list > li:eq(2) .am-icon-angle-right").removeClass("invisible");
 })
 
-function showRuleEditor(row,index){
+function showRuleEditor(row,newIndex,index){
 	$("#rule-content-box").addClass("invisible");
 	$("#rule-editor-box").removeClass("invisible");
 	$(".edui-container").removeAttr("style");
 	$(".edui-body-container").removeAttr("style").css({"height":"600px"});
-	if(index){
+	if(newIndex==1){
+		um.setContent("");
+		$("#rule-editor-box .am-btn-primary").unbind("click").click(function(){
+			myPrompt('请输入子模块的标题','saveRule('+row+','+index+',1)');			
+		})
+	} else if(index!=null){
 		um.setContent($("#rule-row-"+row+"-"+index).html());
+		$("#rule-editor-box .am-btn-primary").unbind("click").click(function(){
+			saveRule(row,index,0)
+		})
 	} else {
 		um.setContent($("#rule-row-"+row).html());
+		$("#rule-editor-box .am-btn-primary").unbind("click").click(function(){
+			saveRule(row,null,0)
+		})
 	}
+	
 }
 
 function showRuleContent(){
@@ -100,10 +132,16 @@ function showRuleContent(){
 	$("#rule-editor-box").addClass("invisible");
 }
 
-function saveRule(){
+function saveRule(row,index,newIndex){
 	var url = getRootPath() + "/saveRule";
 	var options = {
-			content : um.getContent()
+			row : row,
+			index : index,
+			newIndex : newIndex,
+			content : addClickAction(um.getContent()).trim()
+	}
+	if(newIndex==1){
+		options.header = $("input[name='header']").val();
 	}
 	var common = new Common();
 	common.callAction(options,url,function(data){
@@ -122,6 +160,14 @@ function saveRule(){
 		}
 	})
 }
+
+$.each($("#rule-content .am-panel-bd"),function(){
+	$(this).hover(function(){
+		$(this).find(".float-toolbar").stop().fadeIn();
+	},function(){
+		$(this).find(".float-toolbar").stop().fadeOut();
+	})
+})
 </script>
 
 </body>
