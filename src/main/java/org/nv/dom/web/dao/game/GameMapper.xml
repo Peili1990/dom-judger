@@ -230,7 +230,8 @@
 				  	dpr.camp=#{item.camp},
 				  	dpr.is_life=#{item.isLife},
 				  	dpr.is_mute=#{item.isMute},
-				  	dpr.position=#{item.position}
+				  	dpr.position=#{item.position},
+				  	dpr.has_position=#{item.hasPosition}
 				  	<if test="item.action != null">
 				  	,dpr.action=#{item.action}
 				  	</if>

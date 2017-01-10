@@ -1,6 +1,8 @@
 package org.nv.dom.web.service.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -89,9 +91,13 @@ public class AssembleServiceImpl implements AssembleService {
 	}
 	
 	private String generateSeatTableHtml(List<PlayerInfo> players){
-		for(PlayerInfo player:players){
-			if(player.getIsLife()!=null&&player.getIsLife()==0){
-				player.setCharacterName("<strike>"+player.getCharacterName()+"</strike>");
+		List<PlayerInfo> temp = new ArrayList<>();
+		Iterator<PlayerInfo> iter = players.iterator();
+		while(iter.hasNext()){
+			PlayerInfo player = iter.next();
+			if(player.getHasPosition()==0){
+				temp.add(player);
+				iter.remove();
 			}
 		}
 		StringBuffer seatTableHtml = new StringBuffer();
@@ -114,6 +120,9 @@ public class AssembleServiceImpl implements AssembleService {
 			}
 		}
 		seatTableHtml.append("</tbody></table>");
+		for(PlayerInfo player:temp){
+			seatTableHtml.append(player.getCharacterName()+"<br>");
+		}
 		return seatTableHtml.toString();
 	}
 

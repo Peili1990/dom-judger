@@ -22,6 +22,7 @@ import org.nv.dom.dto.game.ChangeStatusDTO;
 import org.nv.dom.dto.game.PublishGameDTO;
 import org.nv.dom.dto.player.ApplyDTO;
 import org.nv.dom.dto.player.KickPlayerDTO;
+import org.nv.dom.enums.CardType;
 import org.nv.dom.enums.GameStatus;
 import org.nv.dom.enums.PlayerStatus;
 import org.nv.dom.util.DateFormatUtil;
@@ -103,14 +104,7 @@ public class GameServiceImpl extends BasicServiceImpl implements GameService {
 						} else {
 							userApplyInfo.setApplyPioneer("否");
 						}
-						if(NVTermConstant.USE_IDENTITY_CARD.equals(userApplyInfo.getUseCard())){
-							userApplyInfo.setUseCard("身份卡");
-						} else if(NVTermConstant.USE_CAMP_CARD.equals(userApplyInfo.getUseCard())){
-							userApplyInfo.setUseCard("阵营卡");
-							
-						} else {
-							userApplyInfo.setUseCard("无");
-						}
+						userApplyInfo.setUseCard(CardType.getMessageByCode(Integer.parseInt(userApplyInfo.getUseCard() == null ? "0" : userApplyInfo.getUseCard())));
 					}
 				}
 				applyingGame.setAlterJudgers(alterJudger);

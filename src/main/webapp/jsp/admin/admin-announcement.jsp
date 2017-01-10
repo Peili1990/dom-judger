@@ -195,7 +195,8 @@
 <script type="text/javascript">
 var um = UE.getEditor("seat-table",{
 	autoHeightEnabled : false,
-	elementPathEnabled : false
+	elementPathEnabled : false,
+	enableAutoSave : false
 });
 var publishAction = 0;
 var editAction = 0;

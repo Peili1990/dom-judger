@@ -16,6 +16,8 @@ public class PlayerInfo {
 	private Integer sex;
 	/** 位置 */
 	private Integer position;
+	/** 是否在桌位表里 */
+	private Integer hasPosition;
 	/** 阵营 */
 	private Integer camp;
 	/** 存活 */
@@ -76,6 +78,12 @@ public class PlayerInfo {
 	}
 	public void setPosition(Integer position) {
 		this.position = position;
+	}
+	public Integer getHasPosition() {
+		return hasPosition;
+	}
+	public void setHasPosition(Integer hasPosition) {
+		this.hasPosition = hasPosition;
 	}
 	public Integer getCamp() {
 		return camp;

@@ -29623,11 +29623,7 @@ UE.registerUI('spoiler', function( name ){
     //在这里处理保存按钮的状态反射
     me.addListener( "selectionchange", function () {
 
-        //检查当前的编辑器状态是否可以使用save命令
-        var state = this.queryCommandState( name );
-
-        //如果状态表示是不可用的( queryCommandState()的返回值为-1 )， 则要禁用该按钮
-        $button.edui().disabled( state == -1 ).active( state == 1 );
+        
 
     } );
 

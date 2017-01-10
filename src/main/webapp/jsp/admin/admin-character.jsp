@@ -53,7 +53,7 @@
 								<table class="am-table am-table-striped am-table-hover table-main">
 									<thead>
 										<tr>
-											<th width="90px">角色</th>
+											<th width="120px">角色</th>
 											<th>实际身份</th>
 											<th>行动</th>
 											<th>特权</th>
@@ -192,6 +192,16 @@
         						<input type="radio" name="is-sp" value="1"> sp
       						</label>
 						</div>
+						<div class="am-form-group">
+							<label>是否在座位表里</label>
+							<br> 
+							<label class="am-radio-inline">
+       							<input type="radio" name="has-position" value="1"> 是
+      						</label>
+      						<label class="am-radio-inline">
+        						<input type="radio" name="has-position" value="0"> 否
+      						</label>
+						</div>
 					</div>
 					<div class="am-form-group" style="text-align:center;">
 						<input type="button" class="am-btn am-btn-primary" value="确定" name="confirm">
@@ -232,6 +242,7 @@ function showPlayerStatus(index){
 	changeRadioValue($("input[name='is-mute']"),players[index].isMute);
 	changeRadioValue($("input[name='camp']"),players[index].camp);
 	changeRadioValue($("input[name='is-sp']"),players[index].isSp);
+	changeRadioValue($("input[name='has-position']"),players[index].hasPosition);
 	$("input[name='confirm']").unbind("click").on("click",function(){
 		changePlayerStatus(index);
 	})
@@ -372,6 +383,15 @@ function changePlayerStatus(index){
 		player.css({"color":"purple"});
 		break;
 	}
+	players[index].hasPosition=parseInt($("input[name='has-position']:checked").val());
+	switch(players[index].hasPosition){
+	case 0:
+		player.text(player.text().indexOf("(")<0?"("+player.text()+")":player.text());
+		break;
+	case 1:
+		player.text(player.text().replace("(","").replace(")",""));
+		break;
+	}
 	playerPanel.modal("close");
 }
 
@@ -425,6 +445,7 @@ function getSubmitTime(index){
 
 
 function saveForm(needAlert){
+	myLoading();
 	$.each($("#character-info tr"),function(index,tr){
 		inputs = $(tr).find("input");
 		players[index].identityDesc = inputs.eq(0).val();
@@ -443,6 +464,7 @@ function saveForm(needAlert){
 		switch (data.status) {
 		case 1:
 			if(needAlert){
+				myLoadingClose();
 				myInfo("保存表格成功！",function(){
 					window.location = getRootPath() + "/admin-character";
 				})
@@ -543,6 +565,9 @@ function addstatusStyle(players){
 		}
 		if(players[index].isSp == "1"){
 			player.text("sp"+players[index].characterName);
+		}
+		if(players[index].hasPosition == "0"){
+			player.text("("+player.text()+")");
 		}
 		switch(players[index].camp){
 		case 1:

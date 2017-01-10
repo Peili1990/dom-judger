@@ -32,7 +32,7 @@ function calOunei(){
 	var ouneiPosition = 0;
 	var lifePlayers = [];
 	$.each(players,function(index,player){
-		if(player.isLife == 1){
+		if(player.isLife == 1 && player.hasPosition == 1){
 			lifePlayers.push(player);
 			if(player.characterName == "欧内斯特"){
 				ouneiPosition = index;
@@ -44,12 +44,8 @@ function calOunei(){
 	while(!(clockwisePoint == anticlockwisePoint || 
 			clockwisePoint - anticlockwisePoint == 1 || 
 			parseInt(clockwisePoint) + parseInt(lifePlayers.length) - anticlockwisePoint == 1)){
-		while(decideSign(lifePlayers[clockwisePoint],clockwise)){
-			clockwisePoint = clockwisePoint == lifePlayers.length - 1 ? 0 : parseInt(clockwisePoint) + 1;
-		}
-		while(decideSign(lifePlayers[anticlockwisePoint],anticlockwise)){
-			anticlockwisePoint = anticlockwisePoint == 0 ? lifePlayers.length - 1 : anticlockwisePoint - 1;
-		}
+		decideSign(lifePlayers[clockwisePoint],clockwise);
+		decideSign(lifePlayers[anticlockwisePoint],anticlockwise);
 		clockwisePoint = clockwisePoint == lifePlayers.length - 1 ? 0 : parseInt(clockwisePoint) + 1;
 		anticlockwisePoint = anticlockwisePoint == 0 ? lifePlayers.length - 1 : anticlockwisePoint - 1;
 	}
@@ -59,15 +55,11 @@ function calOunei(){
 
 function decideSign(player,counter){
 	if(player.characterName=="叶什（兄）"&&player.isSp == 0){
-		return false;
+		return;
 	}
 	if(player.sign!=11&&player.sign!=12&&player.sign!=23){
 		counter.count++;
 	}
-	if(player.characterName=="布莱克"){
-		return true;
-	}
-	return false;
 }
 
 </script>

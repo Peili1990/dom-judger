@@ -96,6 +96,7 @@ var um = UE.getEditor("rule-editor",{
 	'enterTag':'br',
 	'allowDivTransToP':false,
 	'autoHeightEnabled' : false,
+	'enableAutoSave' : false,
 	'iframeCssUrl' :getRootPath()+'/assets/css/amazeui.min.css'});
 
 
@@ -138,7 +139,7 @@ function saveRule(row,index,newIndex){
 			row : row,
 			index : index,
 			newIndex : newIndex,
-			content : addClickAction(um.getContent()).trim()
+			content : dealRuleText(um.getContent()).trim()
 	}
 	if(newIndex==1){
 		options.header = $("input[name='header']").val();

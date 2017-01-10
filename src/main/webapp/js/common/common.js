@@ -425,6 +425,14 @@ function myPrompt(text,callback){
 	});
 }
 
+function myLoading(){
+	$("#my-loading").modal('open');
+}
+
+function myLoadingClose(){
+	$("#my-loading").modal('close');
+}
+
 function timeoutHandle(){
 	myInfo("登录超时",function(){
 		window.location = getRootPath() + "/index";
@@ -448,10 +456,10 @@ function recoverTag(input){
 	return input.replace(/\n|\r\n/g,"<br>");
 }
 
-function addClickAction(input){
+function dealRuleText(input){
 	if(typeof(input) == "undefined")
 		return "";
-	return input.replace(new RegExp('class="spoiler-button am-btn am-btn-default"',"g"),'class="spoiler-button am-btn am-btn-default" onclick="showSpoiler(this)"');
+	return input.replace(new RegExp('class="spoiler-button am-btn am-btn-default"',"g"),'class="spoiler-button am-btn am-btn-default" onclick="showSpoiler(this)"').replace(new RegExp('<p>',"g"),'').replace(new RegExp('</p>',"g"),'');
 }
 
 function getCurrentDb(userId) {
@@ -563,3 +571,5 @@ function showSpoiler(obj){
 		obj.innerHTML = '显示'; 
 	}
 }
+
+

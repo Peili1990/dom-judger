@@ -147,7 +147,7 @@
                     				<button type="button" class="am-btn am-btn-default am-btn-xs am-text-secondary" title="查看版杀记录"><span class="am-icon-pencil-square-o"></span></button>
                    					<button type="button" class="am-btn am-btn-default am-btn-xs" title="发送消息" onclick="establishChat(${player.playerId},'player')"><span class="am-icon-paper-plane-o"></span></button>
                    					<c:if test="${ applyingGame.gameStatus == 1 }">
-                    					<button type="button" class="am-btn am-btn-default am-btn-xs am-text-danger" title="踢出游戏" onclick="myPrompt('被踢出的玩家将无法再次报名本次版杀<br/>请输入踢出理由','kickPlayer(${player.playerId})')"><span class="am-icon-trash-o"></span></button>
+                    					<button type="button" class="am-btn am-btn-default am-btn-xs am-text-danger" title="踢出游戏" onclick="kickPlayer(${playerStatus.index})"><span class="am-icon-trash-o"></span></button>
                   				  	</c:if>
                   				  </div>
                 				</div>
@@ -318,18 +318,22 @@ function extractIdentity(){
 	var players=gamedata.players;
 	var pioneerCandidate=[];
 	var flag=true;
+	var pioneerFlag = false;
 	$.each(players,function(index,player){
 		if(player.characterId == null){
 			myAlert("有玩家还未选择外在身份！")
 			flag=false;
 			return false;
 		}
-		if(player.useCard == "无"){
+		if(player.useCard == "无" || player.useCard == "特权卡"){
 			player.sign=null;
 			if(player.applyPioneer == "是"){
 				pioneerCandidate.push(index);
 			}
-		}	
+		}
+		if(player.useCard == "先驱卡"){
+			pioneerFlag = true;
+		}
 	})
 	if(!flag) return;
 	var playerNum = players.length;
@@ -345,17 +349,19 @@ function extractIdentity(){
 						})
 					}	
 				})
-				if(pioneerCandidate.length==0){
-					array.push({
-	                    "sign": 11,
-	                    "desc": "平民"
-	                });
-				} else {
-					pioneer = pioneerCandidate[parseInt(pioneerCandidate.length*Math.random())]
-					players[pioneer].sign = 12;
-					players[pioneer].identityDesc = "先驱";
-					players[pioneer].camp = 1;
-					$("#apply-info tr:eq("+pioneer+") td:eq(6)").text("先驱");
+				if(!pioneerFlag){
+					if(pioneerCandidate.length==0){
+						array.push({
+	                    	"sign": 11,
+	                    	"desc": "平民"
+	                	});
+					} else {
+						pioneer = pioneerCandidate[parseInt(pioneerCandidate.length*Math.random())]
+						players[pioneer].sign = 12;
+						players[pioneer].identityDesc = "先驱";
+						players[pioneer].camp = 1;
+						$("#apply-info tr:eq("+pioneer+") td:eq(6)").text("先驱");
+					}
 				}
 				array.shuffle();
 				offset=0;
@@ -389,6 +395,7 @@ function submitList(gameId){
 		var killerCount = 0;
 		$.each(players,function(index,player){
 			player.position=index;
+			player.hasPosition=player.characterId == 45 ? 0:1;
 			player.isLife=1;
 			player.isMute=0;
 			switch(player.sign){
@@ -576,10 +583,14 @@ function submitApply(gameId){
 	});
 }
 
-function kickPlayer(playerId){
+function kickPlayer(index){
+	if(gamedata.players[index].useCard!="无"){
+		myAlert("该玩家使用了卡片，无法踢出");
+		return;
+	}
 	var url = getRootPath() + "/game/kickPlayer";
 	var options = {
-			playerId : playerId,
+			playerId : gamedata.players[index].playerId,
 			reason : $("input[name='header']").val()
 		};
 	var common = new Common();
