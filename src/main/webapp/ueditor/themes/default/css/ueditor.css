@@ -567,6 +567,10 @@ div.edui-box {
 	background-position: -724px -102px;
 }
 
+.edui-default  .edui-for-insertbbcode .edui-icon{
+	background-position: -402px -20px;
+}
+
 .edui-default  .edui-for-forecolor .edui-icon {
     background-position: -720px 0;
 }

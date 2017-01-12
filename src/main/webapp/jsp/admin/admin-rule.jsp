@@ -85,6 +85,20 @@
     
     </div>
   </div>
+  
+  <div class="am-modal am-modal-confirm" tabindex="-1" id="my-textarea">
+  <div class="am-modal-dialog">
+    <div class="am-modal-hd">维多利亚的噩梦</div>
+    <div class="am-modal-bd">
+    	请将bb代码复制到以下对话框
+    <textarea id="bbcode-area"></textarea>
+    </div>
+    <div class="am-modal-footer">
+      <span class="am-modal-btn" data-am-modal-confirm>确定</span>
+      <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+    </div>
+  </div>
+  </div>
    <!-- content end -->
 
 </div>

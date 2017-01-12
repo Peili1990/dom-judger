@@ -12241,8 +12241,8 @@ UE.plugins['spoiler'] = function () {
 	
 	var spoiler = '<div class="spoiler-header">'+
 				  '<div class="spoiler-title">'+
-                  '<strong>剧透</strong>'+
-				  '<em>在这里输入标题</em>'+			
+                  '<strong>剧透 </strong>'+
+				  '<em>在这里输入标题： </em>'+			
                   '<div class="spoiler-button am-btn am-btn-default">显示</div></div>'+
 				  '<div class="spoiler-body">'+
                   '<div class="invisible">在这里输入内容</div></div></div>'
@@ -12274,6 +12274,93 @@ UE.plugins['spoiler'] = function () {
     };
 
 };
+
+//plugins/insertBBcode.js
+UE.plugins['insertbbcode'] = function () {
+	
+	var me = this;
+
+    me.commands['insertbbcode'] = {
+
+        execCommand: function (cmdName) {
+
+            //在这里实现具体的命令的行为
+            //当调用 editor.execCommand(name) 时， 该方法就会被调用
+            //保存功能的实际代码由用户自己实现
+        	$("#bbcode-area").val("");
+        	$("#my-textarea").modal({
+        		 relatedTarget: this,
+        		 onConfirm: function(e){
+        			 var str = $("#bbcode-area").val();
+        			 str = str.replace(/</ig, '&lt;');
+        	         str = str.replace(/>/ig, '&gt;');
+        	         str = str.replace(/\n|\r\n/g, '<br>');
+        	         str = str.replace(/\[hr\]/ig, '<hr/>');
+        	         str = str.replace(/\[\/(size|color|font|backcolor|left|center|right|justify)\]/ig, '</span>');
+        	         str = str.replace(/\[(sub|sup|u|i|s|b|blockquote|li)\]/ig, '<$1>');
+        	         str = str.replace(/\[\/(sub|sup|u|i|s|b|blockquote|li)\]/ig, '</$1>');
+        	         str = str.replace(/\[(\/)?h([1-6])\]/ig, '<$1h$2>');
+
+        	         str = str.replace(/\[(left|center|right|justify)\]/ig, '<span align="$1">');
+        	         str = str.replace(/\[size=([^\[\<]+?)\]/ig, '<span style="font-size:$1">');
+        	         str = str.replace(/\[color=([^\[\<]+?)\]/ig, '<span style="color:$1">');
+        	         str = str.replace(/\[backcolor=([^\[\<]+?)\]/ig, '<span style="background-color:$1">');
+        	         str = str.replace(/\[font=([^\[\<]+?)\]/ig, '<span style="font-family:$1">');
+        	         str = str.replace(/\[list=(a|A|1)\](.+?)\[\/list\]/ig, '<ol type="$1">$2</ol>');
+        	         str = str.replace(/\[(\/)?list\]/ig, '<$1ul>');
+
+        	         str = str.replace(/\[img\]([^\[]*)\[\/img\]/ig, '<img src="$1" border="0" />');
+        	         str = str.replace(/\[url=([^\]]+)\]([^\[]+)\[\/url\]/ig, '<a href="$1">' + '$2' + '</a>');
+        	         str = str.replace(/\[url\]([^\[]+)\[\/url\]/ig, '<a href="$1">' + '$1' + '</a>');
+        	         
+        	         str = str.replace(/\[(quote)\]/ig,'<blockquote>');
+        	         str = str.replace(/\[\/(quote)\]/ig, '</blockquote>');
+        	         str = str.replace(/\[quote=([^\[\<]+?)\]/ig,'<div>$1</div><blockquote>');
+        	         
+        	         str = str.replace(/\[(spoiler)\]/ig,'<div class="spoiler-header">'+
+        	        		 							 '<div class="spoiler-title">'+
+        	     										 '<strong>剧透 </strong>'+
+        	     										 '<em>'+ 
+        	     									 	 '</em>'+
+        	     										 '<div class="spoiler-button am-btn am-btn-default" onclick="showSpoiler(this)">显示</div>'+
+        	     										 '</div>'+
+        	     										 '<div class="spoiler-body">'+
+        	     										 '<div class="invisible">');
+        	         str = str.replace(/\[\/(spoiler)\]/ig, '</div></div></div>');
+        	         str = str.replace(/\[spoiler=([^\[\<]+?)\]/ig,'<div class="spoiler-header">'+
+        						 								   '<div class="spoiler-title">'+
+        							 							   '<strong>剧透 </strong>'+
+        							 							   '<em>$1： '+ 
+        						 	 							   '</em>'+
+        							 							   '<div class="spoiler-button am-btn am-btn-default" onclick="showSpoiler(this)">显示</div>'+
+        							 							   '</div>'+
+        							 							   '<div class="spoiler-body">'+
+        							 							   '<div class="invisible">');
+        	         me.focus();
+        	         me.execCommand('inserthtml',str);
+       	      }
+        	});
+			
+
+        },
+        queryCommandState: function () {
+
+            //这里返回只能是 1, 0, -1
+            //1代表当前命令已经执行过了
+            //0代表当前命令未执行
+            //-1代表当前命令不可用
+
+            //在这里总是返回0， 这样做可以使保存按钮一直可点击
+            return 0;
+        },
+        //声明该插件不支持“撤销／保存”功能， 这样就不会触发ctrl+z 和ctrl+y的记忆功能
+        notNeedUndo: 1
+
+    };
+
+};
+
+
 
 
 // plugins/blockquote.js
@@ -12310,143 +12397,173 @@ UE.plugins['spoiler'] = function () {
 
 
 UE.plugins['blockquote'] = function(){
-    var me = this;
-    function getObj(editor){
-        return domUtils.filterNodeList(editor.selection.getStartElementPath(),'blockquote');
-    }
+var me = this;
+	
+	var quote = '<div>在这里输入标题</div><blockquote>在这里输入内容</blockquote>';
+
     me.commands['blockquote'] = {
-        execCommand : function( cmdName, attrs ) {
-            var range = this.selection.getRange(),
-                obj = getObj(this),
-                blockquote = dtd.blockquote,
-                bookmark = range.createBookmark();
 
-            if ( obj ) {
+        execCommand: function (cmdName) {
 
-                    var start = range.startContainer,
-                        startBlock = domUtils.isBlockElm(start) ? start : domUtils.findParent(start,function(node){return domUtils.isBlockElm(node)}),
+            //在这里实现具体的命令的行为
+            //当调用 editor.execCommand(name) 时， 该方法就会被调用
+            //保存功能的实际代码由用户自己实现
+			this.focus();
+			this.execCommand('inserthtml',quote);
 
-                        end = range.endContainer,
-                        endBlock = domUtils.isBlockElm(end) ? end :  domUtils.findParent(end,function(node){return domUtils.isBlockElm(node)});
-
-                    //处理一下li
-                    startBlock = domUtils.findParentByTagName(startBlock,'li',true) || startBlock;
-                    endBlock = domUtils.findParentByTagName(endBlock,'li',true) || endBlock;
-
-
-                    if(startBlock.tagName == 'LI' || startBlock.tagName == 'TD' || startBlock === obj || domUtils.isBody(startBlock)){
-                        domUtils.remove(obj,true);
-                    }else{
-                        domUtils.breakParent(startBlock,obj);
-                    }
-
-                    if(startBlock !== endBlock){
-                        obj = domUtils.findParentByTagName(endBlock,'blockquote');
-                        if(obj){
-                            if(endBlock.tagName == 'LI' || endBlock.tagName == 'TD'|| domUtils.isBody(endBlock)){
-                                obj.parentNode && domUtils.remove(obj,true);
-                            }else{
-                                domUtils.breakParent(endBlock,obj);
-                            }
-
-                        }
-                    }
-
-                    var blockquotes = domUtils.getElementsByTagName(this.document,'blockquote');
-                    for(var i=0,bi;bi=blockquotes[i++];){
-                        if(!bi.childNodes.length){
-                            domUtils.remove(bi);
-                        }else if(domUtils.getPosition(bi,startBlock)&domUtils.POSITION_FOLLOWING && domUtils.getPosition(bi,endBlock)&domUtils.POSITION_PRECEDING){
-                            domUtils.remove(bi,true);
-                        }
-                    }
-
-
-
-
-            } else {
-
-                var tmpRange = range.cloneRange(),
-                    node = tmpRange.startContainer.nodeType == 1 ? tmpRange.startContainer : tmpRange.startContainer.parentNode,
-                    preNode = node,
-                    doEnd = 1;
-
-                //调整开始
-                while ( 1 ) {
-                    if ( domUtils.isBody(node) ) {
-                        if ( preNode !== node ) {
-                            if ( range.collapsed ) {
-                                tmpRange.selectNode( preNode );
-                                doEnd = 0;
-                            } else {
-                                tmpRange.setStartBefore( preNode );
-                            }
-                        }else{
-                            tmpRange.setStart(node,0);
-                        }
-
-                        break;
-                    }
-                    if ( !blockquote[node.tagName] ) {
-                        if ( range.collapsed ) {
-                            tmpRange.selectNode( preNode );
-                        } else{
-                            tmpRange.setStartBefore( preNode);
-                        }
-                        break;
-                    }
-
-                    preNode = node;
-                    node = node.parentNode;
-                }
-
-                //调整结束
-                if ( doEnd ) {
-                    preNode = node =  node = tmpRange.endContainer.nodeType == 1 ? tmpRange.endContainer : tmpRange.endContainer.parentNode;
-                    while ( 1 ) {
-
-                        if ( domUtils.isBody( node ) ) {
-                            if ( preNode !== node ) {
-
-                                tmpRange.setEndAfter( preNode );
-
-                            } else {
-                                tmpRange.setEnd( node, node.childNodes.length );
-                            }
-
-                            break;
-                        }
-                        if ( !blockquote[node.tagName] ) {
-                            tmpRange.setEndAfter( preNode );
-                            break;
-                        }
-
-                        preNode = node;
-                        node = node.parentNode;
-                    }
-
-                }
-
-
-                node = range.document.createElement( 'blockquote' );
-                domUtils.setAttributes( node, attrs );
-                node.appendChild( tmpRange.extractContents() );
-                tmpRange.insertNode( node );
-                //去除重复的
-                var childs = domUtils.getElementsByTagName(node,'blockquote');
-                for(var i=0,ci;ci=childs[i++];){
-                    if(ci.parentNode){
-                        domUtils.remove(ci,true);
-                    }
-                }
-
-            }
-            range.moveToBookmark( bookmark ).select();
         },
-        queryCommandState : function() {
-            return getObj(this) ? 1 : 0;
-        }
+        queryCommandState: function () {
+
+            //这里返回只能是 1, 0, -1
+            //1代表当前命令已经执行过了
+            //0代表当前命令未执行
+            //-1代表当前命令不可用
+
+            //在这里总是返回0， 这样做可以使保存按钮一直可点击
+            return 0;
+        },
+        //声明该插件不支持“撤销／保存”功能， 这样就不会触发ctrl+z 和ctrl+y的记忆功能
+        notNeedUndo: 1
+
     };
+//    var me = this;
+//    function getObj(editor){
+//        return domUtils.filterNodeList(editor.selection.getStartElementPath(),'blockquote');
+//    }
+//    me.commands['blockquote'] = {
+//        execCommand : function( cmdName, attrs ) {
+//            var range = this.selection.getRange(),
+//                obj = getObj(this),
+//                blockquote = dtd.blockquote,
+//                bookmark = range.createBookmark();
+//
+//            if ( obj ) {
+//
+//                    var start = range.startContainer,
+//                        startBlock = domUtils.isBlockElm(start) ? start : domUtils.findParent(start,function(node){return domUtils.isBlockElm(node)}),
+//
+//                        end = range.endContainer,
+//                        endBlock = domUtils.isBlockElm(end) ? end :  domUtils.findParent(end,function(node){return domUtils.isBlockElm(node)});
+//
+//                    //处理一下li
+//                    startBlock = domUtils.findParentByTagName(startBlock,'li',true) || startBlock;
+//                    endBlock = domUtils.findParentByTagName(endBlock,'li',true) || endBlock;
+//
+//
+//                    if(startBlock.tagName == 'LI' || startBlock.tagName == 'TD' || startBlock === obj || domUtils.isBody(startBlock)){
+//                        domUtils.remove(obj,true);
+//                    }else{
+//                        domUtils.breakParent(startBlock,obj);
+//                    }
+//
+//                    if(startBlock !== endBlock){
+//                        obj = domUtils.findParentByTagName(endBlock,'blockquote');
+//                        if(obj){
+//                            if(endBlock.tagName == 'LI' || endBlock.tagName == 'TD'|| domUtils.isBody(endBlock)){
+//                                obj.parentNode && domUtils.remove(obj,true);
+//                            }else{
+//                                domUtils.breakParent(endBlock,obj);
+//                            }
+//
+//                        }
+//                    }
+//
+//                    var blockquotes = domUtils.getElementsByTagName(this.document,'blockquote');
+//                    for(var i=0,bi;bi=blockquotes[i++];){
+//                        if(!bi.childNodes.length){
+//                            domUtils.remove(bi);
+//                        }else if(domUtils.getPosition(bi,startBlock)&domUtils.POSITION_FOLLOWING && domUtils.getPosition(bi,endBlock)&domUtils.POSITION_PRECEDING){
+//                            domUtils.remove(bi,true);
+//                        }
+//                    }
+//
+//
+//
+//
+//            } else {
+//
+//                var tmpRange = range.cloneRange(),
+//                    node = tmpRange.startContainer.nodeType == 1 ? tmpRange.startContainer : tmpRange.startContainer.parentNode,
+//                    preNode = node,
+//                    doEnd = 1;
+//
+//                //调整开始
+//                while ( 1 ) {
+//                    if ( domUtils.isBody(node) ) {
+//                        if ( preNode !== node ) {
+//                            if ( range.collapsed ) {
+//                                tmpRange.selectNode( preNode );
+//                                doEnd = 0;
+//                            } else {
+//                                tmpRange.setStartBefore( preNode );
+//                            }
+//                        }else{
+//                            tmpRange.setStart(node,0);
+//                        }
+//
+//                        break;
+//                    }
+//                    if ( !blockquote[node.tagName] ) {
+//                        if ( range.collapsed ) {
+//                            tmpRange.selectNode( preNode );
+//                        } else{
+//                            tmpRange.setStartBefore( preNode);
+//                        }
+//                        break;
+//                    }
+//
+//                    preNode = node;
+//                    node = node.parentNode;
+//                }
+//
+//                //调整结束
+//                if ( doEnd ) {
+//                    preNode = node =  node = tmpRange.endContainer.nodeType == 1 ? tmpRange.endContainer : tmpRange.endContainer.parentNode;
+//                    while ( 1 ) {
+//
+//                        if ( domUtils.isBody( node ) ) {
+//                            if ( preNode !== node ) {
+//
+//                                tmpRange.setEndAfter( preNode );
+//
+//                            } else {
+//                                tmpRange.setEnd( node, node.childNodes.length );
+//                            }
+//
+//                            break;
+//                        }
+//                        if ( !blockquote[node.tagName] ) {
+//                            tmpRange.setEndAfter( preNode );
+//                            break;
+//                        }
+//
+//                        preNode = node;
+//                        node = node.parentNode;
+//                    }
+//
+//                }
+//
+//
+//                node = range.document.createElement( 'blockquote' );
+//                domUtils.setAttributes( node, attrs );
+//                node.appendChild( tmpRange.extractContents() );
+//                tmpRange.insertNode( node );
+//                //去除重复的
+//                var childs = domUtils.getElementsByTagName(node,'blockquote');
+//                for(var i=0,ci;ci=childs[i++];){
+//                    if(ci.parentNode){
+//                        domUtils.remove(ci,true);
+//                    }
+//                }
+//
+//            }
+//            range.moveToBookmark( bookmark ).select();
+//        },
+//        queryCommandState : function() {
+//            return getObj(this) ? 1 : 0;
+//        }
+//    };
+	
 };
 
 
@@ -27866,7 +27983,7 @@ UE.ui = baidu.editor.ui = {};
     var btnCmds = ['undo', 'redo', 'formatmatch',
         'bold', 'italic', 'underline', 'fontborder', 'touppercase', 'tolowercase',
         'strikethrough', 'subscript', 'superscript', 'source', 'indent', 'outdent',
-        'blockquote', 'spoiler', 'pasteplain', 'pagebreak',
+        'blockquote', 'spoiler','insertbbcode', 'pasteplain', 'pagebreak',
         'selectall', 'print','horizontal', 'removeformat', 'time', 'date', 'unlink',
         'insertparagraphbeforetable', 'insertrow', 'insertcol', 'mergeright', 'mergedown', 'deleterow',
         'deletecol', 'splittorows', 'splittocols', 'splittocells', 'mergecells', 'deletetable', 'drafts'];
@@ -29597,38 +29714,6 @@ UE.registerUI('autosave', function(editor) {
 
         },2000)
     })
-
-});
-
-UE.registerUI('spoiler', function( name ){
-
-    //该方法里的this指向编辑器实例
-
-    var me = this,
-
-        //实例化一个UMEDITOR提供的按钮对象
-        $button = new UE.ui.Button({
-            //按钮icon的名字， 在这里会生成一个“edui-icon-save”的className的icon box，
-            //用户可以重写该className的background样式来更改icon的图标
-            //覆盖示例见btn.css
-            'icon': 'spoiler',
-            'title': me.options.lang === "zh-cn" ? "剧透" : "spoiler",
-            'click': function(){
-                //在这里处理按钮的点击事件
-                //点击之后执行save命令
-                me.execCommand( name );
-            }
-        });
-
-    //在这里处理保存按钮的状态反射
-    me.addListener( "selectionchange", function () {
-
-        
-
-    } );
-
-    //返回该按钮对象后， 该按钮将会被附加到工具栏上
-    return $button;
 
 });
 
