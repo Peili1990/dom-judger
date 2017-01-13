@@ -28,6 +28,25 @@
     	<div class="am-u-sm-12 am-u-sm-centered" id="rule-content-box">
 			<div class="am-panel am-panel-default">
 				<div class="am-panel-bd">
+					<div id="rule-nav">
+						<div class="am-panel-hd">
+							<h2>规则目录</h2>
+						</div>
+						<div class="am-panel-bd">
+							<ul>
+								<c:forEach items="${ rules }" var="rule">
+									<li>${ rule.chapter}</li>
+									<c:if test="${not empty rule.indexs}">
+										<ul class="second-index">
+										<c:forEach items="${rule.indexs}" var="index">
+											<li>${index.header }</li>
+										</c:forEach>
+										</ul>
+									</c:if>
+								</c:forEach>
+							</ul>
+						</div>
+					</div>
 					<div id="rule-content">
 						<c:forEach items="${ rules }" var="rule">
 							<div class="am-panel-hd">
@@ -116,6 +135,7 @@ var um = UE.getEditor("rule-editor",{
 
 $(function(){
 	$(".admin-sidebar-list > li:eq(2) .am-icon-angle-right").removeClass("invisible");
+	$("#rule-nav").css({top:$(window).scrollTop()+15});
 })
 
 function showRuleEditor(row,newIndex,index){
@@ -183,6 +203,11 @@ $.each($("#rule-content .am-panel-bd"),function(){
 		$(this).find(".float-toolbar").stop().fadeOut();
 	})
 })
+
+$(window).scroll(function(){
+	$("#rule-nav").stop().animate({top:$(window).scrollTop()+15});
+})
+
 </script>
 
 </body>

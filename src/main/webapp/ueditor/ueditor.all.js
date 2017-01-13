@@ -12296,7 +12296,7 @@ UE.plugins['insertbbcode'] = function () {
         	         str = str.replace(/>/ig, '&gt;');
         	         str = str.replace(/\n|\r\n/g, '<br>');
         	         str = str.replace(/\[hr\]/ig, '<hr/>');
-        	         str = str.replace(/\[\/(size|color|font|backcolor|left|center|right|justify)\]/ig, '</span>');
+        	         str = str.replace(/\[\/(size|color|font|backcolor|shadow|left|center|right|justify)\]/ig, '</span>');
         	         str = str.replace(/\[(sub|sup|u|i|s|b|blockquote|li)\]/ig, '<$1>');
         	         str = str.replace(/\[\/(sub|sup|u|i|s|b|blockquote|li)\]/ig, '</$1>');
         	         str = str.replace(/\[(\/)?h([1-6])\]/ig, '<$1h$2>');
@@ -12306,6 +12306,7 @@ UE.plugins['insertbbcode'] = function () {
         	         str = str.replace(/\[color=([^\[\<]+?)\]/ig, '<span style="color:$1">');
         	         str = str.replace(/\[backcolor=([^\[\<]+?)\]/ig, '<span style="background-color:$1">');
         	         str = str.replace(/\[font=([^\[\<]+?)\]/ig, '<span style="font-family:$1">');
+        	         str = str.replace(/\[shadow=([^\[\<]+?)\]/ig,'<span style="text-shadow:2px 2px 2px grey">');
         	         str = str.replace(/\[list=(a|A|1)\](.+?)\[\/list\]/ig, '<ol type="$1">$2</ol>');
         	         str = str.replace(/\[(\/)?list\]/ig, '<$1ul>');
 
@@ -12319,7 +12320,7 @@ UE.plugins['insertbbcode'] = function () {
         	         
         	         str = str.replace(/\[(spoiler)\]/ig,'<div class="spoiler-header">'+
         	        		 							 '<div class="spoiler-title">'+
-        	     										 '<strong>剧透 </strong>'+
+        	     										 '<strong>展开 </strong>'+
         	     										 '<em>'+ 
         	     									 	 '</em>'+
         	     										 '<div class="spoiler-button am-btn am-btn-default" onclick="showSpoiler(this)">显示</div>'+
@@ -12329,7 +12330,7 @@ UE.plugins['insertbbcode'] = function () {
         	         str = str.replace(/\[\/(spoiler)\]/ig, '</div></div></div>');
         	         str = str.replace(/\[spoiler=([^\[\<]+?)\]/ig,'<div class="spoiler-header">'+
         						 								   '<div class="spoiler-title">'+
-        							 							   '<strong>剧透 </strong>'+
+        							 							   '<strong>展开 </strong>'+
         							 							   '<em>$1： '+ 
         						 	 							   '</em>'+
         							 							   '<div class="spoiler-button am-btn am-btn-default" onclick="showSpoiler(this)">显示</div>'+
