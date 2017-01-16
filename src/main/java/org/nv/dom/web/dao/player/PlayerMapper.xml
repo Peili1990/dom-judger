@@ -37,11 +37,12 @@
 	
 		SELECT
 			dc.name AS characterName,
+			dpr.is_life AS isLife,
 			dpr.has_position AS hasPosition
 		FROM
 			d_player dp, d_player_record dpr, d_character dc
 		WHERE 
-			dp.id = dpr.player_id AND dpr.is_life = 1 AND dpr.character_id = dc.id AND dp.game_id = #{gameId}
+			dp.id = dpr.player_id AND dpr.character_id = dc.id AND dp.game_id = #{gameId}
 		ORDER BY
 			dpr.position
 	

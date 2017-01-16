@@ -147,10 +147,11 @@ public class IndexController extends BaseController {
 	}
 	
 	@RequestMapping(value = "/admin-authority", method = RequestMethod.GET)
-	public ModelAndView adminAuthorityView(HttpSession session) {
-		ModelAndView mav = new ModelAndView("admin/admin-authority");
+	public ModelAndView adminAuthorityView(HttpServletRequest request) {
+		ModelAndView mav = Integer.parseInt(CookiesUtil.getCookieValue(request, "nv_screen_width"))<1600 ? 
+				new ModelAndView("admin/admin-authority-small") : new ModelAndView("admin/admin-authority");
 		mav.addAllObjects(authorityService.getAllJudegers());
-		mav.addAllObjects(basicService.getSessionUserService(session));
+		mav.addAllObjects(basicService.getSessionUserService(request.getSession()));
 		return mav;
 	}
 	

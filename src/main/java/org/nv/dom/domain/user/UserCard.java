@@ -6,6 +6,8 @@ public class UserCard {
 	private String nickname;
 	private Integer campCardNum;
 	private Integer identityCardNum;
+	private Integer privilegeCardNum;
+	private Integer pioneerCardNum;
 	
 	public long getUserId() {
 		return userId;
@@ -31,7 +33,18 @@ public class UserCard {
 	public void setIdentityCardNum(Integer identityCardNum) {
 		this.identityCardNum = identityCardNum;
 	}
-	
+	public Integer getPrivilegeCardNum() {
+		return privilegeCardNum;
+	}
+	public void setPrivilegeCardNum(Integer privilegeCardNum) {
+		this.privilegeCardNum = privilegeCardNum;
+	}
+	public Integer getPioneerCardNum() {
+		return pioneerCardNum;
+	}
+	public void setPioneerCardNum(Integer pioneerCardNum) {
+		this.pioneerCardNum = pioneerCardNum;
+	}
 	
 
 }

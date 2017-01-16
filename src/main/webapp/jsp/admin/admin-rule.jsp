@@ -33,13 +33,13 @@
 							<h2>规则目录</h2>
 						</div>
 						<div class="am-panel-bd">
-							<ul>
+							<ul data-am-scrollspynav>
 								<c:forEach items="${ rules }" var="rule">
-									<li>${ rule.chapter}</li>
+									<li><a href="#rule-row-${rule.chapterId}">${ rule.chapter}</a></li>
 									<c:if test="${not empty rule.indexs}">
 										<ul class="second-index">
 										<c:forEach items="${rule.indexs}" var="index">
-											<li>${index.header }</li>
+											<li><a href="#rule-row-${rule.chapterId }-${index.indexId}">${index.header }</a></li>
 										</c:forEach>
 										</ul>
 									</c:if>

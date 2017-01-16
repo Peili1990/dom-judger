@@ -95,6 +95,9 @@ public class AssembleServiceImpl implements AssembleService {
 		Iterator<PlayerInfo> iter = players.iterator();
 		while(iter.hasNext()){
 			PlayerInfo player = iter.next();
+			if(player.getIsLife()!=null&&player.getIsLife()==0){
+				player.setCharacterName("<strike>"+player.getCharacterName()+"</strike>");
+			}
 			if(player.getHasPosition()==0){
 				temp.add(player);
 				iter.remove();

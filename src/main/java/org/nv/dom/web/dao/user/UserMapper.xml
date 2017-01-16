@@ -90,7 +90,9 @@
 			du.id AS userId,
 			du.nickname AS nickname,
 			SUM(IF(dc.type=1,1,0)) AS identityCardNum,
-			SUM(IF(dc.type=2,1,0)) AS campCardNum 
+			SUM(IF(dc.type=2,1,0)) AS campCardNum,
+			SUM(IF(dc.type=3,1,0)) AS privilegeCardNum,
+			SUM(IF(dc.type=4,1,0)) AS pioneerCardNum			
 		FROM
 			d_user du, d_card dc
 		WHERE
