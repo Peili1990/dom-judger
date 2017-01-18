@@ -49,7 +49,7 @@ function calOunei(){
 		clockwisePoint = clockwisePoint == lifePlayers.length - 1 ? 0 : parseInt(clockwisePoint) + 1;
 		anticlockwisePoint = anticlockwisePoint == 0 ? lifePlayers.length - 1 : anticlockwisePoint - 1;
 	}
-	var ounei = clockwise.count > anticlockwise.count ? "顺时针>逆时针" : clockwise.count < anticlockwise.count ? "顺时针<逆时针" : "顺时针=逆时针";
+	var ounei = clockwise.count > anticlockwise.count ? "顺时针-逆时针="+(clockwise.count-anticlockwise.count) : clockwise.count < anticlockwise.count ? "逆时针-顺时针="+(anticlockwise.count-clockwise.count) : "顺时针=逆时针";
 	$("#ounei input[name='ounei-result']").val(ounei);
 }	
 

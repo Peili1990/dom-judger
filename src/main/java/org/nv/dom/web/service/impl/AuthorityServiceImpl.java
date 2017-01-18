@@ -1,5 +1,12 @@
 package org.nv.dom.web.service.impl;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,6 +19,7 @@ import org.nv.dom.domain.user.UserAuthority;
 import org.nv.dom.domain.user.UserCard;
 import org.nv.dom.dto.authority.AddUserCardDTO;
 import org.nv.dom.enums.PlayerStatus;
+import org.nv.dom.util.ConfigUtil;
 import org.nv.dom.util.RandomCodeUtil;
 import org.nv.dom.util.RandomCodeUtil.CodeType;
 import org.nv.dom.util.StringUtil;
@@ -26,6 +34,8 @@ import org.springframework.stereotype.Service;
 public class AuthorityServiceImpl extends BasicServiceImpl implements AuthorityService {
 	
 	private String defaultExpireDate = "2099-12-31";
+	
+	private static String filePath = ConfigUtil.getVersionConfigProperty("img.filepath");
 	
 	private static Logger logger = Logger.getLogger(AuthorityServiceImpl.class);
 	
@@ -206,6 +216,46 @@ public class AuthorityServiceImpl extends BasicServiceImpl implements AuthorityS
 			result.put(PageParamType.BUSINESS_STATUS, -1);
 			result.put(PageParamType.BUSINESS_MESSAGE,"系统异常");
 		}	
+		return result;
+	}
+
+	@Override
+	public Map<String, Object> addWord(String word, User user) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		if( user==null || user.getAuthority() == null || user.getAuthority() < 1){
+			result.put(PageParamType.BUSINESS_STATUS, -2);
+			result.put(PageParamType.BUSINESS_MESSAGE,"权限不够，无法增加字典");
+			return result;
+		}
+		try{
+			File file = new File(filePath+"nv_dict.txt");  
+			InputStreamReader read = new InputStreamReader(new FileInputStream(file),"UTF-8");//考虑到编码格式  
+			BufferedReader bufferedReader = new BufferedReader(read);  
+			String line = null;  
+			while ((line = bufferedReader.readLine()) != null) {  
+				if(line.startsWith("#")){  
+					continue;  
+				}    
+				if (line.contains(word)) {  
+					result.put(PageParamType.BUSINESS_STATUS, -3);
+					result.put(PageParamType.BUSINESS_MESSAGE,"已有该词语，请勿重复添加");
+					bufferedReader.close();
+					return result;
+				}  
+			}
+			bufferedReader.close();
+			OutputStreamWriter write = new OutputStreamWriter(new FileOutputStream(file, true),"UTF-8");
+			BufferedWriter bufferedWriter = new BufferedWriter(write);
+			bufferedWriter.write(word+"\r\n");
+			bufferedWriter.flush();
+			bufferedWriter.close();
+			result.put(PageParamType.BUSINESS_STATUS, 1);
+			result.put(PageParamType.BUSINESS_MESSAGE,"添加成功");
+		}catch (Exception e) {
+			logger.error(e.getMessage(),e);
+			result.put(PageParamType.BUSINESS_STATUS, -1);
+			result.put(PageParamType.BUSINESS_MESSAGE,"系统异常");
+		}
 		return result;
 	}
 

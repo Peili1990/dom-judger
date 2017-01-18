@@ -21,4 +21,6 @@ public interface AuthorityService {
 
 	public Map<String, Object> addUserCard(AddUserCardDTO addUserCardDTO, User user);
 
+	public Map<String, Object> addWord(String word, User user);
+
 }

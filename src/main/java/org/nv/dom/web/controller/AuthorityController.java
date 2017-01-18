@@ -69,5 +69,12 @@ public class AuthorityController {
 		User user = (User) request.getSession().getAttribute(PageParamType.user_in_session);
 		return authorityService.addUserCard(addUserCardDTO,user);
 	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/addWord", method = RequestMethod.POST)
+	public Map<String, Object> addWord(@RequestParam("word")String word,HttpServletRequest request) {
+		User user = (User) request.getSession().getAttribute(PageParamType.user_in_session);
+		return authorityService.addWord(word,user);
+	}
 
 }
