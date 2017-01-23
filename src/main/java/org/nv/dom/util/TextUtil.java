@@ -27,5 +27,5 @@ public class TextUtil {
         List<Word> words = WordSegmenter.segWithStopWords(content);
         return words.size();
 	}
-
+	
 }

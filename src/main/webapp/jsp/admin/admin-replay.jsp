@@ -44,7 +44,6 @@
 							 )">
 						</div>
 						<div class="am-form-group">
-							<input type="hidden" id="replay-essay" value="${replayEssay.content}"/>   
               				<textarea id="replay-area" style="height:400px"></textarea> 
         				</div>
         			</c:when>
@@ -69,7 +68,7 @@
 $(function(){
 	$("#collapse-nav li:eq(4) .am-icon-star").removeClass("invisible");
 	$(".admin-sidebar-list > li:eq(0) .am-icon-angle-right").removeClass("invisible");
-	$("#replay-area").val(replaceTag($("#replay-essay").val()));
+	$("#replay-area").val(replaceTag('${replayEssay.content}'));
 })
 
 function saveEssay(gameId,gameDesc,essayId){

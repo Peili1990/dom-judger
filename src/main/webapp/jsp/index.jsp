@@ -40,7 +40,7 @@
 			</form>
 			<hr>
 			<p>
-				© 2016 版权所有. <a href="http://www.mycodes.net/" target="_blank">维多利亚的噩梦</a>
+				© 2016 版权所有. <a href="http://www.goddessfantasy.net/bbs/index.php?board=1049.0" target="_blank">维多利亚的噩梦</a>
 			</p>
 		</div>
 	</div>
