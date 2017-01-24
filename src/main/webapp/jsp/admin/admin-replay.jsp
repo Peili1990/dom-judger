@@ -82,19 +82,9 @@ function saveEssay(gameId,gameDesc,essayId){
 		}
 	var common = new Common();
 	common.callAction(options,url,function(data){
-		if(!data){
-			return;
-		}
-		switch(data.status){
-		case 1:
-			myInfo("复盘发布成功！",function(){
-				window.location = getRootPath()+"/admin-replay";
-			});
-			return;
-		default:
-			myAlert(data.message)
-			return;
-		}
+		myInfo("复盘发布成功！",function(){
+			window.location = getRootPath()+"/admin-replay";
+		});			
 	})
 }
 
@@ -105,18 +95,8 @@ function simpleEssayBuild(gameId){
 	}
 	var common = new Common();
 	common.callAction(options,url,function(data){
-		if(!data){
-			return;
-		}
-		switch(data.status){
-		case 1:
-			$("#replay-area").val(replaceTag(data.simpleEssay));
-			myInfo("简易复盘生成成功！");
-			return;
-		default:
-			myAlert(data.message)
-			return;
-		}
+		$("#replay-area").val(replaceTag(data.simpleEssay));
+		myInfo("简易复盘生成成功！");			
 	})
 }
 

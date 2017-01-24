@@ -48,20 +48,10 @@ function createChat(chatInfo){
 	}
 	var common = new Common();
 	common.callAction(options,url,function(data){
-		if(!data){
-			return;
-		}
-		switch(data.status){
-		case 1:
-			$("#"+chatInfo.chatId).find("ul").empty();
-			$.each(data.chatDetails,function(index,detail){
-				appendChat(detail,true,true);
-			})
-			return;
-		default:
-			myAlert(data.message);
-			return;
-		}		
+		$("#"+chatInfo.chatId).find("ul").empty();
+		$.each(data.chatDetails,function(index,detail){
+			appendChat(detail,true,true);
+		})				
 	})
 	$("#"+chatInfo.chatId).on("click",function(){
 		$.each($(".window"),function(index,win){
@@ -97,19 +87,9 @@ function createChat(chatInfo){
 			}
 			var common = new Common();
 			common.callAction(options,url,function(data){
-				if(!data){
-					return;
-				}
-				switch(data.status){
-				case 1:
-					$.each(data.chatDetails,function(index,detail){
-						appendChat(detail,true,false);
-					})
-					return;
-				default:
-					myAlert(data.message);
-					return;
-				}				
+				$.each(data.chatDetails,function(index,detail){
+					appendChat(detail,true,false);
+				})							
 			})
 		}
 	})
@@ -155,17 +135,7 @@ function sendMessage(chatInfo,content){
 	}
 	var common = new Common();
 	common.callAction(options, url, function(data) {
-		if (!data) {
-			return;
-		}
-		switch (data.status) {
-		case 1:
-			appendChat(data.chatDetail);
-			return;
-		default:
-			myAlert(data.message);
-			return;
-		}
+		appendChat(data.chatDetail);		
 	})
 }
 

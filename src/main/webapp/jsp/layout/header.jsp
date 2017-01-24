@@ -82,37 +82,24 @@
 		var url = getRootPath() + "/getOfflineMessage";
 		var common = new Common();
 		common.callAction(null, url, function(data) {
-			if(!data){
-				return;
-			}
-			switch (data.status){
-			case 1:
-				totalChat = 0;
-				chatInfoListStr = getCache("nv_chat_info"+userId);
-				chatInfoList = chatInfoListStr ? JSON.parse(chatInfoListStr) : [];
-				$.each(data.offlineChat,function(index,chat){
-					totalChat+=parseInt(chat.num);
-					i = indexOfKey(chatInfoList,chat.chatId);
-					if(i<0){
-						chatInfoList.push(chat);
-					} else {
-						chatInfoList[i].toUserAvatar = chat.toUserAvatar;
-						chatInfoList[i].toUserMotto = chat.toUserMotto;
-						chatInfoList[i].toUserId = chat.toUserId;
-						chatInfoList[i].num = chatInfoList[i].num > chat.num ? chatInfoList[i].num : chat.num; 
-					}
-				})
-				setCache("nv_chat_info"+userId,JSON.stringify(chatInfoList));				
-				setCache("nv_offline_chat"+userId,totalChat);
-				setRedspot();
-				return;
-			case 0:
-				timeoutHandle();
-				return;
-			default:
-				myAlert(data.message);
-				return;
-			}	
+			totalChat = 0;
+			chatInfoListStr = getCache("nv_chat_info"+userId);
+			chatInfoList = chatInfoListStr ? JSON.parse(chatInfoListStr) : [];
+			$.each(data.offlineChat,function(index,chat){
+				totalChat+=parseInt(chat.num);
+				i = indexOfKey(chatInfoList,chat.chatId);
+				if(i<0){
+					chatInfoList.push(chat);
+				} else {
+					chatInfoList[i].toUserAvatar = chat.toUserAvatar;
+					chatInfoList[i].toUserMotto = chat.toUserMotto;
+					chatInfoList[i].toUserId = chat.toUserId;
+					chatInfoList[i].num = chatInfoList[i].num > chat.num ? chatInfoList[i].num : chat.num; 
+				}
+			})
+			setCache("nv_chat_info"+userId,JSON.stringify(chatInfoList));				
+			setCache("nv_offline_chat"+userId,totalChat);
+			setRedspot();				
 		});
 	}
 	
@@ -128,19 +115,9 @@
 			options.toPlayerId = id;
 		}
 		common.callAction(options, url, function(data) {
-			if (!data) {
-				return;
-			}
-			switch (data.status) {
-			case 1:
-				if(type=="player"){
-					createChat(data.chatInfo);
-				}
-				return;
-			default:
-				myAlert(data.message);
-				return;
-			}
+			if(type=="player"){
+				createChat(data.chatInfo);
+			}			
 		})
 	}
 	
@@ -161,24 +138,11 @@
 	        		chatId : chatId
 	        	}
 	        	common.callAction(options, url, function(data) {
-	            if(!data){
-	           	    return;
-	            }
-	            switch (data.status){
-	           	   case 1:
-	           		    chatInfo = data.chatInfo;
-	           		    chatInfo.num = 1;
-	           		    chatInfoList.push(chatInfo);
-	           		    setCache("nv_chat_info"+userId,JSON.stringify(chatInfoList));
-	           		    setRedspot();
-	           			return;
-	           		case 0:
-	           			timeoutHandle();
-	           			return;
-	           		default:
-	           			myAlert(data.message);
-	           			return;
-	           		}
+	           		chatInfo = data.chatInfo;
+	           		chatInfo.num = 1;
+	           		chatInfoList.push(chatInfo);
+	           		setCache("nv_chat_info"+userId,JSON.stringify(chatInfoList));
+	           		setRedspot();           			
 	          	})
 			} else {
 				chatInfoList[i].num++;

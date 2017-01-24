@@ -74,16 +74,7 @@ function onlineSettlement(content,settlement){
 	}
 	var common = new Common();
 	common.callAction(options, url, function(data) {
-		if (!data) {
-			return;
-		}
-		switch (data.status) {
-		case 1:
-			return;
-		default:
-			myAlert(data.message);
-			return;
-		}
+		
 	})
 }
 

@@ -256,37 +256,27 @@ function showReplacePanel(playerIndex){
 			playerId : players[playerIndex].playerId
 	}
 	common.callAction(options,url,function(data){
-		if (!data) {
-			return;
-		}
-		switch (data.status) {
-		case 1:
-			var list = replacePanel.find("tbody");
-			list.empty();
-			$.each(data.replaceList,function(index,skin){
-				var builder = new StringBuilder();
-				builder.appendFormat('<tr><td><input type="hidden" name="id" value={0}><input type="text" name="character-name" value={1}></td>',skin.id,skin.characterName);
-				builder.append(avatarList);
-				builder.appendFormat('<td><div class="am-form-group"><label class="am-radio-inline"><input type="radio" name="is-mute-{0}" value="0"> 正常</label>',index);
-				builder.appendFormat('<label class="am-radio-inline"><input type="radio" name="is-mute-{0}" value="1"> 禁言</label>',index);
-				builder.appendFormat('<label class="am-radio-inline"><input type="radio" name="is-mute-{0}" value="2"> 语无伦次</label></div></td>',index);
-				builder.appendFormat('<td><div class="am-btn-toolbar">' +
-				'<div class="am-btn-group am-btn-group-xs">' +
-				'<button type="button" class="am-btn am-btn-default am-btn-xs am-text-secondary" title="保存" onclick="saveReplaceSkin({0},{1})"><span class="am-icon-check-square-o"></span></button>'+							
-				'<button type="button" class="am-btn am-btn-default am-btn-xs am-text-danger" title="删除" onclick="deleteReplaceSkin({2},{3})"><span class="am-icon-trash-o"></span></button>'+								
-				'</div></div></td></tr>',playerIndex,index,playerIndex,index);
-				list.append(builder.toString());
-				list.find("input[name='is-mute-"+index+"'][value="+skin.isMute+"]").attr("checked",true);
-				list.find("select").eq(index).val(skin.characterAvatar).selected({maxHeight: '100px'});
-			})
-			replacePanel.find("input[name='create']").unbind("click").on("click",function(){saveReplaceSkin(playerIndex)});
-			replacePanel.find("legend").text("发言称呼管理 -- "+players[playerIndex].characterName);
-			replacePanel.modal('open');
-			return;
-		default:
-			myAlert(data.message);
-			return;
-		}
+		var list = replacePanel.find("tbody");
+		list.empty();
+		$.each(data.replaceList,function(index,skin){
+			var builder = new StringBuilder();
+			builder.appendFormat('<tr><td><input type="hidden" name="id" value={0}><input type="text" name="character-name" value={1}></td>',skin.id,skin.characterName);
+			builder.append(avatarList);
+			builder.appendFormat('<td><div class="am-form-group"><label class="am-radio-inline"><input type="radio" name="is-mute-{0}" value="0"> 正常</label>',index);
+			builder.appendFormat('<label class="am-radio-inline"><input type="radio" name="is-mute-{0}" value="1"> 禁言</label>',index);
+			builder.appendFormat('<label class="am-radio-inline"><input type="radio" name="is-mute-{0}" value="2"> 语无伦次</label></div></td>',index);
+			builder.appendFormat('<td><div class="am-btn-toolbar">' +
+			'<div class="am-btn-group am-btn-group-xs">' +
+			'<button type="button" class="am-btn am-btn-default am-btn-xs am-text-secondary" title="保存" onclick="saveReplaceSkin({0},{1})"><span class="am-icon-check-square-o"></span></button>'+							
+			'<button type="button" class="am-btn am-btn-default am-btn-xs am-text-danger" title="删除" onclick="deleteReplaceSkin({2},{3})"><span class="am-icon-trash-o"></span></button>'+								
+			'</div></div></td></tr>',playerIndex,index,playerIndex,index);
+			list.append(builder.toString());
+			list.find("input[name='is-mute-"+index+"'][value="+skin.isMute+"]").attr("checked",true);
+			list.find("select").eq(index).val(skin.characterAvatar).selected({maxHeight: '100px'});
+		})
+		replacePanel.find("input[name='create']").unbind("click").on("click",function(){saveReplaceSkin(playerIndex)});
+		replacePanel.find("legend").text("发言称呼管理 -- "+players[playerIndex].characterName);
+		replacePanel.modal('open');			
 	})
 }
 
@@ -304,19 +294,9 @@ function saveReplaceSkin(playerIndex,skinIndex){
 			characterName : "新称呼",			
 			playerId : players[playerIndex].playerId,
 			isMute : 0
-	}
+	};
 	common.callAction(options,url,function(data){
-		if (!data) {
-			return;
-		}
-		switch (data.status) {
-		case 1:
-			showReplacePanel(playerIndex);
-			return;
-		default:
-			myAlert(data.message);
-			return;
-		}
+		showReplacePanel(playerIndex);		
 	})
 }
 
@@ -327,17 +307,7 @@ function deleteReplaceSkin(playerIndex,skinIndex){
 			skinId : replacePanel.find("tbody").find("tr").eq(skinIndex).find("input[name='id']").val(),
 	};
 	common.callAction(options,url,function(data){
-		if (!data) {
-			return;
-		}
-		switch (data.status) {
-		case 1:
-			showReplacePanel(playerIndex);
-			return;
-		default:
-			myAlert(data.message);
-			return;
-		}
+		showReplacePanel(playerIndex);			
 	})
 }
 
@@ -428,17 +398,7 @@ function getSubmitTime(index){
 	}
 	var common = new Common();
 	common.callAction(options,url,function(data){
-		if(!data){
-			return;
-		}
-		switch(data.status){
-		case 1:
-			myInfo(players[index].characterName+"最近提交操作时间："+data.submitTime);
-			return;
-		default:
-			myAlert(data.message);
-			return;
-		}
+		myInfo(players[index].characterName+"最近提交操作时间："+data.submitTime);			
 	})
 }
 
@@ -458,24 +418,14 @@ function saveForm(needAlert){
 	var url = getRootPath() + "/game/submitList";
 	var common = new Common();
 	common.callAction(JSON.stringify(players),url,function(data){
-		if (!data) {
-			return;
-		}
-		switch (data.status) {
-		case 1:
-			if(needAlert){
-				myLoadingClose();
-				myInfo("保存表格成功！",function(){
-					window.location = getRootPath() + "/admin-character";
-				})
-			} else {
+		if(needAlert){
+			myLoadingClose();
+			myInfo("保存表格成功！",function(){
 				window.location = getRootPath() + "/admin-character";
-			}
-			return;
-		default:
-			myAlert(data.message);
-			return;
-		}
+			})
+		} else {
+			window.location = getRootPath() + "/admin-character";
+		}			
 	},"application/json;charset=utf-8")
 }
 
@@ -487,33 +437,14 @@ function updateForm(){
 		content : JSON.stringify(players)
 	};
 	common.callAction(options,url,function(data){
-		if (!data) {
-			return;
-		}
-		switch (data.status) {
-		case 1:
-			options = {
-				header : $("input[name='header']").val()
-			};
-			common.callAction(options,url,function(data1){
-				if (!data1) {
-					return;
-				}
-				switch (data1.status) {
-				case 1:
-					myInfo("创建表格成功！",function(){
-						window.location = getRootPath() + "/admin-character";
-					})
-				default:
-					myAlert(data1.message);
-					return;
-				}
+		options = {
+			header : $("input[name='header']").val()
+		};
+		common.callAction(options,url,function(data1){
+			myInfo("创建表格成功！",function(){
+				window.location = getRootPath() + "/admin-character";
 			})
-			return;
-		default:
-			myAlert(data.message);
-			return;
-		}
+		})			
 	})		
 }
 
@@ -527,29 +458,19 @@ $("#form-list").change(function(){
 			formId : $('#form-list option:selected').val(),
 		};
 		common.callAction(options,url,function(data){
-			if (!data) {
-				return;
-			}
-			switch (data.status) {
-			case 1:
-				players = JSON.parse(data.content);
-				$.each($("#character-info tr"),function(index,tr){
-					$(tr).find("td").eq(0).text(players[index].characterName);
-					inputs=$(tr).find("input");
-					inputs.eq(0).val(players[index].identityDesc);
-					inputs.eq(1).val(players[index].action); 
-					inputs.eq(2).val(players[index].privilege);
-					inputs.eq(3).val(players[index].feedback);
-					inputs.eq(4).val(players[index].vote);
-					inputs.eq(5).val(players[index].remark);
-				})
-				addstatusStyle(players);
-				$(".operation .am-btn").attr("disabled","disabled");
-				return;
-			default:
-				myAlert(data.message);
-				return;
-			}
+			players = JSON.parse(data.content);
+			$.each($("#character-info tr"),function(index,tr){
+				$(tr).find("td").eq(0).text(players[index].characterName);
+				inputs=$(tr).find("input");
+				inputs.eq(0).val(players[index].identityDesc);
+				inputs.eq(1).val(players[index].action); 
+				inputs.eq(2).val(players[index].privilege);
+				inputs.eq(3).val(players[index].feedback);
+				inputs.eq(4).val(players[index].vote);
+				inputs.eq(5).val(players[index].remark);
+			})
+			addstatusStyle(players);
+			$(".operation .am-btn").attr("disabled","disabled");			
 		})
 	}
 })

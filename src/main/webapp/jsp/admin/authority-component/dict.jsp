@@ -27,17 +27,7 @@ function addWord(){
 	}
 	var common = new Common();
 	common.callAction(options,url,function(data){
-		if(!data){
-			return;
-		}
-		switch(data.status){
-		case 1:
-			myInfo("添加成功！");
-			return;
-		default:
-			myAlert(data.message);
-			return;
-		}
+		myInfo("添加成功！");			
 	})
 }
 

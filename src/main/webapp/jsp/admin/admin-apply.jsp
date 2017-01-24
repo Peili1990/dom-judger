@@ -298,19 +298,9 @@ function changeGameStatus(gameId,status,finalResult){
 	};
 	var common = new Common();
 	common.callAction(options, url, function(data) {
-		if (!data) {
-			return;
-		}
-		switch (data.status) {
-		case 1:
-			myInfo("版杀状态更新成功！",function(){
-				window.location = getRootPath() + "/admin-apply";
-			});
-			return;
-		default:
-			myAlert(data.message);
-			return;
-		}
+		myInfo("版杀状态更新成功！",function(){
+			window.location = getRootPath() + "/admin-apply";
+		});			
 	})
 }
 
@@ -414,17 +404,7 @@ function submitList(gameId){
 		var url = getRootPath() + "/game/submitList";
 		var common = new Common();
 		common.callAction(JSON.stringify(players),url,function(data){
-			if (!data) {
-				return;
-			}
-			switch (data.status) {
-			case 1:
-				changeGameStatus(gameId,3);
-				return;
-			default:
-				myAlert(data.message);
-				return;
-			}
+			changeGameStatus(gameId,3);				
 		},"application/json;charset=utf-8")
 	})	
 }
@@ -451,35 +431,25 @@ function showApplyList(){
 	var url = getRootPath() + "/game/getGameList";
 	var common = new Common();
 	common.callAction(null,url,function(data){
-		if(!data){
-			return;
-		}
-		switch(data.status){
-		case 1:
-			$("#game-list").empty();
-			$.each(data.applyingGames,function(index,game){
-				var builder = new StringBuilder();
-				builder.append('<tr>');
-				builder.appendFormat('<td>{0}</td><td>',game.gameDesc);
-				$.each(game.judgers,function(index,judger){
-					builder.appendFormat('{0} ',judger);
-				})
-				builder.append('</td>');
-				builder.appendFormat('<td>{0}</td>',game.playerNum);
-				builder.appendFormat('<td>{0}</td>',game.startDate);
-				builder.appendFormat(game.characterSelect=="A" ? '<td>个人选取</td>':'<td>3选1</td>');
-				builder.appendFormat('<td><div class="am-btn-toolbar">'+
-              			'<div class="am-btn-group am-btn-group-xs">'+
-                		'<button type="button" onclick="becomeJudger({0})" class="am-btn am-btn-default am-btn-xs am-text-secondary" title="加入">'+
-              			'<span class="am-icon-sign-in"></span></button>'+
-               			'</div></div></td>',game.id);
-				$("#game-list").append(builder.toString());	
+		$("#game-list").empty();
+		$.each(data.applyingGames,function(index,game){
+			var builder = new StringBuilder();
+			builder.append('<tr>');
+			builder.appendFormat('<td>{0}</td><td>',game.gameDesc);
+			$.each(game.judgers,function(index,judger){
+				builder.appendFormat('{0} ',judger);
 			})
-			return;
-		default:
-			myAlert(data.message);
-			return;
-		}
+			builder.append('</td>');
+			builder.appendFormat('<td>{0}</td>',game.playerNum);
+			builder.appendFormat('<td>{0}</td>',game.startDate);
+			builder.appendFormat(game.characterSelect=="A" ? '<td>个人选取</td>':'<td>3选1</td>');
+			builder.appendFormat('<td><div class="am-btn-toolbar">'+
+              		'<div class="am-btn-group am-btn-group-xs">'+
+                	'<button type="button" onclick="becomeJudger({0})" class="am-btn am-btn-default am-btn-xs am-text-secondary" title="加入">'+
+              		'<span class="am-icon-sign-in"></span></button>'+
+               		'</div></div></td>',game.id);
+			$("#game-list").append(builder.toString());	
+		})			
 	})
 	$("#apply-detail").css({"display":"none"});
 	$("#apply-judger").css({"display":"block"});
@@ -492,19 +462,9 @@ function becomeJudger(gameId){
 	}
 	var common = new Common();
 	common.callAction(options,url,function(data){
-		if(!data){
-			return;
-		}
-		switch(data.status){
-		case 1:
-			myInfo("报名法官成功！",function(){
-				window.location = getRootPath() + "/admin-apply";
-			})
-			return;
-		default:
-			myAlert(data.message);
-			return;
-		}
+		myInfo("报名法官成功！",function(){
+			window.location = getRootPath() + "/admin-apply";
+		})			
 	})
 }
 
@@ -516,19 +476,9 @@ function judgerDecision(playerId,decision){
 	}
 	var common = new Common();
 	common.callAction(options,url,function(data){
-		if(!data){
-			return;
-		}
-		switch(data.status){
-		case 1:
-			myInfo("操作成功！",function(){
-				window.location = getRootPath() + "/admin-apply";
-			})
-			return;
-		default:
-			myAlert(data.message);
-			return;
-		}
+		myInfo("操作成功！",function(){
+			window.location = getRootPath() + "/admin-apply";
+		})			
 	})
 }
 
@@ -564,22 +514,9 @@ function submitApply(gameId){
 	};
 	var common = new Common();
 	common.callAction(options, url, function(data) {
-		if (!data) {
-			$("#error-msg").css("display","block");
-			$("#error-msg").text("系统异常");
-			return;
-		}
-		switch (data.status) {
-		case 1:
-			myInfo("报名帖发布成功！",function(){
-				window.location = getRootPath() + "/admin-apply";
-			});
-			return;
-		default:
-			$("#error-msg").css("display","block");
-			$("#error-msg").text(data.message);
-			return;
-		}
+		myInfo("报名帖发布成功！",function(){
+			window.location = getRootPath() + "/admin-apply";
+		});			
 	});
 }
 
@@ -595,19 +532,9 @@ function kickPlayer(index){
 		};
 	var common = new Common();
 	common.callAction(options, url, function(data) {
-		if (!data) {
-			return;
-		}
-		switch (data.status) {
-		case 1:
-			myInfo("踢出玩家成功！",function(){
-				window.location = getRootPath() + "/admin-apply";
-			});
-			return;
-		default:
-			myAlert(data.message);
-			return;
-		}
+		myInfo("踢出玩家成功！",function(){
+			window.location = getRootPath() + "/admin-apply";
+		});			
 	})
 }
 

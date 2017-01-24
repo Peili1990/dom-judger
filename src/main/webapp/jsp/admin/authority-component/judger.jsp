@@ -47,19 +47,9 @@ function addJudger(){
 	}
 	var common = new Common();
 	common.callAction(options,url,function(data){
-		if(!data){
-			return;
-		}
-		switch(data.status){
-		case 1:		
-			myInfo("添加成功！",function(){
-				window.location = getRootPath()+"/admin-authority";
-			});
-			return;
-		default:
-			myAlert(data.message);
-			return;
-		}
+		myInfo("添加成功！",function(){
+			window.location = getRootPath()+"/admin-authority";
+		});		
 	})
 }
 
@@ -74,19 +64,9 @@ function removeJudger(judgerId,isbusy){
 		return;
 	}
 	common.callAction(options,url,function(data){
-		if(!data){
-			return;
-		}
-		switch(data.status){
-		case 1:		
-			myInfo("删除成功！",function(){
-				window.location = getRootPath()+"/admin-authority";
-			});
-			return;
-		default:
-			myAlert(data.message);
-			return;
-		}
+		myInfo("删除成功！",function(){
+			window.location = getRootPath()+"/admin-authority";
+		});			
 	})
 }
 

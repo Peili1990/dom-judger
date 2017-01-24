@@ -24,19 +24,9 @@ function generateInvCode(){
 	}
 	var common = new Common();
 	common.callAction(options,url,function(data){
-		if(!data){
-			return;
-		}
-		switch(data.status){
-		case 1:		
-			myInfo("批量生成成功！",function(){
-				window.location = getRootPath()+"/admin-authority";
-			});
-			return;
-		default:
-			myAlert(data.message);
-			return;
-		}
+		myInfo("批量生成成功！",function(){
+			window.location = getRootPath()+"/admin-authority";
+		});			
 	})
 		
 }

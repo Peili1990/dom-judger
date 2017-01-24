@@ -180,19 +180,9 @@ function saveRule(row,index,newIndex){
 	}
 	var common = new Common();
 	common.callAction(options,url,function(data){
-		if(!data){
-			return;
-		}
-		switch(data.status){
-		case 1:
-			myInfo("修改成功！",function(){
-				window.location = getRootPath() + "/admin-rule";
-			})
-			return;
-		default:
-			myAlert(data.message);
-			return;
-		}
+		myInfo("修改成功！",function(){
+			window.location = getRootPath() + "/admin-rule";
+		})			
 	})
 }
 

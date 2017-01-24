@@ -238,22 +238,9 @@ function generateSeatTable(){
 	var url = getRootPath() + "/assemble/generateSeatTable";
 	var common = new Common();
 	common.callAction(null, url, function(data) {
-		if (!data) {
-			$("#error-msg").css("display","block");
-			$("#error-msg").text("系统异常");
-			return;
-		}
-		switch (data.status) {
-		case 1:
-			$("#error-msg").css("display","block");
-			$("#error-msg").text("生成座位表成功！");
-			um.setContent(data.seatTable);
-			return;
-		default:
-			$("#error-msg").css("display","block");
-			$("#error-msg").text(data.message);
-			return;
-		}
+		$("#error-msg").css("display","block");
+		$("#error-msg").text("生成座位表成功！");
+		um.setContent(data.seatTable);
 	});
 }
 
@@ -265,21 +252,11 @@ function createNewspaper(){
 		status : 0,
 		type : 0
 	};
-	common.callAction(options, url, function(data) {
-		if (!data) {
-			return;
-		}
-		switch (data.status) {
-		case 1:	
-			$("#announcement-list").prepend("<option value='"+data.newspaperId+"'>"+data.header+"</option>");
-			$("#announcement-list").get(0).selectedIndex = 0;
-			editAction = 1;
-			showEditNewspaperForm();
-			return;
-		default:
-			myAlert(data.message);
-			return;
-		}
+	common.callAction(options, url, function(data) {			
+		$("#announcement-list").prepend("<option value='"+data.newspaperId+"'>"+data.header+"</option>");
+		$("#announcement-list").get(0).selectedIndex = 0;
+		editAction = 1;
+		showEditNewspaperForm();	
 	})
 	
 }
@@ -306,28 +283,15 @@ function saveNewspaper(publish){
 		}
 	var common = new Common();
 	common.callAction(options, url, function(data) {
-		if (!data) {
+		if(publish == 1){
+			publishAction = 1;
+			myInfo("公告发布成功！",function(){
+				window.location = getRootPath() + "/admin-announcement";
+			})
+		} else {
 			$("#error-msg").css("display","block");
-			$("#error-msg").text("系统异常");
-			return;
-		}
-		switch (data.status) {
-		case 1:
-			if(publish == 1){
-				publishAction = 1;
-				myInfo("公告发布成功！",function(){
-					window.location = getRootPath() + "/admin-announcement";
-				})
-			} else {
-				$("#error-msg").css("display","block");
-				$("#error-msg").text("保存成功！");
-			}
-			return;
-		default:
-			$("#error-msg").css("display","block");
-			$("#error-msg").text(data.message);
-			return;
-		}
+			$("#error-msg").text("保存成功！");
+		}			
 	})
 }
 
@@ -360,42 +324,32 @@ function switchNewspaper(){
 		newspaperId : $('#announcement-list option:selected').val(),
 	};
 	common.callAction(options,url,function(data){
-		if (!data) {
-			return;
+		var newspaperDetail = data.newspaperDetail;
+		var builder = new StringBuilder();
+		$("#newspaper-content").empty();
+		builder.appendFormat("<h2>{0}</h2>",newspaperDetail.headline ? newspaperDetail.headline:"");
+		builder.appendFormat("<p>{0}</p><p>{1}</p>",newspaperDetail.headlineBody ? newspaperDetail.headlineBody:"",newspaperDetail.subedition ? newspaperDetail.subedition:"");
+		if(newspaperDetail.importantNotice){
+			builder.appendFormat("<hr><h3>重要公告</h3><p>{0}</p>",newspaperDetail.importantNotice);
 		}
-		switch (data.status) {
-		case 1:
-			var newspaperDetail = data.newspaperDetail;
-			var builder = new StringBuilder();
-			$("#newspaper-content").empty();
-			builder.appendFormat("<h2>{0}</h2>",newspaperDetail.headline ? newspaperDetail.headline:"");
-			builder.appendFormat("<p>{0}</p><p>{1}</p>",newspaperDetail.headlineBody ? newspaperDetail.headlineBody:"",newspaperDetail.subedition ? newspaperDetail.subedition:"");
-			if(newspaperDetail.importantNotice){
-				builder.appendFormat("<hr><h3>重要公告</h3><p>{0}</p>",newspaperDetail.importantNotice);
-			}
-			if(newspaperDetail.seatTable){
-				builder.append("<hr><h3>座位表</h3><div id='seat-table-content'></div>");
-			}
-			$("#newspaper-content").append(builder.toString());
-			if(newspaperDetail.seatTable){
-				$("#seat-table-content").html(newspaperDetail.seatTable);
-			}
-			if(data.speechList!=null){
-				$("#speech-list").empty();
-				$.each(data.speechList,function(index,speech){
-					appendSpeech(speech);
-				})
-				$(".announce-box").removeClass("invisible");
-			} else{
-				$("#speech-list").empty().text("没有相关发言");
-				$(".announce-box").addClass("invisible");
-			}
-			showNewspaperContent();
-			return;
-		default:
-			myAlert(data.message);
-			return;
+		if(newspaperDetail.seatTable){
+			builder.append("<hr><h3>座位表</h3><div id='seat-table-content'></div>");
 		}
+		$("#newspaper-content").append(builder.toString());
+		if(newspaperDetail.seatTable){
+			$("#seat-table-content").html(newspaperDetail.seatTable);
+		}
+		if(data.speechList!=null){
+			$("#speech-list").empty();
+			$.each(data.speechList,function(index,speech){
+				appendSpeech(speech);
+			})
+			$(".announce-box").removeClass("invisible");
+		} else{
+			$("#speech-list").empty().text("没有相关发言");
+			$(".announce-box").addClass("invisible");
+		}
+		showNewspaperContent();			
 	})
 }
 
@@ -468,22 +422,12 @@ function deleteSpeech(speechId){
 		}
 	var common = new Common();
 	common.callAction(options, url, function(data) {
-		if (!data) {
-			return;
-		}
-		switch (data.status) {
-		case 1:
-			$.each($("#speech-list li"),function(index,speech){
-				if($(speech).find("input[type='hidden']").val() == speechId){
-					$(speech).remove();
-					return false;
-				}
-			})
-			return;
-		default:
-			myAlert(data.message);
-			return;
-		}
+		$.each($("#speech-list li"),function(index,speech){
+			if($(speech).find("input[type='hidden']").val() == speechId){
+				$(speech).remove();
+				return false;
+			}
+		})			
 	})
 }
 
@@ -494,17 +438,7 @@ function wordCount(btn){
 		}
 	var common = new Common();
 	common.callAction(options, url, function(data) {
-		if (!data) {
-			return;
-		}
-		switch (data.status) {
-		case 1:
-			myInfo("该发言共计："+data.wordCount+"字");
-			return;
-		default:
-			myAlert(data.message);
-			return;
-		}
+		myInfo("该发言共计："+data.wordCount+"字");			
 	})
 }
 

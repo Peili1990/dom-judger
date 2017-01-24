@@ -70,23 +70,10 @@
 		};
 		var common = new Common();
 		common.callAction(options, url, function(data) {
-			if (!data) {
-				$("#error-msg").css("display","block");
-				$("#error-msg").text("系统异常");
-				return;
+			if($("#remember-me").is(':checked')){
+				setCookie("nv_account",account,"7d");
 			}
-			switch (data.status) {
-			case 1:
-				if($("#remember-me").is(':checked')){
-					setCookie("nv_account",account,"7d");
-				}
-				window.location = getRootPath() + "/admin-apply";
-				return;
-			default:
-				$("#error-msg").css("display","block");
-				$("#error-msg").text(data.message);
-				return;
-			}
+			window.location = getRootPath() + "/admin-apply";			
 		});
 	}
 	

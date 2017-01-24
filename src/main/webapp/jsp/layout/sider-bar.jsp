@@ -49,22 +49,9 @@
   		}
   		var common = new Common();
   		common.callAction(options,url,function(data){
-  			if(!data){
-  				return;
-  			}
-  			switch(data.status){
-  			case 1:
-  				myInfo("修改成功！");
-  				setCache("nv_info_message",infoMessage);
-  				$("#info-message").text(infoMessage);
-  				return;
-  			case 0:
-				timeoutHandle();
-				return;
-			default:
-				myAlert(data.message);
-				return;
-  			}
+  			myInfo("修改成功！");
+  			setCache("nv_info_message",infoMessage);
+  			$("#info-message").text(infoMessage);				
   		})
   	}
 
@@ -72,23 +59,9 @@
 		var url = getRootPath()+"/logoutAction";
 		var common = new Common();
 		common.callAction(null, url, function(data) {
-			if (!data) {
-				myAlert("系统或网络异常");
-				return;
-			}
-			switch (data.status) {
-			case 1:
-				myInfo("登出成功！",function(){
-					window.location = getRootPath() + "/index";
-				});
-				return;
-			case 0:
-				timeoutHandle();
-				return;
-			default:
-				myAlert(data.message);
-				return;
-			}
+			myInfo("登出成功！",function(){
+				window.location = getRootPath() + "/index";
+			});			
 		})
 	} 
 

@@ -219,28 +219,18 @@ function showCharacterRecord(characterId){
 		}
 		var common = new Common();
 		common.callAction(options,url,function(data){
-			if(!data){
-				return;
-			}
-			switch(data.status){
-			case 1:
-				$.each(data.records,function(index,detail){
-					var builder = new StringBuilder();
-					builder.append("<tr>");
-					builder.appendFormat("<td>{0}</td>",detail.gameName);
-					builder.appendFormat("<td>{0}</td>",detail.isSp);
-					builder.appendFormat("<td>{0}</td>",detail.sign);
-					builder.appendFormat("<td>{0}</td>",detail.result);
-					builder.appendFormat("<td>{0}</td>",detail.remark);
-					builder.append("</tr>");
-					$("#record-detail").append(builder.toString());
-				})
-				$("#character-record-panel").modal('open');
-				return;
-			default:
-				myAlert(data.message);
-				return;
-			}
+			$.each(data.records,function(index,detail){
+				var builder = new StringBuilder();
+				builder.append("<tr>");
+				builder.appendFormat("<td>{0}</td>",detail.gameName);
+				builder.appendFormat("<td>{0}</td>",detail.isSp);
+				builder.appendFormat("<td>{0}</td>",detail.sign);
+				builder.appendFormat("<td>{0}</td>",detail.result);
+				builder.appendFormat("<td>{0}</td>",detail.remark);
+				builder.append("</tr>");
+				$("#record-detail").append(builder.toString());
+			})
+			$("#character-record-panel").modal('open');				
 		})
 	})
 }
