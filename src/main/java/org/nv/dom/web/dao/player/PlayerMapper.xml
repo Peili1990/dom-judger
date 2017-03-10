@@ -100,14 +100,17 @@
 	
 	</delete>
 	
-	<update id="updatePlayerStatus" parameterType="long">
-	
+	<update id="updatePlayerStatus" parameterType="UpdatePlayerStatusDTO">
+		
 		UPDATE
 			d_player
 		SET
-			status = 9
+			status = #{status}
 		WHERE
 			game_id = #{gameId}
+		<if test="includeJudger==false">
+			AND role = "player" 
+		</if>
 	
 	</update>
 	

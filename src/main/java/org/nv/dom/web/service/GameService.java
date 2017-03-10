@@ -20,7 +20,7 @@ public interface GameService {
 	
 	public Map<String, Object> changeStatus(ChangeStatusDTO changeStatusDTO);
 	
-	public Map<String, Object> submitList(List<PlayerInfo> submitList); 
+	public Map<String, Object> submitList(List<PlayerInfo> submitList, boolean isFullList, long gameId); 
 	
 	public Map<String, Object> createOrUpdateForm(GameForm form);
 	

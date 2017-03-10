@@ -3,7 +3,6 @@ package org.nv.dom.web.service.impl;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
 import org.nv.dom.config.PageParamType;
 import org.nv.dom.domain.user.User;
 import org.nv.dom.dto.account.LoginDTO;
@@ -16,9 +15,7 @@ import org.springframework.stereotype.Service;
 
 @Service("accountServiceImpl")
 public class AccountServiceImpl implements AccountService {
-	
-	private Logger logger = Logger.getLogger(AccountServiceImpl.class);
-	
+		
 	@Autowired
 	private AccountMapper accountMapper;
 

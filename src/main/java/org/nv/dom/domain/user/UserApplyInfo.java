@@ -8,8 +8,10 @@ public class UserApplyInfo {
 	private long playerId;
 	/** 用户昵称 */
 	private String nickname;
-	/** 玩家状态描述 */
+	/** 玩家状态 */
 	private Integer status;
+	/** 玩家状态描述 */
+	private String statusDesc;
 	/** 是否选sp */
 	private String isSp;
 	/** 角色id */
@@ -49,6 +51,12 @@ public class UserApplyInfo {
 	}
 	public void setStatus(Integer status) {
 		this.status = status;
+	}
+	public String getStatusDesc() {
+		return statusDesc;
+	}
+	public void setStatusDesc(String statusDesc) {
+		this.statusDesc = statusDesc;
 	}
 	public String getIsSp() {
 		return isSp;

@@ -124,7 +124,8 @@
 							<th>编号</th>
 							<th>id</th>	
 							<th>报名时间</th>
-							<th>外在身份</th>							
+							<th>当前状态</th>	
+							<th>外在身份</th>												
 							<th>申请先驱</th>
 							<th>使用卡片</th>
 							<th>实际身份</th>
@@ -137,6 +138,7 @@
               					<td>${ playerStatus.index+1 }</td>
              					<td>${ player.nickname }</td>
               					<td>${ player.applyTime }</td>
+              					<td>${ player.statusDesc }</td>
               					<td>${ player.characterName }</td>
               					<td>${ player.applyPioneer }</td> 
               					<td>${ player.useCard }</td>            					
@@ -401,7 +403,7 @@ function submitList(gameId){
 				break;
 			}
 		})
-		var url = getRootPath() + "/game/submitList";
+		var url = getRootPath() + "/game/submitFullList";
 		var common = new Common();
 		common.callAction(JSON.stringify(players),url,function(data){
 			changeGameStatus(gameId,3);				

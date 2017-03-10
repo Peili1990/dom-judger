@@ -36,10 +36,10 @@ public interface PlayerMapper {
 	public int deleteReplaceSkinDao(long skinId);
 	
 	/**
-	 * <p>游戏结束后统一更新状态</p>
+	 * <p>统一更新玩家状态</p>
 	 */
 	
-	public int updatePlayerStatus(long gameId);
+	public int updatePlayerStatus(UpdatePlayerStatusDTO updatePlayerStatusDTO);
 	
 	/**
 	 * <p>更新一个玩家状态</p>

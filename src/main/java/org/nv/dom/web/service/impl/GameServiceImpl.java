@@ -22,6 +22,7 @@ import org.nv.dom.dto.game.ChangeStatusDTO;
 import org.nv.dom.dto.game.PublishGameDTO;
 import org.nv.dom.dto.player.ApplyDTO;
 import org.nv.dom.dto.player.KickPlayerDTO;
+import org.nv.dom.dto.player.UpdatePlayerStatusDTO;
 import org.nv.dom.enums.CardType;
 import org.nv.dom.enums.GameStatus;
 import org.nv.dom.enums.PlayerStatus;
@@ -90,6 +91,7 @@ public class GameServiceImpl extends BasicServiceImpl implements GameService {
 					} else if(PlayerStatus.JUDGER.getCode() == userApplyInfo.getStatus()){
 						iter.remove();
 					} else {
+						userApplyInfo.setStatusDesc(PlayerStatus.getMessageByCode(userApplyInfo.getStatus()));
 						String isSp=userApplyInfo.getIsSp();
 						if(StringUtil.isNullOrEmpty(isSp)){
 							userApplyInfo.setCharacterName("未选择");
@@ -219,7 +221,11 @@ public class GameServiceImpl extends BasicServiceImpl implements GameService {
 				}
 				if(changeStatusDTO.getStatus() == GameStatus.FINISHED.getCode() ||
 						changeStatusDTO.getStatus() == GameStatus.CANCELED.getCode()){
-					playerMapper.updatePlayerStatus(changeStatusDTO.getGameId());
+					UpdatePlayerStatusDTO updatePlayerStatusDTO = new UpdatePlayerStatusDTO();
+					updatePlayerStatusDTO.setGameId(changeStatusDTO.getGameId());
+					updatePlayerStatusDTO.setStatus(PlayerStatus.FINISHED.getCode());
+					updatePlayerStatusDTO.setIncludeJudger(true);
+					playerMapper.updatePlayerStatus(updatePlayerStatusDTO);
 				}
 				result.put(PageParamType.BUSINESS_STATUS, 1);
 				result.put(PageParamType.BUSINESS_MESSAGE, "修改状态成功");
@@ -236,10 +242,17 @@ public class GameServiceImpl extends BasicServiceImpl implements GameService {
 	}
 
 	@Override
-	public Map<String, Object> submitList(List<PlayerInfo> submitList) {
+	public Map<String, Object> submitList(List<PlayerInfo> submitList, boolean isFullList, long gameId) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		try{
 			gameMapper.submitApplyListDao(submitList); 
+			if(isFullList){
+				UpdatePlayerStatusDTO updatePlayerStatusDTO = new UpdatePlayerStatusDTO();
+				updatePlayerStatusDTO.setGameId(gameId);
+				updatePlayerStatusDTO.setStatus(PlayerStatus.INDENTITY_OBTAINED.getCode());
+				updatePlayerStatusDTO.setIncludeJudger(false);
+				playerMapper.updatePlayerStatus(updatePlayerStatusDTO);
+			}
 			result.put(PageParamType.BUSINESS_STATUS, 1);
 			result.put(PageParamType.BUSINESS_MESSAGE, "提交全名单成功");	
 		}catch(Exception e){
