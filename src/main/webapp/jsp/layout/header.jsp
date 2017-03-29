@@ -46,13 +46,9 @@
   	webSocket.onerror = function(event) {
 		myAlert(event.data);
 	};
-	
-	$(function(){
-		getOfflineMessage();
-	})
 
 	webSocket.onopen = function(event) {
-		
+		getOfflineMessage();
 	}
 
 	webSocket.onmessage = function(event) {
