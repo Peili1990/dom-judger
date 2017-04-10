@@ -236,7 +236,7 @@ public class AuthorityServiceImpl extends BasicServiceImpl implements AuthorityS
 				if(line.startsWith("#")){  
 					continue;  
 				}    
-				if (line.contains(word)) {  
+				if (line.equals(word)) {  
 					result.put(PageParamType.BUSINESS_STATUS, -3);
 					result.put(PageParamType.BUSINESS_MESSAGE,"已有该词语，请勿重复添加");
 					bufferedReader.close();
