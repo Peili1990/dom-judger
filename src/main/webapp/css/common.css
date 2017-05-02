@@ -61,6 +61,15 @@ fieldset{
 	
 }
 
+.operation .am-form-field{
+	width:220px;
+	display:inline-block;
+}
+
+.operation .am-checkbox{
+	display:inline-block;
+}
+
 .invisible{
 	display:none;
 }

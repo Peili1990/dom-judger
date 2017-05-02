@@ -48,6 +48,9 @@
 							<div class="am-form-group operation">
 								<input type="button" class="am-btn am-btn-primary" value="保存表格" onclick="saveForm(true)">
 								<input type="button" class="am-btn am-btn-danger" value="新增表格" onclick="myPrompt('注意：请先保存表格再新增表格，否则可能导致数据丢失！<br/>请输入新表格标题','updateForm()')">
+								<input type="text" class="am-form-field" id="police-feedback" placeholder="警察统一反馈"/>
+								<input type="text" class="am-form-field" id="killer-feedback" placeholder="杀手统一反馈"/>
+								<input type="checkbox" class="am-checkbox" id="feedback-operation">追加
 							</div>
 							<form class="am-form">
 								<table class="am-table am-table-striped am-table-hover table-main">
@@ -233,6 +236,7 @@ $(function(){
 		builder.append('</select></td>');
 		avatarList=builder.toString();
 	})
+	activeFeedback();
 })
 
 function showPlayerStatus(index){
@@ -501,6 +505,28 @@ function addstatusStyle(players){
 			player.css({"color":"purple"});
 			break;
 		}	
+	})
+}
+
+function activeFeedback(){
+	$("#police-feedback").blur(function(){
+		autofill($("#police-feedback").val(),1,6);
+	})
+	$("#killer-feedback").blur(function(){
+		autofill($("#police-feedback").val(),13,18);
+	})
+}
+
+function autofill(content,start,end){
+	$.each(players,function(index,player){
+		if(player.sign>=start && player.sign<=end){
+			if($("#feedback-operation").is(":checked")){
+				curStr = $("#character-info tr:eq("+index+") td:eq(4)").find("input").val();
+				$("#character-info tr:eq("+index+") td:eq(4)").find("input").val(curStr+"，"+content);		
+			} else {
+				$("#character-info tr:eq("+index+") td:eq(4)").find("input").val(content);
+			}			
+		}
 	})
 }
 
