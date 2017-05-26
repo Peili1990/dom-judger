@@ -352,7 +352,7 @@ function extractIdentity(){
 						players[pioneer].sign = 12;
 						players[pioneer].identityDesc = "先驱";
 						players[pioneer].camp = 1;
-						$("#apply-info tr:eq("+pioneer+") td:eq(6)").text("先驱");
+						$("#apply-info tr:eq("+pioneer+") td:eq(7)").text("先驱");
 					}
 				}
 				array.shuffle();
@@ -363,7 +363,7 @@ function extractIdentity(){
 					} else {
 						player.sign = array[index-offset].sign;
 						player.identityDesc = array[index-offset].desc;
-						$("#apply-info tr:eq("+index+") td:eq(6)").text(array[index-offset].desc);				
+						$("#apply-info tr:eq("+index+") td:eq(7)").text(array[index-offset].desc);				
 					}					
 					player.camp = player.sign < 13 ? 1 : 2;					
 				})
