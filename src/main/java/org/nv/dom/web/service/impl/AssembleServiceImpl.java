@@ -19,6 +19,7 @@ import org.nv.dom.web.dao.player.PlayerMapper;
 import org.nv.dom.web.service.AssembleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 @Service("assembleServiceImpl")
 public class AssembleServiceImpl implements AssembleService {
@@ -51,42 +52,26 @@ public class AssembleServiceImpl implements AssembleService {
 	@Override
 	public Map<String, Object> getNewspaperDetail(long newspaperId) {
 		Map<String, Object> result = new HashMap<String, Object>();
-		try{
-			Newspaper newspaper = newspaperMapper.getNewspaperDetailDao(newspaperId);
-			if(newspaper.getType() == NVTermConstant.DAILY_PAPER){
-				List<Speech> speechList = messageMapper.getSpeechListDao(newspaperId);
-				result.put("speechList", speechList);
-			}
-			result.put("newspaperDetail", newspaper);
-			result.put(PageParamType.BUSINESS_STATUS, 1);
-			result.put(PageParamType.BUSINESS_MESSAGE, "获取报纸详情成功");
-		}catch(Exception e){
-			logger.error(e.getMessage(), e);
-			result.put(PageParamType.BUSINESS_STATUS, -1);
-			result.put(PageParamType.BUSINESS_MESSAGE, "系统异常");
+		Newspaper newspaper = newspaperMapper.getNewspaperDetailDao(newspaperId);
+		if(newspaper.getType() == NVTermConstant.DAILY_PAPER){
+			List<Speech> speechList = messageMapper.getSpeechListDao(newspaperId);
+			result.put("speechList", speechList);
 		}
+		result.put("newspaperDetail", newspaper);
+		result.put(PageParamType.BUSINESS_STATUS, 1);
+		result.put(PageParamType.BUSINESS_MESSAGE, "获取报纸详情成功");
 		return result;
 	}
 
 	@Override
 	public Map<String, Object> generateSeatTable(long gameId) {
 		Map<String, Object> result = new HashMap<String, Object>();
-		try{
-			List<PlayerInfo> players = playerMapper.getAlivePlayersDao(gameId);
-			if(players == null || players.size()<6){
-				result.put(PageParamType.BUSINESS_STATUS, -3);
-				result.put(PageParamType.BUSINESS_MESSAGE, "存活玩家太少，无法生成座位表！");
-			} else {
-				String seatTableHtml = generateSeatTableHtml(players);
-				result.put("seatTable", seatTableHtml);
-				result.put(PageParamType.BUSINESS_STATUS, 1);
-				result.put(PageParamType.BUSINESS_MESSAGE, "生成座位表成功");
-			}	
-		}catch(Exception e){
-			logger.error(e.getMessage(), e);
-			result.put(PageParamType.BUSINESS_STATUS, -1);
-			result.put(PageParamType.BUSINESS_MESSAGE, "系统异常");
-		}
+		List<PlayerInfo> players = playerMapper.getAlivePlayersDao(gameId);
+		Assert.isTrue(players != null && players.size()>=6, "存活玩家太少，无法生成座位表！");
+		String seatTableHtml = generateSeatTableHtml(players);
+		result.put("seatTable", seatTableHtml);
+		result.put(PageParamType.BUSINESS_STATUS, 1);
+		result.put(PageParamType.BUSINESS_MESSAGE, "生成座位表成功");
 		return result;
 	}
 	
@@ -132,36 +117,24 @@ public class AssembleServiceImpl implements AssembleService {
 	@Override
 	public Map<String, Object> createOrUpdateNewspaper(Newspaper newspaper) {
 		Map<String, Object> result = new HashMap<String, Object>();
-		try{
-			if(newspaper.getNewspaperId() == 0){
-				newspaperMapper.updateNewspaperStatusDao(newspaper.getGameId());
-			}
-			newspaperMapper.createOrUpdateNewspaperDao(newspaper);
-			result.put("newspaperId", newspaper.getNewspaperId());
-			result.put("header", newspaper.getHeader());
-			result.put(PageParamType.BUSINESS_STATUS, 1);
-			result.put(PageParamType.BUSINESS_MESSAGE, "新增或更新报纸成功！");
-		}catch(Exception e){  
-			logger.error(e.getMessage(),e);
-			result.put(PageParamType.BUSINESS_STATUS, -1);
-			result.put(PageParamType.BUSINESS_MESSAGE, "系统异常");
+		if(newspaper.getNewspaperId() == 0){
+			newspaperMapper.updateNewspaperStatusDao(newspaper.getGameId());
 		}
+		newspaperMapper.createOrUpdateNewspaperDao(newspaper);
+		result.put("newspaperId", newspaper.getNewspaperId());
+		result.put("header", newspaper.getHeader());
+		result.put(PageParamType.BUSINESS_STATUS, 1);
+		result.put(PageParamType.BUSINESS_MESSAGE, "新增或更新报纸成功！");
 		return result;
 	}
 
 	@Override
 	public Map<String, Object> wordCount(String content) {
 		Map<String, Object> result = new HashMap<String, Object>();
-		try{
-			Integer wordCount = TextUtil.wordCount(content);
-			result.put("wordCount", wordCount);
-			result.put(PageParamType.BUSINESS_STATUS, 1);
-			result.put(PageParamType.BUSINESS_MESSAGE, "字数统计成功");
-		}catch(Exception e){  
-			logger.error(e.getMessage(),e);
-			result.put(PageParamType.BUSINESS_STATUS, -1);
-			result.put(PageParamType.BUSINESS_MESSAGE, "系统异常");
-		}
+		Integer wordCount = TextUtil.wordCount(content);
+		result.put("wordCount", wordCount);
+		result.put(PageParamType.BUSINESS_STATUS, 1);
+		result.put(PageParamType.BUSINESS_MESSAGE, "字数统计成功");
 		return result;
 	}
 	

@@ -13,11 +13,13 @@ import org.nv.dom.domain.user.User;
 import org.nv.dom.dto.rule.GetRuleContentDTO;
 import org.nv.dom.dto.rule.SaveRuleDTO;
 import org.nv.dom.util.StringUtil;
-import org.nv.dom.util.json.JacksonJSONUtils;
 import org.nv.dom.web.dao.rule.RuleMapper;
 import org.nv.dom.web.service.RuleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
+
+import com.alibaba.fastjson.JSON;
 
 @Service("ruleServiceImpl")
 public class RuleServiceImpl extends BasicServiceImpl implements RuleService {
@@ -44,63 +46,43 @@ public class RuleServiceImpl extends BasicServiceImpl implements RuleService {
 	@Override
 	public Map<String, Object> getRuleRow() {
 		Map<String, Object> result = new HashMap<>();
-		try{
-			List<RuleRow> ruleRows = JacksonJSONUtils.jsonToList(redisClient.get(RedisConstant.RULE_ROW_CONTENT, ""), RuleRow.class);
-			if(ruleRows == null || ruleRows.isEmpty()){
-				ruleRows = ruleMapper.getRuleRowContent();
-			}
-			GetRuleContentDTO getRuleContentDTO = new GetRuleContentDTO();
-			for(int row=0;row<ruleRows.size();row++){
-				for(RuleIndex ruleIndex:ruleRows.get(row).getIndexs()){
-					getRuleContentDTO.setRow(row+1);
-					getRuleContentDTO.setIndex(ruleIndex.getIndexId());
-					ruleIndex.setContent(getRuleContent(getRuleContentDTO));
-				}
-			}
-			result.put("rules", ruleRows);
-			result.put(PageParamType.BUSINESS_STATUS, 1);
-			result.put(PageParamType.BUSINESS_MESSAGE,"获取规则成功");
-		}catch(Exception e){
-			logger.error(e.getMessage(), e);
-			result.put(PageParamType.BUSINESS_STATUS, -1);
-			result.put(PageParamType.BUSINESS_MESSAGE,"系统异常");
+		List<RuleRow> ruleRows = JSON.parseArray(redisClient.get(RedisConstant.RULE_ROW_CONTENT, ""), RuleRow.class);
+		if(ruleRows == null || ruleRows.isEmpty()){
+			ruleRows = ruleMapper.getRuleRowContent();
 		}
+		GetRuleContentDTO getRuleContentDTO = new GetRuleContentDTO();
+		for(int row=0;row<ruleRows.size();row++){
+			for(RuleIndex ruleIndex:ruleRows.get(row).getIndexs()){
+				getRuleContentDTO.setRow(row+1);
+				getRuleContentDTO.setIndex(ruleIndex.getIndexId());
+				ruleIndex.setContent(getRuleContent(getRuleContentDTO));
+			}
+		}
+		result.put("rules", ruleRows);
+		result.put(PageParamType.BUSINESS_STATUS, 1);
+		result.put(PageParamType.BUSINESS_MESSAGE,"获取规则成功");
 		return result;
 	}
 	
 	@Override
 	public Map<String, Object> saveRule(SaveRuleDTO saveRuleDTO, User user) {
 		Map<String, Object> result = new HashMap<String, Object>();
-		if( user==null || user.getAuthority() == null || user.getAuthority() < 2){
-			result.put(PageParamType.BUSINESS_STATUS, -2);
-			result.put(PageParamType.BUSINESS_MESSAGE,"权限不够，无法修改规则");
-			return result;
+		Assert.isTrue(user != null && user.getAuthority() != null && user.getAuthority() > 1, "权限不够，无法修改规则");
+		Assert.isTrue(ruleMapper.saveRule(saveRuleDTO)==1, "修改规则失败");		
+		if(saveRuleDTO.getIndex()==null){
+			List<RuleRow> ruleRows = JSON.parseArray(redisClient.get(RedisConstant.RULE_ROW_CONTENT, ""), RuleRow.class);
+			ruleRows.get(saveRuleDTO.getRow()-1).setContent(saveRuleDTO.getContent());
+			redisClient.set(RedisConstant.RULE_ROW_CONTENT, JSON.toJSONString(ruleRows));
+		} else if (saveRuleDTO.getNewIndex()==1){
+			List<RuleRow> ruleRows = JSON.parseArray(redisClient.get(RedisConstant.RULE_ROW_CONTENT, ""), RuleRow.class);
+			ruleRows.get(saveRuleDTO.getRow()-1).getIndexs().add(new RuleIndex(saveRuleDTO.getIndex(),saveRuleDTO.getRow(),saveRuleDTO.getHeader()));
+			redisClient.set(RedisConstant.RULE_ROW_CONTENT, JSON.toJSONString(ruleRows));
+			redisClient.setHSet(RedisConstant.RULE_ROW+saveRuleDTO.getRow(), RedisConstant.RULE_INDEX+saveRuleDTO.getIndex(), saveRuleDTO.getContent());			
+		} else {
+			redisClient.setHSet(RedisConstant.RULE_ROW+saveRuleDTO.getRow(), RedisConstant.RULE_INDEX+saveRuleDTO.getIndex(), saveRuleDTO.getContent());
 		}
-		try{
-			if(ruleMapper.saveRule(saveRuleDTO)==1){
-				if(saveRuleDTO.getIndex()==null){
-					List<RuleRow> ruleRows = JacksonJSONUtils.jsonToList(redisClient.get(RedisConstant.RULE_ROW_CONTENT, ""), RuleRow.class);
-					ruleRows.get(saveRuleDTO.getRow()-1).setContent(saveRuleDTO.getContent());
-					redisClient.set(RedisConstant.RULE_ROW_CONTENT, JacksonJSONUtils.beanToJSON(ruleRows));
-				} else if (saveRuleDTO.getNewIndex()==1){
-					List<RuleRow> ruleRows = JacksonJSONUtils.jsonToList(redisClient.get(RedisConstant.RULE_ROW_CONTENT, ""), RuleRow.class);
-					ruleRows.get(saveRuleDTO.getRow()-1).getIndexs().add(new RuleIndex(saveRuleDTO.getIndex(),saveRuleDTO.getRow(),saveRuleDTO.getHeader()));
-					redisClient.set(RedisConstant.RULE_ROW_CONTENT, JacksonJSONUtils.beanToJSON(ruleRows));
-					redisClient.setHSet(RedisConstant.RULE_ROW+saveRuleDTO.getRow(), RedisConstant.RULE_INDEX+saveRuleDTO.getIndex(), saveRuleDTO.getContent());			
-				} else {
-					redisClient.setHSet(RedisConstant.RULE_ROW+saveRuleDTO.getRow(), RedisConstant.RULE_INDEX+saveRuleDTO.getIndex(), saveRuleDTO.getContent());
-				}
-				result.put(PageParamType.BUSINESS_STATUS, 1);
-				result.put(PageParamType.BUSINESS_MESSAGE,"修改规则成功");
-			} else {
-				result.put(PageParamType.BUSINESS_STATUS, -3);
-				result.put(PageParamType.BUSINESS_MESSAGE,"修改规则失败");
-			}		
-		}catch(Exception e){
-			logger.error(e.getMessage(),e);
-			result.put(PageParamType.BUSINESS_STATUS, -1);
-			result.put(PageParamType.BUSINESS_MESSAGE,"系统异常");
-		}	
+		result.put(PageParamType.BUSINESS_STATUS, 1);
+		result.put(PageParamType.BUSINESS_MESSAGE,"修改规则成功");
 		return result;
 	}
 
