@@ -58,8 +58,8 @@ public class PlayerController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "/getPlayerOperation")
-	public Map<String, Object> getPlayerOperation(@RequestParam("playerId") long playerId,HttpSession session) {
+	@RequestMapping(value = "/getPlayerOperation", method = RequestMethod.POST)
+	public Map<String, Object> getPlayerOperation(@RequestBody long playerId,HttpSession session) {
 		return playerService.getPlayerOperation(playerId);
 	}
 
