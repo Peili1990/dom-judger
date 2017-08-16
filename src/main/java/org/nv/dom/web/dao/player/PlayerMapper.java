@@ -2,7 +2,9 @@ package org.nv.dom.web.dao.player;
 
 import java.util.List;
 
+import org.nv.dom.domain.player.PlayerFeedback;
 import org.nv.dom.domain.player.PlayerInfo;
+import org.nv.dom.domain.player.PlayerOperationRecord;
 import org.nv.dom.domain.player.PlayerReplaceSkin;
 import org.nv.dom.dto.player.UpdatePlayerStatusDTO;
 import org.springframework.stereotype.Repository;
@@ -46,4 +48,24 @@ public interface PlayerMapper {
 	 */
 	
 	public int updateOnePlayerStatus(UpdatePlayerStatusDTO updatePlayerStatusDTO);
+	
+	/**
+	 * <p>插入玩家操作</p>
+	 */
+	public int insertPlayerOperationRecord(PlayerOperationRecord playerOperationRecord);
+	
+	/**
+	 * <p>删除玩家操作</p>
+	 */
+	public int deletePlayerOperationRecord(PlayerOperationRecord playerOperationRecord);
+	
+	/**
+	 * <p>根据玩家id获取用户id</p>
+	 */
+	public long getUserIdByPlayerId(long playerId);
+	
+	/**
+	 * <p>批量插入玩家反馈</p>
+	 */
+	public int insertPlayerFeedbackBatch(List<PlayerFeedback> feedbacks);
 }

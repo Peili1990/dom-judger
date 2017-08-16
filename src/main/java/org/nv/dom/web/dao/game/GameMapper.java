@@ -88,6 +88,10 @@ public interface GameMapper {
 	/**
 	 * <p>获取提交时间</p>
 	 */
-	public Date getSubmitTimeDao(long playerId);
+	public Date getSubmitTimeDao(long playerId);	
+	/**
+	 * <p>获取游戏当前阶段</p>
+	 */
+	public int getCurStage(long gameId);
 	
 }

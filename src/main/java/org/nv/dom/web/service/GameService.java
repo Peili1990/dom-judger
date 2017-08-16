@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.nv.dom.domain.game.GameForm;
 import org.nv.dom.domain.player.PlayerInfo;
+import org.nv.dom.domain.player.PlayerOperationRecord;
 import org.nv.dom.dto.game.ChangeStatusDTO;
 import org.nv.dom.dto.game.PublishGameDTO;
 import org.nv.dom.dto.player.KickPlayerDTO;
@@ -31,4 +32,6 @@ public interface GameService {
 	public Map<String, Object> getGameList();
 
 	public Map<String, Object> getSubmitTime(long playerId);
+	
+	public Map<String, Object> insertPlayerOperationRecord(PlayerOperationRecord playerOperationRecord);
 }

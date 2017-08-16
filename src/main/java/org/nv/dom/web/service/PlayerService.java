@@ -20,4 +20,6 @@ public interface PlayerService {
 
 	public Map<String, Object> dealJudgerDecision(JudgerDecisionDTO judgerDecisionDTO);
 
+	public Map<String, Object> getPlayerOperation(long playerId);
+
 }

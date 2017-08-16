@@ -16,6 +16,7 @@ import org.nv.dom.domain.game.ApplyingGame;
 import org.nv.dom.domain.game.GameForm;
 import org.nv.dom.domain.newspaper.Newspaper;
 import org.nv.dom.domain.player.PlayerInfo;
+import org.nv.dom.domain.player.PlayerOperationRecord;
 import org.nv.dom.domain.user.UserApplyInfo;
 import org.nv.dom.dto.game.ChangeStatusDTO;
 import org.nv.dom.dto.game.PublishGameDTO;
@@ -159,7 +160,7 @@ public class GameServiceImpl extends BasicServiceImpl implements GameService {
 			GameForm form = new GameForm();
 			form.setGameId(changeStatusDTO.getGameId());
 			form.setHeader("游戏开始前");
-			gameMapper.createOrUpdateFormDao(form);
+			gameMapper.createOrUpdateFormDao(form);	
 		}
 		if(changeStatusDTO.getStatus() == GameStatus.REPLAYING.getCode()){
 			newspaperMapper.updateNewspaperStatusDao(changeStatusDTO.getGameId());
@@ -177,6 +178,8 @@ public class GameServiceImpl extends BasicServiceImpl implements GameService {
 		result.put(PageParamType.BUSINESS_MESSAGE, "修改状态成功");
 		return result;
 	}
+	
+
 
 	@Override
 	public Map<String, Object> submitList(List<PlayerInfo> submitList, boolean isFullList, long gameId) {
@@ -192,7 +195,7 @@ public class GameServiceImpl extends BasicServiceImpl implements GameService {
 		result.put(PageParamType.BUSINESS_STATUS, 1);
 		result.put(PageParamType.BUSINESS_MESSAGE, "提交全名单成功");	
 		return result;
-	}
+	}	
 
 	@Override
 	public Map<String, Object> getFormList(long gameId) {
@@ -236,6 +239,16 @@ public class GameServiceImpl extends BasicServiceImpl implements GameService {
 		result.put("submitTime", submitTime);
 		result.put(PageParamType.BUSINESS_STATUS, 1);
 		result.put(PageParamType.BUSINESS_MESSAGE, "获取提交时间成功");
+		return result;
+	}
+
+	@Override
+	public Map<String, Object> insertPlayerOperationRecord(PlayerOperationRecord playerOperationRecord) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		playerMapper.deletePlayerOperationRecord(playerOperationRecord);
+		playerMapper.insertPlayerOperationRecord(playerOperationRecord);
+		result.put(PageParamType.BUSINESS_STATUS, 1);
+		result.put(PageParamType.BUSINESS_MESSAGE, "插入操作成功");
 		return result;
 	}	
 

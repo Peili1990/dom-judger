@@ -13,6 +13,7 @@ import org.nv.dom.web.service.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -54,6 +55,12 @@ public class PlayerController {
 	@RequestMapping(value = "/judgerDecision", method = RequestMethod.POST)
 	public Map<String, Object> judgerDecision(@ModelAttribute("JudgerDecisionDTO") JudgerDecisionDTO judgerDecisionDTO,HttpSession session) {
 		return playerService.dealJudgerDecision(judgerDecisionDTO);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/getPlayerOperation")
+	public Map<String, Object> getPlayerOperation(@RequestParam("playerId") long playerId,HttpSession session) {
+		return playerService.getPlayerOperation(playerId);
 	}
 
 }

@@ -347,5 +347,20 @@
 			dpr.player_id = #{playerId}
 	
 	</select>
+	
+	<select id="getCurStage" parameterType="long" resultType="Integer">
+	
+		SELECT
+			type
+		FROM	
+			d_form
+		WHERE
+			game_id = #{gameId}
+		ORDER BY
+			create_time
+		DESC
+		LIMIT 1
+	
+	</select>
 
 </mapper>

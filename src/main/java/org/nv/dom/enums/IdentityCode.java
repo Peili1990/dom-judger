@@ -2,20 +2,19 @@ package org.nv.dom.enums;
 
 public enum IdentityCode {
 	
-	NONE(0,"未发放"),
-	POLICE(1,"警察"),
-	OFFICER(2,"官员"),
-	ASSASSIN(3,"刺客"),
-	DOCTER(4,"医生"),
-	PRIEST(5,"牧师"),
-	CIVILIAN(6,"平民"),
-	PIONEER(7,"先驱"),
-	KILLER(8,"杀手"),
-	MOB(9,"暴徒"),
-	SPY(10,"间谍"),
-	THIEF(11,"小偷"),
-	WIZARD(12,"巫师"),
-	GANG(13,"帮众");
+	POLICE(-1,"警察"),
+	OFFICER(10,"官员"),
+	ASSASSIN(8,"刺客"),
+	DOCTER(9,"医生"),
+	PRIEST(7,"牧师"),
+	CIVILIAN(11,"平民"),
+	PIONEER(12,"先驱"),
+	KILLER(99,"杀手"),
+	MOB(22,"暴徒"),
+	SPY(20,"间谍"),
+	THIEF(19,"小偷"),
+	WIZARD(21,"巫师"),
+	GANG(23,"帮众");
 	
 	private final Integer code;
 	private final String message;

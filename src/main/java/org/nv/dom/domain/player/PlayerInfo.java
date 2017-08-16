@@ -1,7 +1,13 @@
 package org.nv.dom.domain.player;
 
-public class PlayerInfo {
+import java.io.Serializable;
+
+public class PlayerInfo implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	/** 玩家id */
 	private long playerId;
 	/** 角色名称 */

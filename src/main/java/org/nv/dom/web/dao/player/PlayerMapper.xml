@@ -125,5 +125,67 @@
 	
 	</update>
 	
+	<insert id="insertPlayerOperationRecord" parameterType="PlayerOperationRecord" useGeneratedKeys="true" keyProperty="id">
+	
+		INSERT INTO d_player_operation_record(
+			player_id,
+			form_id,
+			operation_id,
+			param,
+			is_done,
+			create_time
+		) VALUES (
+			#{playerId},
+			#{formId},
+			#{operationId},
+			#{param},
+			#{isDone},
+			NOW()
+		)
+	
+	</insert>
+	
+	<update id="deletePlayerOperationRecord" parameterType="PlayerOperationRecord">
+	
+		UPDATE
+			d_player_operation_record
+		SET
+			is_delete = 1
+		WHERE
+			form_id = #{formId} AND operation_id = #{operationId} AND is_done = 0;	
+	
+	</update>
+	
+	<select id="getUserIdByPlayerId" parameterType="Long" resultType="Long">
+	
+		SELECT
+			user_id
+		FROM
+			d_player
+		WHERE
+			id = #{playerId}
+	
+	</select>
+	
+	<insert id="insertPlayerFeedbackBatch">
+	
+		INSERT INTO d_player_feedback(
+			operation_record_id,
+			player_id,
+			feedback,
+			create_time
+		)
+		VALUES
+			 <foreach item="item" index="index" collection="list" separator=",">
+ 			(
+            #{item.operationRecordId},
+            #{item.playerId},
+            #{item.feedback},
+            NOW()
+            )
+    		 </foreach>
+	
+	</insert>
+	
 
 </mapper>

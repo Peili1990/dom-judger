@@ -98,5 +98,13 @@ public class PlayerServiceImpl implements PlayerService {
 		return result;
 	}
 
+	@Override
+	public Map<String, Object> getPlayerOperation(long playerId) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put(PageParamType.BUSINESS_STATUS, 1);
+		result.put(PageParamType.BUSINESS_MESSAGE, "获取玩家操作成功");
+		return result;
+	}
+
 
 }

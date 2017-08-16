@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.nv.dom.config.EventList;
 import org.nv.dom.config.PageParamType;
 import org.nv.dom.domain.game.ApplyingGame;
 import org.nv.dom.domain.game.GameForm;
@@ -14,6 +15,7 @@ import org.nv.dom.dto.game.ChangeStatusDTO;
 import org.nv.dom.dto.game.PublishGameDTO;
 import org.nv.dom.dto.player.KickPlayerDTO;
 import org.nv.dom.enums.GameStatus;
+import org.nv.dom.web.service.EventService;
 import org.nv.dom.web.service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,6 +32,9 @@ public class GameController extends BaseController{
 	
 	@Autowired
 	GameService gameService;
+	
+	@Autowired
+	EventService eventService;
 	
 	@ResponseBody
 	@RequestMapping(value = "/getGameList", method = RequestMethod.POST)
@@ -58,6 +63,10 @@ public class GameController extends BaseController{
 	@RequestMapping(value = "/changeStatus", method = RequestMethod.POST)
 	public Map<String, Object> changeStatus(@ModelAttribute("changeStatusDTO") ChangeStatusDTO changeStatusDTO, HttpSession session) {
 		Map<String, Object> result = gameService.changeStatus(changeStatusDTO);
+		if((int)result.get("status")==1&&changeStatusDTO.getStatus()==GameStatus.READY.getCode()){
+			result.put("gameId", changeStatusDTO.getGameId());
+			eventService.publish(EventList.GAME_START_EVENT, result);
+		}
 		if((int)result.get("status")==1&&changeStatusDTO.getStatus()==GameStatus.FINISHED.getCode()){
 			session.setAttribute(PageParamType.GAME_IN_SESSION, null);
 		}

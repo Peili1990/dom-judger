@@ -49,6 +49,8 @@ public class NVTermConstant {
 	 
 	public static final String USE_CAMP_CARD = "2";
 	
+	public static final Integer ADMINISTRATOR = 2;
+	
 	
 
 }
