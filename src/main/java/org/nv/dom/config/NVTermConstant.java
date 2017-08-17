@@ -51,6 +51,8 @@ public class NVTermConstant {
 	
 	public static final Integer ADMINISTRATOR = 2;
 	
+	public static final Integer GOOD_CAMP = 1;
 	
+	public static final Integer KILLER_CAMP = 2;
 
 }

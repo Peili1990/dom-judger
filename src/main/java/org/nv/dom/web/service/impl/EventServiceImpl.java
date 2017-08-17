@@ -31,6 +31,7 @@ public class EventServiceImpl implements EventService {
 	@Override
 	public void publish(String event, Map<String, Object> param) {
 		Map<Integer, Operation> observers = eventManager.getOrDefault(event, new HashMap<Integer, Operation>());
+		observers.keySet().stream().forEach(id -> observers.get(id).check(param));	
 		observers.keySet().stream().forEach(id -> observers.get(id).accept(param));	
 	}
 

@@ -67,16 +67,14 @@ public abstract class Operation {
 	};
 	
 	public void accept(Map<String, Object> param){
-		if(check(param)){
-			PlayerOperationRecord record = settle(param);
-			long formId = gameUtil.getCurForm((long) param.get("gameId"));
-			record.setFormId(formId);
-			record.setOperationId(operationId);
-			record.setIsDone(1);
-			gameUtil.insertOperationRecord(record);
-			if(record.getFeedback() != null){
-				sendMessage(record.getFeedback());
-			}
+		PlayerOperationRecord record = settle(param);
+		long formId = gameUtil.getCurForm((long) param.get("gameId")).getFormId();
+		record.setFormId(formId);
+		record.setOperationId(operationId);
+		record.setIsDone(1);
+		gameUtil.insertOperationRecord(record);
+		if(record.getFeedback() != null){
+			sendMessage(record.getFeedback());
 		}		
 	}
 	

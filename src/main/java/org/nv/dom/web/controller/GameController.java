@@ -13,6 +13,7 @@ import org.nv.dom.domain.player.PlayerInfo;
 import org.nv.dom.domain.user.User;
 import org.nv.dom.dto.game.ChangeStatusDTO;
 import org.nv.dom.dto.game.PublishGameDTO;
+import org.nv.dom.dto.operation.GetOperationTargetDTO;
 import org.nv.dom.dto.player.KickPlayerDTO;
 import org.nv.dom.enums.GameStatus;
 import org.nv.dom.web.service.EventService;
@@ -105,6 +106,13 @@ public class GameController extends BaseController{
 	public Map<String, Object> getSubmitTime(@RequestParam("playerId") long playerId, HttpSession session){
 		return gameService.getSubmitTime(playerId);
 	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/getOperationTarget", method = RequestMethod.POST)
+	public Map<String, Object> getSubmitTime(@RequestBody GetOperationTargetDTO getOperationTarget, HttpSession session){
+		return gameService.getOperationTarget(getOperationTarget);
+	}
+	
 	
 
 

@@ -2,6 +2,7 @@ package org.nv.dom.web.service.impl;
 
 import java.util.List;
 
+import org.nv.dom.domain.game.GameForm;
 import org.nv.dom.domain.player.PlayerInfo;
 import org.nv.dom.domain.player.PlayerOperationRecord;
 import org.nv.dom.web.dao.game.GameMapper;
@@ -25,8 +26,8 @@ public class GameUtilServiceImpl implements GameUtilService{
 	}
 	
 	@Override
-	public long getCurForm(long gameId) {
-		return gameMapper.getFormListDao(gameId, false).get(0).getFormId();
+	public GameForm getCurForm(long gameId) {
+		return gameMapper.getFormListDao(gameId, false).get(0);
 	}
 
 	@Override

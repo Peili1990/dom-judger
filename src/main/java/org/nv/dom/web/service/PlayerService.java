@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.nv.dom.domain.player.PlayerReplaceSkin;
 import org.nv.dom.dto.player.ApplyDTO;
+import org.nv.dom.dto.player.GetPlayerOperationDTO;
 import org.nv.dom.dto.player.JudgerDecisionDTO;
 
 public interface PlayerService {
@@ -20,6 +21,6 @@ public interface PlayerService {
 
 	public Map<String, Object> dealJudgerDecision(JudgerDecisionDTO judgerDecisionDTO);
 
-	public Map<String, Object> getPlayerOperation(long playerId);
+	public Map<String, Object> getPlayerOperation(GetPlayerOperationDTO getPlayerOperationDTO);
 
 }

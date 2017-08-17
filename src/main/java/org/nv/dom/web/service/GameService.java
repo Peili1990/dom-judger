@@ -9,6 +9,7 @@ import org.nv.dom.domain.player.PlayerInfo;
 import org.nv.dom.domain.player.PlayerOperationRecord;
 import org.nv.dom.dto.game.ChangeStatusDTO;
 import org.nv.dom.dto.game.PublishGameDTO;
+import org.nv.dom.dto.operation.GetOperationTargetDTO;
 import org.nv.dom.dto.player.KickPlayerDTO;
 
 public interface GameService {
@@ -34,4 +35,6 @@ public interface GameService {
 	public Map<String, Object> getSubmitTime(long playerId);
 	
 	public Map<String, Object> insertPlayerOperationRecord(PlayerOperationRecord playerOperationRecord);
+
+	public Map<String, Object> getOperationTarget(GetOperationTargetDTO getOperationTarget);
 }

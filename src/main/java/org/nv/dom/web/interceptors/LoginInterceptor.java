@@ -16,7 +16,7 @@ public class LoginInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
         if(httpServletRequest.getSession().getAttribute(PageParamType.user_in_session)!=null ||
-        		httpServletRequest.getHeader("source").equals("nv-client")) {
+        		httpServletRequest.getHeader("source") != null) {
             return true;
         }
         return sessionTimeoutHandle.timeout(httpServletRequest, httpServletResponse);

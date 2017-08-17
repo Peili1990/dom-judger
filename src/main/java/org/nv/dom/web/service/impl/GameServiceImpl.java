@@ -16,10 +16,13 @@ import org.nv.dom.domain.game.ApplyingGame;
 import org.nv.dom.domain.game.GameForm;
 import org.nv.dom.domain.newspaper.Newspaper;
 import org.nv.dom.domain.player.PlayerInfo;
+import org.nv.dom.domain.player.PlayerOperation;
 import org.nv.dom.domain.player.PlayerOperationRecord;
+import org.nv.dom.domain.player.PlayerReplaceSkin;
 import org.nv.dom.domain.user.UserApplyInfo;
 import org.nv.dom.dto.game.ChangeStatusDTO;
 import org.nv.dom.dto.game.PublishGameDTO;
+import org.nv.dom.dto.operation.GetOperationTargetDTO;
 import org.nv.dom.dto.player.ApplyDTO;
 import org.nv.dom.dto.player.KickPlayerDTO;
 import org.nv.dom.dto.player.UpdatePlayerStatusDTO;
@@ -38,6 +41,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import com.alibaba.fastjson.JSON;
+
+import static java.util.stream.Collectors.*;
 
 @Service("gameServiceImpl")
 public class GameServiceImpl extends BasicServiceImpl implements GameService {
@@ -191,11 +196,25 @@ public class GameServiceImpl extends BasicServiceImpl implements GameService {
 			updatePlayerStatusDTO.setStatus(PlayerStatus.INDENTITY_OBTAINED.getCode());
 			updatePlayerStatusDTO.setIncludeJudger(false);
 			playerMapper.updatePlayerStatus(updatePlayerStatusDTO);
+			initPlayerOperation(submitList);
 		}
 		result.put(PageParamType.BUSINESS_STATUS, 1);
 		result.put(PageParamType.BUSINESS_MESSAGE, "提交全名单成功");	
 		return result;
 	}	
+	
+	private void initPlayerOperation(List<PlayerInfo> playerInfos){
+		playerInfos.forEach(playerInfo -> {
+			int sign = playerInfo.getSign();
+			if(sign >= 1 && sign <= 6) sign = 1;
+			if(sign >= 13 && sign <= 18) sign = 13;
+			List<PlayerOperation> operations = playerMapper.initPlayerOperation(sign);
+			if(operations.size()>0){
+				operations.forEach(operation -> operation.setPlayerId(playerInfo.getPlayerId()));
+				playerMapper.insertInitPlayerOperation(operations);
+			}		
+		});
+	}
 
 	@Override
 	public Map<String, Object> getFormList(long gameId) {
@@ -247,6 +266,31 @@ public class GameServiceImpl extends BasicServiceImpl implements GameService {
 		Map<String, Object> result = new HashMap<String, Object>();
 		playerMapper.deletePlayerOperationRecord(playerOperationRecord);
 		playerMapper.insertPlayerOperationRecord(playerOperationRecord);
+		result.put(PageParamType.BUSINESS_STATUS, 1);
+		result.put(PageParamType.BUSINESS_MESSAGE, "插入操作成功");
+		return result;
+	}
+
+	@Override
+	public Map<String, Object> getOperationTarget(GetOperationTargetDTO getOperationTarget) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		List<PlayerInfo> playerInfos = playerMapper.getPlayerInfosDao(getOperationTarget.getGameId());
+		List<PlayerReplaceSkin> playerReplaceSkin = playerMapper.getAllReplaceSkinDao(getOperationTarget.getGameId());
+		Map<Long, String> target = new HashMap<>();
+		switch (getOperationTarget.getType()) {
+		case 1:
+			playerInfos.forEach(playerInfo -> {
+				List<PlayerReplaceSkin> skins = playerReplaceSkin.stream()
+						.filter(skin -> skin.getPlayerId() == playerInfo.getPlayerId())
+						.collect(toList());
+				String characterName = skins.size() == 1 ? skins.get(0).getCharacterName() : playerInfo.getCharacterName();
+				target.put(playerInfo.getPlayerId(), characterName);
+			});
+			break;
+		default:
+			break;
+		}
+		result.put("operationTarget", target);
 		result.put(PageParamType.BUSINESS_STATUS, 1);
 		result.put(PageParamType.BUSINESS_MESSAGE, "插入操作成功");
 		return result;

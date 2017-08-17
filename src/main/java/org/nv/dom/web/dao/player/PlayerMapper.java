@@ -2,8 +2,10 @@ package org.nv.dom.web.dao.player;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.nv.dom.domain.player.PlayerFeedback;
 import org.nv.dom.domain.player.PlayerInfo;
+import org.nv.dom.domain.player.PlayerOperation;
 import org.nv.dom.domain.player.PlayerOperationRecord;
 import org.nv.dom.domain.player.PlayerReplaceSkin;
 import org.nv.dom.dto.player.UpdatePlayerStatusDTO;
@@ -68,4 +70,29 @@ public interface PlayerMapper {
 	 * <p>批量插入玩家反馈</p>
 	 */
 	public int insertPlayerFeedbackBatch(List<PlayerFeedback> feedbacks);
+
+	/**
+	 * <p>获取玩家初始操作</p>
+	 */
+	public List<PlayerOperation> initPlayerOperation(int sign);
+	
+	/**
+	 * <p>初始化玩家操作</p>
+	 */
+	public int insertInitPlayerOperation(List<PlayerOperation> operations);
+
+	/**
+	 * <p>获取该阶段玩家操作列表</p>
+	 */
+	public List<PlayerOperation> getPlayerOperationList(@Param("playerId")long playerId, @Param("stage")int stage);
+
+	/**
+	 * <p>获取该阶段玩家操作记录</p>
+	 */
+	public List<PlayerOperationRecord> getPlayerOperationRecord(@Param("playerId")long playerId, @Param("formId")long formId);
+
+	/**
+	 * <p>获取所有的发言称呼</p>
+	 */
+	public List<PlayerReplaceSkin> getAllReplaceSkinDao(long gameId);
 }

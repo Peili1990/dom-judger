@@ -8,6 +8,7 @@ import org.nv.dom.config.PageParamType;
 import org.nv.dom.domain.player.PlayerReplaceSkin;
 import org.nv.dom.domain.user.User;
 import org.nv.dom.dto.player.ApplyDTO;
+import org.nv.dom.dto.player.GetPlayerOperationDTO;
 import org.nv.dom.dto.player.JudgerDecisionDTO;
 import org.nv.dom.web.service.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,8 +60,8 @@ public class PlayerController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/getPlayerOperation", method = RequestMethod.POST)
-	public Map<String, Object> getPlayerOperation(@RequestBody long playerId,HttpSession session) {
-		return playerService.getPlayerOperation(playerId);
+	public Map<String, Object> getPlayerOperation(@RequestBody GetPlayerOperationDTO getPlayerOperationDTO,HttpSession session) {
+		return playerService.getPlayerOperation(getPlayerOperationDTO);
 	}
 
 }

@@ -6,6 +6,12 @@ public class PlayerOperation {
 	
 	private long operationId;
 	
+	private String operationName;
+	
+	private String template;
+	
+	private int immediately;
+	
 	private int times;
 
 	public long getPlayerId() {
@@ -22,6 +28,30 @@ public class PlayerOperation {
 
 	public void setOperationId(long operationId) {
 		this.operationId = operationId;
+	}
+
+	public String getOperationName() {
+		return operationName;
+	}
+
+	public void setOperationName(String operationName) {
+		this.operationName = operationName;
+	}
+
+	public String getTemplate() {
+		return template;
+	}
+
+	public void setTemplate(String template) {
+		this.template = template;
+	}
+
+	public int getImmediately() {
+		return immediately;
+	}
+
+	public void setImmediately(int immediately) {
+		this.immediately = immediately;
 	}
 
 	public int getTimes() {

@@ -5,14 +5,19 @@ import java.util.List;
 import java.util.Map;
 
 import org.nv.dom.config.PageParamType;
+import org.nv.dom.domain.game.GameForm;
 import org.nv.dom.domain.player.PlayerInfo;
+import org.nv.dom.domain.player.PlayerOperation;
+import org.nv.dom.domain.player.PlayerOperationRecord;
 import org.nv.dom.domain.player.PlayerReplaceSkin;
 import org.nv.dom.dto.player.ApplyDTO;
+import org.nv.dom.dto.player.GetPlayerOperationDTO;
 import org.nv.dom.dto.player.JudgerDecisionDTO;
 import org.nv.dom.dto.player.UpdatePlayerStatusDTO;
 import org.nv.dom.enums.PlayerStatus;
 import org.nv.dom.web.dao.game.GameMapper;
 import org.nv.dom.web.dao.player.PlayerMapper;
+import org.nv.dom.web.service.GameUtilService;
 import org.nv.dom.web.service.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +33,9 @@ public class PlayerServiceImpl implements PlayerService {
 	
 	@Autowired
 	GameMapper gameMapper;
+	
+	@Autowired
+	GameUtilService gameUtil;
 
 	@Override
 	public Map<String, Object> getPlayerInfo(long gameId) {
@@ -99,12 +107,18 @@ public class PlayerServiceImpl implements PlayerService {
 	}
 
 	@Override
-	public Map<String, Object> getPlayerOperation(long playerId) {
+	public Map<String, Object> getPlayerOperation(GetPlayerOperationDTO getPlayerOperationDTO) {
 		Map<String, Object> result = new HashMap<String, Object>();
+		int stage = gameUtil.getCurStage(getPlayerOperationDTO.getGameId());
+		GameForm form = gameUtil.getCurForm(getPlayerOperationDTO.getGameId());
+		List<PlayerOperation> operationList = playerMapper.getPlayerOperationList(getPlayerOperationDTO.getPlayerId(), stage);
+		List<PlayerOperationRecord> operationRecord = playerMapper.getPlayerOperationRecord(getPlayerOperationDTO.getPlayerId(), form.getFormId());
+		result.put("curStage", form.getHeader());
+		result.put("operationList", operationList);
+		result.put("operationRecord", operationRecord);
 		result.put(PageParamType.BUSINESS_STATUS, 1);
 		result.put(PageParamType.BUSINESS_MESSAGE, "获取玩家操作成功");
 		return result;
 	}
-
 
 }

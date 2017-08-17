@@ -12,6 +12,10 @@ public class PlayerOperationRecord {
 	
 	private long operationId;
 	
+	private String operationName;
+	
+	private String template;
+	
 	private String param;
 	
 	private int isDone;
@@ -50,6 +54,22 @@ public class PlayerOperationRecord {
 
 	public void setOperationId(long operationId) {
 		this.operationId = operationId;
+	}
+
+	public String getOperationName() {
+		return operationName;
+	}
+
+	public void setOperationName(String operationName) {
+		this.operationName = operationName;
+	}
+
+	public String getTemplate() {
+		return template;
+	}
+
+	public void setTemplate(String template) {
+		this.template = template;
 	}
 
 	public String getParam() {

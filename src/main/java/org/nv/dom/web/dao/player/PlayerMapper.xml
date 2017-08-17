@@ -187,5 +187,76 @@
 	
 	</insert>
 	
+	<select id="initPlayerOperation" parameterType="Integer" resultType="PlayerOperation">
+	
+		SELECT
+			id AS operationId,
+			times
+		FROM
+			d_operation_config
+		WHERE
+			sign = #{sign} AND 'condition' = 0
+			
+		
+	</select>
+	
+	<insert id="insertInitPlayerOperation">
+	
+		INSERT INTO d_player_operation(
+			player_id,
+			operation_id,
+			times
+		)
+		VALUES
+			 <foreach item="item" index="index" collection="list" separator=",">
+ 			(
+            #{item.playerId},
+            #{item.operationId},
+            #{item.times}
+            )
+    		 </foreach>
+	
+	</insert>
+	
+	<select id="getPlayerOperationList" resultType="PlayerOperation">
+	
+		SELECT
+			doc.id AS operationId,
+			doc.name AS operationName,
+			doc.template,
+			doc.immediately 
+		FROM
+			d_operation_config doc, d_player_operation dpo
+		WHERE
+			dpo.operation_id = doc.id AND dpo.player_id = #{playerId} AND dpo.times > 0 AND doc.stage % #{stage} = 0
+	
+	</select>
+	
+	<select id="getPlayerOperationRecord" resultType="PlayerOperationRecord">
+	
+		SELECT
+			doc.id AS operationId,
+			dpor.param,
+			doc.name AS operationName,
+			doc.template AS template		
+		FROM
+			d_operation_config doc, d_player_operation_record dpor
+		WHERE
+			dpor.operation_id = doc.id AND dpor.player_id = #{playerId} AND dpor.is_done = 0 AND dpor.is_delete= 0 AND dpor.form_id = #{formId}			
+	
+	</select>
+	
+	<select id="getAllReplaceSkinDao" parameterType="Long" resultType="PlayerReplaceSkin">
+	
+		SELECT
+			drs.player_id AS playerId,
+			drs.character_name AS characterName
+		FROM
+			d_replace_skin drs, d_player dp
+		WHERE
+			drs.player_id = dp.id AND dp.game_id = #{gameId}
+	
+	</select>
+	
 
 </mapper>

@@ -300,6 +300,7 @@ function changeGameStatus(gameId,status,finalResult){
 	};
 	var common = new Common();
 	common.callAction(options, url, function(data) {
+		myLoadingClose();
 		myInfo("版杀状态更新成功！",function(){
 			window.location = getRootPath() + "/admin-apply";
 		});			
@@ -378,6 +379,7 @@ function submitList(gameId){
 		myAlert("请先抽取身份");
 		return;
 	}
+	myLoading();
 	$.get('${baseUrl}file/identity-config.json',function(data){
 		var policeSign = data.policeSign;
 		policeSign.shuffle();
