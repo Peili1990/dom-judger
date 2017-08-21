@@ -224,6 +224,8 @@
 			doc.id AS operationId,
 			doc.name AS operationName,
 			doc.template,
+			doc.multiple,
+			dpo.times,
 			doc.immediately 
 		FROM
 			d_operation_config doc, d_player_operation dpo

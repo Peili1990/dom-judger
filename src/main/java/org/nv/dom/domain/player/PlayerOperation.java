@@ -12,6 +12,8 @@ public class PlayerOperation {
 	
 	private int immediately;
 	
+	private int multiple;
+	
 	private int times;
 
 	public long getPlayerId() {
@@ -52,6 +54,14 @@ public class PlayerOperation {
 
 	public void setImmediately(int immediately) {
 		this.immediately = immediately;
+	}
+
+	public int getMultiple() {
+		return multiple;
+	}
+
+	public void setMultiple(int multiple) {
+		this.multiple = multiple;
 	}
 
 	public int getTimes() {

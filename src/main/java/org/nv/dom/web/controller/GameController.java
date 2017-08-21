@@ -14,9 +14,10 @@ import org.nv.dom.domain.user.User;
 import org.nv.dom.dto.game.ChangeStatusDTO;
 import org.nv.dom.dto.game.PublishGameDTO;
 import org.nv.dom.dto.operation.GetOperationTargetDTO;
+import org.nv.dom.dto.operation.SubmitOperationDTO;
 import org.nv.dom.dto.player.KickPlayerDTO;
 import org.nv.dom.enums.GameStatus;
-import org.nv.dom.web.service.EventService;
+import org.nv.dom.web.service.EventUtilService;
 import org.nv.dom.web.service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -35,7 +36,7 @@ public class GameController extends BaseController{
 	GameService gameService;
 	
 	@Autowired
-	EventService eventService;
+	EventUtilService eventService;
 	
 	@ResponseBody
 	@RequestMapping(value = "/getGameList", method = RequestMethod.POST)
@@ -113,7 +114,10 @@ public class GameController extends BaseController{
 		return gameService.getOperationTarget(getOperationTarget);
 	}
 	
-	
-
+	@ResponseBody
+	@RequestMapping(value = "/submitOperation", method = RequestMethod.POST)
+	public Map<String, Object> submitOperation(@RequestBody List<SubmitOperationDTO> records,HttpSession session) {
+		return gameService.submitOperation(records);
+	}
 
 }

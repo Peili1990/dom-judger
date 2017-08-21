@@ -8,6 +8,8 @@ public class PlayerOperationRecord {
 	
 	private long playerId;
 	
+	private long gameId;
+	
 	private long formId;
 	
 	private long operationId;
@@ -38,6 +40,14 @@ public class PlayerOperationRecord {
 
 	public void setPlayerId(long playerId) {
 		this.playerId = playerId;
+	}
+
+	public long getGameId() {
+		return gameId;
+	}
+
+	public void setGameId(long gameId) {
+		this.gameId = gameId;
 	}
 
 	public long getFormId() {

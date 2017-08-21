@@ -10,6 +10,7 @@ import org.nv.dom.domain.user.User;
 import org.nv.dom.dto.player.ApplyDTO;
 import org.nv.dom.dto.player.GetPlayerOperationDTO;
 import org.nv.dom.dto.player.JudgerDecisionDTO;
+import org.nv.dom.web.service.EventUtilService;
 import org.nv.dom.web.service.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,6 +26,9 @@ public class PlayerController {
 	
 	@Autowired
 	PlayerService playerService;
+	
+	@Autowired
+	EventUtilService eventService;
 	
 	@ResponseBody
 	@RequestMapping(value = "/getReplaceSkin", method = RequestMethod.POST)

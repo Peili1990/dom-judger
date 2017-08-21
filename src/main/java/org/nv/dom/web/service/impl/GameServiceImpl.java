@@ -23,11 +23,13 @@ import org.nv.dom.domain.user.UserApplyInfo;
 import org.nv.dom.dto.game.ChangeStatusDTO;
 import org.nv.dom.dto.game.PublishGameDTO;
 import org.nv.dom.dto.operation.GetOperationTargetDTO;
+import org.nv.dom.dto.operation.SubmitOperationDTO;
 import org.nv.dom.dto.player.ApplyDTO;
 import org.nv.dom.dto.player.KickPlayerDTO;
 import org.nv.dom.dto.player.UpdatePlayerStatusDTO;
 import org.nv.dom.enums.CardType;
 import org.nv.dom.enums.GameStatus;
+import org.nv.dom.enums.IdentityCode;
 import org.nv.dom.enums.PlayerStatus;
 import org.nv.dom.util.DateFormatUtil;
 import org.nv.dom.util.StringUtil;
@@ -35,7 +37,9 @@ import org.nv.dom.web.dao.character.CharacterMapper;
 import org.nv.dom.web.dao.game.GameMapper;
 import org.nv.dom.web.dao.newspaper.NewspaperMapper;
 import org.nv.dom.web.dao.player.PlayerMapper;
+import org.nv.dom.web.service.EventUtilService;
 import org.nv.dom.web.service.GameService;
+import org.nv.dom.web.service.GameUtilService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -58,6 +62,12 @@ public class GameServiceImpl extends BasicServiceImpl implements GameService {
 	
 	@Autowired
 	CharacterMapper characterMapper;
+	
+	@Autowired
+	EventUtilService eventUtil;
+	
+	@Autowired
+	GameUtilService gameUtil;
 	
 	@Override
 	public Map<String, Object> getGameList() {
@@ -287,13 +297,38 @@ public class GameServiceImpl extends BasicServiceImpl implements GameService {
 				target.put(playerInfo.getPlayerId(), characterName);
 			});
 			break;
+		case 2:
+			playerInfos.stream()
+				.filter(player -> player.getCamp() == NVTermConstant.KILLER_CAMP)
+				.filter(player -> player.getSign() > 18)
+				.forEach(player -> target.put(player.getPlayerId(), IdentityCode.getMessageByCode(player.getSign())));
 		default:
 			break;
 		}
 		result.put("operationTarget", target);
 		result.put(PageParamType.BUSINESS_STATUS, 1);
-		result.put(PageParamType.BUSINESS_MESSAGE, "插入操作成功");
+		result.put(PageParamType.BUSINESS_MESSAGE, "获取操作对象列表成功");
 		return result;
 	}	
+	
+	@Override
+	public Map<String, Object> submitOperation(List<SubmitOperationDTO> records) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		eventUtil.preSubmit(records);
+		List<SubmitOperationDTO> remains = eventUtil.instantSettle(records);
+		long formId = gameUtil.getCurForm(records.get(0).getGameId()).getFormId();
+		remains.forEach(submit -> {
+			PlayerOperationRecord record = new PlayerOperationRecord();
+			record.setFormId(formId);
+			record.setOperationId(submit.getOperationId());
+			record.setParam(JSON.toJSONString(submit.getParam()));
+			record.setPlayerId(submit.getPlayerId());
+			record.setIsDone(0);
+			this.insertPlayerOperationRecord(record);
+		});
+		result.put(PageParamType.BUSINESS_STATUS, 1);
+		result.put(PageParamType.BUSINESS_MESSAGE, "提交操作成功");
+		return result;
+	}
 
 }

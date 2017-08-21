@@ -14,7 +14,7 @@ import org.nv.dom.domain.player.PlayerOperationRecord;
 import org.nv.dom.util.ConfigUtil;
 import org.nv.dom.util.HttpClientUtil;
 import org.nv.dom.web.service.GameUtilService;
-import org.nv.dom.web.service.EventService;
+import org.nv.dom.web.service.EventUtilService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.alibaba.fastjson.JSON;
@@ -28,7 +28,7 @@ public abstract class Operation {
 	protected Random random = new Random();
 	
 	@Autowired
-	protected EventService eventService;
+	protected EventUtilService eventService;
 	
 	@Autowired
 	protected GameUtilService gameUtil;
