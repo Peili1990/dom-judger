@@ -230,7 +230,7 @@
 		FROM
 			d_operation_config doc, d_player_operation dpo
 		WHERE
-			dpo.operation_id = doc.id AND dpo.player_id = #{playerId} AND dpo.times > 0 AND doc.stage % #{stage} = 0
+			dpo.operation_id = doc.id AND dpo.player_id = #{playerId} AND dpo.times > 0 AND doc.stage % #{stage} = 0 AND doc.condition = 0
 	
 	</select>
 	
