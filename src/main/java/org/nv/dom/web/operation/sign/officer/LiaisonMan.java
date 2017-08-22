@@ -41,8 +41,10 @@ public class LiaisonMan extends Operation {
 		PlayerInfo liaisonMan = policemen.get(randomNum(policemen.size()));
 		PlayerOperationRecord record = new PlayerOperationRecord();
 		record.setPlayerId(officer.getPlayerId());
+		record.setOperationStr("官员触发《联络员》");
 		PlayerFeedback feedback = new PlayerFeedback();
 		feedback.setPlayerId(officer.getPlayerId());
+		feedback.setCharacterName(officer.getCharacterName());
 		feedback.setFeedback("你的联络员是"+liaisonMan.getCharacterName()+"，签是"+liaisonMan.getIdentityDesc());
 		record.setFeedback(Arrays.asList(feedback));
 		return record;

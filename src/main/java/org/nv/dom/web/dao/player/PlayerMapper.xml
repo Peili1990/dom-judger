@@ -16,13 +16,7 @@
 			dpr.position AS position,
 			dpr.has_position AS hasPosition,
 			dpr.is_life AS isLife,
-			dpr.is_mute AS isMute,
-			dpr.action AS action,
-			dpr.privilege AS privilege,
-			dpr.feedback AS feedback,
-			dpr.vote AS vote,
-			dpr.submit_time AS submitTime,
-			dpr.remark AS remark 
+			dpr.is_mute AS isMute
 		FROM
 			d_game dg, d_player dp, d_player_record dpr, d_character dc
 		WHERE 
@@ -132,6 +126,7 @@
 			form_id,
 			operation_id,
 			param,
+			operation_str,
 			is_done,
 			create_time
 		) VALUES (
@@ -139,20 +134,21 @@
 			#{formId},
 			#{operationId},
 			#{param},
+			#{operationStr},
 			#{isDone},
 			NOW()
 		)
 	
 	</insert>
 	
-	<update id="deletePlayerOperationRecord" parameterType="PlayerOperationRecord">
+	<update id="deletePlayerOperationRecord">
 	
 		UPDATE
 			d_player_operation_record
 		SET
 			is_delete = 1
 		WHERE
-			form_id = #{formId} AND operation_id = #{operationId} AND is_done = 0;	
+			form_id = #{formId} AND player_id = #{playerId} AND is_done = 0;	
 	
 	</update>
 	
@@ -172,6 +168,7 @@
 		INSERT INTO d_player_feedback(
 			operation_record_id,
 			player_id,
+			character_name,
 			feedback,
 			create_time
 		)
@@ -180,6 +177,7 @@
  			(
             #{item.operationRecordId},
             #{item.playerId},
+            #{item.characterName},
             #{item.feedback},
             NOW()
             )
@@ -240,7 +238,8 @@
 			doc.id AS operationId,
 			dpor.param,
 			doc.name AS operationName,
-			doc.template AS template		
+			doc.template AS template,
+			doc.immediately		
 		FROM
 			d_operation_config doc, d_player_operation_record dpor
 		WHERE
@@ -257,6 +256,42 @@
 			d_replace_skin drs, d_player dp
 		WHERE
 			drs.player_id = dp.id AND dp.game_id = #{gameId}
+	
+	</select>
+	
+	<select id="getCurStageAllOperation" parameterType="Long" resultType="PlayerOperationRecord">
+	
+		SELECT
+			id,
+			player_id AS playerId,
+			operation_str AS operationStr,
+			is_done AS isDone,
+			create_time AS createTime		
+		FROM
+			d_player_operation_record
+		WHERE
+			form_id = #{formId} AND is_delete = 0
+		ORDER BY
+			create_time
+		DESC
+	
+	</select>
+	
+	<select id="getCurStageAllFeedback" parameterType="Long" resultType="PlayerFeedback">
+	
+		SELECT
+			operation_record_id AS operationRecordId,
+			player_id AS playerId,
+			character_name AS characterName,
+			feedback,
+			create_time AS createTime
+		FROM
+			d_player_feedback 
+		WHERE
+			form_id = #{formId}
+		ORDER BY
+			create_time
+		DESC
 	
 	</select>
 	

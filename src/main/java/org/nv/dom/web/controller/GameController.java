@@ -14,7 +14,6 @@ import org.nv.dom.domain.user.User;
 import org.nv.dom.dto.game.ChangeStatusDTO;
 import org.nv.dom.dto.game.PublishGameDTO;
 import org.nv.dom.dto.operation.GetOperationTargetDTO;
-import org.nv.dom.dto.operation.SubmitOperationDTO;
 import org.nv.dom.dto.player.KickPlayerDTO;
 import org.nv.dom.enums.GameStatus;
 import org.nv.dom.web.service.EventUtilService;
@@ -115,9 +114,10 @@ public class GameController extends BaseController{
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "/submitOperation", method = RequestMethod.POST)
-	public Map<String, Object> submitOperation(@RequestBody List<SubmitOperationDTO> records,HttpSession session) {
-		return gameService.submitOperation(records);
+	@RequestMapping(value = "/nextStage", method = RequestMethod.POST)
+	public Map<String, Object> nextStage(HttpSession session){
+		ApplyingGame game = (ApplyingGame)session.getAttribute(PageParamType.GAME_IN_SESSION);
+		return gameService.nextStage(game.getId());
 	}
 
 }

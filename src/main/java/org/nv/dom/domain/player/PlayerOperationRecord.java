@@ -14,11 +14,15 @@ public class PlayerOperationRecord {
 	
 	private long operationId;
 	
+	private long immediately;
+	
 	private String operationName;
 	
 	private String template;
 	
 	private String param;
+	
+	private String operationStr;
 	
 	private int isDone;
 	
@@ -66,6 +70,14 @@ public class PlayerOperationRecord {
 		this.operationId = operationId;
 	}
 
+	public long getImmediately() {
+		return immediately;
+	}
+
+	public void setImmediately(long immediately) {
+		this.immediately = immediately;
+	}
+
 	public String getOperationName() {
 		return operationName;
 	}
@@ -88,6 +100,14 @@ public class PlayerOperationRecord {
 
 	public void setParam(String param) {
 		this.param = param;
+	}
+
+	public String getOperationStr() {
+		return operationStr;
+	}
+
+	public void setOperationStr(String operationStr) {
+		this.operationStr = operationStr;
 	}
 
 	public int getIsDone() {

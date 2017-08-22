@@ -59,7 +59,7 @@ public interface PlayerMapper {
 	/**
 	 * <p>删除玩家操作</p>
 	 */
-	public int deletePlayerOperationRecord(PlayerOperationRecord playerOperationRecord);
+	public int deletePlayerOperationRecord(@Param("formId")long formId,@Param("playerId")long playerId);
 	
 	/**
 	 * <p>根据玩家id获取用户id</p>
@@ -95,4 +95,14 @@ public interface PlayerMapper {
 	 * <p>获取所有的发言称呼</p>
 	 */
 	public List<PlayerReplaceSkin> getAllReplaceSkinDao(long gameId);
+	
+	/**
+	 * <p>获取该阶段所有的操作</p>
+	 */
+	public List<PlayerOperationRecord> getCurStageAllOperation(long formId);
+	
+	/**
+	 * <p>获取该阶段所有的反馈</p>
+	 */
+	public List<PlayerFeedback> getCurStageAllFeedback(long formId);
 }

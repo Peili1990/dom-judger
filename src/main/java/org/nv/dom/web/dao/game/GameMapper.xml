@@ -258,7 +258,8 @@
 	
 		SELECT
 			df.id AS formId,
-			df.header AS header
+			df.header AS header,
+			df.type AS type
 			<if test="getContent==true">
 			,df.content AS content
 			</if>
@@ -278,7 +279,15 @@
 			UPDATE 
 				d_form df
 			SET
-				df.content=#{content},
+				<if test="header != null">
+					df.header=#{header},
+				</if>				
+				<if test="content != null">
+					df.content=#{content},
+				</if>
+				<if test="type > 0">
+					df.type=#{type},
+				</if>
 				df.update_time=NOW()
 			WHERE
 				df.id=#{formId}
@@ -287,14 +296,14 @@
 			INSERT INTO d_form (
 				game_id,
 				header,
-				content,
-				create_time
+				create_time,
+				type
 			)
 			VALUES(
 				#{gameId},
 				#{header},
-				#{content},
-				NOW()
+				NOW(),
+				#{type}
 			);
 		</if>
 	

@@ -10,6 +10,8 @@ public class GameForm {
 	private String header;
 	/** 表格内容 */
 	private String content;
+	/** 阶段 */
+	private int type;
 	public long getFormId() {
 		return formId;
 	}
@@ -34,4 +36,11 @@ public class GameForm {
 	public void setContent(String content) {
 		this.content = content;
 	}
+	public int getType() {
+		return type;
+	}
+	public void setType(int type) {
+		this.type = type;
+	}
+	
 }

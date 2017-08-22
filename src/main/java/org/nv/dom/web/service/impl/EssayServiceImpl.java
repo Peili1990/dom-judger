@@ -9,7 +9,6 @@ import org.nv.dom.config.NVTermConstant;
 import org.nv.dom.config.PageParamType;
 import org.nv.dom.domain.essay.Essay;
 import org.nv.dom.domain.game.GameForm;
-import org.nv.dom.domain.player.PlayerInfo;
 import org.nv.dom.domain.user.UserApplyInfo;
 import org.nv.dom.util.StringUtil;
 import org.nv.dom.web.dao.essay.EssayMapper;
@@ -19,7 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
-import com.alibaba.fastjson.JSON;
 
 @Service("essayServiceImpl")
 public class EssayServiceImpl implements EssayService {
@@ -67,41 +65,13 @@ public class EssayServiceImpl implements EssayService {
 			sb.append(player.getNickname()+" "+player.getCharacterName()+" "+player.getIdentityDesc()+"<br>");
 		}
 		sb.append("<br>");
+		//FIXME
 		for(int i=gameForms.size()-1;i>0;i--){
 			GameForm form = gameForms.get(i);
 			sb.append(form.getHeader());
 			sb.append("<br><br>");
-			List<PlayerInfo> players = JSON.parseArray(form.getContent(), PlayerInfo.class);
-			for(PlayerInfo player:players){
-				if(!StringUtil.isNullOrEmpty(player.getAction())){
-					sb.append(player.getIdentityDesc().trim()+" ");
-					sb.append(player.getAction().trim());
-					if(!StringUtil.isNullOrEmpty(player.getFeedback())){
-						sb.append("→"+player.getFeedback().trim());
-					}
-					sb.append("<br>");
-				} 
-			}
-			sb.append("<br>");
-			for(PlayerInfo player:players){
-				if(!StringUtil.isNullOrEmpty(player.getPrivilege())){
-					sb.append(player.getCharacterName().trim()+" ");
-					sb.append(player.getPrivilege().trim());
-					if(!StringUtil.isNullOrEmpty(player.getFeedback())){
-						sb.append("→"+player.getFeedback().trim());
-					}
-					sb.append("<br>");
-				}
-			}
-			sb.append("<br>");
-			for(PlayerInfo player:players){
-				if(!StringUtil.isNullOrEmpty(player.getVote())){
-					sb.append(player.getCharacterName().trim()+" ");
-					sb.append(player.getVote().trim());
-					sb.append("<br>");
-				}
-			}	
-			sb.append("<br>");
+			
+			
 		}
 		result.put("simpleEssay", sb.toString());
 		result.put(PageParamType.BUSINESS_STATUS, 1);

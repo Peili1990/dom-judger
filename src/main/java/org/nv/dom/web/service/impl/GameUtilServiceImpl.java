@@ -34,7 +34,10 @@ public class GameUtilServiceImpl implements GameUtilService{
 	public void insertOperationRecord(PlayerOperationRecord playerOperationRecord) {
 		playerMapper.insertPlayerOperationRecord(playerOperationRecord);
 		if(playerOperationRecord.getFeedback() != null){
-			playerOperationRecord.getFeedback().forEach(feedback -> feedback.setOperationRecordId(playerOperationRecord.getId()));
+			playerOperationRecord.getFeedback().forEach(feedback -> {
+				feedback.setOperationRecordId(playerOperationRecord.getId());
+				feedback.setFormId(playerOperationRecord.getFormId());
+			});
 			playerMapper.insertPlayerFeedbackBatch(playerOperationRecord.getFeedback());
 		}	
 	}

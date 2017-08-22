@@ -6,10 +6,12 @@ import java.util.Map;
 
 import org.nv.dom.config.PageParamType;
 import org.nv.dom.domain.game.GameForm;
+import org.nv.dom.domain.player.PlayerFeedback;
 import org.nv.dom.domain.player.PlayerInfo;
 import org.nv.dom.domain.player.PlayerOperation;
 import org.nv.dom.domain.player.PlayerOperationRecord;
 import org.nv.dom.domain.player.PlayerReplaceSkin;
+import org.nv.dom.dto.operation.SubmitOperationDTO;
 import org.nv.dom.dto.player.ApplyDTO;
 import org.nv.dom.dto.player.GetPlayerOperationDTO;
 import org.nv.dom.dto.player.JudgerDecisionDTO;
@@ -17,6 +19,7 @@ import org.nv.dom.dto.player.UpdatePlayerStatusDTO;
 import org.nv.dom.enums.PlayerStatus;
 import org.nv.dom.web.dao.game.GameMapper;
 import org.nv.dom.web.dao.player.PlayerMapper;
+import org.nv.dom.web.service.EventUtilService;
 import org.nv.dom.web.service.GameUtilService;
 import org.nv.dom.web.service.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +27,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import com.alibaba.fastjson.JSON;
+
+import static java.util.stream.Collectors.*;
 
 @Service("playerServiceImpl")
 public class PlayerServiceImpl implements PlayerService {
@@ -36,14 +41,33 @@ public class PlayerServiceImpl implements PlayerService {
 	
 	@Autowired
 	GameUtilService gameUtil;
+	
+	@Autowired
+	EventUtilService eventUtil;
 
 	@Override
 	public Map<String, Object> getPlayerInfo(long gameId) {
 		Map<String, Object> result = new HashMap<String, Object>();
-		List<PlayerInfo> playerList;
-		playerList = playerMapper.getPlayerInfosDao(gameId);
-		Assert.isTrue(playerList != null && !playerList.isEmpty(), "该版杀还未开始");
+		long formId = gameUtil.getCurForm(gameId).getFormId();
+		List<PlayerInfo> playerList = playerMapper.getPlayerInfosDao(gameId);
+		List<PlayerOperationRecord> records = playerMapper.getCurStageAllOperation(formId);
+		List<PlayerFeedback> feedbacks = playerMapper.getCurStageAllFeedback(formId);
+		playerList.forEach(player -> {
+			String lastOperation = records.stream()
+					.filter(record -> record.getPlayerId() == player.getPlayerId())
+					.findFirst()
+					.orElse(new PlayerOperationRecord()).getOperationStr();
+			player.setLastOperation(lastOperation);
+			String lastFeedback = feedbacks.stream()
+					.filter(feedback -> feedback.getPlayerId() == player.getPlayerId())
+					.findFirst()
+					.orElse(new PlayerFeedback()).getFeedback();
+			player.setLastFeedback(lastFeedback);
+		});
+		Map<Long,List<PlayerFeedback>> temp = feedbacks.stream().collect(groupingBy(PlayerFeedback::getOperationRecordId));
+		records.forEach(record -> record.setFeedback(temp.get(record.getId())));
 		result.put("playerList", playerList);
+		result.put("operationList", records);
 		result.put("playerListStr", JSON.toJSONString(playerList));
 		result.put(PageParamType.BUSINESS_STATUS, 1);
 		result.put(PageParamType.BUSINESS_MESSAGE, "获取角色列表成功");
@@ -118,6 +142,28 @@ public class PlayerServiceImpl implements PlayerService {
 		result.put("operationRecord", operationRecord);
 		result.put(PageParamType.BUSINESS_STATUS, 1);
 		result.put(PageParamType.BUSINESS_MESSAGE, "获取玩家操作成功");
+		return result;
+	}
+	
+	@Override
+	public Map<String, Object> submitOperation(List<SubmitOperationDTO> records) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		eventUtil.preSubmit(records);
+		List<SubmitOperationDTO> remains = eventUtil.instantSettle(records);
+		long formId = gameUtil.getCurForm(records.get(0).getGameId()).getFormId();
+		playerMapper.deletePlayerOperationRecord(formId,records.get(0).getPlayerId());
+		remains.forEach(submit -> {
+			PlayerOperationRecord record = new PlayerOperationRecord();
+			record.setFormId(formId);
+			record.setOperationId(submit.getOperationId());
+			record.setParam(JSON.toJSONString(submit.getParam()));
+			record.setOperationStr(submit.getOperationStr());
+			record.setPlayerId(submit.getPlayerId());
+			record.setIsDone(0);
+			playerMapper.insertPlayerOperationRecord(record);
+		});
+		result.put(PageParamType.BUSINESS_STATUS, 1);
+		result.put(PageParamType.BUSINESS_MESSAGE, "提交操作成功");
 		return result;
 	}
 

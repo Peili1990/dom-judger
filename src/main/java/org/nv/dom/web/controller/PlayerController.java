@@ -1,5 +1,6 @@
 package org.nv.dom.web.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -7,6 +8,7 @@ import javax.servlet.http.HttpSession;
 import org.nv.dom.config.PageParamType;
 import org.nv.dom.domain.player.PlayerReplaceSkin;
 import org.nv.dom.domain.user.User;
+import org.nv.dom.dto.operation.SubmitOperationDTO;
 import org.nv.dom.dto.player.ApplyDTO;
 import org.nv.dom.dto.player.GetPlayerOperationDTO;
 import org.nv.dom.dto.player.JudgerDecisionDTO;
@@ -66,6 +68,12 @@ public class PlayerController {
 	@RequestMapping(value = "/getPlayerOperation", method = RequestMethod.POST)
 	public Map<String, Object> getPlayerOperation(@RequestBody GetPlayerOperationDTO getPlayerOperationDTO,HttpSession session) {
 		return playerService.getPlayerOperation(getPlayerOperationDTO);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/submitOperation", method = RequestMethod.POST)
+	public Map<String, Object> submitOperation(@RequestBody List<SubmitOperationDTO> records,HttpSession session) {
+		return playerService.submitOperation(records);
 	}
 
 }

@@ -17,13 +17,11 @@ import org.nv.dom.domain.game.GameForm;
 import org.nv.dom.domain.newspaper.Newspaper;
 import org.nv.dom.domain.player.PlayerInfo;
 import org.nv.dom.domain.player.PlayerOperation;
-import org.nv.dom.domain.player.PlayerOperationRecord;
 import org.nv.dom.domain.player.PlayerReplaceSkin;
 import org.nv.dom.domain.user.UserApplyInfo;
 import org.nv.dom.dto.game.ChangeStatusDTO;
 import org.nv.dom.dto.game.PublishGameDTO;
 import org.nv.dom.dto.operation.GetOperationTargetDTO;
-import org.nv.dom.dto.operation.SubmitOperationDTO;
 import org.nv.dom.dto.player.ApplyDTO;
 import org.nv.dom.dto.player.KickPlayerDTO;
 import org.nv.dom.dto.player.UpdatePlayerStatusDTO;
@@ -33,11 +31,11 @@ import org.nv.dom.enums.IdentityCode;
 import org.nv.dom.enums.PlayerStatus;
 import org.nv.dom.util.DateFormatUtil;
 import org.nv.dom.util.StringUtil;
+import org.nv.dom.util.TextUtil;
 import org.nv.dom.web.dao.character.CharacterMapper;
 import org.nv.dom.web.dao.game.GameMapper;
 import org.nv.dom.web.dao.newspaper.NewspaperMapper;
 import org.nv.dom.web.dao.player.PlayerMapper;
-import org.nv.dom.web.service.EventUtilService;
 import org.nv.dom.web.service.GameService;
 import org.nv.dom.web.service.GameUtilService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,9 +60,6 @@ public class GameServiceImpl extends BasicServiceImpl implements GameService {
 	
 	@Autowired
 	CharacterMapper characterMapper;
-	
-	@Autowired
-	EventUtilService eventUtil;
 	
 	@Autowired
 	GameUtilService gameUtil;
@@ -272,16 +267,6 @@ public class GameServiceImpl extends BasicServiceImpl implements GameService {
 	}
 
 	@Override
-	public Map<String, Object> insertPlayerOperationRecord(PlayerOperationRecord playerOperationRecord) {
-		Map<String, Object> result = new HashMap<String, Object>();
-		playerMapper.deletePlayerOperationRecord(playerOperationRecord);
-		playerMapper.insertPlayerOperationRecord(playerOperationRecord);
-		result.put(PageParamType.BUSINESS_STATUS, 1);
-		result.put(PageParamType.BUSINESS_MESSAGE, "插入操作成功");
-		return result;
-	}
-
-	@Override
 	public Map<String, Object> getOperationTarget(GetOperationTargetDTO getOperationTarget) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		List<PlayerInfo> playerInfos = playerMapper.getPlayerInfosDao(getOperationTarget.getGameId());
@@ -309,26 +294,60 @@ public class GameServiceImpl extends BasicServiceImpl implements GameService {
 		result.put(PageParamType.BUSINESS_STATUS, 1);
 		result.put(PageParamType.BUSINESS_MESSAGE, "获取操作对象列表成功");
 		return result;
-	}	
-	
+	}
+
 	@Override
-	public Map<String, Object> submitOperation(List<SubmitOperationDTO> records) {
+	public Map<String, Object> nextStage(long gameId) {
 		Map<String, Object> result = new HashMap<String, Object>();
-		eventUtil.preSubmit(records);
-		List<SubmitOperationDTO> remains = eventUtil.instantSettle(records);
-		long formId = gameUtil.getCurForm(records.get(0).getGameId()).getFormId();
-		remains.forEach(submit -> {
-			PlayerOperationRecord record = new PlayerOperationRecord();
-			record.setFormId(formId);
-			record.setOperationId(submit.getOperationId());
-			record.setParam(JSON.toJSONString(submit.getParam()));
-			record.setPlayerId(submit.getPlayerId());
-			record.setIsDone(0);
-			this.insertPlayerOperationRecord(record);
-		});
+		GameForm form = gameUtil.getCurForm(gameId);
+		GameForm newForm = new GameForm();
+		List<PlayerInfo> playerInfo = playerMapper.getPlayerInfosDao(gameId);
+		newForm.setGameId(gameId);
+		int stage = form.getType();
+		switch(stage){
+		case NVTermConstant.STAGE_GAME_START:
+			newForm.setHeader("第一夜");
+			newForm.setType(NVTermConstant.STAGE_NIGHT);
+			form.setContent(JSON.toJSONString(playerInfo));
+			gameMapper.createOrUpdateFormDao(newForm);
+		break;
+		case NVTermConstant.STAGE_NIGHT:
+			form.setHeader(form.getHeader()+"-结算阶段");
+			form.setType(NVTermConstant.STAGE_SETTLING);
+		break;
+		case NVTermConstant.STAGE_SETTLING:
+			form.setContent(JSON.toJSONString(playerInfo));
+			newForm.setHeader(buildHeader(form.getHeader()));
+			newForm.setType(NVTermConstant.STAGE_DAY);
+			gameMapper.createOrUpdateFormDao(newForm);
+		break;
+		case NVTermConstant.STAGE_DAY:
+			form.setHeader(form.getHeader()+"-投票阶段");
+			form.setType(NVTermConstant.STAGE_VOTING);
+		break;
+		case NVTermConstant.STAGE_VOTING:
+			form.setContent(JSON.toJSONString(playerInfo));
+			newForm.setHeader(buildHeader(form.getHeader()));
+			newForm.setType(NVTermConstant.STAGE_NIGHT);
+			gameMapper.createOrUpdateFormDao(newForm);
+		break;
+		}
+		gameMapper.createOrUpdateFormDao(form);
 		result.put(PageParamType.BUSINESS_STATUS, 1);
-		result.put(PageParamType.BUSINESS_MESSAGE, "提交操作成功");
+		result.put(PageParamType.BUSINESS_MESSAGE, "进入下一阶段成功！");
 		return result;
 	}
+	
+	private String buildHeader(String curHeader){
+		if(curHeader.indexOf("日")>0){
+			String num = curHeader.substring(1, curHeader.indexOf("日"));
+			return "第"+num+"夜";
+		} else {
+			String num = curHeader.substring(1, curHeader.indexOf("夜"));
+			return "第"+TextUtil.numToStr(TextUtil.strToNum(num)+1)+"日";
+		}
+	}
+	
+
 
 }

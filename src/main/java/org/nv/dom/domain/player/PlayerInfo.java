@@ -31,15 +31,9 @@ public class PlayerInfo implements Serializable{
 	/** 禁言 */
 	private Integer isMute;
 	/** 行动 */
-	private String action;
-	/** 特权 */
-	private String privilege;
+	private String lastOperation;
 	/** 反馈 */
-	private String feedback;
-	/** 投票 */
-	private String vote;
-	/** 提交时间 */
-	private String submitTime;
+	private String lastFeedback;
 	/** 备注 */
 	private String remark;
 	
@@ -109,35 +103,17 @@ public class PlayerInfo implements Serializable{
 	public void setIsMute(Integer isMute) {
 		this.isMute = isMute;
 	}
-	public String getAction() {
-		return action;
+	public String getLastOperation() {
+		return lastOperation;
 	}
-	public void setAction(String action) {
-		this.action = action;
+	public void setLastOperation(String lastOperation) {
+		this.lastOperation = lastOperation;
 	}
-	public String getPrivilege() {
-		return privilege;
+	public String getLastFeedback() {
+		return lastFeedback;
 	}
-	public void setPrivilege(String privilege) {
-		this.privilege = privilege;
-	}
-	public String getFeedback() {
-		return feedback;
-	}
-	public void setFeedback(String feedback) {
-		this.feedback = feedback;
-	}
-	public String getVote() {
-		return vote;
-	}
-	public void setVote(String vote) {
-		this.vote = vote;
-	}
-	public String getSubmitTime() {
-		return submitTime;
-	}
-	public void setSubmitTime(String submitTime) {
-		this.submitTime = submitTime;
+	public void setLastFeedback(String lastFeedback) {
+		this.lastFeedback = lastFeedback;
 	}
 	public String getRemark() {
 		return remark;

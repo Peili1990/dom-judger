@@ -1,5 +1,6 @@
 package org.nv.dom.util;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.apdplat.word.WordSegmenter;
@@ -16,6 +17,8 @@ public class TextUtil {
 	
 	private static String filePath = ConfigUtil.getVersionConfigProperty("img.filepath");
 	
+	private static List<String> word = Arrays.asList("一","二","三","四","五","六","七","八","九","十");
+	
 	/**
 	 * <p>统计字数</p>
 	 * 
@@ -28,4 +31,12 @@ public class TextUtil {
         return words.size();
 	}
 	
+	public static int strToNum(String str){
+		return str.length() == 1 ? word.indexOf(str) + 1 : word.indexOf(str.substring(str.length()-1, str.length())) + 11;
+	}
+	
+	public static String numToStr(int num){
+		return num <= 10 ? word.get(num-1) : "十" + word.get(num-11);
+	}
+
 }

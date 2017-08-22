@@ -33,7 +33,50 @@
 			<hr />
 
 	<div class="am-g">
-		<div class="am-u-sm-12 am-u-sm-centered">
+	
+		<div class="am-u-sm-12 am-u-md-4 am-u-md-push-8"> 
+      		<div class="am-panel am-panel-default">
+          		<div class="am-panel-bd">
+          			<h2>玩家操作提交记录</h2>	
+          			<ul class="am-comments-list am-comments-list-flip" id="operation-list">
+          			<c:choose>
+          				<c:when test="${operationList != null && !operationList.isEmpty()}">
+          					<c:forEach items="${ operationList}" var="operation">
+          						<li class="am-panel am-panel-default">
+          							<div class="am-panel-hd"><time>${operation.createTime}</time></div>
+          							<div class="am-panel-bd"><p>${operation.operationStr }</p>
+          							<hr>
+          							<c:choose>
+          								<c:when test="${operation.isDone == 1}">
+          									<c:choose>
+          										<c:when test="${operation.feedback != null && !operation.feedback.isEmpty()}">
+														<c:forEach items="${ operation.feedback }" var="feedback">
+															<p>=>反馈${feedback.characterName}：${feedback.feedback }</p>
+														</c:forEach>
+          										</c:when>
+          										<c:otherwise>
+          											<p>=>已结算</p>
+          										</c:otherwise>
+          									</c:choose>
+          								</c:when>
+          								<c:otherwise>
+          									<p>=>暂未结算</p>
+          								</c:otherwise>
+          							</c:choose>  
+          							</div>       							
+          						</li>
+          					</c:forEach>
+          				</c:when>
+          				<c:otherwise>
+          					暂无玩家操作记录
+          				</c:otherwise>
+          			</c:choose>		
+          			</ul>			
+          		</div>
+         	</div>
+    	</div>
+    	
+		<div class="am-u-sm-12 am-u-md-8 am-u-md-pull-4">
 			<div class="am-panel am-panel-default">
 				<div class="am-panel-bd">
 					<c:choose>
@@ -46,23 +89,16 @@
 								</select>
 							</div>
 							<div class="am-form-group operation">
-								<input type="button" class="am-btn am-btn-primary" value="保存表格" onclick="saveForm(true)">
-								<input type="button" class="am-btn am-btn-danger" value="新增表格" onclick="myPrompt('注意：请先保存表格再新增表格，否则可能导致数据丢失！<br/>请输入新表格标题','updateForm()')">
-								<input type="text" class="am-form-field" id="police-feedback" placeholder="警察统一反馈"/>
-								<input type="text" class="am-form-field" id="killer-feedback" placeholder="杀手统一反馈"/>
-								<input type="checkbox" class="am-checkbox" id="feedback-operation">追加
+								<input type="button" class="am-btn am-btn-primary" value="下一阶段" onclick="nextStage()">
 							</div>
 							<form class="am-form">
 								<table class="am-table am-table-striped am-table-hover table-main">
 									<thead>
 										<tr>
 											<th width="120px">角色</th>
-											<th>实际身份</th>
-											<th>行动</th>
-											<th>特权</th>
-											<th>反馈</th>
-											<th>投票</th>
-											<th>备注</th>
+											<th>实际身份</th>									
+											<th width="300px">最近一条操作</th>
+											<th width="300px">最近一条反馈</th>
 											<th class="table-set" width="130px">操作</th>
 										</tr>
 									</thead>
@@ -70,12 +106,9 @@
 										<c:forEach items="${ playerList }" var="player" varStatus="playerStatus">
 											<tr>	
 												<td>${player.characterName}</td>
-												<td><input type="text" value="${player.identityDesc}  "></td>
-												<td><input type="text" value="${player.action}"></td>
-												<td><input type="text" value="${player.privilege}"></td>
-												<td><input type="text" value="${player.feedback}"></td>
-												<td><input type="text" value="${player.vote}"></td>
-												<td><input type="text" value="${player.remark}"></td>
+												<td><span>${player.identityDesc}</span></td>	
+												<td><span>${player.lastOperation}</span></td>										
+												<td><span>${player.lastFeedback}</span></td>
 												<td>
 													<div class="am-btn-toolbar">
 														<div class="am-btn-group am-btn-group-xs">
@@ -88,8 +121,7 @@
 															" data-am-dropdown>
 																<button type="button" class="am-btn am-btn-default am-btn-xs am-text-success am-dropdown-toggle" title="更多操作"><span class="am-icon-ellipsis-h"></span></button>
 																<ul class="am-dropdown-content">
-    																<li onclick="showReplacePanel(${playerStatus.index})"><a><span class="am-icon-comments-o"></span> 发言称呼</a></li>
-    																<li onclick="getSubmitTime(${playerStatus.index})"><a><span class="am-icon-clock-o"></span> 提交时间</a></li>
+    																<li onclick="showReplacePanel(${playerStatus.index})"><a><span class="am-icon-comments-o"></span> 发言称呼</a></li>  					
     		 														<li onclick="positionUp(${playerStatus.index})"><a><span class="am-icon-chevron-up" ></span> 位置上移</a></li>
     																<li onclick="positionDown(${playerStatus.index})"><a><span class="am-icon-chevron-down"></span> 位置下移</a></li>
  														 		</ul>
@@ -236,7 +268,6 @@ $(function(){
 		builder.append('</select></td>');
 		avatarList=builder.toString();
 	})
-	activeFeedback();
 })
 
 function showPlayerStatus(index){
@@ -395,19 +426,6 @@ function positionDown(index){
 	saveForm(false);
 }
 
-function getSubmitTime(index){
-	var url = getRootPath() + "/game/getSubmitTime";
-	var options = {
-			playerId : players[index].playerId
-	}
-	var common = new Common();
-	common.callAction(options,url,function(data){
-		myInfo(players[index].characterName+"最近提交操作时间："+data.submitTime);			
-	})
-}
-
-
-
 function saveForm(needAlert){
 	myLoading();
 	$.each($("#character-info tr"),function(index,tr){
@@ -505,28 +523,6 @@ function addstatusStyle(players){
 			player.css({"color":"purple"});
 			break;
 		}	
-	})
-}
-
-function activeFeedback(){
-	$("#police-feedback").blur(function(){
-		autofill($("#police-feedback").val(),1,6);
-	})
-	$("#killer-feedback").blur(function(){
-		autofill($("#police-feedback").val(),13,18);
-	})
-}
-
-function autofill(content,start,end){
-	$.each(players,function(index,player){
-		if(player.sign>=start && player.sign<=end){
-			if($("#feedback-operation").is(":checked")){
-				curStr = $("#character-info tr:eq("+index+") td:eq(4)").find("input").val();
-				$("#character-info tr:eq("+index+") td:eq(4)").find("input").val(curStr+"，"+content);		
-			} else {
-				$("#character-info tr:eq("+index+") td:eq(4)").find("input").val(content);
-			}			
-		}
 	})
 }
 

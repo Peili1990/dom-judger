@@ -54,5 +54,15 @@ public class NVTermConstant {
 	public static final Integer GOOD_CAMP = 1;
 	
 	public static final Integer KILLER_CAMP = 2;
+	
+	public static final int STAGE_GAME_START = 11;
+	
+	public static final int STAGE_NIGHT = 2;
+	
+	public static final int STAGE_SETTLING = 3;
+	
+	public static final int STAGE_DAY = 5;
+	
+	public static final int STAGE_VOTING = 7;
 
 }
