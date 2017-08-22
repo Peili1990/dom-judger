@@ -526,6 +526,10 @@ function addstatusStyle(players){
 	})
 }
 
+function nextStage(){
+	
+}
+
 
 </script>
 
