@@ -119,5 +119,11 @@ public class GameController extends BaseController{
 		ApplyingGame game = (ApplyingGame)session.getAttribute(PageParamType.GAME_IN_SESSION);
 		return gameService.nextStage(game.getId());
 	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/allOperationList", method = RequestMethod.POST)
+	public Map<String, Object> allOperationList(HttpSession session){
+		return gameService.allOperationList();
+	}
 
 }

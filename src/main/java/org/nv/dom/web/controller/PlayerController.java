@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 import org.nv.dom.config.PageParamType;
 import org.nv.dom.domain.player.PlayerReplaceSkin;
 import org.nv.dom.domain.user.User;
+import org.nv.dom.dto.operation.SavePlayerOperationDTO;
 import org.nv.dom.dto.operation.SubmitOperationDTO;
 import org.nv.dom.dto.player.ApplyDTO;
 import org.nv.dom.dto.player.GetPlayerOperationDTO;
@@ -71,9 +72,21 @@ public class PlayerController {
 	}
 	
 	@ResponseBody
+	@RequestMapping(value = "/getOperationList", method = RequestMethod.POST)
+	public Map<String, Object> getOperationList(@RequestParam("playerId") long playerId, HttpSession session) {
+		return playerService.getOperationList(playerId);
+	}
+	
+	@ResponseBody
 	@RequestMapping(value = "/submitOperation", method = RequestMethod.POST)
 	public Map<String, Object> submitOperation(@RequestBody List<SubmitOperationDTO> records,HttpSession session) {
 		return playerService.submitOperation(records);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/savePlayerOperation", method = RequestMethod.POST)
+	public Map<String, Object> savePlayerOperation(@RequestBody SavePlayerOperationDTO savePlayerOperationDTO,HttpSession session) {
+		return playerService.savePlayerOperation(savePlayerOperationDTO);
 	}
 
 }

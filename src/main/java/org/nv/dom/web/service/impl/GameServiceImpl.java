@@ -45,6 +45,7 @@ import org.springframework.util.Assert;
 import com.alibaba.fastjson.JSON;
 
 import static java.util.stream.Collectors.*;
+import static java.util.Comparator.*;
 
 @Service("gameServiceImpl")
 public class GameServiceImpl extends BasicServiceImpl implements GameService {
@@ -170,6 +171,7 @@ public class GameServiceImpl extends BasicServiceImpl implements GameService {
 			GameForm form = new GameForm();
 			form.setGameId(changeStatusDTO.getGameId());
 			form.setHeader("游戏开始前");
+			form.setType(NVTermConstant.STAGE_GAME_START);
 			gameMapper.createOrUpdateFormDao(form);	
 		}
 		if(changeStatusDTO.getStatus() == GameStatus.REPLAYING.getCode()){
@@ -216,7 +218,7 @@ public class GameServiceImpl extends BasicServiceImpl implements GameService {
 			List<PlayerOperation> operations = playerMapper.initPlayerOperation(sign);
 			if(operations.size()>0){
 				operations.forEach(operation -> operation.setPlayerId(playerInfo.getPlayerId()));
-				playerMapper.insertInitPlayerOperation(operations);
+				playerMapper.insertPlayerOperation(operations);
 			}		
 		});
 	}
@@ -284,9 +286,10 @@ public class GameServiceImpl extends BasicServiceImpl implements GameService {
 			break;
 		case 2:
 			playerInfos.stream()
-				.filter(player -> player.getCamp() == NVTermConstant.KILLER_CAMP)
-				.filter(player -> player.getSign() > 18)
-				.forEach(player -> target.put(player.getPlayerId(), IdentityCode.getMessageByCode(player.getSign())));
+				.filter(player -> IdentityCode.getMessageByCode(player.getSign()).isSpecial())
+				.distinct()
+				.sorted(comparing(PlayerInfo::getSign))
+				.forEach(player -> target.put(player.getPlayerId(), IdentityCode.getMessageByCode(player.getSign()).getMessage()));
 		default:
 			break;
 		}
@@ -346,6 +349,16 @@ public class GameServiceImpl extends BasicServiceImpl implements GameService {
 			String num = curHeader.substring(1, curHeader.indexOf("夜"));
 			return "第"+TextUtil.numToStr(TextUtil.strToNum(num)+1)+"日";
 		}
+	}
+
+	@Override
+	public Map<String, Object> allOperationList() {
+		Map<String, Object> result = new HashMap<String, Object>();
+		List<String> operationList = playerMapper.getAllOperation();
+		result.put("operationList", operationList);
+		result.put(PageParamType.BUSINESS_STATUS, 1);
+		result.put(PageParamType.BUSINESS_MESSAGE, "获取所有的操作列表成功");
+		return result;
 	}
 	
 

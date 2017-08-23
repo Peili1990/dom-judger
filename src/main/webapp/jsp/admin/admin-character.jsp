@@ -78,7 +78,7 @@
     	
 		<div class="am-u-sm-12 am-u-md-8 am-u-md-pull-4">
 			<div class="am-panel am-panel-default">
-				<div class="am-panel-bd">
+				<div class="am-panel-bd" style="overflow:visible">
 					<c:choose>
 						<c:when test="${playerList != null && !playerList.isEmpty()}">
 							<div class="character-info">
@@ -106,9 +106,9 @@
 										<c:forEach items="${ playerList }" var="player" varStatus="playerStatus">
 											<tr>	
 												<td>${player.characterName}</td>
-												<td><span>${player.identityDesc}</span></td>	
-												<td><span>${player.lastOperation}</span></td>										
-												<td><span>${player.lastFeedback}</span></td>
+												<td><span class="ellipsis-span">${player.identityDesc}</span></td>	
+												<td><span class="ellipsis-span">${player.lastOperation}</span></td>										
+												<td><span class="ellipsis-span">${player.lastFeedback}</span></td>
 												<td>
 													<div class="am-btn-toolbar">
 														<div class="am-btn-group am-btn-group-xs">
@@ -121,7 +121,8 @@
 															" data-am-dropdown>
 																<button type="button" class="am-btn am-btn-default am-btn-xs am-text-success am-dropdown-toggle" title="更多操作"><span class="am-icon-ellipsis-h"></span></button>
 																<ul class="am-dropdown-content">
-    																<li onclick="showReplacePanel(${playerStatus.index})"><a><span class="am-icon-comments-o"></span> 发言称呼</a></li>  					
+    																<li onclick="showReplacePanel(${playerStatus.index})"><a><span class="am-icon-comments-o"></span> 发言称呼</a></li> 
+    																<li onclick="showOperationPanel(${playerStatus.index})"><a><span class="am-icon-keyboard-o"></span> 操作管理</a></li> 					
     		 														<li onclick="positionUp(${playerStatus.index})"><a><span class="am-icon-chevron-up" ></span> 位置上移</a></li>
     																<li onclick="positionDown(${playerStatus.index})"><a><span class="am-icon-chevron-down"></span> 位置下移</a></li>
  														 		</ul>
@@ -146,6 +147,33 @@
 	</div>
 		<!-- content end -->
 
+	</div>
+	
+	<div class="am-modal am-modal-no-btn" tabindex="-1" id="operation-panel">
+		<div class="am-modal-dialog">
+			<form class="am-form modal-am-form">
+			 <fieldset>
+			 	<legend>操作管理 -- 珀利</legend>
+			 		<table class="am-table am-table-striped am-table-hover table-main" >
+						<thead>
+							<tr>
+								<th width="200px">操作名称</th>
+								<th width="150px">次数</th>
+								<th>操作</th>
+							</tr>
+						</thead>
+						<tbody>
+							
+						</tbody>
+					</table>
+					<div class="am-form-group" style="text-align:center">
+						<input type="button" class="am-btn am-btn-primary" value="新增" name="create">
+						<input type="button" class="am-btn am-btn-primary" value="保存" name="save">
+						<input type="button" class="am-btn am-btn-default" value="关闭" onclick="closeOperationPanel()">
+					</div>
+			 </fieldset>
+			 </form>
+			</div>
 	</div>
 	
 	<div class="am-modal am-modal-no-btn" tabindex="-1" id="replace-panel">
@@ -252,13 +280,16 @@
 <script type="text/javascript">
 var playerPanel = $("#player-panel")
 var replacePanel = $("#replace-panel")
+var operationPanel = $("#operation-panel")
 var avatarList;
+var operationList;
 var players=${playerListStr}
 
 $(function(){
 	$("#collapse-nav li:eq(1) .am-icon-star").removeClass("invisible");
 	$(".admin-sidebar-list > li:eq(0) .am-icon-angle-right").removeClass("invisible");
 	addstatusStyle(players);
+	getAllOperationList();
 	$.get('${baseUrl}file/character-avatar.json',function(data){
 		var builder = new StringBuilder();
 		builder.append('<td><select>');
@@ -269,6 +300,20 @@ $(function(){
 		avatarList=builder.toString();
 	})
 })
+
+function getAllOperationList(){
+	var url = getRootPath() + "/game/allOperationList";
+	var common = new Common();
+	common.callAction(null,url,function(data){
+		var builder = new StringBuilder();
+		builder.append('<td><select>');
+		$.each(data.operationList,function(index,operationName){
+			builder.appendFormat('<option value="{0}">{1}</option>',index+1,operationName);
+		})
+		builder.append('</select></td>');
+		operationList = builder.toString();
+	})
+}
 
 function showPlayerStatus(index){
 	playerPanel.modal('open');
@@ -282,6 +327,79 @@ function showPlayerStatus(index){
 		changePlayerStatus(index);
 	})
 	
+}
+
+function showOperationPanel(playerIndex){
+	var url = getRootPath() + "/getOperationList";
+	var common = new Common();
+	var options = {
+			playerId : players[playerIndex].playerId
+	}
+	common.callAction(options,url,function(data){
+		var list = operationPanel.find("tbody");
+		list.empty();
+		$.each(data.operationList,function(index,operation){
+			var builder = new StringBuilder();
+			builder.appendFormat('<tr>');
+			builder.appendFormat(operationList);
+			builder.appendFormat('<td><input type="number" name="operation-times" value={0}></td>',operation.times)
+			builder.append('<td><div class="am-btn-toolbar"><div class="am-btn-group am-btn-group-xs">' +												
+					'<button type="button" class="am-btn am-btn-default am-btn-xs am-text-danger" title="删除" onclick="deleteOperation(this)"><span class="am-icon-trash-o"></span></button>'+								
+					'</div></div></td></tr>');
+			list.append(builder.toString());
+			list.find("select").eq(index).val(operation.operationName).selected({
+				maxHeight: '200px',
+				searchBox: 1
+			});
+		})
+		operationPanel.find("input[name='save']").unbind("click").on("click",function(){savePlayerOperation(playerIndex)})
+		operationPanel.find("input[name='create']").unbind("click").on("click",function(){
+			var builder = new StringBuilder();
+			builder.append('<tr>');
+			builder.append(operationList);
+			builder.append('<td><input type="number" name="operation-times" value=0></td>')
+			builder.append('<td><div class="am-btn-toolbar"><div class="am-btn-group am-btn-group-xs">' +												
+					'<button type="button" class="am-btn am-btn-default am-btn-xs am-text-danger" title="删除" onclick="deleteOperation(this)"><span class="am-icon-trash-o"></span></button>'+								
+					'</div></div></td></tr>');
+			list.append(builder.toString());
+			list.find("select").last().selected({
+				maxHeight: '200px',
+				searchBox: 1
+			});
+		});
+		operationPanel.find("legend").text("操作管理 -- "+players[playerIndex].characterName);
+		operationPanel.modal('open');	
+	})
+}
+
+function closeOperationPanel(){
+	operationPanel.modal("close");
+}
+
+function deleteOperation(button){
+	$(button).parents("tr").remove();
+}
+
+function savePlayerOperation(playerIndex){
+	var list = [];
+	$.each(operationPanel.find("tr"),function(index,row){
+		if(index==0) return true;
+		list.push({
+			playerId : players[playerIndex].playerId,
+			operationId : $(row).find("select").val(),
+			times : $(row).find("input[name='operation-times']").val()
+		})
+	})
+	var options = {
+		playerId : players[playerIndex].playerId,
+		operations : list
+	}
+	var url = getRootPath() + "/savePlayerOperation";
+	var common = new Common();
+	common.callAction(JSON.stringify(options),url,function(data){
+		closeOperationPanel();
+		myInfo("保存成功！");
+	},"application/json;charset=utf-8")
 }
 
 function showReplacePanel(playerIndex){
@@ -527,7 +645,13 @@ function addstatusStyle(players){
 }
 
 function nextStage(){
-	
+	var common = new Common();
+	var url = getRootPath() + "/game/nextStage";
+	common.callAction(null,url,function(data){
+		myInfo("更新成功！",function(){
+			window.location = getRootPath() + "/admin-character";
+		})			
+	})
 }
 
 

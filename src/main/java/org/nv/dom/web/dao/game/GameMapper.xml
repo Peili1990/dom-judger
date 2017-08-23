@@ -232,21 +232,6 @@
 				  	dpr.is_mute=#{item.isMute},
 				  	dpr.position=#{item.position},
 				  	dpr.has_position=#{item.hasPosition}
-				  	<if test="item.action != null">
-				  	,dpr.action=#{item.action}
-				  	</if>
-				  	<if test="item.privilege != null">
-				  	,dpr.privilege=#{item.privilege}
-				  	</if>
-				  	<if test="item.feedback != null">
-				  	,dpr.feedback=#{item.feedback}
-				  	</if>
-				  	<if test="item.vote != null">
-				  	,dpr.vote=#{item.vote}
-				  	</if>
-				  	<if test="item.remark != null">
-				  	,dpr.remark=#{item.remark}
-				  	</if>
 				</set>  	
 				WHERE
 				  	dpr.player_id = #{item.playerId}

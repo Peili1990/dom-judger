@@ -11,6 +11,7 @@ import org.nv.dom.domain.player.PlayerInfo;
 import org.nv.dom.domain.player.PlayerOperation;
 import org.nv.dom.domain.player.PlayerOperationRecord;
 import org.nv.dom.domain.player.PlayerReplaceSkin;
+import org.nv.dom.dto.operation.SavePlayerOperationDTO;
 import org.nv.dom.dto.operation.SubmitOperationDTO;
 import org.nv.dom.dto.player.ApplyDTO;
 import org.nv.dom.dto.player.GetPlayerOperationDTO;
@@ -164,6 +165,28 @@ public class PlayerServiceImpl implements PlayerService {
 		});
 		result.put(PageParamType.BUSINESS_STATUS, 1);
 		result.put(PageParamType.BUSINESS_MESSAGE, "提交操作成功");
+		return result;
+	}
+
+	@Override
+	public Map<String, Object> getOperationList(long playerId) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		List<PlayerOperation> operationList = playerMapper.getPlayerAllOperationList(playerId);
+		result.put("operationList", operationList);
+		result.put(PageParamType.BUSINESS_STATUS, 1);
+		result.put(PageParamType.BUSINESS_MESSAGE, "获取操作列表成功");
+		return result;
+	}
+
+	@Override
+	public Map<String, Object> savePlayerOperation(SavePlayerOperationDTO savePlayerOperationDTO) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		playerMapper.deletePlayerOperation(savePlayerOperationDTO.getPlayerId());
+		if(!savePlayerOperationDTO.getOperations().isEmpty()){
+			playerMapper.insertPlayerOperation(savePlayerOperationDTO.getOperations());
+		}
+		result.put(PageParamType.BUSINESS_STATUS, 1);
+		result.put(PageParamType.BUSINESS_MESSAGE, "保存玩家操作列表成功");
 		return result;
 	}
 

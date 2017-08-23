@@ -3,7 +3,9 @@ package org.nv.dom.web.service;
 import java.util.List;
 import java.util.Map;
 
+import org.nv.dom.domain.player.PlayerOperation;
 import org.nv.dom.domain.player.PlayerReplaceSkin;
+import org.nv.dom.dto.operation.SavePlayerOperationDTO;
 import org.nv.dom.dto.operation.SubmitOperationDTO;
 import org.nv.dom.dto.player.ApplyDTO;
 import org.nv.dom.dto.player.GetPlayerOperationDTO;
@@ -26,5 +28,9 @@ public interface PlayerService {
 	public Map<String, Object> getPlayerOperation(GetPlayerOperationDTO getPlayerOperationDTO);
 	
 	public Map<String, Object> submitOperation(List<SubmitOperationDTO> records);
+
+	public Map<String, Object> getOperationList(long playerId);
+
+	public Map<String, Object> savePlayerOperation(SavePlayerOperationDTO savePlayerOperationDTO);
 
 }

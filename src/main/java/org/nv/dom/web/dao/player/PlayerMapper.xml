@@ -166,6 +166,7 @@
 	<insert id="insertPlayerFeedbackBatch">
 	
 		INSERT INTO d_player_feedback(
+			form_id,
 			operation_record_id,
 			player_id,
 			character_name,
@@ -175,6 +176,7 @@
 		VALUES
 			 <foreach item="item" index="index" collection="list" separator=",">
  			(
+ 			#{item.formId},
             #{item.operationRecordId},
             #{item.playerId},
             #{item.characterName},
@@ -198,7 +200,7 @@
 		
 	</select>
 	
-	<insert id="insertInitPlayerOperation">
+	<insert id="insertPlayerOperation">
 	
 		INSERT INTO d_player_operation(
 			player_id,
@@ -294,6 +296,38 @@
 		DESC
 	
 	</select>
+	
+	<select id="getPlayerAllOperationList" parameterType="Long" resultType="PlayerOperation">
+	
+		SELECT
+			doc.id AS operationId,
+			doc.name AS operationName,
+			dpo.times
+		FROM
+			d_player_operation dpo, d_operation_config doc
+		WHERE
+			dpo.operation_id = doc.id AND dpo.player_id = #{playerId}
+	
+	</select>
+	
+	<select id="getAllOperation" resultType="String">
+	
+		SELECT
+			name
+		FROM
+			d_operation_config
+	
+	</select>
+	
+	<delete id="deletePlayerOperation" parameterType="Long">
+	
+		DELETE FROM
+			d_player_operation
+		WHERE
+			player_id = #{playerId}
+	
+	</delete>
+	
 	
 
 </mapper>

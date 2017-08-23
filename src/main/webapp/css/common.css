@@ -304,7 +304,7 @@ fieldset{
 	margin-left:32px;
 }
 
-#character-info span{
+.ellipsis-span{
 	-webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
     text-overflow: ellipsis;

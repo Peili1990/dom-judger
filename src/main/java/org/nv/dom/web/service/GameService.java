@@ -37,4 +37,6 @@ public interface GameService {
 
 	public Map<String, Object> nextStage(long gameId);
 
+	public Map<String, Object> allOperationList();
+
 }

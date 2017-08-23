@@ -79,7 +79,7 @@ public interface PlayerMapper {
 	/**
 	 * <p>初始化玩家操作</p>
 	 */
-	public int insertInitPlayerOperation(List<PlayerOperation> operations);
+	public int insertPlayerOperation(List<PlayerOperation> operations);
 
 	/**
 	 * <p>获取该阶段玩家操作列表</p>
@@ -105,4 +105,20 @@ public interface PlayerMapper {
 	 * <p>获取该阶段所有的反馈</p>
 	 */
 	public List<PlayerFeedback> getCurStageAllFeedback(long formId);
+
+	/**
+	 * <p>获取该玩家所拥有的操作</p>
+	 */
+	public List<PlayerOperation> getPlayerAllOperationList(long playerId);
+	
+	/**
+	 * <p>获取所有操作</p>
+	 */
+	public List<String> getAllOperation();
+
+	/**
+	 * <p>删除玩家拥有操作</p>
+	 */
+	public void deletePlayerOperation(long playerId);
+	
 }
