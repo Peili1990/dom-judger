@@ -44,7 +44,10 @@
           					<c:forEach items="${ operationList}" var="operation">
           						<li class="am-panel am-panel-default">
           							<div class="am-panel-hd"><time>${operation.createTime}</time></div>
-          							<div class="am-panel-bd"><p>${operation.operationStr }</p>
+          							<div class="am-panel-bd"><p>
+          							<c:if test="${operation.operator != null}">
+          								${operation.operator}提交操作：
+          							</c:if>${operation.operationStr }</p>
           							<hr>
           							<c:choose>
           								<c:when test="${operation.isDone == 1}">
@@ -63,7 +66,13 @@
           									<p>=>暂未结算</p>
           								</c:otherwise>
           							</c:choose>  
-          							</div>       							
+          							</div>   
+          							<input type="hidden" value="${operation.id }">			
+									<div class="am-btn-toolbar float-toolbar">
+										<div class="am-btn-group am-btn-group-xs">
+											<button type="button" class="am-btn am-btn-default am-btn-xs am-text-secondary" title="结算" onclick=""><span class="am-icon-pencil-square-o"></span></button>							
+										</div>
+									</div>    							
           						</li>
           					</c:forEach>
           				</c:when>

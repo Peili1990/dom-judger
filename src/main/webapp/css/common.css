@@ -129,7 +129,7 @@ fieldset{
 }
 
 #speech-list{
-	overflow-y:scroll;
+	overflow-y:auto;
 	max-height:600px;
 }
 
@@ -310,6 +310,11 @@ fieldset{
     text-overflow: ellipsis;
     display: -webkit-box;
     overflow: hidden;
+}
+
+#operation-list{
+	overflow-y:auto;
+	max-height:1056px;
 }
 
 #operation-list time{

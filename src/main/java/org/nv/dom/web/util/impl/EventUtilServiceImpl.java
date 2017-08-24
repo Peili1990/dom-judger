@@ -1,4 +1,4 @@
-package org.nv.dom.web.service.impl;
+package org.nv.dom.web.util.impl;
 
 import java.util.HashMap;
 import java.util.List;
@@ -7,7 +7,7 @@ import java.util.Map;
 import org.nv.dom.config.EventList;
 import org.nv.dom.dto.operation.SubmitOperationDTO;
 import org.nv.dom.web.operation.Operation;
-import org.nv.dom.web.service.EventUtilService;
+import org.nv.dom.web.util.EventUtilService;
 import org.springframework.stereotype.Service;
 
 import static java.util.stream.Collectors.*;
@@ -45,7 +45,8 @@ public class EventUtilServiceImpl implements EventUtilService {
 	@Override
 	public void preSubmit(List<SubmitOperationDTO> records) {
 		Map<Integer, Operation> observers = eventManager.getOrDefault(EventList.OPERATION_SUBMIT_EVENT, new HashMap<Integer, Operation>());
-		records.forEach(record -> observers.get((int)record.getOperationId()).check(buildParam(record)));		
+		Map<String, Object> params = buildParam(records);
+		records.forEach(record -> observers.get((int)record.getOperationId()).check(params));		
 	}
 
 	@Override
@@ -53,16 +54,14 @@ public class EventUtilServiceImpl implements EventUtilService {
 		Map<Boolean, List<SubmitOperationDTO>> temp =records.stream()
 				.collect(partitioningBy(SubmitOperationDTO::isImmediately));
 		Map<Integer, Operation> observers = eventManager.getOrDefault(EventList.OPERATION_SUBMIT_EVENT, new HashMap<Integer, Operation>());
-		temp.getOrDefault(true, new ArrayList<>()).stream().forEach(record -> observers.get((int)record.getOperationId()).check(buildParam(record)));
+		Map<String, Object> params = buildParam(records);
+		temp.getOrDefault(true, new ArrayList<>()).stream().forEach(record -> observers.get((int)record.getOperationId()).check(params));
 		return temp.getOrDefault(false, new ArrayList<>());
 	}
 	
-	private Map<String, Object> buildParam(SubmitOperationDTO record){
+	private Map<String, Object> buildParam(List<SubmitOperationDTO> records){
 		Map<String, Object> param = new HashMap<>();
-		param.put("gameId", record.getGameId());
-		param.put("playerId", record.getPlayerId());
-		param.put("operationId", record.getOperationId());
-		param.put("param", record.getParam());
+		param.put("operations", records);
 		return param;
 	}
 

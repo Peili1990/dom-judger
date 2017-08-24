@@ -37,7 +37,7 @@ import org.nv.dom.web.dao.game.GameMapper;
 import org.nv.dom.web.dao.newspaper.NewspaperMapper;
 import org.nv.dom.web.dao.player.PlayerMapper;
 import org.nv.dom.web.service.GameService;
-import org.nv.dom.web.service.GameUtilService;
+import org.nv.dom.web.util.GameUtilService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;

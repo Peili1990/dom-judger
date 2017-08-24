@@ -16,6 +16,8 @@ public class PlayerInfo implements Serializable{
 	private Integer isSp;
 	/** 签代码 */
 	private Integer sign;
+	/** 是否特殊身份 */
+	private Integer isSpecial;
 	/** 身份描述 */
 	private String identityDesc;
 	/** 性别 */
@@ -60,6 +62,12 @@ public class PlayerInfo implements Serializable{
 	}
 	public void setSign(Integer sign) {
 		this.sign = sign;
+	}
+	public Integer getIsSpecial() {
+		return isSpecial;
+	}
+	public void setIsSpecial(Integer isSpecial) {
+		this.isSpecial = isSpecial;
 	}
 	public String getIdentityDesc() {
 		return identityDesc;

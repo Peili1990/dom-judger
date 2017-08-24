@@ -1,6 +1,5 @@
 package org.nv.dom.web.controller;
 
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -9,12 +8,12 @@ import org.nv.dom.config.PageParamType;
 import org.nv.dom.domain.player.PlayerReplaceSkin;
 import org.nv.dom.domain.user.User;
 import org.nv.dom.dto.operation.SavePlayerOperationDTO;
-import org.nv.dom.dto.operation.SubmitOperationDTO;
+import org.nv.dom.dto.operation.SubmitPlayerOperationDTO;
 import org.nv.dom.dto.player.ApplyDTO;
 import org.nv.dom.dto.player.GetPlayerOperationDTO;
 import org.nv.dom.dto.player.JudgerDecisionDTO;
-import org.nv.dom.web.service.EventUtilService;
 import org.nv.dom.web.service.PlayerService;
+import org.nv.dom.web.util.EventUtilService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -79,8 +78,8 @@ public class PlayerController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/submitOperation", method = RequestMethod.POST)
-	public Map<String, Object> submitOperation(@RequestBody List<SubmitOperationDTO> records,HttpSession session) {
-		return playerService.submitOperation(records);
+	public Map<String, Object> submitOperation(@RequestBody SubmitPlayerOperationDTO submitPlayerOperationDTO,HttpSession session) {
+		return playerService.submitOperation(submitPlayerOperationDTO);
 	}
 	
 	@ResponseBody

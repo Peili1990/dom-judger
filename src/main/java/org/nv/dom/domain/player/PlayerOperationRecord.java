@@ -22,6 +22,8 @@ public class PlayerOperationRecord {
 	
 	private String param;
 	
+	private String operator;
+	
 	private String operationStr;
 	
 	private int isDone;
@@ -92,6 +94,14 @@ public class PlayerOperationRecord {
 
 	public void setTemplate(String template) {
 		this.template = template;
+	}
+
+	public String getOperator() {
+		return operator;
+	}
+
+	public void setOperator(String operator) {
+		this.operator = operator;
 	}
 
 	public String getParam() {

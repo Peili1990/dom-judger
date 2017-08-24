@@ -12,6 +12,7 @@
 			dpr.is_sp AS isSp,
 			dpr.identity_desc AS identityDesc,
 			dpr.sign AS sign,
+			dpr.is_special AS isSpecial,
 			dpr.camp AS camp,
 			dpr.position AS position,
 			dpr.has_position AS hasPosition,
@@ -127,6 +128,7 @@
 			operation_id,
 			param,
 			operation_str,
+			operator,
 			is_done,
 			create_time
 		) VALUES (
@@ -135,6 +137,7 @@
 			#{operationId},
 			#{param},
 			#{operationStr},
+			#{operator},
 			#{isDone},
 			NOW()
 		)
@@ -237,6 +240,7 @@
 	<select id="getPlayerOperationRecord" resultType="PlayerOperationRecord">
 	
 		SELECT
+			dpor.id AS id,
 			doc.id AS operationId,
 			dpor.param,
 			doc.name AS operationName,
@@ -267,6 +271,7 @@
 			id,
 			player_id AS playerId,
 			operation_str AS operationStr,
+			operator,
 			is_done AS isDone,
 			create_time AS createTime		
 		FROM

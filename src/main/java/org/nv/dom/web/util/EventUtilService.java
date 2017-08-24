@@ -1,4 +1,4 @@
-package org.nv.dom.web.service;
+package org.nv.dom.web.util;
 
 import java.util.List;
 import java.util.Map;

@@ -4,6 +4,7 @@ import java.util.List;
 
 import java.util.Map;
 import java.util.Random;
+import java.util.function.Predicate;
 
 import javax.annotation.PostConstruct;
 
@@ -13,8 +14,8 @@ import org.nv.dom.domain.player.PlayerFeedback;
 import org.nv.dom.domain.player.PlayerOperationRecord;
 import org.nv.dom.util.ConfigUtil;
 import org.nv.dom.util.HttpClientUtil;
-import org.nv.dom.web.service.GameUtilService;
-import org.nv.dom.web.service.EventUtilService;
+import org.nv.dom.web.util.EventUtilService;
+import org.nv.dom.web.util.GameUtilService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.alibaba.fastjson.JSON;
@@ -76,6 +77,15 @@ public abstract class Operation {
 		if(record.getFeedback() != null){
 			sendMessage(record.getFeedback());
 		}		
+	}
+	
+	public <T> T findTarget(List<T> operations,Predicate<T> clue){
+		return operations.stream().filter(clue).findAny().orElse(null);
+	}
+	
+	public long getTarget(Object target){
+		String[] str = target.toString().split(",");
+		return Long.parseLong(str[0]);
 	}
 	
 	@PostConstruct

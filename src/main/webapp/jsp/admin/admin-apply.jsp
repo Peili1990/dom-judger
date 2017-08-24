@@ -366,7 +366,8 @@ function extractIdentity(){
 						player.identityDesc = array[index-offset].desc;
 						$("#apply-info tr:eq("+index+") td:eq(7)").text(array[index-offset].desc);				
 					}					
-					player.camp = player.sign < 13 ? 1 : 2;					
+					player.camp = player.sign < 13 ? 1 : 2;	
+					player.isSpecial = player.sign == 11 || player.sign == 12 || player.sign == 23 ? 0 : 1;
 				})
 			}
 		})

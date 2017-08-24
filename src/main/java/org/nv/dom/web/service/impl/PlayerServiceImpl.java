@@ -13,6 +13,7 @@ import org.nv.dom.domain.player.PlayerOperationRecord;
 import org.nv.dom.domain.player.PlayerReplaceSkin;
 import org.nv.dom.dto.operation.SavePlayerOperationDTO;
 import org.nv.dom.dto.operation.SubmitOperationDTO;
+import org.nv.dom.dto.operation.SubmitPlayerOperationDTO;
 import org.nv.dom.dto.player.ApplyDTO;
 import org.nv.dom.dto.player.GetPlayerOperationDTO;
 import org.nv.dom.dto.player.JudgerDecisionDTO;
@@ -20,9 +21,9 @@ import org.nv.dom.dto.player.UpdatePlayerStatusDTO;
 import org.nv.dom.enums.PlayerStatus;
 import org.nv.dom.web.dao.game.GameMapper;
 import org.nv.dom.web.dao.player.PlayerMapper;
-import org.nv.dom.web.service.EventUtilService;
-import org.nv.dom.web.service.GameUtilService;
 import org.nv.dom.web.service.PlayerService;
+import org.nv.dom.web.util.EventUtilService;
+import org.nv.dom.web.util.GameUtilService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -147,18 +148,19 @@ public class PlayerServiceImpl implements PlayerService {
 	}
 	
 	@Override
-	public Map<String, Object> submitOperation(List<SubmitOperationDTO> records) {
+	public Map<String, Object> submitOperation(SubmitPlayerOperationDTO submitPlayerOperationDTO) {
 		Map<String, Object> result = new HashMap<String, Object>();
-		eventUtil.preSubmit(records);
-		List<SubmitOperationDTO> remains = eventUtil.instantSettle(records);
-		long formId = gameUtil.getCurForm(records.get(0).getGameId()).getFormId();
-		playerMapper.deletePlayerOperationRecord(formId,records.get(0).getPlayerId());
+		eventUtil.preSubmit(submitPlayerOperationDTO.getRecords());
+		List<SubmitOperationDTO> remains = eventUtil.instantSettle(submitPlayerOperationDTO.getRecords());
+		long formId = gameUtil.getCurForm(submitPlayerOperationDTO.getGameId()).getFormId();
+		playerMapper.deletePlayerOperationRecord(formId,submitPlayerOperationDTO.getPlayerId());
 		remains.forEach(submit -> {
 			PlayerOperationRecord record = new PlayerOperationRecord();
 			record.setFormId(formId);
 			record.setOperationId(submit.getOperationId());
 			record.setParam(JSON.toJSONString(submit.getParam()));
 			record.setOperationStr(submit.getOperationStr());
+			record.setOperator(submit.getOperator());
 			record.setPlayerId(submit.getPlayerId());
 			record.setIsDone(0);
 			playerMapper.insertPlayerOperationRecord(record);

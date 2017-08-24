@@ -225,6 +225,7 @@
 					d_player_record dpr 
 				<set>
 				  	dpr.sign=#{item.sign},
+				  	dpr.is_special=#{item.isSpecial},
 				  	dpr.identity_desc=#{item.identityDesc},
 				  	dpr.is_sp=#{item.isSp},
 				  	dpr.camp=#{item.camp},

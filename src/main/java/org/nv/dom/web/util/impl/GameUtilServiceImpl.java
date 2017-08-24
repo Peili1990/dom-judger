@@ -1,4 +1,4 @@
-package org.nv.dom.web.service.impl;
+package org.nv.dom.web.util.impl;
 
 import java.util.List;
 
@@ -7,7 +7,7 @@ import org.nv.dom.domain.player.PlayerInfo;
 import org.nv.dom.domain.player.PlayerOperationRecord;
 import org.nv.dom.web.dao.game.GameMapper;
 import org.nv.dom.web.dao.player.PlayerMapper;
-import org.nv.dom.web.service.GameUtilService;
+import org.nv.dom.web.util.GameUtilService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

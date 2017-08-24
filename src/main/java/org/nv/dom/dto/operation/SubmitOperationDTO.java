@@ -3,7 +3,7 @@ package org.nv.dom.dto.operation;
 public class SubmitOperationDTO {
 	
 	private long gameId;
-	
+		
 	private long playerId;
 	
 	private long operationId;
@@ -11,6 +11,8 @@ public class SubmitOperationDTO {
 	private boolean immediately;
 	
 	private Object[] param;
+	
+	private String operator;
 	
 	private String operationStr;
 
@@ -52,6 +54,14 @@ public class SubmitOperationDTO {
 
 	public void setParam(Object[] param) {
 		this.param = param;
+	}
+
+	public String getOperator() {
+		return operator;
+	}
+
+	public void setOperator(String operator) {
+		this.operator = operator;
 	}
 
 	public String getOperationStr() {
