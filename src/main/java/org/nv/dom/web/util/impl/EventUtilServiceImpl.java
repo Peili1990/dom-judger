@@ -46,7 +46,11 @@ public class EventUtilServiceImpl implements EventUtilService {
 	public void preSubmit(List<SubmitOperationDTO> records) {
 		Map<Integer, Operation> observers = eventManager.getOrDefault(EventList.OPERATION_SUBMIT_EVENT, new HashMap<Integer, Operation>());
 		Map<String, Object> params = buildParam(records);
-		records.forEach(record -> observers.get((int)record.getOperationId()).check(params));		
+		records.forEach(record -> {
+			if(observers.containsKey((int)record.getOperationId())){
+				observers.get((int)record.getOperationId()).check(params);
+			}		
+		});		
 	}
 
 	@Override
@@ -55,7 +59,11 @@ public class EventUtilServiceImpl implements EventUtilService {
 				.collect(partitioningBy(SubmitOperationDTO::isImmediately));
 		Map<Integer, Operation> observers = eventManager.getOrDefault(EventList.OPERATION_SUBMIT_EVENT, new HashMap<Integer, Operation>());
 		Map<String, Object> params = buildParam(records);
-		temp.getOrDefault(true, new ArrayList<>()).stream().forEach(record -> observers.get((int)record.getOperationId()).check(params));
+		temp.getOrDefault(true, new ArrayList<>()).stream().forEach(record -> {
+			if(observers.containsKey((int)record.getOperationId())){
+				observers.get((int)record.getOperationId()).settle(params);
+			}		
+		});
 		return temp.getOrDefault(false, new ArrayList<>());
 	}
 	

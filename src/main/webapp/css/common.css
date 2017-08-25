@@ -324,3 +324,8 @@ fieldset{
 #operation-list p{
 	margin:0 auto;
 }
+
+#record-panel .am-modal-dialog{
+	height:400px;
+	width:700px;
+}

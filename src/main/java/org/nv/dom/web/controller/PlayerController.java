@@ -5,6 +5,7 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.nv.dom.config.PageParamType;
+import org.nv.dom.domain.game.ApplyingGame;
 import org.nv.dom.domain.player.PlayerReplaceSkin;
 import org.nv.dom.domain.user.User;
 import org.nv.dom.dto.operation.SavePlayerOperationDTO;
@@ -67,6 +68,10 @@ public class PlayerController {
 	@ResponseBody
 	@RequestMapping(value = "/getPlayerOperation", method = RequestMethod.POST)
 	public Map<String, Object> getPlayerOperation(@RequestBody GetPlayerOperationDTO getPlayerOperationDTO,HttpSession session) {
+		if(getPlayerOperationDTO.getGameId() == 0){
+			ApplyingGame game = (ApplyingGame)session.getAttribute(PageParamType.GAME_IN_SESSION);
+			getPlayerOperationDTO.setGameId(game.getId());
+		}
 		return playerService.getPlayerOperation(getPlayerOperationDTO);
 	}
 	
@@ -79,6 +84,10 @@ public class PlayerController {
 	@ResponseBody
 	@RequestMapping(value = "/submitOperation", method = RequestMethod.POST)
 	public Map<String, Object> submitOperation(@RequestBody SubmitPlayerOperationDTO submitPlayerOperationDTO,HttpSession session) {
+		if(submitPlayerOperationDTO.getGameId() == 0){
+			ApplyingGame game = (ApplyingGame)session.getAttribute(PageParamType.GAME_IN_SESSION);
+			submitPlayerOperationDTO.setGameId(game.getId());
+		}
 		return playerService.submitOperation(submitPlayerOperationDTO);
 	}
 	

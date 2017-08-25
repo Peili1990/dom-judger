@@ -243,6 +243,7 @@
 			dpor.id AS id,
 			doc.id AS operationId,
 			dpor.param,
+			dpor.operation_str AS operationStr,
 			doc.name AS operationName,
 			doc.template AS template,
 			doc.immediately		

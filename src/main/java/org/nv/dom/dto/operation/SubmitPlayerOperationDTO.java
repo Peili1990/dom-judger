@@ -8,6 +8,8 @@ public class SubmitPlayerOperationDTO {
 	
 	private long gameId;
 	
+	private boolean jumpSettle;
+	
 	private List<SubmitOperationDTO> records;
 
 	public long getPlayerId() {
@@ -24,6 +26,14 @@ public class SubmitPlayerOperationDTO {
 
 	public void setGameId(long gameId) {
 		this.gameId = gameId;
+	}
+
+	public boolean isJumpSettle() {
+		return jumpSettle;
+	}
+
+	public void setJumpSettle(boolean jumpSettle) {
+		this.jumpSettle = jumpSettle;
 	}
 
 	public List<SubmitOperationDTO> getRecords() {

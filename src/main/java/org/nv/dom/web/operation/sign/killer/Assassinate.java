@@ -1,12 +1,9 @@
 package org.nv.dom.web.operation.sign.killer;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.naming.java.javaURLContextFactory;
 import org.nv.dom.config.EventList;
-import org.nv.dom.domain.player.PlayerInfo;
 import org.nv.dom.domain.player.PlayerOperationRecord;
 import org.nv.dom.dto.operation.SubmitOperationDTO;
 import org.nv.dom.web.operation.Operation;
@@ -27,9 +24,7 @@ public class Assassinate extends Operation {
 		SubmitOperationDTO operation = findTarget(operations, record -> record.getOperationId() == operationId);
 		Object[] targets = operation.getParam();
 		Assert.isTrue(targets != null && targets.length == 2, "还有空格没填完！");
-		Assert.isTrue(getTarget(targets[0]) != getTarget(targets[1]), "凶器不得放置于【刺杀】对象！");
-		List<PlayerInfo> playerInfos = gameUtil.getPlayerInfo(operation.getGameId());
-		
+		Assert.isTrue(getTarget(targets[0]) != getTarget(targets[1]), "凶器不得放置于【刺杀】对象！");		
 		return true;
 	}
 
@@ -42,7 +37,6 @@ public class Assassinate extends Operation {
 	@Override
 	public void registerEvent() {
 		eventService.registerEvent(EventList.OPERATION_SUBMIT_EVENT, this);
-
 	}
 
 }

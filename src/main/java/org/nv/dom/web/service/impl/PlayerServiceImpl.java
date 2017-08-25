@@ -150,15 +150,20 @@ public class PlayerServiceImpl implements PlayerService {
 	@Override
 	public Map<String, Object> submitOperation(SubmitPlayerOperationDTO submitPlayerOperationDTO) {
 		Map<String, Object> result = new HashMap<String, Object>();
-		eventUtil.preSubmit(submitPlayerOperationDTO.getRecords());
-		List<SubmitOperationDTO> remains = eventUtil.instantSettle(submitPlayerOperationDTO.getRecords());
+		List<SubmitOperationDTO> remains;
+		if(submitPlayerOperationDTO.isJumpSettle()){
+			remains = submitPlayerOperationDTO.getRecords();		
+		} else {
+			eventUtil.preSubmit(submitPlayerOperationDTO.getRecords());
+			remains = eventUtil.instantSettle(submitPlayerOperationDTO.getRecords());
+		}
 		long formId = gameUtil.getCurForm(submitPlayerOperationDTO.getGameId()).getFormId();
 		playerMapper.deletePlayerOperationRecord(formId,submitPlayerOperationDTO.getPlayerId());
 		remains.forEach(submit -> {
 			PlayerOperationRecord record = new PlayerOperationRecord();
 			record.setFormId(formId);
 			record.setOperationId(submit.getOperationId());
-			record.setParam(JSON.toJSONString(submit.getParam()));
+			record.setParam(submit.getParam() == null ? null:JSON.toJSONString(submit.getParam()));
 			record.setOperationStr(submit.getOperationStr());
 			record.setOperator(submit.getOperator());
 			record.setPlayerId(submit.getPlayerId());
