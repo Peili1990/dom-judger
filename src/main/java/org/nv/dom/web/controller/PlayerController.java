@@ -13,6 +13,7 @@ import org.nv.dom.dto.operation.SubmitPlayerOperationDTO;
 import org.nv.dom.dto.player.ApplyDTO;
 import org.nv.dom.dto.player.GetPlayerOperationDTO;
 import org.nv.dom.dto.player.JudgerDecisionDTO;
+import org.nv.dom.dto.player.SaveFeedbackDTO;
 import org.nv.dom.web.service.PlayerService;
 import org.nv.dom.web.util.EventUtilService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,6 +96,12 @@ public class PlayerController {
 	@RequestMapping(value = "/savePlayerOperation", method = RequestMethod.POST)
 	public Map<String, Object> savePlayerOperation(@RequestBody SavePlayerOperationDTO savePlayerOperationDTO,HttpSession session) {
 		return playerService.savePlayerOperation(savePlayerOperationDTO);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/saveFeedback", method = RequestMethod.POST)
+	public Map<String, Object> saveFeedback(@RequestBody SaveFeedbackDTO saveFeedbackDTO,HttpSession session) {
+		return playerService.saveFeedback(saveFeedbackDTO);
 	}
 
 }

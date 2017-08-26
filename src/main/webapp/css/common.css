@@ -31,6 +31,7 @@ input[type="checkbox"]{
 #replace-panel .am-modal-dialog{
 	height:400px;
 	width:700px;
+	overflow-y:auto;
 }
 
 #player-panel .am-modal-dialog{
@@ -319,13 +320,28 @@ fieldset{
 
 #operation-list time{
 	margin-left:0px;
+	vertical-align: middle;
 }
 
 #operation-list p{
 	margin:0 auto;
 }
 
-#record-panel .am-modal-dialog{
-	height:400px;
+#record-panel .am-modal-dialog,
+#settle-panel .am-modal-dialog{
+	height:450px;
 	width:700px;
+	overflow-y:auto;
+}
+
+#operation-detail {
+	margin-left: 13px;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+#feedback-now {
+    margin-left: 15px;
+    zoom: 1.5;
+    vertical-align: sub;
 }

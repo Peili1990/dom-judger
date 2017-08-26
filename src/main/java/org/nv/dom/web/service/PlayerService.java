@@ -8,6 +8,7 @@ import org.nv.dom.dto.operation.SubmitPlayerOperationDTO;
 import org.nv.dom.dto.player.ApplyDTO;
 import org.nv.dom.dto.player.GetPlayerOperationDTO;
 import org.nv.dom.dto.player.JudgerDecisionDTO;
+import org.nv.dom.dto.player.SaveFeedbackDTO;
 
 public interface PlayerService {
 	
@@ -30,5 +31,7 @@ public interface PlayerService {
 	public Map<String, Object> getOperationList(long playerId);
 
 	public Map<String, Object> savePlayerOperation(SavePlayerOperationDTO savePlayerOperationDTO);
+
+	public Map<String, Object> saveFeedback(SaveFeedbackDTO saveFeedbackDTO);
 
 }

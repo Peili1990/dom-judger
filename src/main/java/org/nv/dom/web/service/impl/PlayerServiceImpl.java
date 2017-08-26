@@ -17,6 +17,7 @@ import org.nv.dom.dto.operation.SubmitPlayerOperationDTO;
 import org.nv.dom.dto.player.ApplyDTO;
 import org.nv.dom.dto.player.GetPlayerOperationDTO;
 import org.nv.dom.dto.player.JudgerDecisionDTO;
+import org.nv.dom.dto.player.SaveFeedbackDTO;
 import org.nv.dom.dto.player.UpdatePlayerStatusDTO;
 import org.nv.dom.enums.PlayerStatus;
 import org.nv.dom.web.dao.game.GameMapper;
@@ -194,6 +195,14 @@ public class PlayerServiceImpl implements PlayerService {
 		}
 		result.put(PageParamType.BUSINESS_STATUS, 1);
 		result.put(PageParamType.BUSINESS_MESSAGE, "保存玩家操作列表成功");
+		return result;
+	}
+
+	@Override
+	public Map<String, Object> saveFeedback(SaveFeedbackDTO saveFeedbackDTO) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put(PageParamType.BUSINESS_STATUS, 1);
+		result.put(PageParamType.BUSINESS_MESSAGE, "保存反馈成功");
 		return result;
 	}
 

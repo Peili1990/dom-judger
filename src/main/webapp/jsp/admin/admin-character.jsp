@@ -37,13 +37,20 @@
 		<div class="am-u-sm-12 am-u-md-4 am-u-md-push-8"> 
       		<div class="am-panel am-panel-default">
           		<div class="am-panel-bd">
-          			<h2>玩家操作提交记录</h2>	
+          			<h2>玩家操作记录</h2>	
+          			<div class="am-form-group operation">
+          				<button class="am-btn am-btn-primary">一键结算</button>
+          				<button class="am-btn am-btn-danger">一键反馈</button>
+          			</div>
           			<ul class="am-comments-list am-comments-list-flip" id="operation-list">
           			<c:choose>
           				<c:when test="${operationList != null && !operationList.isEmpty()}">
           					<c:forEach items="${ operationList}" var="operation">
           						<li class="am-panel am-panel-default">
-          							<div class="am-panel-hd"><time>${operation.createTime}</time></div>
+          							<div class="am-panel-hd">
+          								<time>${operation.createTime}</time>
+          								<button class="am-btn am-btn-default" onclick="settleOperation(${operation.id},this)">结算</button>
+          							</div>
           							<div class="am-panel-bd"><p>
           							<c:if test="${operation.operator != null}">
           								${operation.operator}提交操作：
@@ -54,7 +61,7 @@
           									<c:choose>
           										<c:when test="${operation.feedback != null && !operation.feedback.isEmpty()}">
 														<c:forEach items="${ operation.feedback }" var="feedback">
-															<p>=>反馈${feedback.characterName}：${feedback.feedback }</p>
+															<p data-player-id="${feedback.playerId}" }>=>反馈${feedback.characterName}：${feedback.feedback }</p>
 														</c:forEach>
           										</c:when>
           										<c:otherwise>
@@ -66,13 +73,7 @@
           									<p>=>暂未结算</p>
           								</c:otherwise>
           							</c:choose>  
-          							</div>   
-          							<input type="hidden" value="${operation.id }">			
-									<div class="am-btn-toolbar float-toolbar">
-										<div class="am-btn-group am-btn-group-xs">
-											<button type="button" class="am-btn am-btn-default am-btn-xs am-text-secondary" title="结算" onclick=""><span class="am-icon-pencil-square-o"></span></button>							
-										</div>
-									</div>    							
+          							</div>   		    							
           						</li>
           					</c:forEach>
           				</c:when>
@@ -212,6 +213,37 @@
 			</div>
 	</div>
 	
+	<div class="am-modal am-modal-no-btn" tabindex="-1" id="settle-panel">
+		<div class="am-modal-dialog">
+			<form class="am-form modal-am-form">
+			 <fieldset>
+			 	<legend>操作结算</legend>
+			 		<div id="operation-detail">厄金特提交操作： 杀害叶什（妹），凶器放置于扬</div>
+			 		<table class="am-table am-table-striped am-table-hover table-main" >
+						<thead>
+							<tr>
+								<th width="200px">反馈角色</th>
+								<th>反馈内容</th>
+								<th width="100px">操作</th>
+							</tr>
+						</thead>
+						<tbody>
+							
+						</tbody>
+					</table>
+					<div class="am-form-group">
+						<input id="feedback-now" type="checkbox"> 立即反馈
+					</div>
+					<div class="am-form-group" style="text-align:center">
+						<input type="button" class="am-btn am-btn-primary" value="新增" name="create">
+						<input type="button" class="am-btn am-btn-secondary" value="保存" name="save">
+						<input type="button" class="am-btn am-btn-default" value="关闭" onclick="closeSettlePanel()">
+					</div>
+			 </fieldset>
+			 </form>
+			</div>
+	</div>
+	
 	<div class="am-modal am-modal-no-btn" tabindex="-1" id="replace-panel">
 		<div class="am-modal-dialog">
 			<form class="am-form modal-am-form">
@@ -318,8 +350,10 @@ var playerPanel = $("#player-panel")
 var replacePanel = $("#replace-panel")
 var operationPanel = $("#operation-panel")
 var recordPanel = $("#record-panel")
+var settlePanel = $("#settle-panel")
 var avatarList;
 var operationList;
+var operationTarget;
 var players=${playerListStr}
 
 $(function(){
@@ -327,6 +361,7 @@ $(function(){
 	$(".admin-sidebar-list > li:eq(0) .am-icon-angle-right").removeClass("invisible");
 	addstatusStyle(players);
 	getAllOperationList();
+	getOperationTarget();
 	$.get('${baseUrl}file/character-avatar.json',function(data){
 		var builder = new StringBuilder();
 		builder.append('<td><select>');
@@ -350,6 +385,16 @@ function getAllOperationList(){
 		builder.append('</select></td>');
 		operationList = builder.toString();
 	})
+}
+
+function getOperationTarget(){
+	var builder = new StringBuilder();
+	builder.append('<td><select>');
+	$.each(players,function(index,player){
+		builder.appendFormat('<option value="{0}">{1}</option>',player.playerId,player.characterName);
+	})
+	builder.append('</select></td>');
+	operationTarget = builder.toString();
 }
 
 function showPlayerStatus(index){
@@ -513,6 +558,77 @@ function deleteOperation(button){
 
 function closeRecordPanel(){
 	recordPanel.modal("close");
+}
+
+function settleOperation(id,button){
+	var list = settlePanel.find("tbody");
+	list.empty();
+	$("#operation-detail").text($(button).parents("li").find("p").first().text());
+	$.each($(button).parents("li").find("p"),function(index,feedback){
+		if($(feedback).text().indexOf("=>反馈")>-1){
+			var colon = $(feedback).text().indexOf("：");
+			var builder = new StringBuilder();
+			builder.append('<tr>');
+			builder.append(operationTarget);
+			builder.appendFormat('<td><input type="text" name="feedback-str" value="{0}"></td>',$(feedback).text().substring(colon+1));
+			builder.appendFormat('<td><div class="am-btn-toolbar"><div class="am-btn-group am-btn-group-xs">' +	
+					'<button type="button" class="am-btn am-btn-default am-btn-xs am-text-danger" title="删除" onclick="deleteFeedback(this)"><span class="am-icon-trash-o"></span></button>'+								
+					'</div></div></td></tr>');
+			list.append(builder.toString());
+			list.find("select").last().val($(feedback).data("player-id")).selected({
+				maxHeight: '200px'
+			});			
+		}
+	})
+	settlePanel.find("input[name='save']").unbind("click").on("click",function(){saveFeedback(id)})
+	settlePanel.find("input[name='create']").unbind("click").on("click",function(){
+		var builder = new StringBuilder();
+		builder.append('<tr>');
+		builder.append(operationTarget);
+		builder.append('<td><input type="text" name="feedback-str" value=""></td>');
+		builder.appendFormat('<td><div class="am-btn-toolbar"><div class="am-btn-group am-btn-group-xs">' +	
+				'<button type="button" class="am-btn am-btn-default am-btn-xs am-text-danger" title="删除" onclick="deleteFeedback(this)"><span class="am-icon-trash-o"></span></button>'+								
+				'</div></div></td></tr>');
+		list.append(builder.toString());
+		list.find("select").last().selected({
+			maxHeight: '200px'
+		});			
+	});
+	settlePanel.modal("open");
+}
+
+function saveFeedback(operationRecordId){
+	var list = [];
+	$.each(settlePanel.find("tr"),function(index,row){
+		if(index==0) return true;
+		list.push({
+			playerId : $(row).find("select").val(),
+			operationRecordId : operationRecordId,
+			characterName : $(row).find("select").find("option:selected").text(),
+			feedback : $(row).find("input[name='feedback-str']").val()
+		})
+	})
+	var options = {
+		operationRecordId : operationRecordId,
+		feedbackNow : $("#feedback-now").is(':checked'),
+		feedbacks : list
+	}
+	var url = getRootPath() + "/saveFeedback";
+	var common = new Common();
+	common.callAction(JSON.stringify(options),url,function(data){
+		closeSettlePanel();
+		myInfo("保存成功！",function(){
+			window.location = getRootPath() + "/admin-character";
+		});
+	},"application/json;charset=utf-8")
+}
+
+function deleteFeedback(button){
+	$(button).parents("tr").remove();
+}
+
+function closeSettlePanel(){
+	settlePanel.modal("close");
 }
 
 function showReplacePanel(playerIndex){
