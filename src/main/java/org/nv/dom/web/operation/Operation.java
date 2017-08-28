@@ -9,18 +9,13 @@ import java.util.function.Predicate;
 import javax.annotation.PostConstruct;
 
 import org.nv.dom.config.NVTermConstant;
-import org.nv.dom.domain.message.chat.ChatDetail;
-import org.nv.dom.domain.player.PlayerFeedback;
 import org.nv.dom.domain.player.PlayerOperationRecord;
-import org.nv.dom.util.ConfigUtil;
-import org.nv.dom.util.HttpClientUtil;
+import org.nv.dom.dto.operation.SubmitOperationDTO;
 import org.nv.dom.web.util.EventUtilService;
 import org.nv.dom.web.util.GameUtilService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.alibaba.fastjson.JSON;
-
-import static java.util.stream.Collectors.*;
 
 public abstract class Operation {
 	
@@ -50,23 +45,6 @@ public abstract class Operation {
 	
 	public abstract PlayerOperationRecord settle(Map<String, Object> param);
 	
-	public void sendMessage(List<PlayerFeedback> feedbacks) {
-		List<ChatDetail> chatDetails = feedbacks.stream()
-				.map(feedback -> {
-					ChatDetail chatDetail = new ChatDetail();
-					long userId = gameUtil.getUserIdByPlayerId(feedback.getPlayerId());
-					String chatId = userId > 2 ? NVTermConstant.ADMINISTRATOR + "-"+ userId :
-						userId + "-" + NVTermConstant.ADMINISTRATOR;
-					chatDetail.setChatId(chatId);
-					chatDetail.setFromUserId(NVTermConstant.ADMINISTRATOR);
-					chatDetail.setToUserId(userId);
-					chatDetail.setContent(feedback.getFeedback());
-					return chatDetail;
-				}).collect(toList());
-		HttpClientUtil.doPostJson("http://"+ConfigUtil.getVersionConfigProperty("chat.server")+"/sendMessageBatch", 
-				JSON.toJSONString(chatDetails));
-	};
-	
 	public void accept(Map<String, Object> param){
 		PlayerOperationRecord record = settle(param);
 		long formId = gameUtil.getCurForm((long) param.get("gameId")).getFormId();
@@ -75,8 +53,20 @@ public abstract class Operation {
 		record.setIsDone(1);
 		gameUtil.insertOperationRecord(record);
 		if(record.getFeedback() != null){
-			sendMessage(record.getFeedback());
+			gameUtil.sendMessage(record.getFeedback(), NVTermConstant.ADMINISTRATOR);
 		}		
+	}
+	
+	public PlayerOperationRecord buildPlayerOperationRecord(Map<String, Object> param){
+		@SuppressWarnings("unchecked")
+		List<SubmitOperationDTO> operations = (List<SubmitOperationDTO>) param.get("operations");
+		SubmitOperationDTO operation = findTarget(operations, record -> record.getOperationId() == operationId);
+		PlayerOperationRecord record = new PlayerOperationRecord();
+		record.setPlayerId(operation.getPlayerId());
+		record.setParam(JSON.toJSONString(operation.getParam()));
+		record.setOperationStr(operation.getOperationStr());
+		record.setOperator(operation.getOperator());
+		return record;
 	}
 	
 	public <T> T findTarget(List<T> operations,Predicate<T> clue){

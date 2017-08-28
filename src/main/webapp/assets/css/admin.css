@@ -181,8 +181,8 @@ ul {
 
 .character-info,.announcement-info{
 	float:left;
-	width:220px;
 	margin-right:20px;
+	margin-left:10px;
 }
 
 /*

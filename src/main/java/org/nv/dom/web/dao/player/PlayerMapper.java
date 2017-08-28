@@ -99,12 +99,12 @@ public interface PlayerMapper {
 	/**
 	 * <p>获取该阶段所有的操作</p>
 	 */
-	public List<PlayerOperationRecord> getCurStageAllOperation(long formId);
+	public List<PlayerOperationRecord> getCurGameAllOperation(@Param("gameId")long gameId,@Param("formId")long formId);
 	
 	/**
 	 * <p>获取该阶段所有的反馈</p>
 	 */
-	public List<PlayerFeedback> getCurStageAllFeedback(long formId);
+	public List<PlayerFeedback> getCurGameAllFeedback(long gameId);
 
 	/**
 	 * <p>获取该玩家所拥有的操作</p>
@@ -120,5 +120,15 @@ public interface PlayerMapper {
 	 * <p>删除玩家拥有操作</p>
 	 */
 	public void deletePlayerOperation(long playerId);
+	
+	/**
+	 * <p>删除玩家反馈</p>
+	 */
+	public void deletePlayerFeedback(long recordId);
+	
+	/**
+	 * <p>批量结算</p>
+	 */
+	public void settleOperationBatch(List<Long> recordId);
 	
 }

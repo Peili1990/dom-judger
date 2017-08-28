@@ -1,5 +1,9 @@
 package org.nv.dom.domain.game;
 
+import java.util.List;
+
+import org.nv.dom.domain.player.PlayerOperationRecord;
+
 public class GameForm {
 	
 	/** 表格id */
@@ -12,6 +16,8 @@ public class GameForm {
 	private String content;
 	/** 阶段 */
 	private int type;
+	/** 操作 */
+	private List<PlayerOperationRecord> records;
 	public long getFormId() {
 		return formId;
 	}
@@ -42,5 +48,12 @@ public class GameForm {
 	public void setType(int type) {
 		this.type = type;
 	}
+	public List<PlayerOperationRecord> getRecords() {
+		return records;
+	}
+	public void setRecords(List<PlayerOperationRecord> records) {
+		this.records = records;
+	}
+
 	
 }

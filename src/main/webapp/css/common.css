@@ -1,9 +1,5 @@
 @CHARSET "UTF-8";
 
-time{
-	margin-left:10px;
-}
-
 input[type="checkbox"]{
 	margin-right:5px;
 }
@@ -313,20 +309,6 @@ fieldset{
     overflow: hidden;
 }
 
-#operation-list{
-	overflow-y:auto;
-	max-height:1056px;
-}
-
-#operation-list time{
-	margin-left:0px;
-	vertical-align: middle;
-}
-
-#operation-list p{
-	margin:0 auto;
-}
-
 #record-panel .am-modal-dialog,
 #settle-panel .am-modal-dialog{
 	height:450px;
@@ -344,4 +326,18 @@ fieldset{
     margin-left: 15px;
     zoom: 1.5;
     vertical-align: sub;
+}
+
+#form-wrapper{
+	overflow-y:auto;
+	max-height:1056px;
+}
+
+#form-wrapper time{
+	margin-left:0px;
+	vertical-align: middle;
+}
+
+#form-wrapper p{
+	margin:0 auto;
 }

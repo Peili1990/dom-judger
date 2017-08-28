@@ -101,6 +101,10 @@ public class PlayerController {
 	@ResponseBody
 	@RequestMapping(value = "/saveFeedback", method = RequestMethod.POST)
 	public Map<String, Object> saveFeedback(@RequestBody SaveFeedbackDTO saveFeedbackDTO,HttpSession session) {
+		User user = (User) session.getAttribute(PageParamType.user_in_session);
+		ApplyingGame game = (ApplyingGame)session.getAttribute(PageParamType.GAME_IN_SESSION);
+		saveFeedbackDTO.setGameId(game.getId());
+		saveFeedbackDTO.setJudegerId(user.getId());
 		return playerService.saveFeedback(saveFeedbackDTO);
 	}
 

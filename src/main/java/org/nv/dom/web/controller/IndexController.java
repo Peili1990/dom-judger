@@ -84,8 +84,7 @@ public class IndexController extends BaseController {
 		ApplyingGame game = (ApplyingGame)session.getAttribute(PageParamType.GAME_IN_SESSION);
 		if(game != null){	
 			mav.addObject("gameId",game.getId());
-			mav.addAllObjects(playerService.getPlayerInfo(game.getId()));
-			mav.addAllObjects(gameService.getFormList(game.getId()));		
+			mav.addAllObjects(playerService.getPlayerInfo(game.getId()));	
 		}
 		mav.addAllObjects(basicService.getSessionUserService(session));
 		return mav;

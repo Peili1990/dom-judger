@@ -303,6 +303,7 @@ public class GameServiceImpl extends BasicServiceImpl implements GameService {
 	public Map<String, Object> nextStage(long gameId) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		GameForm form = gameUtil.getCurForm(gameId);
+		
 		GameForm newForm = new GameForm();
 		List<PlayerInfo> playerInfo = playerMapper.getPlayerInfosDao(gameId);
 		newForm.setGameId(gameId);

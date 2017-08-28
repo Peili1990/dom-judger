@@ -266,39 +266,44 @@
 	
 	</select>
 	
-	<select id="getCurStageAllOperation" parameterType="Long" resultType="PlayerOperationRecord">
+	<select id="getCurGameAllOperation" parameterType="Long" resultType="PlayerOperationRecord">
 	
 		SELECT
-			id,
-			player_id AS playerId,
-			operation_str AS operationStr,
-			operator,
-			is_done AS isDone,
-			create_time AS createTime		
+			dpor.id,
+			dpor.form_id AS formId,
+			dpor.player_id AS playerId,
+			dpor.operation_str AS operationStr,
+			dpor.operator,
+			dpor.is_done AS isDone,
+			dpor.create_time AS createTime		
 		FROM
-			d_player_operation_record
+			d_player_operation_record dpor, d_form df
 		WHERE
-			form_id = #{formId} AND is_delete = 0
+			dpor.is_delete = 0 AND dpor.form_id = df.id AND df.game_id = #{gameId}
+			<if test="formId>0">
+				AND dpor.form_id = #{formId}
+			</if>
 		ORDER BY
-			create_time
+			dpor.create_time
 		DESC
 	
 	</select>
 	
-	<select id="getCurStageAllFeedback" parameterType="Long" resultType="PlayerFeedback">
+	<select id="getCurGameAllFeedback" parameterType="Long" resultType="PlayerFeedback">
 	
 		SELECT
-			operation_record_id AS operationRecordId,
-			player_id AS playerId,
-			character_name AS characterName,
-			feedback,
-			create_time AS createTime
+			dpf.form_id AS formId,
+			dpf.operation_record_id AS operationRecordId,
+			dpf.player_id AS playerId,
+			dpf.character_name AS characterName,
+			dpf.feedback,
+			dpf.create_time AS createTime
 		FROM
-			d_player_feedback 
+			d_player_feedback dpf, d_form df
 		WHERE
-			form_id = #{formId}
+			dpf.form_id = df.id AND df.game_id = #{gameId}
 		ORDER BY
-			create_time
+			dpf.create_time
 		DESC
 	
 	</select>
@@ -333,6 +338,29 @@
 			player_id = #{playerId}
 	
 	</delete>
+	
+	<delete id="deletePlayerFeedback" parameterType="Long">
+	
+		DELETE FROM
+			d_player_feedback
+		WHERE
+			operation_record_id = #{recordId}
+	
+	</delete>
+	
+	<update id="settleOperationBatch" parameterType="java.util.List">
+		
+		<foreach collection="list" item="item" index="index" open="" close="" separator=";">
+				UPDATE 
+					d_player_operation_record
+				<set>
+				  	is_done = 1
+				</set>  	
+				WHERE
+				  	id = #{item}
+		 </foreach>	
+		
+	</update>
 	
 	
 

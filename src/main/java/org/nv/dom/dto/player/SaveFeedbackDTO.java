@@ -6,11 +6,31 @@ import org.nv.dom.domain.player.PlayerFeedback;
 
 public class SaveFeedbackDTO {
 	
+	private long judegerId;
+	
+	private long gameId;
+	
 	private long operationRecordId;
 	
 	private boolean feedbackNow;
 	
 	private List<PlayerFeedback> feedbacks;
+
+	public long getJudegerId() {
+		return judegerId;
+	}
+
+	public void setJudegerId(long judegerId) {
+		this.judegerId = judegerId;
+	}
+
+	public long getGameId() {
+		return gameId;
+	}
+
+	public void setGameId(long gameId) {
+		this.gameId = gameId;
+	}
 
 	public long getOperationRecordId() {
 		return operationRecordId;

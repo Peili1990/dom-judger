@@ -33,6 +33,8 @@ import com.alibaba.fastjson.JSON;
 
 import static java.util.stream.Collectors.*;
 
+import java.util.Arrays;
+
 @Service("playerServiceImpl")
 public class PlayerServiceImpl implements PlayerService {
 	
@@ -51,12 +53,12 @@ public class PlayerServiceImpl implements PlayerService {
 	@Override
 	public Map<String, Object> getPlayerInfo(long gameId) {
 		Map<String, Object> result = new HashMap<String, Object>();
-		long formId = gameUtil.getCurForm(gameId).getFormId();
 		List<PlayerInfo> playerList = playerMapper.getPlayerInfosDao(gameId);
-		List<PlayerOperationRecord> records = playerMapper.getCurStageAllOperation(formId);
-		List<PlayerFeedback> feedbacks = playerMapper.getCurStageAllFeedback(formId);
+		List<PlayerOperationRecord> operationRecords = playerMapper.getCurGameAllOperation(gameId,0);
+		List<PlayerFeedback> feedbacks = playerMapper.getCurGameAllFeedback(gameId);
+		List<GameForm> formList = gameMapper.getFormListDao(gameId,false);
 		playerList.forEach(player -> {
-			String lastOperation = records.stream()
+			String lastOperation = operationRecords.stream()
 					.filter(record -> record.getPlayerId() == player.getPlayerId())
 					.findFirst()
 					.orElse(new PlayerOperationRecord()).getOperationStr();
@@ -67,10 +69,12 @@ public class PlayerServiceImpl implements PlayerService {
 					.orElse(new PlayerFeedback()).getFeedback();
 			player.setLastFeedback(lastFeedback);
 		});
-		Map<Long,List<PlayerFeedback>> temp = feedbacks.stream().collect(groupingBy(PlayerFeedback::getOperationRecordId));
-		records.forEach(record -> record.setFeedback(temp.get(record.getId())));
+		Map<Long, List<PlayerFeedback>> temp = feedbacks.stream().collect(groupingBy(PlayerFeedback::getOperationRecordId));
+		operationRecords.forEach(record -> record.setFeedback(temp.get(record.getId())));
+		Map<Long, List<PlayerOperationRecord>> records = operationRecords.stream().collect(groupingBy(PlayerOperationRecord::getFormId));
+		formList.forEach(form -> form.setRecords(records.get(form.getFormId())));
 		result.put("playerList", playerList);
-		result.put("operationList", records);
+		result.put("formList", formList);
 		result.put("playerListStr", JSON.toJSONString(playerList));
 		result.put(PageParamType.BUSINESS_STATUS, 1);
 		result.put(PageParamType.BUSINESS_MESSAGE, "获取角色列表成功");
@@ -201,6 +205,16 @@ public class PlayerServiceImpl implements PlayerService {
 	@Override
 	public Map<String, Object> saveFeedback(SaveFeedbackDTO saveFeedbackDTO) {
 		Map<String, Object> result = new HashMap<String, Object>();
+		playerMapper.settleOperationBatch(Arrays.asList(saveFeedbackDTO.getOperationRecordId()));
+		long formId = gameUtil.getCurForm(saveFeedbackDTO.getGameId()).getFormId();
+		playerMapper.deletePlayerFeedback(saveFeedbackDTO.getOperationRecordId());
+		if(!saveFeedbackDTO.getFeedbacks().isEmpty()){
+			saveFeedbackDTO.getFeedbacks().forEach(feedback -> feedback.setFormId(formId));
+			playerMapper.insertPlayerFeedbackBatch(saveFeedbackDTO.getFeedbacks());
+		}		
+		if(saveFeedbackDTO.isFeedbackNow()){
+			gameUtil.sendMessage(saveFeedbackDTO.getFeedbacks(), saveFeedbackDTO.getJudegerId());
+		}
 		result.put(PageParamType.BUSINESS_STATUS, 1);
 		result.put(PageParamType.BUSINESS_MESSAGE, "保存反馈成功");
 		return result;

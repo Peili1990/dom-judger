@@ -1,5 +1,8 @@
 package org.nv.dom.web.service.impl;
 
+import static java.util.stream.Collectors.groupingBy;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,10 +12,13 @@ import org.nv.dom.config.NVTermConstant;
 import org.nv.dom.config.PageParamType;
 import org.nv.dom.domain.essay.Essay;
 import org.nv.dom.domain.game.GameForm;
+import org.nv.dom.domain.player.PlayerFeedback;
+import org.nv.dom.domain.player.PlayerOperationRecord;
 import org.nv.dom.domain.user.UserApplyInfo;
 import org.nv.dom.util.StringUtil;
 import org.nv.dom.web.dao.essay.EssayMapper;
 import org.nv.dom.web.dao.game.GameMapper;
+import org.nv.dom.web.dao.player.PlayerMapper;
 import org.nv.dom.web.service.EssayService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,6 +35,9 @@ public class EssayServiceImpl implements EssayService {
 	
 	@Autowired
 	GameMapper	gameMapper;
+	
+	@Autowired
+	PlayerMapper playerMapper;
 
 	@Override
 	public Map<String, Object> publishEssay(Essay essay, long gameId) {
@@ -57,6 +66,10 @@ public class EssayServiceImpl implements EssayService {
 		Map<String, Object> result = new HashMap<String, Object>();
 		List<UserApplyInfo> gameplayers = gameMapper.queryGamePlayerDao(gameId);
 		List<GameForm> gameForms = gameMapper.getFormListDao(gameId, true);
+		List<PlayerOperationRecord> operationRecords = playerMapper.getCurGameAllOperation(gameId,0);
+		List<PlayerFeedback> playerFeedbacks = playerMapper.getCurGameAllFeedback(gameId);
+		Map<Long, List<PlayerFeedback>> feedbackMap = playerFeedbacks.stream().collect(groupingBy(PlayerFeedback::getOperationRecordId));
+		Map<Long, List<PlayerOperationRecord>> recordMap = operationRecords.stream().collect(groupingBy(PlayerOperationRecord::getFormId));
 		StringBuilder sb = new StringBuilder();
 		sb.append("全名单<br>");
 		for(UserApplyInfo player : gameplayers){
@@ -65,13 +78,23 @@ public class EssayServiceImpl implements EssayService {
 			sb.append(player.getNickname()+" "+player.getCharacterName()+" "+player.getIdentityDesc()+"<br>");
 		}
 		sb.append("<br>");
-		//FIXME
-		for(int i=gameForms.size()-1;i>0;i--){
+		for(int i=gameForms.size()-1;i>=0;i--){
 			GameForm form = gameForms.get(i);
 			sb.append(form.getHeader());
 			sb.append("<br><br>");
-			
-			
+			List<PlayerOperationRecord> records = recordMap.getOrDefault(form.getFormId(), new ArrayList<>());
+			records.forEach(record -> {
+				sb.append("<==");
+				sb.append(StringUtil.isNullOrEmpty(record.getOperator()) ? record.getOperationStr() : 
+					record.getOperator() + "提交操作：" + record.getOperationStr());
+				sb.append("<br>");
+				List<PlayerFeedback> feedbacks = feedbackMap.getOrDefault(record.getId(), new ArrayList<>());
+				feedbacks.forEach(feedback -> {
+					sb.append("==>反馈"+feedback.getCharacterName()+"："+feedback.getFeedback());
+					sb.append("<br>");
+				});
+			});
+			sb.append("<br>");
 		}
 		result.put("simpleEssay", sb.toString());
 		result.put(PageParamType.BUSINESS_STATUS, 1);
