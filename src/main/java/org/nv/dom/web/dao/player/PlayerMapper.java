@@ -130,5 +130,10 @@ public interface PlayerMapper {
 	 * <p>批量结算</p>
 	 */
 	public void settleOperationBatch(List<Long> recordId);
+
+	/**
+	 * <p>消耗操作次数</p>
+	 */
+	public void consumeOperationTimes(List<PlayerOperation> playerOperation);
 	
 }

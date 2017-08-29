@@ -18,12 +18,12 @@ import org.nv.dom.web.operation.Operation;
 import org.springframework.stereotype.Component;
 
 @Component
-public class RedEnvelop extends Operation {
+public class BlueEnvelop extends Operation {
 
-	public RedEnvelop() {
-		operationId = 33;
+	public BlueEnvelop() {
+		operationId = 35;
 	}
-
+	
 	@Override
 	public boolean check(Map<String, Object> param) {
 		return true;
@@ -36,12 +36,12 @@ public class RedEnvelop extends Operation {
 		case EventList.OPERATION_SUBMIT_EVENT:
 			PlayerOperationRecord operation = buildPlayerOperationRecord(param);
 			List<PlayerOperation> consumer = new ArrayList<>();
-			consumer.add(new PlayerOperation(operation.getPlayerId(),33));
-			consumer.add(new PlayerOperation(operation.getPlayerId(),34));
+			consumer.add(new PlayerOperation(operation.getPlayerId(),35));
+			consumer.add(new PlayerOperation(operation.getPlayerId(),36));
 			gameUtil.consumeOperationTimes(consumer);
 			List<PlayerOperationRecord> records = gameUtil.getCurStageRecords(operation.getGameId());
 			PlayerOperationRecord envelop = records.stream()
-					.filter(record -> record.getOperationId() == 33 || record.getOperationId() == 34)
+					.filter(record -> record.getOperationId() == 35 || record.getOperationId() == 36)
 					.findAny().orElse(null);
 			if(envelop == null){
 				return operation;			
@@ -49,7 +49,7 @@ public class RedEnvelop extends Operation {
 				PlayerFeedback feedback = new PlayerFeedback();
 				feedback.setPlayerId(operation.getPlayerId());
 				feedback.setCharacterName(operation.getOperator());
-				feedback.setFeedback("红信提交失败");
+				feedback.setFeedback("蓝信提交失败");
 				operation.setFeedback(Arrays.asList(feedback));
 				return operation;
 			}
@@ -57,12 +57,13 @@ public class RedEnvelop extends Operation {
 			List<PlayerInfo> playerInfos = gameUtil.getPlayerInfo((long) param.get("gameId"));
 			PlayerInfo mob = playerInfos.stream()
 					.filter(player -> player.getSign() == IdentityCode.MOB.getCode())
-					.filter(player -> player.getCamp() == NVTermConstant.KILLER_CAMP)
+					.filter(player -> player.getCamp() == NVTermConstant.GOOD_CAMP)
 					.filter(player -> player.getIsLife() == 1)
 					.findAny().orElse(null);
 			if(mob != null){
 				List<PlayerOperation> operations = playerInfos.stream()
-						.filter(player -> player.getCamp() == NVTermConstant.KILLER_CAMP)
+						.filter(player -> player.getCamp() == NVTermConstant.GOOD_CAMP)
+						.filter(player -> player.getSign() != 11)
 						.filter(player -> player.getIsLife() == 1)
 						.map(player -> buildPlayerOperation(player.getPlayerId(), operationId, 1))
 						.collect(toList());

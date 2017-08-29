@@ -30,7 +30,8 @@ public class LiaisonMan extends Operation {
 	
 	@Override
 	public PlayerOperationRecord settle(Map<String, Object> param) {
-		List<PlayerInfo> playerInfo = gameUtil.getPlayerInfo((long) param.get("gameId"));
+		long gameId = (long) param.get("gameId");
+		List<PlayerInfo> playerInfo = gameUtil.getPlayerInfo(gameId);
 		PlayerInfo officer = playerInfo.stream()
 				.filter(player -> player.getSign() == IdentityCode.OFFICER.getCode())
 				.findFirst()
@@ -40,6 +41,7 @@ public class LiaisonMan extends Operation {
 				.collect(toList());
 		PlayerInfo liaisonMan = policemen.get(randomNum(policemen.size()));
 		PlayerOperationRecord record = new PlayerOperationRecord();
+		record.setGameId(gameId);
 		record.setPlayerId(officer.getPlayerId());
 		record.setOperationStr("官员触发《联络员》");
 		PlayerFeedback feedback = new PlayerFeedback();

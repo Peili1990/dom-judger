@@ -5,6 +5,7 @@ import java.util.List;
 import org.nv.dom.domain.game.GameForm;
 import org.nv.dom.domain.player.PlayerFeedback;
 import org.nv.dom.domain.player.PlayerInfo;
+import org.nv.dom.domain.player.PlayerOperation;
 import org.nv.dom.domain.player.PlayerOperationRecord;
 
 public interface GameUtilService {
@@ -22,5 +23,9 @@ public interface GameUtilService {
 	List<PlayerInfo> getPlayerInfo(long gameId);
 	
 	void sendMessage(List<PlayerFeedback> feedbacks, long judgerId);
+	
+	void addPlayerOperation(List<PlayerOperation> playerOperation);
+	
+	void consumeOperationTimes(List<PlayerOperation> playerOperation);
 
 }

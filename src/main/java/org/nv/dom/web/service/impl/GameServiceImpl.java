@@ -9,6 +9,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.nv.dom.config.EventList;
 import org.nv.dom.config.NVTermConstant;
 import org.nv.dom.config.PageParamType;
 import org.nv.dom.config.RedisConstant;
@@ -37,6 +38,7 @@ import org.nv.dom.web.dao.game.GameMapper;
 import org.nv.dom.web.dao.newspaper.NewspaperMapper;
 import org.nv.dom.web.dao.player.PlayerMapper;
 import org.nv.dom.web.service.GameService;
+import org.nv.dom.web.util.EventUtilService;
 import org.nv.dom.web.util.GameUtilService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -64,6 +66,9 @@ public class GameServiceImpl extends BasicServiceImpl implements GameService {
 	
 	@Autowired
 	GameUtilService gameUtil;
+	
+	@Autowired
+	EventUtilService eventUtil;
 	
 	@Override
 	public Map<String, Object> getGameList() {
@@ -302,8 +307,9 @@ public class GameServiceImpl extends BasicServiceImpl implements GameService {
 	@Override
 	public Map<String, Object> nextStage(long gameId) {
 		Map<String, Object> result = new HashMap<String, Object>();
+		Map<String, Object> param = new HashMap<>();
+		param.put("gameId", gameId);
 		GameForm form = gameUtil.getCurForm(gameId);
-		
 		GameForm newForm = new GameForm();
 		List<PlayerInfo> playerInfo = playerMapper.getPlayerInfosDao(gameId);
 		newForm.setGameId(gameId);
@@ -314,6 +320,7 @@ public class GameServiceImpl extends BasicServiceImpl implements GameService {
 			newForm.setType(NVTermConstant.STAGE_NIGHT);
 			form.setContent(JSON.toJSONString(playerInfo));
 			gameMapper.createOrUpdateFormDao(newForm);
+			eventUtil.publish(EventList.NIGNT_START_EVENT, param);
 		break;
 		case NVTermConstant.STAGE_NIGHT:
 			form.setHeader(form.getHeader()+"-结算阶段");
@@ -334,6 +341,7 @@ public class GameServiceImpl extends BasicServiceImpl implements GameService {
 			newForm.setHeader(buildHeader(form.getHeader()));
 			newForm.setType(NVTermConstant.STAGE_NIGHT);
 			gameMapper.createOrUpdateFormDao(newForm);
+			eventUtil.publish(EventList.NIGNT_START_EVENT, param);
 		break;
 		}
 		gameMapper.createOrUpdateFormDao(form);

@@ -8,6 +8,7 @@ import org.nv.dom.domain.game.GameForm;
 import org.nv.dom.domain.message.chat.ChatDetail;
 import org.nv.dom.domain.player.PlayerFeedback;
 import org.nv.dom.domain.player.PlayerInfo;
+import org.nv.dom.domain.player.PlayerOperation;
 import org.nv.dom.domain.player.PlayerOperationRecord;
 import org.nv.dom.util.ConfigUtil;
 import org.nv.dom.util.HttpClientUtil;
@@ -85,6 +86,18 @@ public class GameUtilServiceImpl implements GameUtilService{
 	public List<PlayerOperationRecord> getCurStageRecords(long gameId) {
 		long formId = getCurForm(gameId).getFormId();
 		return playerMapper.getCurGameAllOperation(gameId,formId);
+	}
+
+	@Override
+	public void addPlayerOperation(List<PlayerOperation> playerOperation) {
+		playerMapper.insertPlayerOperation(playerOperation);
+		
+	}
+
+	@Override
+	public void consumeOperationTimes(List<PlayerOperation> playerOperation) {
+		playerMapper.consumeOperationTimes(playerOperation);
+		
 	}
 
 }

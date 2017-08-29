@@ -9,6 +9,7 @@ import java.util.function.Predicate;
 import javax.annotation.PostConstruct;
 
 import org.nv.dom.config.NVTermConstant;
+import org.nv.dom.domain.player.PlayerOperation;
 import org.nv.dom.domain.player.PlayerOperationRecord;
 import org.nv.dom.dto.operation.SubmitOperationDTO;
 import org.nv.dom.web.util.EventUtilService;
@@ -47,7 +48,9 @@ public abstract class Operation {
 	
 	public void accept(Map<String, Object> param){
 		PlayerOperationRecord record = settle(param);
-		long formId = gameUtil.getCurForm((long) param.get("gameId")).getFormId();
+		if(record == null) return;
+		long gameId = record.getGameId();
+		long formId = gameUtil.getCurForm(gameId).getFormId();
 		record.setFormId(formId);
 		record.setOperationId(operationId);
 		record.setIsDone(1);
@@ -62,11 +65,20 @@ public abstract class Operation {
 		List<SubmitOperationDTO> operations = (List<SubmitOperationDTO>) param.get("operations");
 		SubmitOperationDTO operation = findTarget(operations, record -> record.getOperationId() == operationId);
 		PlayerOperationRecord record = new PlayerOperationRecord();
+		record.setGameId(operation.getGameId());
 		record.setPlayerId(operation.getPlayerId());
-		record.setParam(JSON.toJSONString(operation.getParam()));
+		record.setParam(operation.getParam() == null ? null:JSON.toJSONString(operation.getParam()));
 		record.setOperationStr(operation.getOperationStr());
 		record.setOperator(operation.getOperator());
 		return record;
+	}
+	
+	public PlayerOperation buildPlayerOperation(long playerId, long operationId, int times){
+		PlayerOperation playerOperation = new PlayerOperation();
+		playerOperation.setPlayerId(playerId);
+		playerOperation.setOperationId(operationId);
+		playerOperation.setTimes(times);
+		return playerOperation;		
 	}
 	
 	public <T> T findTarget(List<T> operations,Predicate<T> clue){

@@ -18,10 +18,10 @@ import org.nv.dom.web.operation.Operation;
 import org.springframework.stereotype.Component;
 
 @Component
-public class RedEnvelop extends Operation {
+public class BlackEnvelop extends Operation {
 
-	public RedEnvelop() {
-		operationId = 33;
+	public BlackEnvelop() {
+		operationId = 34;
 	}
 
 	@Override
@@ -36,8 +36,8 @@ public class RedEnvelop extends Operation {
 		case EventList.OPERATION_SUBMIT_EVENT:
 			PlayerOperationRecord operation = buildPlayerOperationRecord(param);
 			List<PlayerOperation> consumer = new ArrayList<>();
-			consumer.add(new PlayerOperation(operation.getPlayerId(),33));
 			consumer.add(new PlayerOperation(operation.getPlayerId(),34));
+			consumer.add(new PlayerOperation(operation.getPlayerId(),33));
 			gameUtil.consumeOperationTimes(consumer);
 			List<PlayerOperationRecord> records = gameUtil.getCurStageRecords(operation.getGameId());
 			PlayerOperationRecord envelop = records.stream()
@@ -49,7 +49,7 @@ public class RedEnvelop extends Operation {
 				PlayerFeedback feedback = new PlayerFeedback();
 				feedback.setPlayerId(operation.getPlayerId());
 				feedback.setCharacterName(operation.getOperator());
-				feedback.setFeedback("红信提交失败");
+				feedback.setFeedback("黑信提交失败");
 				operation.setFeedback(Arrays.asList(feedback));
 				return operation;
 			}

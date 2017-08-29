@@ -272,6 +272,7 @@
 			dpor.id,
 			dpor.form_id AS formId,
 			dpor.player_id AS playerId,
+			dpor.operation_id AS operationId,
 			dpor.operation_str AS operationStr,
 			dpor.operator,
 			dpor.is_done AS isDone,
@@ -360,6 +361,20 @@
 				  	id = #{item}
 		 </foreach>	
 		
+	</update>
+	
+	<update id="consumeOperationTimes" parameterType="java.util.List">
+	
+		<foreach collection="list" item="item" index="index" open="" close="" separator=";">
+				UPDATE 
+					d_player_operation
+				<set>
+				  	times = times - 1
+				</set>  	
+				WHERE
+				  	player_id = #{item.playerId} AND operation_id = #{item.operationId}
+		 </foreach>	
+	
 	</update>
 	
 	

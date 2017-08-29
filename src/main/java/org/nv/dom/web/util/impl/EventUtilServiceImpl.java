@@ -37,6 +37,7 @@ public class EventUtilServiceImpl implements EventUtilService {
 
 	@Override
 	public void publish(String event, Map<String, Object> param) {
+		param.put("event", event);
 		Map<Integer, Operation> observers = eventManager.getOrDefault(event, new HashMap<Integer, Operation>());
 		observers.keySet().stream().forEach(id -> observers.get(id).check(param));	
 		observers.keySet().stream().forEach(id -> observers.get(id).accept(param));	
@@ -61,7 +62,7 @@ public class EventUtilServiceImpl implements EventUtilService {
 		Map<String, Object> params = buildParam(records);
 		temp.getOrDefault(true, new ArrayList<>()).stream().forEach(record -> {
 			if(observers.containsKey((int)record.getOperationId())){
-				observers.get((int)record.getOperationId()).settle(params);
+				observers.get((int)record.getOperationId()).accept(params);
 			}		
 		});
 		return temp.getOrDefault(false, new ArrayList<>());
@@ -69,6 +70,7 @@ public class EventUtilServiceImpl implements EventUtilService {
 	
 	private Map<String, Object> buildParam(List<SubmitOperationDTO> records){
 		Map<String, Object> param = new HashMap<>();
+		param.put("event", EventList.OPERATION_SUBMIT_EVENT);
 		param.put("operations", records);
 		return param;
 	}
