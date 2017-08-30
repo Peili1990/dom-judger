@@ -100,4 +100,10 @@ public class GameUtilServiceImpl implements GameUtilService{
 		
 	}
 
+	@Override
+	public void removePlayerOperation(List<PlayerOperation> playerOperation) {
+		playerMapper.removePlayerOperation(playerOperation);
+		
+	}
+
 }

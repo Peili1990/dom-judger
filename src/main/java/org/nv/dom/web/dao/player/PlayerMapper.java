@@ -135,5 +135,10 @@ public interface PlayerMapper {
 	 * <p>消耗操作次数</p>
 	 */
 	public void consumeOperationTimes(List<PlayerOperation> playerOperation);
+
+	/**
+	 * <p>删除玩家拥有操作</p>
+	 */
+	public void removePlayerOperation(List<PlayerOperation> playerOperation);
 	
 }

@@ -20,6 +20,8 @@ import org.nv.dom.dto.player.JudgerDecisionDTO;
 import org.nv.dom.dto.player.SaveFeedbackDTO;
 import org.nv.dom.dto.player.UpdatePlayerStatusDTO;
 import org.nv.dom.enums.PlayerStatus;
+import org.nv.dom.util.ConfigUtil;
+import org.nv.dom.util.HttpClientUtil;
 import org.nv.dom.web.dao.game.GameMapper;
 import org.nv.dom.web.dao.player.PlayerMapper;
 import org.nv.dom.web.service.PlayerService;
@@ -175,6 +177,8 @@ public class PlayerServiceImpl implements PlayerService {
 			record.setIsDone(0);
 			playerMapper.insertPlayerOperationRecord(record);
 		});
+		HttpClientUtil.doPostJson("http://"+ConfigUtil.getVersionConfigProperty("chat.server")+"/submitOpreation", 
+				String.valueOf(submitPlayerOperationDTO.getGameId()));
 		result.put(PageParamType.BUSINESS_STATUS, 1);
 		result.put(PageParamType.BUSINESS_MESSAGE, "提交操作成功");
 		return result;

@@ -377,6 +377,17 @@
 	
 	</update>
 	
+	<delete id="removePlayerOperation" parameterType="java.util.List">
+	
+		<foreach collection="list" item="item" index="index" open="" close="" separator=";">
+				DELETE FROM	 
+					d_player_operation  	
+				WHERE
+				  	player_id = #{item.playerId} AND operation_id = #{item.operationId}
+		 </foreach>	
+	
+	</delete>
+	
 	
 
 </mapper>

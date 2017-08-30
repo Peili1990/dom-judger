@@ -69,6 +69,13 @@ public class RedEnvelop extends Operation {
 				gameUtil.addPlayerOperation(operations);
 			}
 			return null;
+		case EventList.DAY_START_EVENT:
+			playerInfos = gameUtil.getPlayerInfo((long) param.get("gameId"));
+			List<PlayerOperation> operations = playerInfos.stream()
+					.map(player -> buildPlayerOperation(player.getPlayerId(), operationId, 0))
+					.collect(toList());
+			gameUtil.removePlayerOperation(operations);
+			return null;
 		default:
 			break;
 		}
@@ -80,6 +87,7 @@ public class RedEnvelop extends Operation {
 	public void registerEvent() {
 		eventService.registerEvent(EventList.OPERATION_SUBMIT_EVENT, this);
 		eventService.registerEvent(EventList.NIGNT_START_EVENT, this);
+		eventService.registerEvent(EventList.DAY_START_EVENT, this);
 	}
 
 }

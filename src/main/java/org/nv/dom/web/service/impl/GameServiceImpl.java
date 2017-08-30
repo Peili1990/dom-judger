@@ -331,6 +331,7 @@ public class GameServiceImpl extends BasicServiceImpl implements GameService {
 			newForm.setHeader(buildHeader(form.getHeader()));
 			newForm.setType(NVTermConstant.STAGE_DAY);
 			gameMapper.createOrUpdateFormDao(newForm);
+			eventUtil.publish(EventList.NIGNT_START_EVENT, param);
 		break;
 		case NVTermConstant.STAGE_DAY:
 			form.setHeader(form.getHeader()+"-投票阶段");

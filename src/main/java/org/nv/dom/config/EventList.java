@@ -7,5 +7,7 @@ public class EventList {
 	public static final String OPERATION_SUBMIT_EVENT = "OperationSubmitEvent";
 	
 	public static final String NIGNT_START_EVENT = "NightStartEvent";
+	
+	public static final String DAY_START_EVENT = "DayStartEvent";
 
 }
