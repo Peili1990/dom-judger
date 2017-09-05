@@ -191,7 +191,7 @@
 	
 	</insert>
 	
-	<select id="initPlayerOperation" parameterType="Integer" resultType="PlayerOperation">
+	<select id="initPlayerOperation" resultType="PlayerOperation">
 	
 		SELECT
 			id AS operationId,
@@ -199,7 +199,7 @@
 		FROM
 			d_operation_config
 		WHERE
-			sign = #{sign} AND 'condition' = 0
+			(sign = #{sign} OR (character_id = #{characterId} AND is_sp = #{isSp})) AND init = 1;
 			
 		
 	</select>

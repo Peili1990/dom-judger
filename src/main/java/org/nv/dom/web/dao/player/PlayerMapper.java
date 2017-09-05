@@ -74,7 +74,7 @@ public interface PlayerMapper {
 	/**
 	 * <p>获取玩家初始操作</p>
 	 */
-	public List<PlayerOperation> initPlayerOperation(int sign);
+	public List<PlayerOperation> initPlayerOperation(@Param("sign")int sign, @Param("characterId")int characterId, @Param("isSp")int isSp);
 	
 	/**
 	 * <p>初始化玩家操作</p>

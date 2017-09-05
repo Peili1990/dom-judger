@@ -220,7 +220,7 @@ public class GameServiceImpl extends BasicServiceImpl implements GameService {
 			int sign = playerInfo.getSign();
 			if(sign >= 1 && sign <= 6) sign = 1;
 			if(sign >= 13 && sign <= 18) sign = 13;
-			List<PlayerOperation> operations = playerMapper.initPlayerOperation(sign);
+			List<PlayerOperation> operations = playerMapper.initPlayerOperation(sign,playerInfo.getCharacterId(),playerInfo.getIsSp());
 			if(operations.size()>0){
 				operations.forEach(operation -> operation.setPlayerId(playerInfo.getPlayerId()));
 				playerMapper.insertPlayerOperation(operations);
