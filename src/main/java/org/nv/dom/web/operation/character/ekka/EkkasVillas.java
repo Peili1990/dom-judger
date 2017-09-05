@@ -43,7 +43,7 @@ public class EkkasVillas extends Operation{
 				.filter(player -> player.getCharacterId() != 5)
 				.filter(player -> player.getIsLife() == 1)
 				.collect(groupingBy(player -> identify(player)));
-		int point = rolldice(gameId, ekka);
+		int point = rolldice(gameId, ekka); 
 		PlayerOperationRecord record = buildPlayerOperationRecord(param);
 		record.setPlayerId(ekka.getPlayerId());
 		record.setOperationStr("小筑的伊卡");
@@ -165,6 +165,9 @@ public class EkkasVillas extends Operation{
 	
 	private String rollCharacter(List<PlayerInfo> groupOne,int numOne,List<PlayerInfo> groupTwo,int numTwo){
 		List<PlayerInfo> list = new ArrayList<>();
+		if(groupOne.size()<numOne){
+			return null;
+		}
 		Collections.shuffle(groupOne);
 		List<PlayerInfo> stepOne = groupOne.subList(0, numOne);
 		if(stepOne.stream().anyMatch(player -> player.getCharacterId() == 41 && player.getIsSp() == 0)){
