@@ -40,8 +40,7 @@ public class LiaisonMan extends Operation {
 				.filter(player -> player.getSign() > 0 && player.getSign() < 7)
 				.collect(toList());
 		PlayerInfo liaisonMan = policemen.get(randomNum(policemen.size()));
-		PlayerOperationRecord record = new PlayerOperationRecord();
-		record.setGameId(gameId);
+		PlayerOperationRecord record = buildPlayerOperationRecord(param);
 		record.setPlayerId(officer.getPlayerId());
 		record.setOperationStr("官员触发《联络员》");
 		PlayerFeedback feedback = new PlayerFeedback();

@@ -106,4 +106,9 @@ public class GameUtilServiceImpl implements GameUtilService{
 		
 	}
 
+	@Override
+	public List<PlayerFeedback> getAllStageFeedback(long gameId) {
+		return playerMapper.getCurGameAllFeedback(gameId);
+	}
+
 }

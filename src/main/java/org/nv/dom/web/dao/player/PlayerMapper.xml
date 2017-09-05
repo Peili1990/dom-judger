@@ -9,6 +9,7 @@
 			dp.id AS playerId,
 			dc.name AS characterName,
 			dc.sex AS sex,
+			dpr.character_id AS characterId,
 			dpr.is_sp AS isSp,
 			dpr.identity_desc AS identityDesc,
 			dpr.sign AS sign,

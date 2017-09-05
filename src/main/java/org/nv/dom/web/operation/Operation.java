@@ -63,13 +63,18 @@ public abstract class Operation {
 	public PlayerOperationRecord buildPlayerOperationRecord(Map<String, Object> param){
 		@SuppressWarnings("unchecked")
 		List<SubmitOperationDTO> operations = (List<SubmitOperationDTO>) param.get("operations");
-		SubmitOperationDTO operation = findTarget(operations, record -> record.getOperationId() == operationId);
 		PlayerOperationRecord record = new PlayerOperationRecord();
-		record.setGameId(operation.getGameId());
-		record.setPlayerId(operation.getPlayerId());
-		record.setParam(operation.getParam() == null ? null:JSON.toJSONString(operation.getParam()));
-		record.setOperationStr(operation.getOperationStr());
-		record.setOperator(operation.getOperator());
+		if(operations == null){
+			record.setGameId((long)param.get("gameId"));
+		} else {
+			SubmitOperationDTO operation = findTarget(operations, r -> r.getOperationId() == operationId);			
+			record.setGameId(operation.getGameId());
+			record.setPlayerId(operation.getPlayerId());
+			record.setParam(operation.getParam() == null ? null:JSON.toJSONString(operation.getParam()));
+			record.setOperationStr(operation.getOperationStr());
+			record.setOperator(operation.getOperator());
+		}
+		
 		return record;
 	}
 	

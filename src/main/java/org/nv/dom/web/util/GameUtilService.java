@@ -18,6 +18,8 @@ public interface GameUtilService {
 	
 	List<PlayerOperationRecord> getCurStageRecords(long gameId);
 	
+	List<PlayerFeedback> getAllStageFeedback(long gameId);
+	
 	long getUserIdByPlayerId(long playerId);
 	
 	List<PlayerInfo> getPlayerInfo(long gameId);

@@ -12,6 +12,8 @@ public class PlayerInfo implements Serializable{
 	private long playerId;
 	/** 角色名称 */
 	private String characterName;
+	/** 角色id */
+	private Integer characterId;
 	/** 是否sp */
 	private Integer isSp;
 	/** 签代码 */
@@ -32,7 +34,7 @@ public class PlayerInfo implements Serializable{
 	private Integer isLife;
 	/** 禁言 */
 	private Integer isMute;
-	/** 行动 */
+	/** 操作 */
 	private String lastOperation;
 	/** 反馈 */
 	private String lastFeedback;
@@ -50,6 +52,12 @@ public class PlayerInfo implements Serializable{
 	}
 	public void setCharacterName(String characterName) {
 		this.characterName = characterName;
+	}
+	public Integer getCharacterId() {
+		return characterId;
+	}
+	public void setCharacterId(Integer characterId) {
+		this.characterId = characterId;
 	}
 	public Integer getIsSp() {
 		return isSp;
