@@ -1,12 +1,3 @@
 eclipse.preferences.version=1
 encoding//src/main/java=UTF-8
-encoding//src/main/webapp/jsp/admin/admin-404.jsp=UTF-8
-encoding//src/main/webapp/jsp/admin/admin-announcement.jsp=UTF-8
-encoding//src/main/webapp/jsp/admin/admin-apply.jsp=UTF-8
-encoding//src/main/webapp/jsp/admin/admin-authority.jsp=UTF-8
-encoding//src/main/webapp/jsp/admin/admin-character.jsp=UTF-8
-encoding//src/main/webapp/jsp/admin/admin-index.jsp=UTF-8
-encoding//src/main/webapp/jsp/admin/admin-replay.jsp=UTF-8
-encoding//src/main/webapp/jsp/admin/admin-settlement.jsp=UTF-8
-encoding//src/main/webapp/jsp/index.jsp=UTF-8
 encoding//src/test/java=UTF-8
