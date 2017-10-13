@@ -7,7 +7,7 @@ public enum IdentityCode {
 	ASSASSIN(8,"刺客",true),
 	DOCTER(9,"医生",true),
 	PRIEST(7,"牧师",true),
-	CIVILIAN(11,"平民",true),
+	CIVILIAN(11,"平民",false),
 	PIONEER(12,"先驱",false),
 	KILLER(99,"杀手",false),
 	MOB(22,"暴徒",true),
@@ -45,6 +45,11 @@ public enum IdentityCode {
 			if (code.equals(_enum.getCode())) {
 				return _enum;
 			}
+		}
+		if(code >= 1 && code <= 6){
+			return POLICE;
+		} else if(code >= 13 && code <= 18){
+			return KILLER;
 		}
 		return null;
 	}

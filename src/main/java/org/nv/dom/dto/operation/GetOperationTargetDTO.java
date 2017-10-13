@@ -5,6 +5,8 @@ public class GetOperationTargetDTO {
 	private long gameId;
 	
 	private int type;
+	
+	private long operationId;
 
 	public long getGameId() {
 		return gameId;
@@ -20,6 +22,14 @@ public class GetOperationTargetDTO {
 
 	public void setType(int type) {
 		this.type = type;
+	}
+
+	public long getOperationId() {
+		return operationId;
+	}
+
+	public void setOperationId(long operationId) {
+		this.operationId = operationId;
 	}
 
 }

@@ -234,7 +234,7 @@
 		FROM
 			d_operation_config doc, d_player_operation dpo
 		WHERE
-			dpo.operation_id = doc.id AND dpo.player_id = #{playerId} AND dpo.times > 0 AND doc.stage % #{stage} = 0 AND doc.condition = 0
+			dpo.operation_id = doc.id AND dpo.player_id = #{playerId} AND dpo.times > 0 AND doc.stage % #{stage} = 0 AND doc.condition = 0 AND is_delete = 0
 	
 	</select>
 	
@@ -388,6 +388,19 @@
 		 </foreach>	
 	
 	</delete>
+	
+	<select id="getOperationOption" parameterType="Long" resultType="OperationOption">
+	
+		SELECT
+			option_name AS optionName,
+			template,
+			sequence
+		FROM
+			d_operation_option
+		WHERE
+			operation_id = #{operationId}
+	
+	</select>
 	
 	
 

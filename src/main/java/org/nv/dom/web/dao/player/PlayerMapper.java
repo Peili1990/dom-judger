@@ -3,6 +3,7 @@ package org.nv.dom.web.dao.player;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
+import org.nv.dom.domain.player.OperationOption;
 import org.nv.dom.domain.player.PlayerFeedback;
 import org.nv.dom.domain.player.PlayerInfo;
 import org.nv.dom.domain.player.PlayerOperation;
@@ -140,5 +141,10 @@ public interface PlayerMapper {
 	 * <p>删除玩家拥有操作</p>
 	 */
 	public void removePlayerOperation(List<PlayerOperation> playerOperation);
+	
+	/**
+	 * <p>获取操作选项</p>
+	 */
+	public List<OperationOption> getOperationOption(long operationId);
 	
 }

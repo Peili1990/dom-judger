@@ -1,5 +1,7 @@
 package org.nv.dom.web.service.impl;
 
+import static java.util.stream.Collectors.toList;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -8,6 +10,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 import org.nv.dom.config.EventList;
 import org.nv.dom.config.NVTermConstant;
@@ -16,6 +19,7 @@ import org.nv.dom.config.RedisConstant;
 import org.nv.dom.domain.game.ApplyingGame;
 import org.nv.dom.domain.game.GameForm;
 import org.nv.dom.domain.newspaper.Newspaper;
+import org.nv.dom.domain.player.OperationOption;
 import org.nv.dom.domain.player.PlayerInfo;
 import org.nv.dom.domain.player.PlayerOperation;
 import org.nv.dom.domain.player.PlayerReplaceSkin;
@@ -45,9 +49,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import com.alibaba.fastjson.JSON;
-
-import static java.util.stream.Collectors.*;
-import static java.util.Comparator.*;
 
 @Service("gameServiceImpl")
 public class GameServiceImpl extends BasicServiceImpl implements GameService {
@@ -275,12 +276,12 @@ public class GameServiceImpl extends BasicServiceImpl implements GameService {
 
 	@Override
 	public Map<String, Object> getOperationTarget(GetOperationTargetDTO getOperationTarget) {
-		Map<String, Object> result = new HashMap<String, Object>();
-		List<PlayerInfo> playerInfos = playerMapper.getPlayerInfosDao(getOperationTarget.getGameId());
-		List<PlayerReplaceSkin> playerReplaceSkin = playerMapper.getAllReplaceSkinDao(getOperationTarget.getGameId());
+		Map<String, Object> result = new HashMap<String, Object>();		
 		Map<Long, String> target = new HashMap<>();
 		switch (getOperationTarget.getType()) {
 		case 1:
+			List<PlayerInfo> playerInfos = playerMapper.getPlayerInfosDao(getOperationTarget.getGameId());
+			List<PlayerReplaceSkin> playerReplaceSkin = playerMapper.getAllReplaceSkinDao(getOperationTarget.getGameId());
 			playerInfos.forEach(playerInfo -> {
 				List<PlayerReplaceSkin> skins = playerReplaceSkin.stream()
 						.filter(skin -> skin.getPlayerId() == playerInfo.getPlayerId())
@@ -290,11 +291,12 @@ public class GameServiceImpl extends BasicServiceImpl implements GameService {
 			});
 			break;
 		case 2:
-			playerInfos.stream()
-				.filter(player -> IdentityCode.getMessageByCode(player.getSign()).isSpecial())
-				.distinct()
-				.sorted(comparing(PlayerInfo::getSign))
-				.forEach(player -> target.put(player.getPlayerId(), IdentityCode.getMessageByCode(player.getSign()).getMessage()));
+			Stream.of(IdentityCode.values()).forEach(identity -> target.put(identity.getCode().longValue(), identity.getMessage()));
+			break;
+		case 3:
+			List<OperationOption> options = playerMapper.getOperationOption(getOperationTarget.getOperationId());
+			result.put("operationOption", options);
+			break;
 		default:
 			break;
 		}
