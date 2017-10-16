@@ -26,7 +26,7 @@ public interface GameUtilService {
 	
 	void sendMessage(List<PlayerFeedback> feedbacks, long judgerId);
 	
-	void addPlayerOperation(List<PlayerOperation> playerOperation);
+	void addPlayerOperation(List<PlayerOperation> playerOperation, boolean update);
 	
 	void removePlayerOperation(List<PlayerOperation> playerOperation);
 	

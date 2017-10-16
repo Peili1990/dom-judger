@@ -33,7 +33,7 @@ public class Vote extends Operation {
 			List<PlayerOperation> operations = playerInfos.stream()
 					.map(player -> buildPlayerOperation(player.getPlayerId(), operationId, 999))
 					.collect(toList());
-			gameUtil.addPlayerOperation(operations);
+			gameUtil.addPlayerOperation(operations, false);
 			return null;
 
 		default:

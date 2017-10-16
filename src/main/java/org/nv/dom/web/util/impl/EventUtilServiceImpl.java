@@ -63,7 +63,9 @@ public class EventUtilServiceImpl implements EventUtilService {
 		temp.getOrDefault(true, new ArrayList<>()).stream().forEach(record -> {
 			if(observers.containsKey((int)record.getOperationId())){
 				observers.get((int)record.getOperationId()).accept(params);
-			}		
+			} else {
+				temp.getOrDefault(false, new ArrayList<>()).add(record);
+			}
 		});
 		return temp.getOrDefault(false, new ArrayList<>());
 	}

@@ -81,6 +81,11 @@ public interface PlayerMapper {
 	 * <p>初始化玩家操作</p>
 	 */
 	public int insertPlayerOperation(List<PlayerOperation> operations);
+	
+	/**
+	 * <p>增加玩家操作</p>
+	 */
+	public int incrPlayerOperation(List<PlayerOperation> operations);
 
 	/**
 	 * <p>获取该阶段玩家操作列表</p>
@@ -101,6 +106,11 @@ public interface PlayerMapper {
 	 * <p>获取该阶段所有的操作</p>
 	 */
 	public List<PlayerOperationRecord> getCurGameAllOperation(@Param("gameId")long gameId,@Param("formId")long formId);
+	
+	/**
+	 * <p>获取操作选项</p>
+	 */
+	public List<OperationOption> getOperationOption(long operationId);
 	
 	/**
 	 * <p>获取该阶段所有的反馈</p>
@@ -141,10 +151,5 @@ public interface PlayerMapper {
 	 * <p>删除玩家拥有操作</p>
 	 */
 	public void removePlayerOperation(List<PlayerOperation> playerOperation);
-	
-	/**
-	 * <p>获取操作选项</p>
-	 */
-	public List<OperationOption> getOperationOption(long operationId);
 	
 }

@@ -222,6 +222,22 @@
 	
 	</insert>
 	
+	<update id="incrPlayerOperation">
+	
+		<foreach item="item" index="index" collection="list" separator=";">
+			UPDATE 
+				d_player_operation
+			SET
+				times = times + #{item.times}
+			WHERE
+				player_id = #{item.playerId} AND operation_id = #{item.operationId}
+			
+		</foreach>
+	
+	</update>
+	
+	
+	
 	<select id="getPlayerOperationList" resultType="PlayerOperation">
 	
 		SELECT

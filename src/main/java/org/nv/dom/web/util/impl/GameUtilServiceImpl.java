@@ -89,8 +89,13 @@ public class GameUtilServiceImpl implements GameUtilService{
 	}
 
 	@Override
-	public void addPlayerOperation(List<PlayerOperation> playerOperation) {
-		playerMapper.insertPlayerOperation(playerOperation);
+	public void addPlayerOperation(List<PlayerOperation> playerOperation, boolean update) {
+		if(update){
+			playerMapper.incrPlayerOperation(playerOperation);
+		} else {
+			playerMapper.insertPlayerOperation(playerOperation);
+		}
+		
 		
 	}
 

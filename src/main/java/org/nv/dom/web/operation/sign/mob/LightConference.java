@@ -18,12 +18,12 @@ import org.nv.dom.web.operation.Operation;
 import org.springframework.stereotype.Component;
 
 @Component
-public class BlueEnvelop extends Operation {
-
-	public BlueEnvelop() {
+public class LightConference extends Operation {
+	
+	public LightConference() {
 		operationId = 35;
 	}
-	
+
 	@Override
 	public boolean check(Map<String, Object> param) {
 		return true;
@@ -36,12 +36,11 @@ public class BlueEnvelop extends Operation {
 		case EventList.OPERATION_SUBMIT_EVENT:
 			PlayerOperationRecord operation = buildPlayerOperationRecord(param);
 			List<PlayerOperation> consumer = new ArrayList<>();
-			consumer.add(new PlayerOperation(operation.getPlayerId(),35));
-			consumer.add(new PlayerOperation(operation.getPlayerId(),36));
+			consumer.add(new PlayerOperation(operation.getPlayerId(),33));
 			gameUtil.consumeOperationTimes(consumer);
 			List<PlayerOperationRecord> records = gameUtil.getCurStageRecords(operation.getGameId());
 			PlayerOperationRecord envelop = records.stream()
-					.filter(record -> record.getOperationId() == 35 || record.getOperationId() == 36)
+					.filter(record -> record.getOperationId() == 33)
 					.findAny().orElse(null);
 			if(envelop == null){
 				return operation;			
@@ -49,7 +48,7 @@ public class BlueEnvelop extends Operation {
 				PlayerFeedback feedback = new PlayerFeedback();
 				feedback.setPlayerId(operation.getPlayerId());
 				feedback.setCharacterName(operation.getOperator());
-				feedback.setFeedback("蓝信提交失败");
+				feedback.setFeedback("曙光议会提交失败");
 				operation.setFeedback(Arrays.asList(feedback));
 				return operation;
 			}
@@ -63,11 +62,10 @@ public class BlueEnvelop extends Operation {
 			if(mob != null){
 				List<PlayerOperation> operations = playerInfos.stream()
 						.filter(player -> player.getCamp() == NVTermConstant.GOOD_CAMP)
-						.filter(player -> player.getSign() != 11)
 						.filter(player -> player.getIsLife() == 1)
 						.map(player -> buildPlayerOperation(player.getPlayerId(), operationId, 1))
 						.collect(toList());
-				gameUtil.addPlayerOperation(operations);
+				gameUtil.addPlayerOperation(operations,false);
 			}
 			return null;
 		case EventList.DAY_START_EVENT:

@@ -1,5 +1,7 @@
 package org.nv.dom.domain.player;
 
+import java.util.List;
+
 public class PlayerOperation {
 	
 	private long playerId;
@@ -15,6 +17,8 @@ public class PlayerOperation {
 	private int multiple;
 	
 	private int times;
+	
+	private List<OperationOption> options;
 
 	public long getPlayerId() {
 		return playerId;
@@ -81,7 +85,13 @@ public class PlayerOperation {
 	public PlayerOperation() {
 		
 	}
-	
-	
+
+	public List<OperationOption> getOptions() {
+		return options;
+	}
+
+	public void setOptions(List<OperationOption> options) {
+		this.options = options;
+	}	
 
 }

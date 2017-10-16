@@ -18,8 +18,8 @@ public class Assassinate extends Operation {
 	}
 
 	@Override
+
 	public boolean check(Map<String, Object> param) {
-		@SuppressWarnings("unchecked")
 		List<SubmitOperationDTO> operations = (List<SubmitOperationDTO>) param.get("operations");
 		SubmitOperationDTO operation = findTarget(operations, record -> record.getOperationId() == operationId);
 		Object[] targets = operation.getParam();

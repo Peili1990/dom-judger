@@ -90,9 +90,9 @@ public abstract class Operation {
 		return operations.stream().filter(clue).findAny().orElse(null);
 	}
 	
-	public long getTarget(Object target){
+	public String getTarget(Object target){
 		String[] str = target.toString().split(",");
-		return Long.parseLong(str[0]);
+		return str[0];
 	}
 	
 	@PostConstruct

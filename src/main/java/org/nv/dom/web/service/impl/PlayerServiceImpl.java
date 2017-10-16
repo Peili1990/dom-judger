@@ -35,6 +35,7 @@ import com.alibaba.fastjson.JSON;
 
 import static java.util.stream.Collectors.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 @Service("playerServiceImpl")
@@ -145,6 +146,7 @@ public class PlayerServiceImpl implements PlayerService {
 		int stage = gameUtil.getCurStage(getPlayerOperationDTO.getGameId());
 		GameForm form = gameUtil.getCurForm(getPlayerOperationDTO.getGameId());
 		List<PlayerOperation> operationList = playerMapper.getPlayerOperationList(getPlayerOperationDTO.getPlayerId(), stage);
+		operationList.forEach(operation -> operation.setOptions(playerMapper.getOperationOption(operation.getOperationId())));
 		List<PlayerOperationRecord> operationRecord = playerMapper.getPlayerOperationRecord(getPlayerOperationDTO.getPlayerId(), form.getFormId());
 		result.put("curStage", form.getHeader());
 		result.put("operationList", operationList);
@@ -174,8 +176,13 @@ public class PlayerServiceImpl implements PlayerService {
 			record.setOperationStr(submit.getOperationStr());
 			record.setOperator(submit.getOperator());
 			record.setPlayerId(submit.getPlayerId());
-			record.setIsDone(0);
+			record.setIsDone(submit.isImmediately() ? 1 : 0);
 			playerMapper.insertPlayerOperationRecord(record);
+			if(submit.isImmediately()){
+				List<PlayerOperation> consumer = new ArrayList<>();
+				consumer.add(new PlayerOperation(submit.getPlayerId(),submit.getOperationId()));
+				gameUtil.consumeOperationTimes(consumer);
+			}
 		});
 		HttpClientUtil.doPostJson("http://"+ConfigUtil.getVersionConfigProperty("chat.server")+"/submitOpreation", 
 				String.valueOf(submitPlayerOperationDTO.getGameId()));
