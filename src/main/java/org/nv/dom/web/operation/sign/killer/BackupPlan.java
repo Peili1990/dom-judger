@@ -26,29 +26,24 @@ public class BackupPlan extends Operation {
 	}
 
 	@Override
-	public boolean check(Map<String, Object> param) {
+	public void check(Map<String, Object> param) {
 		List<SubmitOperationDTO> operations = (List<SubmitOperationDTO>) param.get("operations");
 		SubmitOperationDTO operation = findTarget(operations, record -> record.getOperationId() == operationId);
 		Object[] targets = operation.getParam();
 		if("4".equals(getTarget(targets[0]))){
 			Assert.isTrue(TextUtil.wordCount(getTarget(targets[2])) == 1, "灰线传递字数不得大于1！");
 		}	
-		return true;
 	}
 
 	@Override
 	public PlayerOperationRecord settle(Map<String, Object> param) {
-		List<SubmitOperationDTO> operations = (List<SubmitOperationDTO>) param.get("operations");
-		SubmitOperationDTO operation = findTarget(operations, record -> record.getOperationId() == operationId);
-		Object[] targets = operation.getParam();
-		List<PlayerInfo> playerInfos = gameUtil.getPlayerInfo(operation.getGameId());
+		PlayerOperationRecord record = buildPlayerOperationRecord(param);
+		Object[] targets = record.getOriginParam();
+		List<PlayerInfo> playerInfos = gameUtil.getPlayerInfo(record.getGameId());
 		List<PlayerInfo> killers = playerInfos.stream()
 				.filter(player -> player.getSign() >= 13 && player.getSign() <= 18)
 				.filter(player -> player.getIsLife() == 1)
 				.collect(toList());
-		PlayerOperationRecord record = buildPlayerOperationRecord(param);
-		record.setPlayerId(operation.getPlayerId());
-		record.setOperationStr(operation.getOperationStr());
 		switch(getTarget(targets[0])){
 		case "1":
 			break;

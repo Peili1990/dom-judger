@@ -20,8 +20,8 @@ public class Vote extends Operation {
 	}
 
 	@Override
-	public boolean check(Map<String, Object> param) {
-		return true;
+	public void check(Map<String, Object> param) {
+		
 	}
 
 	@Override
@@ -35,7 +35,6 @@ public class Vote extends Operation {
 					.collect(toList());
 			gameUtil.addPlayerOperation(operations, false);
 			return null;
-
 		default:
 			break;
 		}

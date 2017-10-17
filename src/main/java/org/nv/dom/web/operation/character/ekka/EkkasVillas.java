@@ -1,11 +1,9 @@
 package org.nv.dom.web.operation.character.ekka;
 
 import static java.util.stream.Collectors.groupingBy;
-import static java.util.stream.Collectors.joining;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -26,8 +24,8 @@ public class EkkasVillas extends Operation{
 	}
 
 	@Override
-	public boolean check(Map<String, Object> param) {
-		return true;
+	public void check(Map<String, Object> param) {
+
 	}
 
 	@Override
@@ -46,7 +44,7 @@ public class EkkasVillas extends Operation{
 		int point = rolldice(gameId, ekka); 
 		PlayerOperationRecord record = buildPlayerOperationRecord(param);
 		record.setPlayerId(ekka.getPlayerId());
-		record.setOperationStr("小筑的伊卡");
+		record.setOperationStr("伊卡触发小筑的伊卡");
 		PlayerFeedback feedback = new PlayerFeedback();
 		feedback.setPlayerId(ekka.getPlayerId());
 		feedback.setCharacterName(ekka.getCharacterName());
@@ -161,25 +159,6 @@ public class EkkasVillas extends Operation{
 			notice = "剩余杀手方杀手人数"+group.getOrDefault("BK", new ArrayList<>()).size()+"人";
 		}
 		return notice;
-	}
-	
-	private String rollCharacter(List<PlayerInfo> groupOne,int numOne,List<PlayerInfo> groupTwo,int numTwo){
-		List<PlayerInfo> list = new ArrayList<>();
-		if(groupOne.size()<numOne){
-			return null;
-		}
-		Collections.shuffle(groupOne);
-		List<PlayerInfo> stepOne = groupOne.subList(0, numOne);
-		if(stepOne.stream().anyMatch(player -> player.getCharacterId() == 41 && player.getIsSp() == 0)){
-			return null;
-		}
-		list.addAll(stepOne);
-		Collections.shuffle(groupTwo);
-		List<PlayerInfo> stepTwo = groupTwo.subList(0, numTwo);
-		stepTwo.removeIf(player -> player.getCharacterId() == 41 && player.getIsSp() == 0);
-		list.addAll(stepTwo);
-		Collections.shuffle(list);
-		return list.stream().map(PlayerInfo::getCharacterName).collect(joining("，"));
 	}
 
 }

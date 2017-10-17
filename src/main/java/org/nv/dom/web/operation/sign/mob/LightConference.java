@@ -2,7 +2,6 @@ package org.nv.dom.web.operation.sign.mob;
 
 import static java.util.stream.Collectors.toList;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -25,8 +24,8 @@ public class LightConference extends Operation {
 	}
 
 	@Override
-	public boolean check(Map<String, Object> param) {
-		return true;
+	public void check(Map<String, Object> param) {
+
 	}
 
 	@Override
@@ -35,12 +34,10 @@ public class LightConference extends Operation {
 		switch (event) {
 		case EventList.OPERATION_SUBMIT_EVENT:
 			PlayerOperationRecord operation = buildPlayerOperationRecord(param);
-			List<PlayerOperation> consumer = new ArrayList<>();
-			consumer.add(new PlayerOperation(operation.getPlayerId(),33));
-			gameUtil.consumeOperationTimes(consumer);
+			gameUtil.consumeOperationTimes(Arrays.asList(new PlayerOperation(operation.getPlayerId(), operationId)));
 			List<PlayerOperationRecord> records = gameUtil.getCurStageRecords(operation.getGameId());
 			PlayerOperationRecord envelop = records.stream()
-					.filter(record -> record.getOperationId() == 33)
+					.filter(record -> record.getOperationId() == operationId)
 					.findAny().orElse(null);
 			if(envelop == null){
 				return operation;			

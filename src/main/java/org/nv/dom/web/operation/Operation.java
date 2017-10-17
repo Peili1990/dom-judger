@@ -1,5 +1,9 @@
 package org.nv.dom.web.operation;
 
+import static java.util.stream.Collectors.joining;
+
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import java.util.Map;
@@ -9,6 +13,7 @@ import java.util.function.Predicate;
 import javax.annotation.PostConstruct;
 
 import org.nv.dom.config.NVTermConstant;
+import org.nv.dom.domain.player.PlayerInfo;
 import org.nv.dom.domain.player.PlayerOperation;
 import org.nv.dom.domain.player.PlayerOperationRecord;
 import org.nv.dom.dto.operation.SubmitOperationDTO;
@@ -42,7 +47,7 @@ public abstract class Operation {
 		return random.nextInt(length);
 	}
 	
-	public abstract boolean check(Map<String, Object> param);
+	public abstract void check(Map<String, Object> param);
 	
 	public abstract PlayerOperationRecord settle(Map<String, Object> param);
 	
@@ -97,5 +102,24 @@ public abstract class Operation {
 	
 	@PostConstruct
 	public abstract void registerEvent();
+	
+	protected String rollCharacter(List<PlayerInfo> groupOne,int numOne,List<PlayerInfo> groupTwo,int numTwo){
+		List<PlayerInfo> list = new ArrayList<>();
+		if(groupOne.size()<numOne){
+			return null;
+		}
+		Collections.shuffle(groupOne);
+		List<PlayerInfo> stepOne = groupOne.subList(0, numOne);
+		if(stepOne.stream().anyMatch(player -> player.getCharacterId() == 41 && player.getIsSp() == 0)){
+			return null;
+		}
+		list.addAll(stepOne);
+		Collections.shuffle(groupTwo);
+		List<PlayerInfo> stepTwo = groupTwo.subList(0, numTwo);
+		stepTwo.removeIf(player -> player.getCharacterId() == 41 && player.getIsSp() == 0);
+		list.addAll(stepTwo);
+		Collections.shuffle(list);
+		return list.stream().map(PlayerInfo::getCharacterName).collect(joining("，"));
+	}
 
 }

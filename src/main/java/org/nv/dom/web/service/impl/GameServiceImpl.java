@@ -297,6 +297,10 @@ public class GameServiceImpl extends BasicServiceImpl implements GameService {
 			List<OperationOption> options = playerMapper.getOperationOption(getOperationTarget.getOperationId());
 			result.put("operationOption", options);
 			break;
+		case 4:
+			characterMapper.getCharacterData().stream()
+			.forEach(character -> target.put(character.getCharacterId().longValue(), character.getCharacterName()));
+			break;
 		default:
 			break;
 		}

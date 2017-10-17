@@ -19,13 +19,12 @@ public class Assassinate extends Operation {
 
 	@Override
 
-	public boolean check(Map<String, Object> param) {
+	public void check(Map<String, Object> param) {
 		List<SubmitOperationDTO> operations = (List<SubmitOperationDTO>) param.get("operations");
 		SubmitOperationDTO operation = findTarget(operations, record -> record.getOperationId() == operationId);
 		Object[] targets = operation.getParam();
 		Assert.isTrue(targets != null && targets.length == 2, "还有空格没填完！");
 		Assert.isTrue(getTarget(targets[0]) != getTarget(targets[1]), "凶器不得放置于【刺杀】对象！");		
-		return true;
 	}
 
 	@Override

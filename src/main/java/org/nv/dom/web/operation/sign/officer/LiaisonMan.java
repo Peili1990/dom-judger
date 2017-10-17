@@ -52,8 +52,8 @@ public class LiaisonMan extends Operation {
 	}
 
 	@Override
-	public boolean check(Map<String, Object> param) {
-		return true;
+	public void check(Map<String, Object> param) {
+
 	}
 
 }
