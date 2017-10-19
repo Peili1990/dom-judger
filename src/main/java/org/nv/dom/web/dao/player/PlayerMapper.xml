@@ -344,7 +344,9 @@
 		SELECT
 			name
 		FROM
-			d_operation_config
+			d_operation_config 
+		WHERE
+			is_delete = 0
 	
 	</select>
 	
