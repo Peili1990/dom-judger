@@ -116,4 +116,9 @@ public class GameUtilServiceImpl implements GameUtilService{
 		return playerMapper.getCurGameAllFeedback(gameId);
 	}
 
+	@Override
+	public void updatePlayerInfo(List<PlayerInfo> playerInfos) {
+		gameMapper.submitApplyListDao(playerInfos);
+	}
+
 }

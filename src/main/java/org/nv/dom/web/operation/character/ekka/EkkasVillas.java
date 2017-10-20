@@ -30,8 +30,8 @@ public class EkkasVillas extends Operation{
 
 	@Override
 	public PlayerOperationRecord settle(Map<String, Object> param) {
-		long gameId = (long) param.get("gameId");
-		List<PlayerInfo> playerInfo = gameUtil.getPlayerInfo(gameId);
+		long gameId = get(param, "gameId");
+		List<PlayerInfo> playerInfo = get(param, "playerInfos");
 		PlayerInfo ekka = findTarget(playerInfo, player -> player.getCharacterId() == 5);
 		if(ekka == null || ekka.getIsLife() == 0 || 
 				ekka.getIsSp() == 1 || ekka.getSign() == IdentityCode.PIONEER.getCode()){

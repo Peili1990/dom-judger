@@ -5,9 +5,12 @@ import java.util.List;
 import java.util.Map;
 
 import org.nv.dom.config.EventList;
+import org.nv.dom.domain.player.PlayerInfo;
 import org.nv.dom.dto.operation.SubmitOperationDTO;
 import org.nv.dom.web.operation.Operation;
 import org.nv.dom.web.util.EventUtilService;
+import org.nv.dom.web.util.GameUtilService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import static java.util.stream.Collectors.*;
@@ -18,6 +21,9 @@ import java.util.ArrayList;
 public class EventUtilServiceImpl implements EventUtilService {
 	
 	private Map<String, Map<Integer, Operation>> eventManager = new HashMap<>();
+	
+	@Autowired
+	GameUtilService gameUtil;
 
 	@Override
 	public void registerEvent(String event, Operation operation) {
@@ -36,7 +42,9 @@ public class EventUtilServiceImpl implements EventUtilService {
 	}
 
 	@Override
-	public void publish(String event, Map<String, Object> param) {
+	public void publish(String event, Map<String, Object> param) {	
+		List<PlayerInfo> playerInfos = gameUtil.getPlayerInfo((long)param.get("gameId"));
+		param.put("playerInfos", playerInfos);
 		param.put("event", event);
 		Map<Integer, Operation> observers = eventManager.getOrDefault(event, new HashMap<Integer, Operation>());
 		observers.keySet().stream().forEach(id -> observers.get(id).check(param));	
@@ -74,6 +82,12 @@ public class EventUtilServiceImpl implements EventUtilService {
 		Map<String, Object> param = new HashMap<>();
 		param.put("event", EventList.OPERATION_SUBMIT_EVENT);
 		param.put("operations", records);
+		if(!records.isEmpty()){
+			long gameId = records.get(0).getGameId();
+			List<PlayerInfo> playerInfos = gameUtil.getPlayerInfo(gameId);
+			param.put("gameId", gameId);
+			param.put("playerInfos", playerInfos);
+		}
 		return param;
 	}
 

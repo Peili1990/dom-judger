@@ -333,9 +333,9 @@
 			doc.name AS operationName,
 			dpo.times
 		FROM
-			d_player_operation dpo, d_operation_config doc
+			d_player_operation dpo, d_operation_config doc, d_player_record dpr
 		WHERE
-			dpo.operation_id = doc.id AND dpo.player_id = #{playerId}
+			dpo.operation_id = doc.id AND dpo.player_id = #{playerId} AND dpr.player_id = #{playerId} AND dpr.is_life = 1
 	
 	</select>
 	

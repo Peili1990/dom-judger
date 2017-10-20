@@ -27,11 +27,11 @@ public class BackupPlan extends Operation {
 
 	@Override
 	public void check(Map<String, Object> param) {
-		List<SubmitOperationDTO> operations = (List<SubmitOperationDTO>) param.get("operations");
+		List<SubmitOperationDTO> operations = get(param, "operations");
 		SubmitOperationDTO operation = findTarget(operations, record -> record.getOperationId() == operationId);
 		Object[] targets = operation.getParam();
-		if("4".equals(getTarget(targets[0]))){
-			Assert.isTrue(TextUtil.wordCount(getTarget(targets[2])) == 1, "灰线传递字数不得大于1！");
+		if(4 == getSequence(targets[0])){
+			Assert.isTrue(TextUtil.wordCount(getDescription(targets[2])) == 1, "灰线传递字数不得大于1！");
 		}	
 	}
 
@@ -39,26 +39,26 @@ public class BackupPlan extends Operation {
 	public PlayerOperationRecord settle(Map<String, Object> param) {
 		PlayerOperationRecord record = buildPlayerOperationRecord(param);
 		Object[] targets = record.getOriginParam();
-		List<PlayerInfo> playerInfos = gameUtil.getPlayerInfo(record.getGameId());
+		List<PlayerInfo> playerInfos = get(param, "playerInfos");
 		List<PlayerInfo> killers = playerInfos.stream()
 				.filter(player -> player.getSign() >= 13 && player.getSign() <= 18)
 				.filter(player -> player.getIsLife() == 1)
 				.collect(toList());
-		switch(getTarget(targets[0])){
-		case "1":
+		switch(getSequence(targets[0])){
+		case 1:
 			break;
-		case "2":
+		case 2:
 			gameUtil.addPlayerOperation(killers.stream()
 					.map(player -> buildPlayerOperation(player.getPlayerId(), 23, 1))
 					.collect(toList()), true);
 			break;
-		case "3":
+		case 3:
 			gameUtil.addPlayerOperation(killers.stream()
 					.map(player -> buildPlayerOperation(player.getPlayerId(), 24, 1))
 					.collect(toList()), true);
 			break;
-		case "4":
-			Integer sign = Integer.valueOf(getTarget(targets[1]));
+		case 4:
+			int sign = getSequence(targets[1]);
 			List<PlayerInfo> receivers = playerInfos.stream()					
 					.filter(player -> IdentityCode.getMessageByCode(player.getSign()).getCode() == sign)
 					.filter(player -> player.getCamp() == NVTermConstant.KILLER_CAMP)
@@ -67,7 +67,7 @@ public class BackupPlan extends Operation {
 				PlayerFeedback feedback = new PlayerFeedback();
 				feedback.setPlayerId(player.getPlayerId());
 				feedback.setCharacterName(player.getCharacterName());
-				feedback.setFeedback("杀手团队通过灰线向你传递："+getTarget(targets[2]));
+				feedback.setFeedback("杀手团队通过灰线向你传递："+getDescription(targets[2]));
 				return feedback;
 			}).collect(toList()));	
 			break;

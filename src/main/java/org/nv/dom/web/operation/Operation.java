@@ -5,7 +5,6 @@ import static java.util.stream.Collectors.joining;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
 import java.util.Map;
 import java.util.Random;
 import java.util.function.Predicate;
@@ -23,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.alibaba.fastjson.JSON;
 
+@SuppressWarnings("unchecked")
 public abstract class Operation {
 	
 	protected int operationId;
@@ -66,7 +66,6 @@ public abstract class Operation {
 	}
 	
 	public PlayerOperationRecord buildPlayerOperationRecord(Map<String, Object> param){
-		@SuppressWarnings("unchecked")
 		List<SubmitOperationDTO> operations = (List<SubmitOperationDTO>) param.get("operations");
 		PlayerOperationRecord record = new PlayerOperationRecord();
 		if(operations == null){
@@ -95,9 +94,18 @@ public abstract class Operation {
 		return operations.stream().filter(clue).findAny().orElse(null);
 	}
 	
-	public String getTarget(Object target){
+	public int getSequence(Object target){
 		String[] str = target.toString().split(",");
-		return str[0];
+		return Integer.valueOf(str[0]);
+	}
+	
+	public String getDescription(Object target){
+		String[] str = target.toString().split(",");
+		return str.length == 1 ? str[0] : str[1];
+	}
+	
+	public <T> T get(Map<String, Object> param, String name){
+		return (T) param.get(name);
 	}
 	
 	@PostConstruct

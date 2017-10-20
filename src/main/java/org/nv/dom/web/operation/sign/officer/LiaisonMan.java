@@ -30,8 +30,7 @@ public class LiaisonMan extends Operation {
 	
 	@Override
 	public PlayerOperationRecord settle(Map<String, Object> param) {
-		long gameId = (long) param.get("gameId");
-		List<PlayerInfo> playerInfo = gameUtil.getPlayerInfo(gameId);
+		List<PlayerInfo> playerInfo = get(param, "playerInfos");
 		PlayerInfo officer = playerInfo.stream()
 				.filter(player -> player.getSign() == IdentityCode.OFFICER.getCode())
 				.findFirst()

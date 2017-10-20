@@ -22,13 +22,13 @@ public class ChooseFriend extends Operation {
 
 	@Override
 	public void check(Map<String, Object> param) {
-		String event = (String) param.get("event");
+		String event = get(param, "event");
 		switch (event) {
 		case EventList.OPERATION_SUBMIT_EVENT:
-			List<SubmitOperationDTO> operations = (List<SubmitOperationDTO>) param.get("operations");
+			List<SubmitOperationDTO> operations = get(param, "operations");
 			SubmitOperationDTO operation = findTarget(operations, record -> record.getOperationId() == operationId);
 			Object[] targets = operation.getParam();
-			List<PlayerInfo> playerInfo = gameUtil.getPlayerInfo(operation.getGameId());
+			List<PlayerInfo> playerInfo = get(param, "playerInfos");
 			for(Object target : targets){
 				String[] str = target.toString().split(",");
 				Assert.isTrue(playerInfo.stream()
@@ -41,10 +41,10 @@ public class ChooseFriend extends Operation {
 
 	@Override
 	public PlayerOperationRecord settle(Map<String, Object> param) {
-		String event = (String) param.get("event");
+		String event = get(param, "event");
 		switch (event) {
 		case EventList.GAME_START_EVENT:
-			List<PlayerInfo> playerInfos = gameUtil.getPlayerInfo((long) param.get("gameId"));
+			List<PlayerInfo> playerInfos = get(param, "playerInfos");
 			PlayerInfo winchester = findTarget(playerInfos, player -> player.getCharacterId() == 54);
 			if(winchester == null){
 				return null;

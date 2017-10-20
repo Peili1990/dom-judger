@@ -27,8 +27,7 @@ public class SweetSmell extends Operation {
 
 	@Override
 	public PlayerOperationRecord settle(Map<String, Object> param) {
-		long gameId = (long) param.get("gameId");
-		List<PlayerInfo> playerInfo = gameUtil.getPlayerInfo(gameId);
+		List<PlayerInfo> playerInfo = get(param, "playerInfos");
 		PlayerInfo ernest = findTarget(playerInfo, player -> player.getCharacterId() == 51);
 		if(ernest == null || ernest.getIsLife() == 0 || 
 				ernest.getIsSp() == 1){

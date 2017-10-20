@@ -31,5 +31,7 @@ public interface GameUtilService {
 	void removePlayerOperation(List<PlayerOperation> playerOperation);
 	
 	void consumeOperationTimes(List<PlayerOperation> playerOperation);
+	
+	void updatePlayerInfo(List<PlayerInfo> playerInfos);
 
 }

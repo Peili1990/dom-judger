@@ -30,8 +30,7 @@ public class Instinct extends Operation{
 
 	@Override
 	public PlayerOperationRecord settle(Map<String, Object> param) {
-		long gameId = (long) param.get("gameId");
-		List<PlayerInfo> playerInfo = gameUtil.getPlayerInfo(gameId);
+		List<PlayerInfo> playerInfo = get(param, "playerInfos");
 		PlayerInfo young = findTarget(playerInfo, player -> player.getCharacterId() == 36);
 		if(young == null || young.getIsLife() == 0 || 
 				young.getIsSp() == 1 || young.getSign() == IdentityCode.PIONEER.getCode()){

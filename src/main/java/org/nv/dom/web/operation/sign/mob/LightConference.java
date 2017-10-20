@@ -30,7 +30,7 @@ public class LightConference extends Operation {
 
 	@Override
 	public PlayerOperationRecord settle(Map<String, Object> param) {
-		String event = (String) param.get("event");
+		String event = get(param, "event");
 		switch (event) {
 		case EventList.OPERATION_SUBMIT_EVENT:
 			PlayerOperationRecord operation = buildPlayerOperationRecord(param);
@@ -50,7 +50,7 @@ public class LightConference extends Operation {
 				return operation;
 			}
 		case EventList.NIGNT_START_EVENT:
-			List<PlayerInfo> playerInfos = gameUtil.getPlayerInfo((long) param.get("gameId"));
+			List<PlayerInfo> playerInfos = get(param, "playerInfos");
 			PlayerInfo mob = playerInfos.stream()
 					.filter(player -> player.getSign() == IdentityCode.MOB.getCode())
 					.filter(player -> player.getCamp() == NVTermConstant.GOOD_CAMP)
@@ -66,7 +66,7 @@ public class LightConference extends Operation {
 			}
 			return null;
 		case EventList.DAY_START_EVENT:
-			playerInfos = gameUtil.getPlayerInfo((long) param.get("gameId"));
+			playerInfos = get(param, "playerInfos");
 			List<PlayerOperation> operations = playerInfos.stream()
 					.map(player -> buildPlayerOperation(player.getPlayerId(), operationId, 0))
 					.collect(toList());
