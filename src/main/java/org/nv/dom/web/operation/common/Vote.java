@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.nv.dom.config.EventList;
+import org.nv.dom.config.OperationParam;
 import org.nv.dom.domain.player.PlayerInfo;
 import org.nv.dom.domain.player.PlayerOperation;
 import org.nv.dom.domain.player.PlayerOperationRecord;
@@ -26,10 +27,10 @@ public class Vote extends Operation {
 
 	@Override
 	public PlayerOperationRecord settle(Map<String, Object> param) {
-		String event = get(param, "event");
+		String event = get(param, OperationParam.EVENT);
 		switch (event) {
 		case EventList.GAME_START_EVENT:
-			List<PlayerInfo> playerInfos = get(param, "playInfos");
+			List<PlayerInfo> playerInfos = get(param, OperationParam.PLAYER_INFO);
 			List<PlayerOperation> operations = playerInfos.stream()
 					.map(player -> buildPlayerOperation(player.getPlayerId(), operationId, 999))
 					.collect(toList());

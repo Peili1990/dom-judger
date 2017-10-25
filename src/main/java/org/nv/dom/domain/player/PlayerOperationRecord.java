@@ -2,8 +2,6 @@ package org.nv.dom.domain.player;
 
 import java.util.List;
 
-import com.alibaba.fastjson.JSON;
-
 public class PlayerOperationRecord {
 	
 	private long id;
@@ -144,10 +142,6 @@ public class PlayerOperationRecord {
 
 	public void setFeedback(List<PlayerFeedback> feedback) {
 		this.feedback = feedback;
-	}
-	
-	public Object[] getOriginParam(){
-		return JSON.parseArray(param, Object.class).toArray();
 	}
 
 }

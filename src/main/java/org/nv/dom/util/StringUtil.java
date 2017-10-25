@@ -6,6 +6,8 @@
  */
 package org.nv.dom.util;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -77,6 +79,27 @@ public class StringUtil {
 		}
 		Pattern pattern = Pattern.compile("[0-9]*");
 		return pattern.matcher(number).matches();
+	}
+	
+	public static List<Integer> oneToFive(String number){
+		List<Integer> box = new ArrayList<>();
+		int i = 0;
+		while(i<number.length()){
+			if(number.charAt(i)>'0' && number.charAt(i)<'6'){
+				int num = number.charAt(i) - '1';
+				if(box.contains(num)){
+					return null;
+				} else {
+					box.add(num);
+					i++;
+				}
+			} else if(number.charAt(i) == ' '){
+				i++;
+			} else {
+				return null;
+			}
+		}
+		return box;
 	}
 	
 }

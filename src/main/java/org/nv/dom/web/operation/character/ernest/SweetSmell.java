@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.nv.dom.config.EventList;
+import org.nv.dom.config.OperationParam;
 import org.nv.dom.domain.player.PlayerFeedback;
 import org.nv.dom.domain.player.PlayerInfo;
 import org.nv.dom.domain.player.PlayerOperationRecord;
@@ -27,7 +28,7 @@ public class SweetSmell extends Operation {
 
 	@Override
 	public PlayerOperationRecord settle(Map<String, Object> param) {
-		List<PlayerInfo> playerInfo = get(param, "playerInfos");
+		List<PlayerInfo> playerInfo = get(param, OperationParam.PLAYER_INFO);
 		PlayerInfo ernest = findTarget(playerInfo, player -> player.getCharacterId() == 51);
 		if(ernest == null || ernest.getIsLife() == 0 || 
 				ernest.getIsSp() == 1){
@@ -53,9 +54,7 @@ public class SweetSmell extends Operation {
 		PlayerOperationRecord record = buildPlayerOperationRecord(param);
 		record.setPlayerId(ernest.getPlayerId());
 		record.setOperationStr("欧内斯特触发甜美气息");
-		PlayerFeedback feedback = new PlayerFeedback();
-		feedback.setPlayerId(ernest.getPlayerId());
-		feedback.setCharacterName(ernest.getCharacterName());
+		PlayerFeedback feedback = buildPlayerFeedback(ernest, 0);
 		feedback.setFeedback("甜美气息计算结果："+notice);
 		record.setFeedback(Arrays.asList(feedback));
 		return record;		

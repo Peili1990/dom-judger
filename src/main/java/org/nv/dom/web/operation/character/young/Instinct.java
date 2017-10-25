@@ -9,6 +9,7 @@ import java.util.Map;
 
 import org.nv.dom.config.EventList;
 import org.nv.dom.config.NVTermConstant;
+import org.nv.dom.config.OperationParam;
 import org.nv.dom.domain.player.PlayerFeedback;
 import org.nv.dom.domain.player.PlayerInfo;
 import org.nv.dom.domain.player.PlayerOperationRecord;
@@ -30,7 +31,7 @@ public class Instinct extends Operation{
 
 	@Override
 	public PlayerOperationRecord settle(Map<String, Object> param) {
-		List<PlayerInfo> playerInfo = get(param, "playerInfos");
+		List<PlayerInfo> playerInfo = get(param, OperationParam.PLAYER_INFO);
 		PlayerInfo young = findTarget(playerInfo, player -> player.getCharacterId() == 36);
 		if(young == null || young.getIsLife() == 0 || 
 				young.getIsSp() == 1 || young.getSign() == IdentityCode.PIONEER.getCode()){
@@ -43,9 +44,7 @@ public class Instinct extends Operation{
 		PlayerOperationRecord record = buildPlayerOperationRecord(param);
 		record.setPlayerId(young.getPlayerId());
 		record.setOperationStr("扬触发直觉");
-		PlayerFeedback feedback = new PlayerFeedback();
-		feedback.setPlayerId(young.getPlayerId());
-		feedback.setCharacterName(young.getCharacterName());
+		PlayerFeedback feedback = buildPlayerFeedback(young, 0);	
 		feedback.setFeedback("直觉名单："+buildNotice(young,temp));
 		record.setFeedback(Arrays.asList(feedback));
 		return record;

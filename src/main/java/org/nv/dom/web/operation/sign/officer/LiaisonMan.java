@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.nv.dom.config.EventList;
+import org.nv.dom.config.OperationParam;
 import org.nv.dom.domain.player.PlayerFeedback;
 import org.nv.dom.domain.player.PlayerInfo;
 import org.nv.dom.domain.player.PlayerOperationRecord;
@@ -30,7 +31,7 @@ public class LiaisonMan extends Operation {
 	
 	@Override
 	public PlayerOperationRecord settle(Map<String, Object> param) {
-		List<PlayerInfo> playerInfo = get(param, "playerInfos");
+		List<PlayerInfo> playerInfo = get(param, OperationParam.PLAYER_INFO);
 		PlayerInfo officer = playerInfo.stream()
 				.filter(player -> player.getSign() == IdentityCode.OFFICER.getCode())
 				.findFirst()
@@ -42,9 +43,7 @@ public class LiaisonMan extends Operation {
 		PlayerOperationRecord record = buildPlayerOperationRecord(param);
 		record.setPlayerId(officer.getPlayerId());
 		record.setOperationStr("官员触发《联络员》");
-		PlayerFeedback feedback = new PlayerFeedback();
-		feedback.setPlayerId(officer.getPlayerId());
-		feedback.setCharacterName(officer.getCharacterName());
+		PlayerFeedback feedback = buildPlayerFeedback(officer, 0);
 		feedback.setFeedback("你的联络员是"+liaisonMan.getCharacterName()+"，签是"+liaisonMan.getIdentityDesc());
 		record.setFeedback(Arrays.asList(feedback));
 		return record;

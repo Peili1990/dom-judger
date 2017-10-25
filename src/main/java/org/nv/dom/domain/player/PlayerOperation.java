@@ -82,6 +82,13 @@ public class PlayerOperation {
 		this.operationId = operationId;
 	}
 
+	public PlayerOperation(long playerId, long operationId, int times) {
+		super();
+		this.playerId = playerId;
+		this.operationId = operationId;
+		this.times = times;
+	}
+
 	public PlayerOperation() {
 		
 	}

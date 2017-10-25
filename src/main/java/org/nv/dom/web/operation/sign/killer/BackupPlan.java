@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.nv.dom.config.EventList;
 import org.nv.dom.config.NVTermConstant;
+import org.nv.dom.config.OperationParam;
 import org.nv.dom.domain.player.PlayerFeedback;
 import org.nv.dom.domain.player.PlayerInfo;
 import org.nv.dom.domain.player.PlayerOperation;
@@ -27,7 +28,7 @@ public class BackupPlan extends Operation {
 
 	@Override
 	public void check(Map<String, Object> param) {
-		List<SubmitOperationDTO> operations = get(param, "operations");
+		List<SubmitOperationDTO> operations = get(param, OperationParam.OPERATIONS);
 		SubmitOperationDTO operation = findTarget(operations, record -> record.getOperationId() == operationId);
 		Object[] targets = operation.getParam();
 		if(4 == getSequence(targets[0])){
@@ -38,8 +39,8 @@ public class BackupPlan extends Operation {
 	@Override
 	public PlayerOperationRecord settle(Map<String, Object> param) {
 		PlayerOperationRecord record = buildPlayerOperationRecord(param);
-		Object[] targets = record.getOriginParam();
-		List<PlayerInfo> playerInfos = get(param, "playerInfos");
+		Object[] targets = getOriginParam(record.getParam());
+		List<PlayerInfo> playerInfos = get(param, OperationParam.PLAYER_INFO);
 		List<PlayerInfo> killers = playerInfos.stream()
 				.filter(player -> player.getSign() >= 13 && player.getSign() <= 18)
 				.filter(player -> player.getIsLife() == 1)
@@ -64,9 +65,7 @@ public class BackupPlan extends Operation {
 					.filter(player -> player.getCamp() == NVTermConstant.KILLER_CAMP)
 					.collect(toList());
 			record.setFeedback(receivers.stream().map(player -> {
-				PlayerFeedback feedback = new PlayerFeedback();
-				feedback.setPlayerId(player.getPlayerId());
-				feedback.setCharacterName(player.getCharacterName());
+				PlayerFeedback feedback = buildPlayerFeedback(player, 0);
 				feedback.setFeedback("杀手团队通过灰线向你传递："+getDescription(targets[2]));
 				return feedback;
 			}).collect(toList()));	

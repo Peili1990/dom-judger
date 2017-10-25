@@ -232,7 +232,8 @@
 				  	dpr.is_life=#{item.isLife},
 				  	dpr.is_mute=#{item.isMute},
 				  	dpr.position=#{item.position},
-				  	dpr.has_position=#{item.hasPosition}
+				  	dpr.has_position=#{item.hasPosition},
+				  	dpr.sex=#{item.sex}
 				</set>  	
 				WHERE
 				  	dpr.player_id = #{item.playerId}

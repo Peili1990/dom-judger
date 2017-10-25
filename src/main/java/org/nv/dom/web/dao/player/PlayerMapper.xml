@@ -8,7 +8,7 @@
 		SELECT 
 			dp.id AS playerId,
 			dc.name AS characterName,
-			dc.sex AS sex,
+			dpr.sex AS sex,
 			dpr.character_id AS characterId,
 			dpr.is_sp AS isSp,
 			dpr.identity_desc AS identityDesc,
@@ -291,6 +291,7 @@
 			dpor.player_id AS playerId,
 			dpor.operation_id AS operationId,
 			dpor.operation_str AS operationStr,
+			dpor.param AS param,
 			dpor.operator,
 			dpor.is_done AS isDone,
 			dpor.create_time AS createTime		
@@ -388,7 +389,7 @@
 				UPDATE 
 					d_player_operation
 				<set>
-				  	times = times - 1
+				  	times = times - #{item.times}
 				</set>  	
 				WHERE
 				  	player_id = #{item.playerId} AND operation_id = #{item.operationId}
@@ -417,6 +418,17 @@
 			d_operation_option
 		WHERE
 			operation_id = #{operationId}
+	
+	</select>
+	
+	<select id="getPlayerIdByUserId" parameterType="Long" resultType="Long">
+	
+		SELECT
+			id
+		FROM
+			d_player
+		WHERE
+			user_id = #{userId} AND status != 9
 	
 	</select>
 	

@@ -2,6 +2,7 @@ package org.nv.dom.web.service;
 
 import java.util.Map;
 
+import org.nv.dom.domain.message.chat.ChatDetail;
 import org.nv.dom.domain.player.PlayerReplaceSkin;
 import org.nv.dom.dto.operation.SavePlayerOperationDTO;
 import org.nv.dom.dto.operation.SubmitPlayerOperationDTO;
@@ -33,5 +34,7 @@ public interface PlayerService {
 	public Map<String, Object> savePlayerOperation(SavePlayerOperationDTO savePlayerOperationDTO);
 
 	public Map<String, Object> saveFeedback(SaveFeedbackDTO saveFeedbackDTO);
+
+	public Map<String, Object> autoSettlement(ChatDetail chatDetail);
 
 }

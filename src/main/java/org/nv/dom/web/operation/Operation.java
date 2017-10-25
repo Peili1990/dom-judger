@@ -12,6 +12,9 @@ import java.util.function.Predicate;
 import javax.annotation.PostConstruct;
 
 import org.nv.dom.config.NVTermConstant;
+import org.nv.dom.config.OperationParam;
+import org.nv.dom.domain.player.OperationSession;
+import org.nv.dom.domain.player.PlayerFeedback;
 import org.nv.dom.domain.player.PlayerInfo;
 import org.nv.dom.domain.player.PlayerOperation;
 import org.nv.dom.domain.player.PlayerOperationRecord;
@@ -51,9 +54,14 @@ public abstract class Operation {
 	
 	public abstract PlayerOperationRecord settle(Map<String, Object> param);
 	
-	public void accept(Map<String, Object> param){
-		PlayerOperationRecord record = settle(param);
-		if(record == null) return;
+	public void accept(Map<String, Object> param){	
+		PlayerOperationRecord record = get(param, OperationParam.SETTLE_RESULT);
+		if(record == null) {
+			record = settle(param);
+		}
+		if(record == null) {
+			return;
+		}
 		long gameId = record.getGameId();
 		long formId = gameUtil.getCurForm(gameId).getFormId();
 		record.setFormId(formId);
@@ -65,11 +73,24 @@ public abstract class Operation {
 		}		
 	}
 	
+	public PlayerFeedback buildPlayerFeedback(PlayerInfo playerInfo, long sessionId){
+		PlayerFeedback playerFeedback = new PlayerFeedback();
+		playerFeedback.setPlayerId(playerInfo.getPlayerId());
+		playerFeedback.setCharacterName(playerInfo.getCharacterName());
+		if(sessionId > 0){
+			OperationSession session = new OperationSession();
+			session.setSessionId(sessionId);
+			session.setOperationId(operationId);
+			playerFeedback.setPayLoad(JSON.toJSONString(session));
+		}
+		return playerFeedback;
+	}
+	
 	public PlayerOperationRecord buildPlayerOperationRecord(Map<String, Object> param){
-		List<SubmitOperationDTO> operations = (List<SubmitOperationDTO>) param.get("operations");
+		List<SubmitOperationDTO> operations = (List<SubmitOperationDTO>) param.get(OperationParam.OPERATIONS);
 		PlayerOperationRecord record = new PlayerOperationRecord();
 		if(operations == null){
-			record.setGameId((long)param.get("gameId"));
+			record.setGameId((long)param.get(OperationParam.GAME_ID));
 		} else {
 			SubmitOperationDTO operation = findTarget(operations, r -> r.getOperationId() == operationId);			
 			record.setGameId(operation.getGameId());
@@ -102,6 +123,10 @@ public abstract class Operation {
 	public String getDescription(Object target){
 		String[] str = target.toString().split(",");
 		return str.length == 1 ? str[0] : str[1];
+	}
+	
+	public Object[] getOriginParam(String param){
+		return JSON.parseArray(param, Object.class).toArray();
 	}
 	
 	public <T> T get(Map<String, Object> param, String name){

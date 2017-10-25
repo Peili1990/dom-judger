@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.nv.dom.config.EventList;
+import org.nv.dom.config.OperationParam;
+import org.nv.dom.domain.player.OperationSession;
 import org.nv.dom.domain.player.PlayerInfo;
 import org.nv.dom.dto.operation.SubmitOperationDTO;
 import org.nv.dom.web.operation.Operation;
@@ -44,8 +46,8 @@ public class EventUtilServiceImpl implements EventUtilService {
 	@Override
 	public void publish(String event, Map<String, Object> param) {	
 		List<PlayerInfo> playerInfos = gameUtil.getPlayerInfo((long)param.get("gameId"));
-		param.put("playerInfos", playerInfos);
-		param.put("event", event);
+		param.put(OperationParam.PLAYER_INFO, playerInfos);
+		param.put(OperationParam.EVENT, event);
 		Map<Integer, Operation> observers = eventManager.getOrDefault(event, new HashMap<Integer, Operation>());
 		observers.keySet().stream().forEach(id -> observers.get(id).check(param));	
 		observers.keySet().stream().forEach(id -> observers.get(id).accept(param));	
@@ -80,15 +82,26 @@ public class EventUtilServiceImpl implements EventUtilService {
 	
 	private Map<String, Object> buildParam(List<SubmitOperationDTO> records){
 		Map<String, Object> param = new HashMap<>();
-		param.put("event", EventList.OPERATION_SUBMIT_EVENT);
-		param.put("operations", records);
+		param.put(OperationParam.EVENT, EventList.OPERATION_SUBMIT_EVENT);
+		param.put(OperationParam.OPERATIONS, records);
 		if(!records.isEmpty()){
 			long gameId = records.get(0).getGameId();
 			List<PlayerInfo> playerInfos = gameUtil.getPlayerInfo(gameId);
-			param.put("gameId", gameId);
-			param.put("playerInfos", playerInfos);
+			param.put(OperationParam.GAME_ID, gameId);
+			param.put(OperationParam.PLAYER_INFO, playerInfos);
 		}
 		return param;
+	}
+
+	@Override
+	public void autoSettle(OperationSession session) {
+		Map<Integer, Operation> observers = eventManager.getOrDefault(EventList.CHAT_SUBMIT_EVENT, new HashMap<Integer, Operation>());
+		Map<String, Object> params = new HashMap<>();
+		params.put(OperationParam.SESSION, session);
+		params.put(OperationParam.EVENT, EventList.CHAT_SUBMIT_EVENT);
+		if(observers.containsKey((int)session.getOperationId())){
+			observers.get((int)session.getOperationId()).accept(params);
+		}		
 	}
 
 }

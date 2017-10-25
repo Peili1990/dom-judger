@@ -9,5 +9,8 @@ public class EventList {
 	public static final String NIGNT_START_EVENT = "NightStartEvent";
 	
 	public static final String DAY_START_EVENT = "DayStartEvent";
+	
+	public static final String CHAT_SUBMIT_EVENT = "ChatSubmitEvent";
+
 
 }

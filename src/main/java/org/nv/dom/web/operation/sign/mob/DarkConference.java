@@ -8,6 +8,7 @@ import java.util.Map;
 
 import org.nv.dom.config.EventList;
 import org.nv.dom.config.NVTermConstant;
+import org.nv.dom.config.OperationParam;
 import org.nv.dom.domain.player.PlayerFeedback;
 import org.nv.dom.domain.player.PlayerInfo;
 import org.nv.dom.domain.player.PlayerOperation;
@@ -30,7 +31,7 @@ public class DarkConference extends Operation {
 
 	@Override
 	public PlayerOperationRecord settle(Map<String, Object> param) {
-		String event = get(param, "event");
+		String event = get(param, OperationParam.EVENT);
 		switch (event) {
 		case EventList.OPERATION_SUBMIT_EVENT:
 			PlayerOperationRecord operation = buildPlayerOperationRecord(param);
@@ -50,7 +51,7 @@ public class DarkConference extends Operation {
 				return operation;
 			}
 		case EventList.NIGNT_START_EVENT:
-			List<PlayerInfo> playerInfos = get(param, "playerInfos");
+			List<PlayerInfo> playerInfos = get(param, OperationParam.PLAYER_INFO);
 			PlayerInfo mob = playerInfos.stream()
 					.filter(player -> player.getSign() == IdentityCode.MOB.getCode())
 					.filter(player -> player.getCamp() == NVTermConstant.KILLER_CAMP)
@@ -66,7 +67,7 @@ public class DarkConference extends Operation {
 			}
 			return null;
 		case EventList.DAY_START_EVENT:
-			playerInfos = get(param, "playerInfos");
+			playerInfos = get(param, OperationParam.PLAYER_INFO);
 			List<PlayerOperation> operations = playerInfos.stream()
 					.map(player -> buildPlayerOperation(player.getPlayerId(), operationId, 0))
 					.collect(toList());

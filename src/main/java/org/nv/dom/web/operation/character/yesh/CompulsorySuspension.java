@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.nv.dom.config.EventList;
+import org.nv.dom.config.OperationParam;
 import org.nv.dom.domain.player.PlayerFeedback;
 import org.nv.dom.domain.player.PlayerInfo;
 import org.nv.dom.domain.player.PlayerOperation;
@@ -22,11 +23,10 @@ public class CompulsorySuspension extends Operation {
 
 	@Override
 	public void check(Map<String, Object> param) {
-		List<PlayerInfo> playerinfos = get(param, "playerInfos");
+		List<PlayerInfo> playerinfos = get(param, OperationParam.PLAYER_INFO);
 		PlayerOperationRecord record = buildPlayerOperationRecord(param);
-		gameUtil.consumeOperationTimes(Arrays.asList(new PlayerOperation(record.getPlayerId(),operationId)));
 		PlayerInfo target = playerinfos.stream()
-				.filter(player -> player.getPlayerId() == getSequence(record.getOriginParam()[0]))
+				.filter(player -> player.getPlayerId() == getSequence(getOriginParam(record.getParam())[0]))
 				.findAny()
 				.orElse(null);
 		Assert.isTrue(target != null && target.getIsLife() == 1 && 
@@ -35,19 +35,17 @@ public class CompulsorySuspension extends Operation {
 
 	@Override
 	public PlayerOperationRecord settle(Map<String, Object> param) {
-		List<PlayerInfo> playerinfos = get(param, "playerInfos");
+		List<PlayerInfo> playerinfos = get(param, OperationParam.PLAYER_INFO);
 		PlayerOperationRecord record = buildPlayerOperationRecord(param);
 		gameUtil.consumeOperationTimes(Arrays.asList(new PlayerOperation(record.getPlayerId(),operationId)));
 		PlayerInfo target = playerinfos.stream()
-				.filter(player -> player.getPlayerId() == getSequence(record.getOriginParam()[0]))
+				.filter(player -> player.getPlayerId() == getSequence(getOriginParam(record.getParam())[0]))
 				.findAny()
 				.get();
 		int originSp = target.getIsSp();
 		target.setIsSp(1-originSp);
 		gameUtil.updatePlayerInfo(Arrays.asList(target));	
-		PlayerFeedback feedback = new PlayerFeedback();
-		feedback.setPlayerId(target.getPlayerId());
-		feedback.setCharacterName(target.getCharacterName());
+		PlayerFeedback feedback = buildPlayerFeedback(target, 0);
 		feedback.setFeedback("你的初始特权被切换为"+(originSp == 0 ? "SP" : "BA")+"状态");
 		record.setFeedback(Arrays.asList(feedback));	
 		return record;

@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import org.nv.dom.config.PageParamType;
 import org.nv.dom.domain.game.ApplyingGame;
+import org.nv.dom.domain.message.chat.ChatDetail;
 import org.nv.dom.domain.player.PlayerReplaceSkin;
 import org.nv.dom.domain.user.User;
 import org.nv.dom.dto.operation.SavePlayerOperationDTO;
@@ -80,6 +81,12 @@ public class PlayerController {
 	@RequestMapping(value = "/getOperationList", method = RequestMethod.POST)
 	public Map<String, Object> getOperationList(@RequestParam("playerId") long playerId, HttpSession session) {
 		return playerService.getOperationList(playerId);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/autoSettlement", method = RequestMethod.POST)
+	public Map<String, Object> autoSettlement(@RequestBody ChatDetail chatDetail, HttpSession session){
+		return playerService.autoSettlement(chatDetail);
 	}
 	
 	@ResponseBody

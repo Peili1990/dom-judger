@@ -152,4 +152,9 @@ public interface PlayerMapper {
 	 */
 	public void removePlayerOperation(List<PlayerOperation> playerOperation);
 	
+	/**
+	 * <p>根据userId查询playerId</p>
+	 */
+	public long getPlayerIdByUserId(long userId);
+	
 }

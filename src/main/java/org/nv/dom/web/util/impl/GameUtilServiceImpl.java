@@ -72,6 +72,7 @@ public class GameUtilServiceImpl implements GameUtilService{
 					chatDetail.setFromUserId(judgerId);
 					chatDetail.setToUserId(userId);
 					chatDetail.setContent(feedback.getFeedback());
+					chatDetail.setPayLoad(feedback.getPayLoad());
 					return chatDetail;
 				}).collect(toList());
 		HttpClientUtil.doPostJson("http://"+ConfigUtil.getVersionConfigProperty("chat.server")+"/sendMessageBatch", 
@@ -101,6 +102,11 @@ public class GameUtilServiceImpl implements GameUtilService{
 
 	@Override
 	public void consumeOperationTimes(List<PlayerOperation> playerOperation) {
+		playerOperation.forEach(operation -> {
+			if(operation.getTimes() == 0){
+				operation.setTimes(1);
+			}
+		});
 		playerMapper.consumeOperationTimes(playerOperation);
 		
 	}

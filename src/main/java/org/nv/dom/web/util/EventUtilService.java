@@ -3,6 +3,7 @@ package org.nv.dom.web.util;
 import java.util.List;
 import java.util.Map;
 
+import org.nv.dom.domain.player.OperationSession;
 import org.nv.dom.dto.operation.SubmitOperationDTO;
 import org.nv.dom.web.operation.Operation;
 
@@ -17,5 +18,7 @@ public interface EventUtilService {
 	void preSubmit(List<SubmitOperationDTO> records);
 
 	List<SubmitOperationDTO> instantSettle(List<SubmitOperationDTO> records);
+	
+	void autoSettle(OperationSession session);
 
 }

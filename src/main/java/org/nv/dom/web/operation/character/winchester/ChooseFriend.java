@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.nv.dom.config.EventList;
+import org.nv.dom.config.OperationParam;
 import org.nv.dom.domain.player.PlayerInfo;
 import org.nv.dom.domain.player.PlayerOperation;
 import org.nv.dom.domain.player.PlayerOperationRecord;
@@ -22,13 +23,13 @@ public class ChooseFriend extends Operation {
 
 	@Override
 	public void check(Map<String, Object> param) {
-		String event = get(param, "event");
+		String event = get(param, OperationParam.EVENT);
 		switch (event) {
 		case EventList.OPERATION_SUBMIT_EVENT:
-			List<SubmitOperationDTO> operations = get(param, "operations");
+			List<SubmitOperationDTO> operations = get(param, OperationParam.OPERATIONS);
 			SubmitOperationDTO operation = findTarget(operations, record -> record.getOperationId() == operationId);
 			Object[] targets = operation.getParam();
-			List<PlayerInfo> playerInfo = get(param, "playerInfos");
+			List<PlayerInfo> playerInfo = get(param, OperationParam.PLAYER_INFO);
 			for(Object target : targets){
 				String[] str = target.toString().split(",");
 				Assert.isTrue(playerInfo.stream()
@@ -41,10 +42,10 @@ public class ChooseFriend extends Operation {
 
 	@Override
 	public PlayerOperationRecord settle(Map<String, Object> param) {
-		String event = get(param, "event");
+		String event = get(param, OperationParam.EVENT);
 		switch (event) {
 		case EventList.GAME_START_EVENT:
-			List<PlayerInfo> playerInfos = get(param, "playerInfos");
+			List<PlayerInfo> playerInfos = get(param, OperationParam.PLAYER_INFO);
 			PlayerInfo winchester = findTarget(playerInfos, player -> player.getCharacterId() == 54);
 			if(winchester == null){
 				return null;

@@ -381,37 +381,40 @@ function submitList(gameId){
 		return;
 	}
 	myLoading();
-	$.get('${baseUrl}file/identity-config.json',function(data){
-		var policeSign = data.policeSign;
-		policeSign.shuffle();
-		var killerSign = data.killerSign;
-		killerSign.shuffle();
-		var policeCount = 0;
-		var killerCount = 0;
-		$.each(players,function(index,player){
-			player.position=index;
-			player.hasPosition=player.characterId == 45 ? 0:1;
-			player.isLife=1;
-			player.isMute=0;
-			switch(player.sign){
-			case -1:
-				player.sign=policeSign[policeCount].sign;
-				player.identityDesc += "（"+policeSign[policeCount].desc+"）";
-				policeCount++;
-				break;
-			case 99:
-				player.sign=killerSign[killerCount].sign;
-				player.identityDesc += "（"+killerSign[killerCount].desc+"）";
-				killerCount++;
-				break;
-			}
-		})
-		var url = getRootPath() + "/game/submitFullList";
-		var common = new Common();
-		common.callAction(JSON.stringify(players),url,function(data){
-			changeGameStatus(gameId,3);				
-		},"application/json;charset=utf-8")
-	})	
+	$.get('${baseUrl}file/character-list.json',function(list){
+		$.get('${baseUrl}file/identity-config.json',function(data){
+			var policeSign = data.policeSign;
+			policeSign.shuffle();
+			var killerSign = data.killerSign;
+			killerSign.shuffle();
+			var policeCount = 0;
+			var killerCount = 0;
+			$.each(players,function(index,player){
+				player.position=index;
+				player.hasPosition=player.characterId == 45 ? 0:1;
+				player.isLife=1;
+				player.isMute=0;
+				player.sex=list.characters[player.characterId-1].sex;
+				switch(player.sign){
+				case -1:
+					player.sign=policeSign[policeCount].sign;
+					player.identityDesc += "（"+policeSign[policeCount].desc+"）";
+					policeCount++;
+					break;
+				case 99:
+					player.sign=killerSign[killerCount].sign;
+					player.identityDesc += "（"+killerSign[killerCount].desc+"）";
+					killerCount++;
+					break;
+				}
+			})
+			var url = getRootPath() + "/game/submitFullList";
+			var common = new Common();
+			common.callAction(JSON.stringify(players),url,function(data){
+				changeGameStatus(gameId,3);				
+			},"application/json;charset=utf-8")
+		})	
+	})
 }
 
 function showApplyForm(gameId){

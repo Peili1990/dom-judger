@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.nv.dom.config.EventList;
+import org.nv.dom.config.OperationParam;
 import org.nv.dom.domain.player.PlayerOperationRecord;
 import org.nv.dom.dto.operation.SubmitOperationDTO;
 import org.nv.dom.web.operation.Operation;
@@ -20,7 +21,7 @@ public class Assassinate extends Operation {
 	@Override
 
 	public void check(Map<String, Object> param) {
-		List<SubmitOperationDTO> operations = get(param, "operations");
+		List<SubmitOperationDTO> operations = get(param, OperationParam.OPERATIONS);
 		SubmitOperationDTO operation = findTarget(operations, record -> record.getOperationId() == operationId);
 		Object[] targets = operation.getParam();
 		Assert.isTrue(targets != null && targets.length == 2, "还有空格没填完！");

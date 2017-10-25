@@ -9,6 +9,7 @@ import java.util.Map;
 
 import org.nv.dom.config.EventList;
 import org.nv.dom.config.NVTermConstant;
+import org.nv.dom.config.OperationParam;
 import org.nv.dom.domain.player.PlayerFeedback;
 import org.nv.dom.domain.player.PlayerInfo;
 import org.nv.dom.domain.player.PlayerOperationRecord;
@@ -30,8 +31,8 @@ public class EkkasVillas extends Operation{
 
 	@Override
 	public PlayerOperationRecord settle(Map<String, Object> param) {
-		long gameId = get(param, "gameId");
-		List<PlayerInfo> playerInfo = get(param, "playerInfos");
+		long gameId = get(param, OperationParam.GAME_ID);
+		List<PlayerInfo> playerInfo = get(param, OperationParam.PLAYER_INFO);
 		PlayerInfo ekka = findTarget(playerInfo, player -> player.getCharacterId() == 5);
 		if(ekka == null || ekka.getIsLife() == 0 || 
 				ekka.getIsSp() == 1 || ekka.getSign() == IdentityCode.PIONEER.getCode()){
@@ -45,9 +46,7 @@ public class EkkasVillas extends Operation{
 		PlayerOperationRecord record = buildPlayerOperationRecord(param);
 		record.setPlayerId(ekka.getPlayerId());
 		record.setOperationStr("伊卡触发小筑的伊卡");
-		PlayerFeedback feedback = new PlayerFeedback();
-		feedback.setPlayerId(ekka.getPlayerId());
-		feedback.setCharacterName(ekka.getCharacterName());
+		PlayerFeedback feedback = buildPlayerFeedback(ekka,0);
 		feedback.setFeedback("骰子结果："+point+"，"+buildNotice(point,temp));
 		record.setFeedback(Arrays.asList(feedback));
 		return record;

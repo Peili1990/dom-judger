@@ -12,6 +12,8 @@ public class PlayerFeedback {
 	
 	private String feedback;
 	
+	private String payLoad;
+	
 	private String createTime;
 
 	public long getOperationRecordId() {
@@ -60,6 +62,14 @@ public class PlayerFeedback {
 
 	public void setCreateTime(String createTime) {
 		this.createTime = createTime;
+	}
+
+	public String getPayLoad() {
+		return payLoad;
+	}
+
+	public void setPayLoad(String payLoad) {
+		this.payLoad = payLoad;
 	}
 
 }

@@ -1,11 +1,17 @@
 package org.nv.dom.web.service.impl;
 
+import static java.util.stream.Collectors.groupingBy;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.nv.dom.config.PageParamType;
 import org.nv.dom.domain.game.GameForm;
+import org.nv.dom.domain.message.chat.ChatDetail;
+import org.nv.dom.domain.player.OperationSession;
 import org.nv.dom.domain.player.PlayerFeedback;
 import org.nv.dom.domain.player.PlayerInfo;
 import org.nv.dom.domain.player.PlayerOperation;
@@ -22,6 +28,7 @@ import org.nv.dom.dto.player.UpdatePlayerStatusDTO;
 import org.nv.dom.enums.PlayerStatus;
 import org.nv.dom.util.ConfigUtil;
 import org.nv.dom.util.HttpClientUtil;
+import org.nv.dom.util.StringUtil;
 import org.nv.dom.web.dao.game.GameMapper;
 import org.nv.dom.web.dao.player.PlayerMapper;
 import org.nv.dom.web.service.PlayerService;
@@ -32,11 +39,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import com.alibaba.fastjson.JSON;
-
-import static java.util.stream.Collectors.*;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 
 @Service("playerServiceImpl")
 public class PlayerServiceImpl implements PlayerService {
@@ -228,6 +230,20 @@ public class PlayerServiceImpl implements PlayerService {
 		}
 		result.put(PageParamType.BUSINESS_STATUS, 1);
 		result.put(PageParamType.BUSINESS_MESSAGE, "保存反馈成功");
+		return result;
+	}
+
+	@Override
+	public Map<String, Object> autoSettlement(ChatDetail chatDetail) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		if(!StringUtil.isNullOrEmpty(chatDetail.getPayLoad())){
+			OperationSession session = JSON.parseObject(chatDetail.getPayLoad(), OperationSession.class);
+			session.setCommand(chatDetail.getContent());
+			session.setPlayerId(playerMapper.getPlayerIdByUserId(chatDetail.getFromUserId()));
+			eventUtil.autoSettle(session);
+		}
+		result.put(PageParamType.BUSINESS_STATUS, 1);
+		result.put(PageParamType.BUSINESS_MESSAGE, "结算成功");
 		return result;
 	}
 
