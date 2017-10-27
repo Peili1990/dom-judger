@@ -97,7 +97,7 @@ function saveOperation(playerIndex){
 		list.push({
 			playerId : players[playerIndex].playerId,
 			operationId : $(row).find("select").val(),
-			operator : players[playerIndex].characterName,
+			operator : ((players[playerIndex].isSp == 1) ? "sp":"")+players[playerIndex].characterName,
 			operationStr : $(row).find("input[name='operation-str']").val() == "" ? 
 					$(row).find("select option:selected").text() : $(row).find("input[name='operation-str']").val()
 		})

@@ -346,8 +346,6 @@
 			name
 		FROM
 			d_operation_config 
-		WHERE
-			is_delete = 0
 	
 	</select>
 	
