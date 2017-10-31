@@ -7,7 +7,6 @@ import static java.util.stream.Collectors.toList;
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,10 +38,12 @@ public class Poker extends Operation {
 	@Override
 	public void check(Map<String, Object> param) {
 		PlayerOperationRecord record = buildPlayerOperationRecord(param);
+		Assert.isTrue(!pokerManager.containsKey(record.getPlayerId()),"你正在打牌中");
 		List<PlayerOperationRecord> historical = gameUtil.getCurStageRecords(get(param,OperationParam.GAME_ID));
 		Assert.isTrue(historical.stream()
 				.filter(history -> history.getOperationId() == operationId)
 				.noneMatch(history -> getSequence(getOriginParam(history.getParam())[0]) == getSequence(getOriginParam(record.getParam())[0])), "不可指定重复角色");
+		
 	}
 
 	@Override
@@ -77,13 +78,13 @@ public class Poker extends Operation {
 			if(session.getStep() == 1 && (command.equals("男") || command.equals("女")) && 
 					operationSession.getPlayerId() == session.getTarget().getPlayerId()){
 				session.setWinSex(command.equals("男") ? 0 : 1);
-				firstList(session, operationSession.getSessionId());
+				firstList(session);
 			}
 			List<Integer> box = StringUtil.oneToFive(command);
 			if(session.getStep() == 2 && box != null && 
 					operationSession.getPlayerId() == session.getBanker().getPlayerId()){
 				session.setSecondList(box.stream().map(session.getFirstList()::get).collect(toList()));
-				secondList(session, operationSession.getSessionId());
+				secondList(session);
 			}
 			break;
 		}
@@ -102,23 +103,22 @@ public class Poker extends Operation {
 		int winNum = randomNum(5)+1;
 		pokerSession.setWinNum(winNum);
 		pokerSession.setStep(1);
-		long sessionId = new Date().getTime();
-		PlayerFeedback bankerFeedback = buildPlayerFeedback(pokerSession.getBanker(), sessionId);
+		PlayerFeedback bankerFeedback = buildPlayerFeedback(pokerSession.getBanker(), pokerSession.banker.getPlayerId());
 		bankerFeedback.setFeedback("当前名单为"+sexCount.get(0)+"男"+sexCount.get(1)+"女<br>随机生成的数字是"+winNum);
-		PlayerFeedback targetFeedback = buildPlayerFeedback(pokerSession.getTarget(), sessionId);
+		PlayerFeedback targetFeedback = buildPlayerFeedback(pokerSession.getTarget(), pokerSession.banker.getPlayerId());
 		targetFeedback.setFeedback(pokerSession.getBanker().getCharacterName()+"找你打牌<br>"+
 				bankerFeedback.getFeedback()+"<br>请在5分钟内选择性别。");
 		gameUtil.sendMessage(Arrays.asList(bankerFeedback,targetFeedback), NVTermConstant.ADMINISTRATOR);
 		pokerSession.timerBegin(new TimerTask() {			
 			@Override
 			public void run() {
-				firstList(pokerSession, sessionId);			
+				firstList(pokerSession);			
 			}
 		},5);
-		pokerManager.put(sessionId, pokerSession);	
+		pokerManager.put(pokerSession.banker.getPlayerId(), pokerSession);	
 	}
 	
-	private void firstList(PokerSession pokerSession, long sessionId){
+	private void firstList(PokerSession pokerSession){
 		pokerSession.timerEnd();
 		if(pokerSession.getWinSex() == null){
 			pokerSession.setWinSex(randomNum(2));
@@ -130,20 +130,20 @@ public class Poker extends Operation {
 		Map<Integer,Long> sexCount = firstList.stream()
 				.collect(groupingBy(PlayerInfo::getSex, counting()));
 		pokerSession.setStep(2);
-		PlayerFeedback bankerFeedback = buildPlayerFeedback(pokerSession.getBanker(), sessionId);
+		PlayerFeedback bankerFeedback = buildPlayerFeedback(pokerSession.getBanker(), pokerSession.getBanker().getPlayerId());
 		bankerFeedback.setFeedback("性别是"+(pokerSession.getWinSex() == 0 ? "男" : "女")+"<br>第一份名单："+
 				buildList(firstList)+"<br>当前名单"+sexCount.get(0)+"男"+sexCount.get(1)+"女<br>请在10分钟内锁定手牌");
 		gameUtil.sendMessage(Arrays.asList(bankerFeedback), NVTermConstant.ADMINISTRATOR);
 		pokerSession.timerBegin(new TimerTask() {			
 			@Override
 			public void run() {
-				secondList(pokerSession, sessionId);			
+				secondList(pokerSession);			
 			}
 		},10);
-		pokerManager.put(sessionId, pokerSession);
+		pokerManager.put(pokerSession.banker.getPlayerId(), pokerSession);
 	}
 	
-	private void secondList(PokerSession pokerSession, long sessionId){
+	private void secondList(PokerSession pokerSession){
 		pokerSession.timerEnd();
 		int tailer = 10 - pokerSession.getSecondList().size();
 		List<PlayerInfo> secondList = pokerSession.getSecondList();
@@ -166,7 +166,7 @@ public class Poker extends Operation {
 		record.setFeedback(Arrays.asList(bankerFeedback, targetFeedback));
 		gameUtil.consumeOperationTimes(Arrays.asList(
 				new PlayerOperation(record.getPlayerId(),operationId,EffectEnum.getByCode(effect).getTimes())));
-		pokerManager.remove(sessionId);
+		pokerManager.remove(pokerSession.getBanker().getPlayerId());
 		Map<String, Object> param = new HashMap<>();
 		param.put(OperationParam.SETTLE_RESULT, record);
 		accept(param);
