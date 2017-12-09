@@ -30,12 +30,13 @@ public class ChooseFriend extends Operation {
 			SubmitOperationDTO operation = findTarget(operations, record -> record.getOperationId() == operationId);
 			Object[] targets = operation.getParam();
 			List<PlayerInfo> playerInfo = get(param, OperationParam.PLAYER_INFO);
-			for(Object target : targets){
-				String[] str = target.toString().split(",");
+			for(int i = 0; i< targets.length; i++){
+				if(i % 2 == 0) continue;
+				String[] str = targets[i].toString().split(",");
 				Assert.isTrue(playerInfo.stream()
 						.noneMatch(player -> String.valueOf(player.getCharacterId()).equals(str[0])), str[1]+"已被选择！");
 			}
-			Assert.isTrue(!targets[0].equals(targets[1]), "不得选择相同角色！");
+			Assert.isTrue(!targets[1].equals(targets[3]), "不得选择相同角色！");
 			break;
 		}
 	}
