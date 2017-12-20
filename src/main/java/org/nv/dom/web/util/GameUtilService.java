@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.nv.dom.domain.game.GameForm;
 import org.nv.dom.domain.player.PlayerFeedback;
+import org.nv.dom.domain.player.PlayerGameStatus;
 import org.nv.dom.domain.player.PlayerInfo;
 import org.nv.dom.domain.player.PlayerOperation;
 import org.nv.dom.domain.player.PlayerOperationRecord;
@@ -33,5 +34,7 @@ public interface GameUtilService {
 	void consumeOperationTimes(List<PlayerOperation> playerOperation);
 	
 	void updatePlayerInfo(List<PlayerInfo> playerInfos);
+
+	void addPlayerGameStatus(List<PlayerGameStatus> asList, long gameId);
 
 }

@@ -18,7 +18,7 @@ import org.springframework.util.Assert;
 public class ChooseFriend extends Operation {
 	
 	public ChooseFriend() {
-		operationId = 235;
+		operationId = 298;
 	}
 
 	@Override
@@ -51,6 +51,8 @@ public class ChooseFriend extends Operation {
 			if(winchester == null){
 				return null;
 			}	
+			gameUtil.addPlayerGameStatus(Arrays.asList(buildPlayerStatus(winchester.getPlayerId(), 25, 999)),
+					get(param,OperationParam.GAME_ID));
 			gameUtil.addPlayerOperation(Arrays.asList(buildPlayerOperation(winchester.getPlayerId(), operationId, 1)), false);
 			return null;
 		case EventList.OPERATION_SUBMIT_EVENT:

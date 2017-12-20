@@ -222,6 +222,37 @@
 	
 	</insert>
 	
+	<insert id="insertPlayerGameStatus">
+	
+		INSERT INTO d_player_status(
+			game_id,
+			player_id,
+			status_id,
+			remain_stage
+		)
+		VALUES
+			 <foreach item="item" index="index" collection="list" separator=",">
+ 			(
+            #{item.gameId},
+            #{item.playerId},
+            #{item.statusId},
+            #{item.remainStage}
+            )
+    		 </foreach>
+	
+	</insert>
+	
+	<select id="getGameStatusByPlayerId" parameterType="Long" resultType="Long">
+	
+		SELECT
+			status_id
+		FROM
+			d_player_status
+		WHERE
+			player_id = #{playerId}
+	
+	</select>
+	
 	<update id="incrPlayerOperation">
 	
 		<foreach item="item" index="index" collection="list" separator=";">
@@ -428,6 +459,34 @@
 		WHERE
 			user_id = #{userId} AND status != 9
 	
+	</select>
+	
+	<select id="getCurGameAllStatus" parameterType="Long" resultType="PlayerGameStatus">
+		
+		SELECT
+			dps.status_id AS statusId,
+			dps.player_id AS playerId,
+			dsc.name AS statusName,
+			dps.remain_stage AS remainStage
+		FROM
+			d_player_status dps, d_status_config dsc
+		WHERE
+			dps.game_id = #{gameId} AND dps.remain_stage > 0 AND dps.status_id = dsc.id
+	
+	</select>
+	
+	<select id="getCurGameAllCount" parameterType="Long" resultType="PlayerCount">
+	
+		SELECT
+			dpc.count_id AS countId,
+			dpc.player_id AS playerId,
+			dcc.name AS countName,
+			dpc.count_num AS countNum
+		FROM
+			d_player_count dpc, d_count_config dcc
+		WHERE
+			dpc.game_id = #{gameId} AND dpc.count_id = dcc.id
+			
 	</select>
 	
 	

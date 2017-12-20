@@ -1,6 +1,8 @@
 package org.nv.dom.web.service.impl;
 
 import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.joining;
+import static java.util.stream.Collectors.toList;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,7 +14,9 @@ import org.nv.dom.config.PageParamType;
 import org.nv.dom.domain.game.GameForm;
 import org.nv.dom.domain.message.chat.ChatDetail;
 import org.nv.dom.domain.player.OperationSession;
+import org.nv.dom.domain.player.PlayerCount;
 import org.nv.dom.domain.player.PlayerFeedback;
+import org.nv.dom.domain.player.PlayerGameStatus;
 import org.nv.dom.domain.player.PlayerInfo;
 import org.nv.dom.domain.player.PlayerOperation;
 import org.nv.dom.domain.player.PlayerOperationRecord;
@@ -61,18 +65,22 @@ public class PlayerServiceImpl implements PlayerService {
 		List<PlayerInfo> playerList = playerMapper.getPlayerInfosDao(gameId);
 		List<PlayerOperationRecord> operationRecords = playerMapper.getCurGameAllOperation(gameId,0);
 		List<PlayerFeedback> feedbacks = playerMapper.getCurGameAllFeedback(gameId);
+		List<PlayerGameStatus> statusList = playerMapper.getCurGameAllStatus(gameId); 
+		List<PlayerCount> counts = playerMapper.getCurGameAllCount(gameId);
 		List<GameForm> formList = gameMapper.getFormListDao(gameId,false);
 		playerList.forEach(player -> {
-			String lastOperation = operationRecords.stream()
-					.filter(record -> record.getPlayerId() == player.getPlayerId())
-					.findFirst()
-					.orElse(new PlayerOperationRecord()).getOperationStr();
-			player.setLastOperation(lastOperation);
-			String lastFeedback = feedbacks.stream()
-					.filter(feedback -> feedback.getPlayerId() == player.getPlayerId())
-					.findFirst()
-					.orElse(new PlayerFeedback()).getFeedback();
-			player.setLastFeedback(lastFeedback);
+			player.setStatus(statusList.stream()
+					.filter(status -> status.getPlayerId() == player.getPlayerId())
+					.collect(toList()));
+			player.setStatusStr(player.getStatus().stream()
+					.map(PlayerGameStatus::getStatusName)
+					.collect(joining("，")));
+			player.setCount(counts.stream()
+					.filter(count -> count.getPlayerId() == player.getPlayerId())
+					.collect(toList()));
+			player.setCountStr(player.getCount().stream()
+					.map(count -> count.getCountName()+"*"+count.getCountNum())
+					.collect(joining("，")));
 		});
 		Map<Long, List<PlayerFeedback>> temp = feedbacks.stream().collect(groupingBy(PlayerFeedback::getOperationRecordId));
 		operationRecords.forEach(record -> record.setFeedback(temp.get(record.getId())));
@@ -148,6 +156,10 @@ public class PlayerServiceImpl implements PlayerService {
 		int stage = gameUtil.getCurStage(getPlayerOperationDTO.getGameId());
 		GameForm form = gameUtil.getCurForm(getPlayerOperationDTO.getGameId());
 		List<PlayerOperation> operationList = playerMapper.getPlayerOperationList(getPlayerOperationDTO.getPlayerId(), stage);
+		List<Long> statusList = playerMapper.getGameStatusByPlayerId(getPlayerOperationDTO.getPlayerId());
+		if(statusList.contains(25L)){
+			operationList.removeIf(operation -> operation.getOperationId()<100);
+		}
 		operationList.forEach(operation -> operation.setOptions(playerMapper.getOperationOption(operation.getOperationId())));
 		List<PlayerOperationRecord> operationRecord = playerMapper.getPlayerOperationRecord(getPlayerOperationDTO.getPlayerId(), form.getFormId());
 		result.put("curStage", form.getHeader());

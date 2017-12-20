@@ -6,7 +6,9 @@ import java.util.List;
 
 import org.nv.dom.domain.game.GameForm;
 import org.nv.dom.domain.message.chat.ChatDetail;
+import org.nv.dom.domain.player.PlayerCount;
 import org.nv.dom.domain.player.PlayerFeedback;
+import org.nv.dom.domain.player.PlayerGameStatus;
 import org.nv.dom.domain.player.PlayerInfo;
 import org.nv.dom.domain.player.PlayerOperation;
 import org.nv.dom.domain.player.PlayerOperationRecord;
@@ -58,7 +60,18 @@ public class GameUtilServiceImpl implements GameUtilService{
 
 	@Override
 	public List<PlayerInfo> getPlayerInfo(long gameId) {
-		return playerMapper.getPlayerInfosDao(gameId);
+		List<PlayerCount> counts = playerMapper.getCurGameAllCount(gameId);
+		List<PlayerGameStatus> statusList = playerMapper.getCurGameAllStatus(gameId); 
+		List<PlayerInfo> playerList = playerMapper.getPlayerInfosDao(gameId);
+		playerList.forEach(player -> {
+			player.setStatus(statusList.stream()
+					.filter(status -> status.getPlayerId() == player.getPlayerId())
+					.collect(toList()));
+			player.setCount(counts.stream()
+					.filter(count -> count.getPlayerId() == player.getPlayerId())
+					.collect(toList()));
+		});
+		return playerList;
 	}
 
 	@Override
@@ -125,6 +138,12 @@ public class GameUtilServiceImpl implements GameUtilService{
 	@Override
 	public void updatePlayerInfo(List<PlayerInfo> playerInfos) {
 		gameMapper.submitApplyListDao(playerInfos);
+	}
+
+	@Override
+	public void addPlayerGameStatus(List<PlayerGameStatus> statusList, long gameId) {
+		statusList.forEach(status -> status.setGameId(gameId));
+		playerMapper.insertPlayerGameStatus(statusList);
 	}
 
 }

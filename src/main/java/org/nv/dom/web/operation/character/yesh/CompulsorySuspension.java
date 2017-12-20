@@ -18,7 +18,7 @@ import org.springframework.util.Assert;
 public class CompulsorySuspension extends Operation {
 
 	public CompulsorySuspension() {
-		operationId = 189;
+		operationId = 252;
 	}
 
 	@Override

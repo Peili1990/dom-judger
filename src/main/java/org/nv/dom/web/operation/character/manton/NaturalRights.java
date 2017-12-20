@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 public class NaturalRights extends Operation {
 
 	public NaturalRights() {
-		operationId = 92;
+		operationId = 155;
 	}
 
 	@Override

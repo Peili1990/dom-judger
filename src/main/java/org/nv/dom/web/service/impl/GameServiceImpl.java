@@ -331,6 +331,7 @@ public class GameServiceImpl extends BasicServiceImpl implements GameService {
 		case NVTermConstant.STAGE_NIGHT:
 			form.setHeader(form.getHeader()+"-结算阶段");
 			form.setType(NVTermConstant.STAGE_SETTLING);
+			gameMapper.changeRemainstage(gameId);
 		break;
 		case NVTermConstant.STAGE_SETTLING:
 			form.setContent(JSON.toJSONString(playerInfo));
@@ -338,10 +339,12 @@ public class GameServiceImpl extends BasicServiceImpl implements GameService {
 			newForm.setType(NVTermConstant.STAGE_DAY);
 			gameMapper.createOrUpdateFormDao(newForm);
 			eventUtil.publish(EventList.DAY_START_EVENT, param);
+			gameMapper.changeRemainstage(gameId);
 		break;
 		case NVTermConstant.STAGE_DAY:
 			form.setHeader(form.getHeader()+"-投票阶段");
 			form.setType(NVTermConstant.STAGE_VOTING);
+			gameMapper.changeRemainstage(gameId);
 		break;
 		case NVTermConstant.STAGE_VOTING:
 			form.setContent(JSON.toJSONString(playerInfo));
@@ -349,6 +352,7 @@ public class GameServiceImpl extends BasicServiceImpl implements GameService {
 			newForm.setType(NVTermConstant.STAGE_NIGHT);
 			gameMapper.createOrUpdateFormDao(newForm);
 			eventUtil.publish(EventList.NIGNT_START_EVENT, param);
+			gameMapper.changeRemainstage(gameId);
 		break;
 		}
 		gameMapper.createOrUpdateFormDao(form);

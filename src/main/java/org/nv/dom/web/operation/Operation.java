@@ -15,6 +15,7 @@ import org.nv.dom.config.NVTermConstant;
 import org.nv.dom.config.OperationParam;
 import org.nv.dom.domain.player.OperationSession;
 import org.nv.dom.domain.player.PlayerFeedback;
+import org.nv.dom.domain.player.PlayerGameStatus;
 import org.nv.dom.domain.player.PlayerInfo;
 import org.nv.dom.domain.player.PlayerOperation;
 import org.nv.dom.domain.player.PlayerOperationRecord;
@@ -71,6 +72,14 @@ public abstract class Operation {
 		if(record.getFeedback() != null){
 			gameUtil.sendMessage(record.getFeedback(), NVTermConstant.ADMINISTRATOR);
 		}		
+	}
+	
+	public PlayerGameStatus buildPlayerStatus(long playerId, long statusId, int remainStage){
+		PlayerGameStatus playerGameStatus = new PlayerGameStatus();
+		playerGameStatus.setPlayerId(playerId);
+		playerGameStatus.setStatusId(statusId);
+		playerGameStatus.setRemainStage(remainStage);
+		return playerGameStatus;
 	}
 	
 	public PlayerFeedback buildPlayerFeedback(PlayerInfo playerInfo, long sessionId){

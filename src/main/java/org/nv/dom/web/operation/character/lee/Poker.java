@@ -30,7 +30,7 @@ import org.springframework.util.Assert;
 public class Poker extends Operation {
 
 	public Poker() {
-		operationId = 215;
+		operationId = 278;
 	}
 	
 	private Map<Long, PokerSession> pokerManager = new HashMap<>();
@@ -104,7 +104,8 @@ public class Poker extends Operation {
 		pokerSession.setWinNum(winNum);
 		pokerSession.setStep(1);
 		PlayerFeedback bankerFeedback = buildPlayerFeedback(pokerSession.getBanker(), pokerSession.banker.getPlayerId());
-		bankerFeedback.setFeedback("当前名单为"+sexCount.get(0)+"男"+sexCount.get(1)+"女<br>随机生成的数字是"+winNum);
+		bankerFeedback.setFeedback("当前名单为"+sexCount.get(0)+"男"+sexCount.get(1)+"女<br>随机生成的数字是"+winNum+
+				"<br>请等待对方选择性别...");
 		PlayerFeedback targetFeedback = buildPlayerFeedback(pokerSession.getTarget(), pokerSession.banker.getPlayerId());
 		targetFeedback.setFeedback(pokerSession.getBanker().getCharacterName()+"找你打牌<br>"+
 				bankerFeedback.getFeedback()+"<br>请在5分钟内选择性别。");
@@ -123,17 +124,20 @@ public class Poker extends Operation {
 		if(pokerSession.getWinSex() == null){
 			pokerSession.setWinSex(randomNum(2));
 		}
+		
 		Collections.shuffle(pokerSession.getDeck());
 		List<PlayerInfo> firstList = pokerSession.getDeck().subList(0, 5);
 		firstList.removeIf(player -> player.getCharacterId() == 41 && player.getIsSp() == 0);
 		pokerSession.setFirstList(firstList);
+		pokerSession.setStep(2);
+		
 		Map<Integer,Long> sexCount = firstList.stream()
 				.collect(groupingBy(PlayerInfo::getSex, counting()));
-		pokerSession.setStep(2);
 		PlayerFeedback bankerFeedback = buildPlayerFeedback(pokerSession.getBanker(), pokerSession.getBanker().getPlayerId());
 		bankerFeedback.setFeedback("性别是"+(pokerSession.getWinSex() == 0 ? "男" : "女")+"<br>第一份名单："+
 				buildList(firstList)+"<br>当前名单"+sexCount.get(0)+"男"+sexCount.get(1)+"女<br>请在10分钟内锁定手牌");
 		gameUtil.sendMessage(Arrays.asList(bankerFeedback), NVTermConstant.ADMINISTRATOR);
+		
 		pokerSession.timerBegin(new TimerTask() {			
 			@Override
 			public void run() {
@@ -145,14 +149,17 @@ public class Poker extends Operation {
 	
 	private void secondList(PokerSession pokerSession){
 		pokerSession.timerEnd();
+		
 		int tailer = 10 - pokerSession.getSecondList().size();
 		List<PlayerInfo> secondList = pokerSession.getSecondList();
 		secondList.addAll(pokerSession.getDeck().subList(5, tailer));
 		secondList.removeIf(player -> player.getCharacterId() == 41 && player.getIsSp() == 0);
+		
 		Map<Integer,Long> sexCount = secondList.stream()
 				.collect(groupingBy(PlayerInfo::getSex, counting()));
 		boolean win = (pokerSession.getWinSex() == 0 && sexCount.get(0) == pokerSession.getWinNum()) ||
 				(pokerSession.getWinSex() == 1 && sexCount.get(1) == pokerSession.getWinNum());
+		
 		PlayerOperationRecord record = pokerSession.getRecord();
 		int effect = getSequence(getOriginParam(record.getParam())[1]);
 		String detail = EffectEnum.getByCode(effect).getMessage();
@@ -160,12 +167,15 @@ public class Poker extends Operation {
 		bankerFeedback.setFeedback("第二份名单："+buildList(secondList)+
 				"<br>当前名单"+sexCount.get(0)+"男"+sexCount.get(1)+"女<br>");
 		gameUtil.sendMessage(Arrays.asList(bankerFeedback), NVTermConstant.ADMINISTRATOR);
+		
 		bankerFeedback.setFeedback(win ? "打牌成功！" : "打牌失败！");
 		PlayerFeedback targetFeedback = buildPlayerFeedback(pokerSession.getTarget(), 0);
 		targetFeedback.setFeedback((win ? "打牌成功！你的灵魂受到震颤，被控制"+detail+"。" : "打牌失败！"));
 		record.setFeedback(Arrays.asList(bankerFeedback, targetFeedback));
+		
 		gameUtil.consumeOperationTimes(Arrays.asList(
 				new PlayerOperation(record.getPlayerId(),operationId,EffectEnum.getByCode(effect).getTimes())));
+		
 		pokerManager.remove(pokerSession.getBanker().getPlayerId());
 		Map<String, Object> param = new HashMap<>();
 		param.put(OperationParam.SETTLE_RESULT, record);

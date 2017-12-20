@@ -1,9 +1,8 @@
 package org.nv.dom.domain.player;
 
 import java.io.Serializable;
-import java.util.List;
 
-public class PlayerInfo implements Serializable{
+public class PlayerInfoStr implements Serializable{
 	
 	/**
 	 * 
@@ -35,17 +34,12 @@ public class PlayerInfo implements Serializable{
 	private Integer isLife;
 	/** 禁言 */
 	private Integer isMute;
-	/** 状态 */
-	private List<PlayerGameStatus> status;
 	/** 状态列表 */
 	private String statusStr;
-	/** 计数 */
-	private List<PlayerCount> count;
 	/** 计数列表 */
 	private String countStr;
 	/** 备注 */
 	private String remark;
-	
 	public long getPlayerId() {
 		return playerId;
 	}
@@ -124,24 +118,6 @@ public class PlayerInfo implements Serializable{
 	public void setIsMute(Integer isMute) {
 		this.isMute = isMute;
 	}
-	public List<PlayerGameStatus> getStatus() {
-		return status;
-	}
-	public void setStatus(List<PlayerGameStatus> status) {
-		this.status = status;
-	}
-	public List<PlayerCount> getCount() {
-		return count;
-	}
-	public void setCount(List<PlayerCount> count) {
-		this.count = count;
-	}
-	public String getRemark() {
-		return remark;
-	}
-	public void setRemark(String remark) {
-		this.remark = remark;
-	}
 	public String getStatusStr() {
 		return statusStr;
 	}
@@ -153,6 +129,12 @@ public class PlayerInfo implements Serializable{
 	}
 	public void setCountStr(String countStr) {
 		this.countStr = countStr;
-	}	
+	}
+	public String getRemark() {
+		return remark;
+	}
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
 
 }

@@ -358,5 +358,16 @@
 		LIMIT 1
 	
 	</select>
+	
+	<update id="changeRemainstage" parameterType="long">
+	
+		UPDATE
+			d_player_status
+		SET
+			remain_stage = remain_stage - 1
+		WHERE
+			game_id = #{gameId} AND remain_stage > 0
+	
+	</update>
 
 </mapper>

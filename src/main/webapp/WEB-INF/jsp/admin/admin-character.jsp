@@ -112,8 +112,8 @@
 										<tr>
 											<th width="120px">角色</th>
 											<th>实际身份</th>									
-											<th width="300px">最近一条操作</th>
-											<th width="300px">最近一条反馈</th>
+											<th width="300px">状态列表</th>
+											<th width="300px">拥有计数</th>
 											<th class="table-set" width="130px">操作</th>
 										</tr>
 									</thead>
@@ -122,8 +122,8 @@
 											<tr ondblclick="showRecordPanel(${playerStatus.index})">	
 												<td>${player.characterName}</td>
 												<td><span class="ellipsis-span">${player.identityDesc}</span></td>	
-												<td><span class="ellipsis-span">${player.lastOperation}</span></td>										
-												<td><span class="ellipsis-span">${player.lastFeedback}</span></td>
+												<td><span class="ellipsis-span">${player.statusStr}</span></td>										
+												<td><span class="ellipsis-span">${player.countStr}</span></td>
 												<td>
 													<div class="am-btn-toolbar">
 														<div class="am-btn-group am-btn-group-xs">

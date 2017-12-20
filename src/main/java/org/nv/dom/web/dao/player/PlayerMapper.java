@@ -4,7 +4,9 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 import org.nv.dom.domain.player.OperationOption;
+import org.nv.dom.domain.player.PlayerCount;
 import org.nv.dom.domain.player.PlayerFeedback;
+import org.nv.dom.domain.player.PlayerGameStatus;
 import org.nv.dom.domain.player.PlayerInfo;
 import org.nv.dom.domain.player.PlayerOperation;
 import org.nv.dom.domain.player.PlayerOperationRecord;
@@ -156,5 +158,25 @@ public interface PlayerMapper {
 	 * <p>根据userId查询playerId</p>
 	 */
 	public long getPlayerIdByUserId(long userId);
+
+	/**
+	 * <p>查询当前所有状态</p>
+	 */
+	public List<PlayerGameStatus> getCurGameAllStatus(long gameId);
+	
+	/** 
+	 * <p>查询当前所有计数</p>
+	 */
+	public List<PlayerCount> getCurGameAllCount(long gameId);
+	
+	/**
+	 * <p>批量插入状态</p>
+	 */
+	public int insertPlayerGameStatus(List<PlayerGameStatus> statusList);
+	
+	/**
+	 * <p>根据playerId查询状态</p>
+	 */
+	public List<Long> getGameStatusByPlayerId(long playerId);
 	
 }
