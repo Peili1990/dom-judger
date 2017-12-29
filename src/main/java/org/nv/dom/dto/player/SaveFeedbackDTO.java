@@ -12,6 +12,12 @@ public class SaveFeedbackDTO {
 	
 	private long operationRecordId;
 	
+	private long playerId;
+	
+	private long operationId;
+	
+	private int isDone;
+	
 	private boolean feedbackNow;
 	
 	private List<PlayerFeedback> feedbacks;
@@ -55,7 +61,29 @@ public class SaveFeedbackDTO {
 	public void setFeedbacks(List<PlayerFeedback> feedbacks) {
 		this.feedbacks = feedbacks;
 	}
-	
-	
+
+	public long getPlayerId() {
+		return playerId;
+	}
+
+	public void setPlayerId(long playerId) {
+		this.playerId = playerId;
+	}
+
+	public long getOperationId() {
+		return operationId;
+	}
+
+	public void setOperationId(long operationId) {
+		this.operationId = operationId;
+	}
+
+	public int getIsDone() {
+		return isDone;
+	}
+
+	public void setIsDone(int isDone) {
+		this.isDone = isDone;
+	}
 
 }

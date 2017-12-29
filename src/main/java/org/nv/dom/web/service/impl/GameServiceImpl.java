@@ -1,5 +1,6 @@
 package org.nv.dom.web.service.impl;
 
+import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toList;
 
 import java.text.SimpleDateFormat;
@@ -35,6 +36,7 @@ import org.nv.dom.enums.GameStatus;
 import org.nv.dom.enums.IdentityCode;
 import org.nv.dom.enums.PlayerStatus;
 import org.nv.dom.util.DateFormatUtil;
+import org.nv.dom.util.Iterables;
 import org.nv.dom.util.StringUtil;
 import org.nv.dom.util.TextUtil;
 import org.nv.dom.web.dao.character.CharacterMapper;
@@ -289,6 +291,13 @@ public class GameServiceImpl extends BasicServiceImpl implements GameService {
 				String characterName = skins.size() == 1 ? skins.get(0).getCharacterName() : playerInfo.getCharacterName();
 				target.put(playerInfo.getPlayerId(), characterName);
 			});
+			Map<String, List<Long>> temp = target.keySet().stream().collect(groupingBy(target::get,toList()));
+			temp.keySet().stream()
+				.filter(name -> temp.get(name).size() > 1)
+				.map(temp::get)
+				.forEach(list -> {
+					Iterables.forEach(list, (index, playerId) -> target.put(playerId, target.get(playerId)+TextUtil.numToLetter(index)));
+				});
 			break;
 		case 2:
 			Stream.of(IdentityCode.values()).forEach(identity -> target.put(identity.getCode().longValue(), identity.getMessage()));
@@ -374,7 +383,7 @@ public class GameServiceImpl extends BasicServiceImpl implements GameService {
 	@Override
 	public Map<String, Object> allOperationList() {
 		Map<String, Object> result = new HashMap<String, Object>();
-		List<String> operationList = playerMapper.getAllOperation();
+		List<PlayerOperation> operationList = playerMapper.getAllOperation();
 		result.put("operationList", operationList);
 		result.put(PageParamType.BUSINESS_STATUS, 1);
 		result.put(PageParamType.BUSINESS_MESSAGE, "获取所有的操作列表成功");

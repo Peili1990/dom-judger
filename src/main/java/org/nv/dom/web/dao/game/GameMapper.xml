@@ -359,6 +359,17 @@
 	
 	</select>
 	
+	<select id="getCurGameStatus" parameterType="long" resultType="Integer">
+	
+		SELECT
+			status
+		FROM
+			d_game
+		WHERE
+			id = #{gameId}
+	
+	</select>
+	
 	<update id="changeRemainstage" parameterType="long">
 	
 		UPDATE

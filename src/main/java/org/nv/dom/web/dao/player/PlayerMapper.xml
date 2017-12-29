@@ -371,12 +371,15 @@
 	
 	</select>
 	
-	<select id="getAllOperation" resultType="String">
+	<select id="getAllOperation" resultType="PlayerOperation">
 	
 		SELECT
-			name
+			id AS operationId,
+			name AS operationName
 		FROM
-			d_operation_config 
+			d_operation_config
+		WHERE
+			is_delete = 0 
 	
 	</select>
 	
@@ -436,6 +439,17 @@
 		 </foreach>	
 	
 	</delete>
+	
+	<select id="checkSettleStatus" parameterType="long" resultType="Integer">
+	
+		SELECT
+			is_done
+		FROM
+			d_player_operation_record
+		WHERE
+			id = #{recordId}
+	
+	</select>
 	
 	<select id="getOperationOption" parameterType="Long" resultType="OperationOption">
 	

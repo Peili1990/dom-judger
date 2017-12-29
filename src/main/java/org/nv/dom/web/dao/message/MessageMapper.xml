@@ -19,6 +19,17 @@
 			ds.newspaper_id = #{newspaperId}		
 	
 	</select>
+	
+	<select id="checkHasSpeech" resultType="Integer">
+	
+		SELECT
+			count(1)
+		FROM
+			d_speech 
+		WHERE
+			newspaper_id = #{newspaperId} AND player_id = #{playerId} AND type = 1
+	
+	</select>
 
 
 </mapper>

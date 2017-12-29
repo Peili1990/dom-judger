@@ -127,7 +127,7 @@ public interface PlayerMapper {
 	/**
 	 * <p>获取所有操作</p>
 	 */
-	public List<String> getAllOperation();
+	public List<PlayerOperation> getAllOperation();
 
 	/**
 	 * <p>删除玩家拥有操作</p>

@@ -64,6 +64,21 @@
 	
 	</select>
 	
+	<select id="getLatestNewspaperId" parameterType="long" resultType="long">
+	
+		SELECT
+			id
+		FROM
+			d_newspaper
+		WHERE
+			game_id = #{gameId} AND type = 2 AND status = 1
+		ORDER BY
+			create_time
+		DESC
+		LIMIT 1
+	
+	</select>
+	
 	<select id="getNewspaperDetailDao" parameterType="long" resultType="Newspaper">
 	
 		SELECT 

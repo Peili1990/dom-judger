@@ -37,7 +37,7 @@
 <script type="text/javascript">
 var settlePanel = $("#settle-panel")
 
-function settleOperation(id,button){
+function settleOperation(id,playerId,operationId,isDone,button){
 	var list = settlePanel.find("tbody");
 	list.empty();
 	$("#operation-detail").text($(button).parents("li").find("p").first().text());
@@ -57,7 +57,7 @@ function settleOperation(id,button){
 			});			
 		}
 	})
-	settlePanel.find("input[name='save']").unbind("click").on("click",function(){saveFeedback(id)})
+	settlePanel.find("input[name='save']").unbind("click").on("click",function(){saveFeedback(id,playerId,operationId,isDone)})
 	settlePanel.find("input[name='create']").unbind("click").on("click",function(){
 		var builder = new StringBuilder();
 		builder.append('<tr>');
@@ -75,7 +75,7 @@ function settleOperation(id,button){
 	settlePanel.modal("open");
 }
 
-function saveFeedback(operationRecordId){
+function saveFeedback(operationRecordId,playerId,operationId,isDone){
 	var list = [];
 	$.each(settlePanel.find("tr"),function(index,row){
 		if(index==0) return true;
@@ -88,6 +88,9 @@ function saveFeedback(operationRecordId){
 	})
 	var options = {
 		operationRecordId : operationRecordId,
+		playerId : playerId,
+		operationId : operationId,
+		isDone : isDone,
 		feedbackNow : $("#feedback-now").is(':checked'),
 		feedbacks : list
 	}

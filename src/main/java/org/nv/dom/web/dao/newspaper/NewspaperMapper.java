@@ -12,6 +12,8 @@ public interface NewspaperMapper {
 	
 	public List<Newspaper> getNewspaperListDao(long gameId);
 	
+	public long getLatestNewspaperId(long gameId);
+	
 	public Newspaper getNewspaperDetailDao(long newspaperId);
 	
 	public int updateNewspaperStatusDao(long gameId);

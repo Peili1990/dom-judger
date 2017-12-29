@@ -54,7 +54,7 @@
           									<li class="am-panel am-panel-default">
           										<div class="am-panel-hd">
           										<time>${operation.createTime}</time>
-          										<button class="am-btn am-btn-default" onclick="settleOperation(${operation.id},this)">结算</button>
+          										<button class="am-btn am-btn-default" onclick="settleOperation(${operation.id},${operation.playerId},${operation.operationId},${operation.isDone},this)">结算</button>
           										</div>
           									<div class="am-panel-bd"><p>
           									<c:if test="${operation.operator != null}">

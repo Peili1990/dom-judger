@@ -94,6 +94,10 @@ public interface GameMapper {
 	 */
 	public int getCurStage(long gameId);
 	/**
+	 * <p>获取游戏当前状态</p>
+	 */
+	public int getCurGameStatus(long gameId);
+	/**
 	 * <p>减少剩余的持续阶段</p>
 	 */
 	public void changeRemainstage(long gameId);

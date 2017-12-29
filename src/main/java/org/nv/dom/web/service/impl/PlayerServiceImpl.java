@@ -230,7 +230,10 @@ public class PlayerServiceImpl implements PlayerService {
 	@Override
 	public Map<String, Object> saveFeedback(SaveFeedbackDTO saveFeedbackDTO) {
 		Map<String, Object> result = new HashMap<String, Object>();
-		playerMapper.settleOperationBatch(Arrays.asList(saveFeedbackDTO.getOperationRecordId()));
+		if(saveFeedbackDTO.getIsDone() != 1){
+			gameUtil.consumeOperationTimes(Arrays.asList(new PlayerOperation(saveFeedbackDTO.getPlayerId(),saveFeedbackDTO.getOperationId())));
+			playerMapper.settleOperationBatch(Arrays.asList(saveFeedbackDTO.getOperationRecordId()));
+		}
 		long formId = gameUtil.getCurForm(saveFeedbackDTO.getGameId()).getFormId();
 		playerMapper.deletePlayerFeedback(saveFeedbackDTO.getOperationRecordId());
 		if(!saveFeedbackDTO.getFeedbacks().isEmpty()){

@@ -43,8 +43,8 @@ function getAllOperationList(){
 	common.callAction(null,url,function(data){
 		var builder = new StringBuilder();
 		builder.append('<td><select>');
-		$.each(data.operationList,function(index,operationName){
-			builder.appendFormat('<option value="{0}">{1}</option>',index+1,operationName);
+		$.each(data.operationList,function(index,operation){
+			builder.appendFormat('<option value="{0}">{1}</option>',operation.operationId,operation.operationName);
 		})
 		builder.append('</select></td>');
 		operationList = builder.toString();

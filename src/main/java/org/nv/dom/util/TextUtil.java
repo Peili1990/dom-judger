@@ -38,5 +38,9 @@ public class TextUtil {
 	public static String numToStr(int num){
 		return num <= 10 ? word.get(num-1) : "十" + word.get(num-11);
 	}
+	
+	public static String numToLetter(int num){
+		return (char) (num + 65) + "";
+	}
 
 }

@@ -58,9 +58,13 @@
                   	</c:if>
                   	<c:if test="${ applyingGame.gameStatus == 4 }">
                   	<p><button type="button" class="am-btn am-btn-primary am-btn-xs" 
-                  		onclick="queryGameResult(${applyingGame.id})">结束游戏</button></p>
+                  		onclick="changeGameStatus(${applyingGame.id},5)">进入快进</button></p>
                   	</c:if>
                   	<c:if test="${ applyingGame.gameStatus == 5 }">
+                  	<p><button type="button" class="am-btn am-btn-primary am-btn-xs" 
+                  		onclick="queryGameResult(${applyingGame.id})">结束游戏</button></p>
+                  	</c:if>
+                  	<c:if test="${ applyingGame.gameStatus == 6 }">
                   	<p><button type="button" class="am-btn am-btn-primary am-btn-xs" 
                   		onclick="changeGameStatus(${applyingGame.id},9)">复盘结束</button></p>
                   	</c:if>
@@ -288,7 +292,7 @@ function changeGameStatus(gameId,status,finalResult){
 			return;
 		}
 	}
-	if(gamedata.gameStatus==5&&!gamedata.replayEssayId){
+	if(gamedata.gameStatus==6&&!gamedata.replayEssayId){
 		myAlert("本次版杀还未复盘！");
 		return;
 	}
