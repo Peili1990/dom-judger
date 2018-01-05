@@ -130,5 +130,17 @@ public class GameController extends BaseController{
 	public Map<String, Object> allOperationList(HttpSession session){
 		return gameService.allOperationList();
 	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/allStatusList", method = RequestMethod.POST)
+	public Map<String, Object> allStatusList(HttpSession session){
+		return gameService.allStatusList();
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/allCountList", method = RequestMethod.POST)
+	public Map<String, Object> allCountList(HttpSession session){
+		return gameService.allCountList();
+	}
 
 }

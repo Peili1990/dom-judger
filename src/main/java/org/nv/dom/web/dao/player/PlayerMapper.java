@@ -11,6 +11,7 @@ import org.nv.dom.domain.player.PlayerInfo;
 import org.nv.dom.domain.player.PlayerOperation;
 import org.nv.dom.domain.player.PlayerOperationRecord;
 import org.nv.dom.domain.player.PlayerReplaceSkin;
+import org.nv.dom.dto.player.ChangePlayerProperDTO;
 import org.nv.dom.dto.player.UpdatePlayerStatusDTO;
 import org.springframework.stereotype.Repository;
 
@@ -178,5 +179,40 @@ public interface PlayerMapper {
 	 * <p>根据playerId查询状态</p>
 	 */
 	public List<Long> getGameStatusByPlayerId(long playerId);
+
+	/**
+	 * <p>插入计数</p>
+	 */
+	public int insertPlayerCount(List<PlayerCount> count);
+	
+	/**
+	 * <p>更新计数</p>
+	 */
+	public int updatePlayerCount(PlayerCount count);
+
+	/**
+	 * <p>获取全部状态</p>
+	 */
+	public List<PlayerGameStatus> getAllStatus();
+
+	/**
+	 * <p>获取全部计数</p>
+	 */
+	public List<PlayerCount> getAllCount();
+
+	/**
+	 * <p>更新基本信息</p>
+	 */
+	public int updatePlayerInfo(ChangePlayerProperDTO changePlayerProperDTO);
+
+	/**
+	 * <p>删除玩家状态</p>
+	 */
+	public void clearPlayerStatus(long playerId);
+
+	/**
+	 * <p>删除玩家计数</p>
+	 */
+	public void clearPlayerCount(long playerId);
 	
 }

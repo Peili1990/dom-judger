@@ -242,6 +242,39 @@
 	
 	</insert>
 	
+	<insert id="insertPlayerCount">
+	
+		INSERT INTO d_player_count(
+			game_id,
+			count_type,
+			player_id,
+			count_id,
+			count_num
+		)
+		VALUES
+			<foreach item="item" index="index" collection="list" separator=",">
+ 			(
+            #{item.gameId},
+            #{item.countType},
+            #{item.playerId},
+            #{item.countId},
+            #{item.countNum}
+            )
+            </foreach>
+	
+	</insert>
+	
+	<update id="updatePlayerCount" parameterType="PlayerCount">
+	
+		UPDATE 
+			d_player_count
+		SET
+			count_num = count_num + #{countNum}
+		WHERE
+			player_id = #{playerId} AND count_id = #{countId}
+	
+	</update>
+	
 	<select id="getGameStatusByPlayerId" parameterType="Long" resultType="Long">
 	
 		SELECT
@@ -249,7 +282,7 @@
 		FROM
 			d_player_status
 		WHERE
-			player_id = #{playerId}
+			player_id = #{playerId} AND remain_stage > 0
 	
 	</select>
 	
@@ -440,17 +473,6 @@
 	
 	</delete>
 	
-	<select id="checkSettleStatus" parameterType="long" resultType="Integer">
-	
-		SELECT
-			is_done
-		FROM
-			d_player_operation_record
-		WHERE
-			id = #{recordId}
-	
-	</select>
-	
 	<select id="getOperationOption" parameterType="Long" resultType="OperationOption">
 	
 		SELECT
@@ -499,9 +521,59 @@
 		FROM
 			d_player_count dpc, d_count_config dcc
 		WHERE
-			dpc.game_id = #{gameId} AND dpc.count_id = dcc.id
+			dpc.game_id = #{gameId} AND dpc.count_id = dcc.id AND dpc.count_num > 0
 			
 	</select>
+	
+	<select id="getAllStatus" resultType="PlayerGameStatus">
+	
+		SELECT
+			id AS statusId,
+			name AS statusName
+		FROM
+			d_status_config
+	
+	</select>
+	
+	<select id="getAllCount" resultType="PlayerCount">
+	
+		SELECT
+			id AS countId,
+			name AS countName
+		FROM
+			d_count_config
+	
+	</select>
+	
+	<update id="updatePlayerInfo" parameterType="ChangePlayerProperDTO">
+	
+		UPDATE
+			d_player_record
+		SET
+			camp = #{camp},
+			is_sp = #{isSp}
+		WHERE
+			player_id = #{playerId}
+	
+	</update>
+	
+	<delete id="clearPlayerStatus" parameterType="long">
+	
+		DELETE FROM
+			d_player_status
+		WHERE
+			player_id = #{playerId}
+	
+	</delete>
+	
+	<delete id="clearPlayerCount" parameterType="long">
+	
+		DELETE FROM
+			d_player_count
+		WHERE
+			player_id = #{playerId}
+	
+	</delete>
 	
 	
 

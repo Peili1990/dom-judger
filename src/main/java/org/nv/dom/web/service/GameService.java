@@ -39,4 +39,8 @@ public interface GameService {
 
 	public Map<String, Object> allOperationList();
 
+	public Map<String, Object> allStatusList();
+
+	public Map<String, Object> allCountList();
+
 }

@@ -3,6 +3,7 @@ package org.nv.dom.web.operation;
 import static java.util.stream.Collectors.joining;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +15,7 @@ import javax.annotation.PostConstruct;
 import org.nv.dom.config.NVTermConstant;
 import org.nv.dom.config.OperationParam;
 import org.nv.dom.domain.player.OperationSession;
+import org.nv.dom.domain.player.PlayerCount;
 import org.nv.dom.domain.player.PlayerFeedback;
 import org.nv.dom.domain.player.PlayerGameStatus;
 import org.nv.dom.domain.player.PlayerInfo;
@@ -51,6 +53,10 @@ public abstract class Operation {
 		return random.nextInt(length);
 	}
 	
+	public boolean determine(double probability) {
+		return random.nextDouble() < probability;
+	}
+	
 	public abstract void check(Map<String, Object> param);
 	
 	public abstract PlayerOperationRecord settle(Map<String, Object> param);
@@ -74,12 +80,33 @@ public abstract class Operation {
 		}		
 	}
 	
+	public void addPlayerGameStatus(long playerId, long statusId, int remainStage, long gameId){
+		gameUtil.addPlayerGameStatus(Arrays.asList(buildPlayerStatus(playerId, statusId, remainStage)), gameId);
+	}
+	
+	public void addPlayerCount(long playerId, int countType, long countId, int countNum, long gameId){
+		gameUtil.addPlayerCount(Arrays.asList(buildPlayerCount(playerId, countType, countId, countNum)), gameId);
+	}
+	
+	public boolean checkStatus(PlayerInfo playerInfo, long statusId){
+		return playerInfo.getStatus().stream().anyMatch(status -> status.getStatusId() == statusId);
+	}
+	
 	public PlayerGameStatus buildPlayerStatus(long playerId, long statusId, int remainStage){
 		PlayerGameStatus playerGameStatus = new PlayerGameStatus();
 		playerGameStatus.setPlayerId(playerId);
 		playerGameStatus.setStatusId(statusId);
 		playerGameStatus.setRemainStage(remainStage);
 		return playerGameStatus;
+	}
+	
+	public PlayerCount buildPlayerCount(long playerId, int countType, long countId, int countNum){
+		PlayerCount playerCount = new PlayerCount();
+		playerCount.setPlayerId(playerId);
+		playerCount.setCountType(countType);
+		playerCount.setCountId(countId);
+		playerCount.setCountNum(countNum);
+		return playerCount;
 	}
 	
 	public PlayerFeedback buildPlayerFeedback(PlayerInfo playerInfo, long sessionId){

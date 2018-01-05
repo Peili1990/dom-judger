@@ -3,6 +3,7 @@ package org.nv.dom.web.util;
 import java.util.List;
 
 import org.nv.dom.domain.game.GameForm;
+import org.nv.dom.domain.player.PlayerCount;
 import org.nv.dom.domain.player.PlayerFeedback;
 import org.nv.dom.domain.player.PlayerGameStatus;
 import org.nv.dom.domain.player.PlayerInfo;
@@ -36,5 +37,9 @@ public interface GameUtilService {
 	void updatePlayerInfo(List<PlayerInfo> playerInfos);
 
 	void addPlayerGameStatus(List<PlayerGameStatus> asList, long gameId);
+	
+	void addPlayerCount(List<PlayerCount> counts, long gameId);
+
+	void updatePlayerCount(PlayerCount playerCount);
 
 }

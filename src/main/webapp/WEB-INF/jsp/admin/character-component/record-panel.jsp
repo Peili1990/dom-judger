@@ -40,6 +40,7 @@ $(function(){
 function getOperationTarget(){
 	var builder = new StringBuilder();
 	builder.append('<td><select>');
+	builder.append('<option value="0">请选择</option>');
 	$.each(players,function(index,player){
 		builder.appendFormat('<option value="{0}">{1}</option>',player.playerId,player.characterName);
 	})

@@ -146,4 +146,15 @@ public class GameUtilServiceImpl implements GameUtilService{
 		playerMapper.insertPlayerGameStatus(statusList);
 	}
 
+	@Override
+	public void addPlayerCount(List<PlayerCount> counts, long gameId) {
+		counts.forEach(count -> count.setGameId(gameId));
+		playerMapper.insertPlayerCount(counts);
+	}
+
+	@Override
+	public void updatePlayerCount(PlayerCount playerCount) {
+		playerMapper.updatePlayerCount(playerCount);
+	}
+
 }

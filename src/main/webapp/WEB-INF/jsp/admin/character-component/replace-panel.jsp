@@ -36,6 +36,7 @@ $(function(){
 	$.get('${baseUrl}file/character-avatar.json',function(data){
 		var builder = new StringBuilder();
 		builder.append('<td><select>');
+		builder.append('<option value="0">请选择</option>');
 		$.each(data.characterAvatars,function(index,character){
 			builder.appendFormat('<option value="{0}">{1}</option>',character.avatar,character.characterName);
 		})

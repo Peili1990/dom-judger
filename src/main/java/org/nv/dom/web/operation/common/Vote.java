@@ -48,7 +48,7 @@ public class Vote extends Operation {
 			PlayerInfo voter = findTarget(playerInfos, player -> player.getPlayerId() == operation.getPlayerId());
 			long gameStatus = gameMapper.getCurGameStatus(gameId);
 			if (gameStatus == GameStatus.SPEEDING.getCode()){
-				Assert.isTrue(voter.getStatus().stream().noneMatch(status -> status.getStatusId() == 4), "被禁言者无法投票");
+				Assert.isTrue(!checkStatus(voter, 4), "被禁言者无法投票");
 			} else {
 				long newspaperId = newspaperMapper.getLatestNewspaperId(gameId);
 				Assert.isTrue(messageMapper.checkHasSpeech(newspaperId, voter.getPlayerId()) > 0, "未发言者无法投票");

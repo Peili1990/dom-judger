@@ -203,6 +203,15 @@ Array.prototype.indexOf = function(val) {
     return -1;  
 };  
 
+Array.prototype.indexOfKey = function(key,val) {  
+    for (var i = 0; i < this.length; i++) {  
+        for(items in this[i]){
+        	if(items==key && this[i][items]==val) return i;
+        }  
+    }  
+    return -1;  
+};  
+
 Array.prototype.remove = function(val) {  
     var index = this.indexOf(val);  
     while(index>-1){  

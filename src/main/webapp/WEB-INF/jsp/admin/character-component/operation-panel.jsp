@@ -43,6 +43,7 @@ function getAllOperationList(){
 	common.callAction(null,url,function(data){
 		var builder = new StringBuilder();
 		builder.append('<td><select>');
+		builder.append('<option value="0">请选择</option>');
 		$.each(data.operationList,function(index,operation){
 			builder.appendFormat('<option value="{0}">{1}</option>',operation.operationId,operation.operationName);
 		})

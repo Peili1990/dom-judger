@@ -8,29 +8,49 @@ public class PlayerCount implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 7284890588489596372L;
-
-	private int playerId;
 	
-	private int countId;
+	private long gameId;
+
+	private long playerId;
+	
+	private long countId;
+	
+	private int countType;
 	
 	private String countName;
 	
 	private int countNum;
 
-	public int getPlayerId() {
+	public long getGameId() {
+		return gameId;
+	}
+
+	public void setGameId(long gameId) {
+		this.gameId = gameId;
+	}
+
+	public long getPlayerId() {
 		return playerId;
 	}
 
-	public void setPlayerId(int playerId) {
+	public void setPlayerId(long playerId) {
 		this.playerId = playerId;
 	}
 
-	public int getCountId() {
+	public long getCountId() {
 		return countId;
 	}
 
-	public void setCountId(int countId) {
+	public void setCountId(long countId) {
 		this.countId = countId;
+	}
+
+	public int getCountType() {
+		return countType;
+	}
+
+	public void setCountType(int countType) {
+		this.countType = countType;
 	}
 
 	public String getCountName() {

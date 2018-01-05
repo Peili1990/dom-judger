@@ -122,8 +122,8 @@
 											<tr ondblclick="showRecordPanel(${playerStatus.index})">	
 												<td>${player.characterName}</td>
 												<td><span class="ellipsis-span">${player.identityDesc}</span></td>	
-												<td><span class="ellipsis-span">${player.statusStr}</span></td>										
-												<td><span class="ellipsis-span">${player.countStr}</span></td>
+												<td title="${player.statusStr}"><span class="ellipsis-span">${player.statusStr}</span></td>										
+												<td title="${player.countStr}"><span class="ellipsis-span">${player.countStr}</span></td>
 												<td>
 													<div class="am-btn-toolbar">
 														<div class="am-btn-group am-btn-group-xs">

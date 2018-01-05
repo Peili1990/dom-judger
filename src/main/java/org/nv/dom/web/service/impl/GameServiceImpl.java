@@ -21,6 +21,8 @@ import org.nv.dom.domain.game.ApplyingGame;
 import org.nv.dom.domain.game.GameForm;
 import org.nv.dom.domain.newspaper.Newspaper;
 import org.nv.dom.domain.player.OperationOption;
+import org.nv.dom.domain.player.PlayerCount;
+import org.nv.dom.domain.player.PlayerGameStatus;
 import org.nv.dom.domain.player.PlayerInfo;
 import org.nv.dom.domain.player.PlayerOperation;
 import org.nv.dom.domain.player.PlayerReplaceSkin;
@@ -387,6 +389,26 @@ public class GameServiceImpl extends BasicServiceImpl implements GameService {
 		result.put("operationList", operationList);
 		result.put(PageParamType.BUSINESS_STATUS, 1);
 		result.put(PageParamType.BUSINESS_MESSAGE, "获取所有的操作列表成功");
+		return result;
+	}
+
+	@Override
+	public Map<String, Object> allStatusList() {
+		Map<String, Object> result = new HashMap<String, Object>();
+		List<PlayerGameStatus> statusList = playerMapper.getAllStatus();
+		result.put("statusList", statusList);
+		result.put(PageParamType.BUSINESS_STATUS, 1);
+		result.put(PageParamType.BUSINESS_MESSAGE, "获取所有的状态列表成功");
+		return result;
+	}
+
+	@Override
+	public Map<String, Object> allCountList() {
+		Map<String, Object> result = new HashMap<String, Object>();
+		List<PlayerCount> countList = playerMapper.getAllCount();
+		result.put("countList", countList);
+		result.put(PageParamType.BUSINESS_STATUS, 1);
+		result.put(PageParamType.BUSINESS_MESSAGE, "获取所有的计数列表成功");
 		return result;
 	}
 	

@@ -12,6 +12,7 @@ import org.nv.dom.domain.user.User;
 import org.nv.dom.dto.operation.SavePlayerOperationDTO;
 import org.nv.dom.dto.operation.SubmitPlayerOperationDTO;
 import org.nv.dom.dto.player.ApplyDTO;
+import org.nv.dom.dto.player.ChangePlayerProperDTO;
 import org.nv.dom.dto.player.GetPlayerOperationDTO;
 import org.nv.dom.dto.player.JudgerDecisionDTO;
 import org.nv.dom.dto.player.SaveFeedbackDTO;
@@ -97,6 +98,14 @@ public class PlayerController {
 			submitPlayerOperationDTO.setGameId(game.getId());
 		}
 		return playerService.submitOperation(submitPlayerOperationDTO);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/updatePlayerStatus", method = RequestMethod.POST)
+	public Map<String, Object> updatePlayerStatus(@RequestBody ChangePlayerProperDTO changePlayerProperDTO,HttpSession session) {
+		ApplyingGame game = (ApplyingGame)session.getAttribute(PageParamType.GAME_IN_SESSION);
+		changePlayerProperDTO.setGameId(game.getId());
+		return playerService.updatePlayerStatus(changePlayerProperDTO);
 	}
 	
 	@ResponseBody

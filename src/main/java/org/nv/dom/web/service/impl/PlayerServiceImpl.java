@@ -25,6 +25,7 @@ import org.nv.dom.dto.operation.SavePlayerOperationDTO;
 import org.nv.dom.dto.operation.SubmitOperationDTO;
 import org.nv.dom.dto.operation.SubmitPlayerOperationDTO;
 import org.nv.dom.dto.player.ApplyDTO;
+import org.nv.dom.dto.player.ChangePlayerProperDTO;
 import org.nv.dom.dto.player.GetPlayerOperationDTO;
 import org.nv.dom.dto.player.JudgerDecisionDTO;
 import org.nv.dom.dto.player.SaveFeedbackDTO;
@@ -160,6 +161,16 @@ public class PlayerServiceImpl implements PlayerService {
 		if(statusList.contains(25L)){
 			operationList.removeIf(operation -> operation.getOperationId()<100);
 		}
+		if(statusList.contains(26L)){
+			if(statusList.contains(28L)){
+				operationList.removeIf(operation -> operation.getOperationId() != 100);
+			} else {
+				operationList.clear();
+			}
+		}
+		if(statusList.contains(27L)){
+			operationList.removeIf(operation -> operation.getOperationId() != 102);
+		}
 		operationList.forEach(operation -> operation.setOptions(playerMapper.getOperationOption(operation.getOperationId())));
 		List<PlayerOperationRecord> operationRecord = playerMapper.getPlayerOperationRecord(getPlayerOperationDTO.getPlayerId(), form.getFormId());
 		result.put("curStage", form.getHeader());
@@ -259,6 +270,25 @@ public class PlayerServiceImpl implements PlayerService {
 		}
 		result.put(PageParamType.BUSINESS_STATUS, 1);
 		result.put(PageParamType.BUSINESS_MESSAGE, "结算成功");
+		return result;
+	}
+
+	@Override
+	public Map<String, Object> updatePlayerStatus(ChangePlayerProperDTO changePlayerProperDTO) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		playerMapper.updatePlayerInfo(changePlayerProperDTO);
+		playerMapper.clearPlayerStatus(changePlayerProperDTO.getPlayerId());
+		if(!changePlayerProperDTO.getStatus().isEmpty()){
+			changePlayerProperDTO.getStatus().forEach(status -> status.setGameId(changePlayerProperDTO.getGameId()));
+			playerMapper.insertPlayerGameStatus(changePlayerProperDTO.getStatus());
+		}
+		playerMapper.clearPlayerCount(changePlayerProperDTO.getPlayerId());
+		if(!changePlayerProperDTO.getCount().isEmpty()){
+			changePlayerProperDTO.getCount().forEach(status -> status.setGameId(changePlayerProperDTO.getGameId()));
+			playerMapper.insertPlayerCount(changePlayerProperDTO.getCount());
+		}
+		result.put(PageParamType.BUSINESS_STATUS, 1);
+		result.put(PageParamType.BUSINESS_MESSAGE, "更新成功");
 		return result;
 	}
 

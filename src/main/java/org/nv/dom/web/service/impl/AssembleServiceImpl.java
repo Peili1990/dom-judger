@@ -17,6 +17,7 @@ import org.nv.dom.web.dao.message.MessageMapper;
 import org.nv.dom.web.dao.newspaper.NewspaperMapper;
 import org.nv.dom.web.dao.player.PlayerMapper;
 import org.nv.dom.web.service.AssembleService;
+import org.nv.dom.web.util.GameUtilService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -34,6 +35,9 @@ public class AssembleServiceImpl implements AssembleService {
 	
 	@Autowired
 	MessageMapper messageMapper;
+	
+	@Autowired
+	GameUtilService gameUtil;
 	
 	@Override
 	public List<Newspaper> getNewspaperList(long gameId) {
@@ -66,8 +70,8 @@ public class AssembleServiceImpl implements AssembleService {
 	@Override
 	public Map<String, Object> generateSeatTable(long gameId) {
 		Map<String, Object> result = new HashMap<String, Object>();
-		List<PlayerInfo> players = playerMapper.getAlivePlayersDao(gameId);
-		Assert.isTrue(players != null && players.size()>=6, "存活玩家太少，无法生成座位表！");
+		List<PlayerInfo> players = gameUtil.getPlayerInfo(gameId);
+		Assert.isTrue(players != null && players.size()>=6, "玩家太少，无法生成座位表！");
 		String seatTableHtml = generateSeatTableHtml(players);
 		result.put("seatTable", seatTableHtml);
 		result.put(PageParamType.BUSINESS_STATUS, 1);
@@ -80,10 +84,11 @@ public class AssembleServiceImpl implements AssembleService {
 		Iterator<PlayerInfo> iter = players.iterator();
 		while(iter.hasNext()){
 			PlayerInfo player = iter.next();
-			if(player.getIsLife()!=null&&player.getIsLife()==0){
+			if(player.getStatus().stream().anyMatch(status -> status.getStatusId() == 26 
+					|| status.getStatusId() == 27)){
 				player.setCharacterName("<strike>"+player.getCharacterName()+"</strike>");
 			}
-			if(player.getHasPosition()==0){
+			if(player.getStatus().stream().anyMatch(status -> status.getStatusId() == 29)){
 				temp.add(player);
 				iter.remove();
 			}
