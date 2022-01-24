@@ -64,9 +64,15 @@ public class GameUtilServiceImpl implements GameUtilService{
 		List<PlayerGameStatus> statusList = playerMapper.getCurGameAllStatus(gameId); 
 		List<PlayerInfo> playerList = playerMapper.getPlayerInfosDao(gameId);
 		playerList.forEach(player -> {
-			player.setStatus(statusList.stream()
+			List<PlayerGameStatus> statuses = statusList.stream()
 					.filter(status -> status.getPlayerId() == player.getPlayerId())
-					.collect(toList()));
+					.collect(toList());
+			if(statuses.stream().anyMatch(status -> status.getStatusId() == 26 || status.getStatusId() == 27)) {
+				player.setIsLife(0);
+			} else {
+				player.setIsLife(1);
+			}
+			player.setStatus(statuses);
 			player.setCount(counts.stream()
 					.filter(count -> count.getPlayerId() == player.getPlayerId())
 					.collect(toList()));

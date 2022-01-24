@@ -196,7 +196,7 @@ function deletePlayerCount(button){
 function addstatusStyle(players){
 	$.each($("#character-info tr"),function(index,tr){
 		player = $(tr).find("td").eq(0);
-		if(players[index].status.indexOfKey("statusId",26) > 0 || players[index].status.indexOfKey("statusId",25) > 0){
+		if(players[index].status.indexOfKey("statusId",26) > 0 || players[index].status.indexOfKey("statusId",27) > 0){
 			player.addClass("dead");
 		}
 		if(players[index].status.indexOfKey("statusId",4) > 0){
