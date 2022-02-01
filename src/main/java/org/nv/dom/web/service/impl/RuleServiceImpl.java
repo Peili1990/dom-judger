@@ -32,7 +32,7 @@ public class RuleServiceImpl extends BasicServiceImpl implements RuleService {
 	@Override
 	public String getRuleContent(GetRuleContentDTO getRuleContentDTO) {
 		try{
-			String rule = redisClient.getHSet(RedisConstant.RULE_ROW+getRuleContentDTO.getRow(), RedisConstant.RULE_INDEX+getRuleContentDTO.getIndex());
+			String rule = redisGetHSet(RedisConstant.RULE_ROW+getRuleContentDTO.getRow(), RedisConstant.RULE_INDEX+getRuleContentDTO.getIndex());
 			if(StringUtil.isNullOrEmpty(rule)){
 				rule = ruleMapper.getRuleIndexContent(getRuleContentDTO);				
 			}
@@ -46,7 +46,7 @@ public class RuleServiceImpl extends BasicServiceImpl implements RuleService {
 	@Override
 	public Map<String, Object> getRuleRow() {
 		Map<String, Object> result = new HashMap<>();
-		List<RuleRow> ruleRows = JSON.parseArray(redisClient.get(RedisConstant.RULE_ROW_CONTENT, ""), RuleRow.class);
+		List<RuleRow> ruleRows = JSON.parseArray(redisGet(RedisConstant.RULE_ROW_CONTENT), RuleRow.class);
 		if(ruleRows == null || ruleRows.isEmpty()){
 			ruleRows = ruleMapper.getRuleRowContent();
 		}
@@ -70,16 +70,16 @@ public class RuleServiceImpl extends BasicServiceImpl implements RuleService {
 		Assert.isTrue(user != null && user.getAuthority() != null && user.getAuthority() > 1, "权限不够，无法修改规则");
 		Assert.isTrue(ruleMapper.saveRule(saveRuleDTO)==1, "修改规则失败");		
 		if(saveRuleDTO.getIndex()==null){
-			List<RuleRow> ruleRows = JSON.parseArray(redisClient.get(RedisConstant.RULE_ROW_CONTENT, ""), RuleRow.class);
+			List<RuleRow> ruleRows = JSON.parseArray(redisGet(RedisConstant.RULE_ROW_CONTENT), RuleRow.class);
 			ruleRows.get(saveRuleDTO.getRow()-1).setContent(saveRuleDTO.getContent());
-			redisClient.set(RedisConstant.RULE_ROW_CONTENT, JSON.toJSONString(ruleRows));
+			redisSet(RedisConstant.RULE_ROW_CONTENT, JSON.toJSONString(ruleRows));
 		} else if (saveRuleDTO.getNewIndex()==1){
-			List<RuleRow> ruleRows = JSON.parseArray(redisClient.get(RedisConstant.RULE_ROW_CONTENT, ""), RuleRow.class);
+			List<RuleRow> ruleRows = JSON.parseArray(redisGet(RedisConstant.RULE_ROW_CONTENT), RuleRow.class);
 			ruleRows.get(saveRuleDTO.getRow()-1).getIndexs().add(new RuleIndex(saveRuleDTO.getIndex(),saveRuleDTO.getRow(),saveRuleDTO.getHeader()));
-			redisClient.set(RedisConstant.RULE_ROW_CONTENT, JSON.toJSONString(ruleRows));
-			redisClient.setHSet(RedisConstant.RULE_ROW+saveRuleDTO.getRow(), RedisConstant.RULE_INDEX+saveRuleDTO.getIndex(), saveRuleDTO.getContent());			
+			redisSet(RedisConstant.RULE_ROW_CONTENT, JSON.toJSONString(ruleRows));
+			redisSetHSet(RedisConstant.RULE_ROW+saveRuleDTO.getRow(), RedisConstant.RULE_INDEX+saveRuleDTO.getIndex(), saveRuleDTO.getContent());			
 		} else {
-			redisClient.setHSet(RedisConstant.RULE_ROW+saveRuleDTO.getRow(), RedisConstant.RULE_INDEX+saveRuleDTO.getIndex(), saveRuleDTO.getContent());
+			redisSetHSet(RedisConstant.RULE_ROW+saveRuleDTO.getRow(), RedisConstant.RULE_INDEX+saveRuleDTO.getIndex(), saveRuleDTO.getContent());
 		}
 		result.put(PageParamType.BUSINESS_STATUS, 1);
 		result.put(PageParamType.BUSINESS_MESSAGE,"修改规则成功");

@@ -150,7 +150,7 @@ public class GameServiceImpl extends BasicServiceImpl implements GameService {
 		Assert.isTrue(gameMapper.applyForGameDao(applyDTO) == 1, "发布失败，请稍后重试");
 		if(publishGameDTO.getCharacterSelect().equals(NVTermConstant.SELECT_THREE)){
 			List<Integer> list = Arrays.asList(NVTermConstant.arrays);
-			redisClient.setHSet(RedisConstant.AVAILABLE_LIST, String.valueOf(publishGameDTO.getGameId()), JSON.toJSONString(list));
+			redisSetHSet(RedisConstant.AVAILABLE_LIST, String.valueOf(publishGameDTO.getGameId()), JSON.toJSONString(list));
 		}
 		Newspaper newspaper = new Newspaper(publishGameDTO.getGameId());
 		newspaper.setHeader("【"+publishGameDTO.getGameDesc()+"】"+newspaper.getHeader());
@@ -175,7 +175,7 @@ public class GameServiceImpl extends BasicServiceImpl implements GameService {
 		Map<String, Object> result = new HashMap<String, Object>();
 		Assert.isTrue(gameMapper.changeStatusDao(changeStatusDTO) == 1, "修改失败，请重试");		
 		if(changeStatusDTO.getStatus() == GameStatus.APPLY_END.getCode()){
-			redisClient.delHSet(RedisConstant.AVAILABLE_LIST, String.valueOf(changeStatusDTO.getGameId()));
+			redisDelHset(RedisConstant.AVAILABLE_LIST, String.valueOf(changeStatusDTO.getGameId()));
 		}
 		if(changeStatusDTO.getStatus() == GameStatus.READY.getCode()){
 			GameForm form = new GameForm();
